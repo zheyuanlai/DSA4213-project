@@ -1,7 +1,8 @@
 # Protocol Freeze (pre-registered before any TEST-split call)
 
 The machine-readable record is `benchmarks/freeze_manifest.json`. It holds sha256 values for the frozen config, every prompt,
-every `src/*.py`, the public benchmark files, the annotation guide and the evaluation scripts, plus the private
+every `src/*.py`, the public benchmark files, the annotation guide and three evaluation scripts
+(`evaluation/auto_metrics.py`, `score_human.py`, `paired_bootstrap.py`; `blinding.py` and `merge_annotations.py` were **not** hashed), plus the private
 TEST-gold hash, the git commit, and an audit showing that no ledger entry or output file referenced a TEST case before the freeze.
 `python scripts/freeze_protocol.py --check` verifies that none of these files has changed since.
 

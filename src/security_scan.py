@@ -25,6 +25,8 @@ FORBIDDEN_TRACKED = [
     re.compile(r"(^|/)\.env$"), re.compile(r"(^|/)\.env\.(?!example$)"), re.compile(r"^private/"),
     re.compile(r"condition_mapping"), re.compile(r"PRIVATE_EXECUTION", re.I), re.compile(r"openrouter\.env$"),
     re.compile(r"^data/real_papers/raw/"), re.compile(r"(^|/)test_gold\.jsonl$"),
+    # withheld until blind annotation ends (remove these two lines in the release commit)
+    re.compile(r"^outputs/synthetic/"), re.compile(r"^outputs/real_papers/"),
 ]
 BINARY_EXT = {".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".gz", ".tar", ".pyc", ".ico", ".woff", ".woff2"}
 

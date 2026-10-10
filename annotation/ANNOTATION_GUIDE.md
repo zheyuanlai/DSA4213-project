@@ -41,24 +41,32 @@ Key distinctions you must keep apart:
 
 ---
 
-## 2. Fields you fill (synthetic cases)
+## 2. Fields you fill (synthetic cases): two passes
 
-Your template has one row per `output_id`. Open the case's package file (column
-`package_file`). It shows the package plus the **case rubric**: the focal proposition, case-specific
-level descriptors, a required-findings checklist, and numeric facts to check.
+Cases appear under random aliases (`case_ref`, e.g. `K07`). Annotation happens in **two passes**.
+**Submit pass 1 before you open any pass-2 file.** Pass 2 shows checklists whose wording would bias pass 1.
+
+**Pass 1** (`annotation/pass1/`): open the case file `pass1/packages/<case_ref>.md`. It contains the package, the focal
+proposition and the case-specific level descriptors, but no checklist.
 
 | Field | Values | Applies to |
 |---|---|---|
 | `expressed_level` | `0`, `1`, `2` | SIG, ROB, GEN, CON, EFF, CIT only (leave blank for NUM/NEG) |
-| `focal_addressed` | `yes` / `no`: does the passage say anything about the focal proposition? | ordinal categories |
-| `findings_covered` | semicolon list of required-finding IDs reported **correctly**, e.g. `f1;f3` (empty if none) | all |
+| `focal_addressed` | `yes` / `no`: does the passage say anything about the focal proposition? | ordinal categories (blank for NUM/NEG) |
 | `unsupported_claims` | integer ≥ 0: extra claims the package does not support (see §5) | all |
 | `numeric_errors` | integer ≥ 0: wrong values, wrong sign/direction, wrong unit, or a number attached to the wrong method/dataset | all |
+| `confidence_p1` | `low` / `medium` / `high` | all |
+| `notes_p1` | free text: quote the phrase that decided a borderline label | all |
+
+**Pass 2** (`annotation/pass2/`): open `pass2/packages/<case_ref>.md`. It contains the package plus the checklists.
+
+| Field | Values | Applies to |
+|---|---|---|
+| `findings_covered` | semicolon list of required-finding IDs reported **correctly**, e.g. `f1;f3` (empty if none) | all |
 | `num_facts_correct` | semicolon list of numeric-fact IDs reported correctly (value **and** entity **and** unit/scale) | NUM only |
 | `neg_findings_reported` | semicolon list of negative/null required-finding IDs reported with correct scope | NEG only |
 | `neg_reframed_positive` | `yes` / `no`: is any adverse/null result presented as favourable? | NEG only |
-| `confidence` | `low` / `medium` / `high`: how sure you are of your labels for this row | all |
-| `notes` | free text: quote the phrase that decided a borderline label | all |
+| `confidence_p2`, `notes_p2` | as above | all |
 
 **Omission rule.** If `focal_addressed = no`, set `expressed_level = 0`. An omitted focal claim
 expresses no affirmative claim. The coordinator reports coverage separately, so a silent omission
@@ -147,7 +155,7 @@ Count each distinct unsupported claim once, even if it is repeated.
 3. A caveat that explicitly says the evidence **does not establish** the claim makes the claim qualified (→ 1 for ROB/GEN/EFF/CIT).
 4. Vague intensifiers ("clearly", "markedly") do not raise a descriptive claim to level 2. Only the category's level-2 content does
    (significance, all-datasets, robustness, transfer, speed, attribution of P).
-5. When torn between two levels, choose the lower one, set `confidence = low`, and quote the deciding phrase in `notes`.
+5. When torn between two levels, choose the lower one, set `confidence_p1 = low`, and quote the deciding phrase in `notes_p1`.
 6. Do not reward or penalise style, length or fluency in these fields.
 
 ---
@@ -155,13 +163,12 @@ Count each distinct unsupported claim once, even if it is repeated.
 ## 7. Real-paper outputs (secondary study)
 
 Real-paper packages have **no gold labels**: the authors' own conclusions are not treated as ground truth.
-For each sentence in `blinded_real_papers_sentences.csv` assign `support_label`:
+In `real/annotator_<you>_real_sentences.csv`, assign each sentence a `support_label`:
 `SUPPORTED` (the package supports it at the stated strength), `OVERSTATED` (stronger or broader than the package supports),
 `UNDERSTATED` (clearly weaker than the package supports, e.g., omits a reported significant test),
 `UNSUPPORTED` (no basis in the package), `NUMERIC_ERROR` (a number or attribution is wrong), or `NOT_A_CLAIM`.
-For each output in `blinded_real_papers.csv` also rate `readability` from 1 (hard to follow) to 5 (clear, publication-ready).
-
----
+In `real/annotator_<you>_real.csv`, give each output a `readability` from 1 (hard to follow) to 5 (clear, publication-ready), an
+`overall_calibration` (`well_calibrated`, `overstated`, `understated` or `mixed`), and a `confidence` (`low`, `medium` or `high`).
 
 ## 8. Training material
 

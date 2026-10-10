@@ -128,8 +128,8 @@ def main() -> int:
     priv = Path(a.private_out)
     priv.mkdir(parents=True, exist_ok=True)
     df.to_csv(priv / f"per_run_rows_{out.name}.csv", index=False)  # contains gold levels -> private
-    public_cols = [c for c in df.columns if c not in ("gold_level",) and "proxy_level" not in c and "proxy_start" not in c]
-    df[public_cols].drop(columns=[c for c in public_cols if c.startswith("proxy_")], errors="ignore").to_csv(out / "per_run_rows_no_gold.csv", index=False)
+    # Per-run rows (case x condition) stay private until annotation ends: together with the packet texts they
+    # could reveal which condition produced which text. Only aggregates are written to the public results dir.
     agg = {
         "n_runs": ("case_id", "count"), "n_completed": ("status", lambda s: int((s == "completed").sum())),
         "n_failed": ("status", lambda s: int((s != "completed").sum())),

@@ -2,9 +2,11 @@
 
 Run ONLY after both annotators have submitted real files:
 
-  python -m evaluation.merge_annotations --a annotation/completed/annotator_A.csv \
-      --b annotation/completed/annotator_B.csv --rubric data/synthetic/rubrics/test_rubric.jsonl \
-      --packet annotation/blinded_synthetic.csv --out annotation/agreement
+  python -m evaluation.merge_annotations \
+      --a annotation/completed/annotator_A_pass1.csv,annotation/completed/annotator_A_pass2.csv \
+      --b annotation/completed/annotator_B_pass1.csv,annotation/completed/annotator_B_pass2.csv \
+      --packet annotation/blinded_synthetic.csv --alias-map private/case_alias_map.csv \
+      --rubric data/synthetic/rubrics/test_rubric.jsonl --out annotation/agreement
   # after filling annotation/agreement/adjudication_synthetic.csv:
   python -m evaluation.merge_annotations ... --adjudicated annotation/agreement/adjudication_synthetic.csv
 
@@ -21,7 +23,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Optional
 
-from evaluation.blinding import SYN_FIELDS, read_csv
+from evaluation.blinding import SYN_FIELDS, read_csv  # noqa: F401
 from src.package_schema import ORDINAL_CATEGORIES
 
 LIST_FIELDS = ("findings_covered", "num_facts_correct", "neg_findings_reported")
@@ -112,8 +114,9 @@ def validate(rows: list[dict[str, str]], packet_ids: set[str], rubric: dict[str,
         else:
             if (r.get("neg_findings_reported") or "").strip() or (r.get("neg_reframed_positive") or "").strip():
                 errs.append(f"{who}/{oid}: NEG fields only for NEG rows")
-        if (r.get("confidence") or "").strip().lower() not in ("low", "medium", "high"):
-            errs.append(f"{who}/{oid}: confidence must be low/medium/high")
+        for cf in ("confidence_p1", "confidence_p2"):
+            if (r.get(cf) or "").strip().lower() not in ("low", "medium", "high"):
+                errs.append(f"{who}/{oid}: {cf} must be low/medium/high")
     return errs
 
 
@@ -161,7 +164,7 @@ def _canon(field: str, v: str) -> str:
     v = (v or "").strip()
     if field in LIST_FIELDS:
         return ";".join(sorted(_ids(v)))
-    return v.lower() if field in ("focal_addressed", "neg_reframed_positive", "confidence") else v
+    return v.lower() if field in ("focal_addressed", "neg_reframed_positive", "confidence_p1", "confidence_p2") else v
 
 
 SCORED_FIELDS = ["expressed_level", "focal_addressed", "findings_covered", "unsupported_claims", "numeric_errors",
@@ -199,25 +202,65 @@ def consensus(A, B, adjud: list[dict[str, str]]) -> tuple[list[dict[str, str]], 
     return rows, errs
 
 
+def join_passes(paths: list[Path]) -> list[dict[str, str]]:
+    """Merge an annotator's pass-1 and pass-2 sheets by output_id. Duplicate IDs within one sheet are
+    kept as extra rows so that validation reports them."""
+    merged: dict[str, dict[str, str]] = {}
+    order: list[str] = []
+    dups: list[dict[str, str]] = []
+    for p in paths:
+        seen: set[str] = set()
+        for r in read_csv(p):
+            oid = r["output_id"]
+            if oid in seen:
+                dups.append(dict(r))
+                continue
+            seen.add(oid)
+            if oid not in merged:
+                merged[oid] = {}
+                order.append(oid)
+            merged[oid].update(r)
+    return [merged[o] for o in order] + dups
+
+
+def validate_consensus_row(row: dict[str, str], cat: str) -> list[str]:
+    """Adjudicated/consensus values must satisfy the same value rules as annotator files."""
+    errs = []
+    lv = row.get("expressed_level", "")
+    if cat in ORDINAL_CATEGORIES and lv not in ("0", "1", "2"):
+        errs.append(f"{row['output_id']}: consensus expressed_level {lv!r} invalid")
+    if cat not in ORDINAL_CATEGORIES and lv:
+        errs.append(f"{row['output_id']}: consensus expressed_level must be blank for {cat}")
+    for f in INT_FIELDS:
+        if not (row.get(f) or "").isdigit():
+            errs.append(f"{row['output_id']}: consensus {f} must be a non-negative integer")
+    if cat in ORDINAL_CATEGORIES and row.get("focal_addressed") not in ("yes", "no"):
+        errs.append(f"{row['output_id']}: consensus focal_addressed invalid")
+    return errs
+
+
 def main(argv=None) -> int:
     import csv
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("--a", required=True)
-    ap.add_argument("--b", required=True)
+    ap.add_argument("--a", required=True, help="comma-separated: pass-1 sheet, pass-2 sheet")
+    ap.add_argument("--b", required=True, help="comma-separated: pass-1 sheet, pass-2 sheet")
     ap.add_argument("--rubric", default="data/synthetic/rubrics/test_rubric.jsonl")
     ap.add_argument("--packet", default="annotation/blinded_synthetic.csv")
+    ap.add_argument("--alias-map", default="private/case_alias_map.csv")
     ap.add_argument("--out", default="annotation/agreement")
     ap.add_argument("--adjudicated", default=None)
     a = ap.parse_args(argv)
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     packet = read_csv(Path(a.packet))
+    alias = {r["case_ref"]: r["case_id"] for r in read_csv(Path(a.alias_map))}
     packet_ids = {r["output_id"] for r in packet}
     cat_by_id = {r["output_id"]: r["category"] for r in packet}
-    case_by_id = {r["output_id"]: r["case_id"] for r in packet}
+    case_by_id = {r["output_id"]: alias[r["case_ref"]] for r in packet}
     rubric = {json.loads(l)["case_id"]: json.loads(l) for l in Path(a.rubric).read_text().splitlines() if l.strip()}
-    ra, rb = read_csv(Path(a.a)), read_csv(Path(a.b))
+    ra = join_passes([Path(x) for x in a.a.split(",")])
+    rb = join_passes([Path(x) for x in a.b.split(",")])
     errs = validate(ra, packet_ids, rubric, cat_by_id, case_by_id, "A") + validate(rb, packet_ids, rubric, cat_by_id, case_by_id, "B")
     (out / "validation_report.txt").write_text("\n".join(errs) + ("\n" if errs else "OK\n"))
     if errs:
@@ -229,21 +272,26 @@ def main(argv=None) -> int:
     (out / "agreement.json").write_text(json.dumps(ag, indent=1))
     dis = disagreements(A, B)
     fields = ["output_id", "field", "value_A", "value_B", "adjudicated_value", "rationale"]
-    with open(out / "adjudication_synthetic.csv" if not a.adjudicated else out / "disagreements_recomputed.csv", "w", newline="") as f:
+    with open(out / ("adjudication_synthetic.csv" if not a.adjudicated else "disagreements_recomputed.csv"), "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=fields)
         w.writeheader()
         w.writerows(dis)
     print(json.dumps({"n_disagreements": len(dis), "expressed_level": ag["expressed_level"]}, indent=1))
     if a.adjudicated:
         rows, cerrs = consensus(A, B, read_csv(Path(a.adjudicated)))
+        for r in rows:
+            cerrs += validate_consensus_row(r, cat_by_id[r["output_id"]])
         if cerrs:
-            print(f"{len(cerrs)} unadjudicated disagreement(s); consensus not written")
+            print(f"{len(cerrs)} consensus problem(s); consensus not written")
             (out / "consensus_errors.txt").write_text("\n".join(cerrs))
             return 1
         with open(out / "consensus_synthetic.csv", "w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=["output_id", "case_id", "category"] + SCORED_FIELDS)
             w.writeheader()
-            w.writerows(rows)
+            for r in rows:
+                r["case_id"] = case_by_id[r["output_id"]]
+                r["category"] = cat_by_id[r["output_id"]]
+                w.writerow(r)
         print(f"consensus written: {out/'consensus_synthetic.csv'}")
     return 0
 

@@ -30,7 +30,8 @@ def test_kappa_known_values():
 def _row(oid, case, cat, lv="", fa="", fc="", uns="0", ne="0", nf="", nr="", nrp="", conf="high"):
     return {"output_id": oid, "case_id": case, "category": cat, "expressed_level": lv, "focal_addressed": fa,
             "findings_covered": fc, "unsupported_claims": uns, "numeric_errors": ne, "num_facts_correct": nf,
-            "neg_findings_reported": nr, "neg_reframed_positive": nrp, "confidence": conf, "notes": FIXTURE_NOTE}
+            "neg_findings_reported": nr, "neg_reframed_positive": nrp, "confidence_p1": conf, "confidence_p2": conf,
+            "notes_p1": FIXTURE_NOTE, "notes_p2": FIXTURE_NOTE}
 
 
 RUBRIC = {"SIG-x": {"required_findings": [{"finding_id": "f1"}, {"finding_id": "f2"}], "numeric_facts": []},
@@ -102,3 +103,73 @@ def test_score_end_to_end_dummy():
     assert res["transitions"]["C7->C4"] == {"over->correct (fix)": 1, "under->correct (fix)": 1}
     co = score(cons, mapping, gold, rubric, itt=False)
     assert co["summary"]["C5"]["n_ordinal"] == 1
+
+
+def test_score_refuses_missing_or_invalid_labels():
+    gold = {"SIG-p2a": {"case_id": "SIG-p2a", "category": "statistical_significance", "gold_level": 1,
+                        "required_findings": [{"finding_id": "f1", "polarity": "positive"}]}}
+    rubric = {"SIG-p2a": {"required_findings": [{"finding_id": "f1"}], "numeric_facts": []}}
+    mapping = [{"output_id": "Sa", "case_id": "SIG-p2a", "condition": "C4", "status": "completed"},
+               {"output_id": "Sb", "case_id": "SIG-p2a", "condition": "C7", "status": "completed"}]
+    cons = [{"output_id": "Sa", "expressed_level": "1", "focal_addressed": "yes", "findings_covered": "f1",
+             "unsupported_claims": "0", "numeric_errors": "0"}]  # Sb missing (DUMMY fixture)
+    with pytest.raises(ValueError, match="no consensus label"):
+        score(cons, mapping, gold, rubric)
+    cons.append({"output_id": "Sb", "expressed_level": "3", "focal_addressed": "yes", "findings_covered": "",
+                 "unsupported_claims": "0", "numeric_errors": "0"})
+    with pytest.raises(ValueError, match="invalid consensus"):
+        score(cons, mapping, gold, rubric)
+
+
+def test_consensus_values_validated():
+    from evaluation.merge_annotations import validate_consensus_row
+    assert validate_consensus_row({"output_id": "S1", "expressed_level": "3", "focal_addressed": "yes",
+                                   "unsupported_claims": "0", "numeric_errors": "0"}, "statistical_significance")
+    assert not validate_consensus_row({"output_id": "S1", "expressed_level": "", "focal_addressed": "",
+                                       "unsupported_claims": "1", "numeric_errors": "0"}, "negative_results")
+
+
+def test_real_paper_merge_and_score_dummy(tmp_path, record):
+    """DUMMY fixture labels only: exercises validate -> agreement -> adjudication -> consensus -> score."""
+    import csv as _csv
+    import json as _json
+    from evaluation.blinding import build_real_packet, read_csv
+    from evaluation.score_real_papers import merge, score
+    from src.package_schema import CaseRecord
+    runs = tmp_path / "runs"
+    for c, text in (("C1", "A is better. It is fast."), ("C2", "A is higher. It is fast."),
+                    ("C3", "A is better. It is fast."), ("C4", "A is better on D. It is fast.")):
+        p = runs / c / "RP-01.json"
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(_json.dumps({"run_id": f"t:{c}:RP-01", "case_id": "RP-01", "condition": c, "status": "completed",
+                                  "final_passage": text, "is_mock": False}))
+    d = record.model_dump()
+    d.update(case_id="RP-01", category=None, split="real")
+    rec = CaseRecord.model_validate(d)
+    ann, priv = tmp_path / "ann", tmp_path / "priv"
+    build_real_packet(runs, [rec], ["C1", "C2", "C3", "C4"], ann, priv)
+
+    def fill(src, dst, f):
+        rows = read_csv(src)
+        for r in rows:
+            f(r)
+        with open(dst, "w", newline="") as fh:
+            w = _csv.DictWriter(fh, fieldnames=list(rows[0]))
+            w.writeheader()
+            w.writerows(rows)
+
+    for who in ("A", "B"):
+        fill(ann / "real" / f"annotator_{who}_real.csv", tmp_path / f"{who}_o.csv",
+             lambda r: r.update(readability="4" if who == "A" else "3", overall_calibration="well_calibrated", confidence="high"))
+        fill(ann / "real" / f"annotator_{who}_real_sentences.csv", tmp_path / f"{who}_s.csv",
+             lambda r: r.update(support_label="SUPPORTED"))
+    out = tmp_path / "agree"
+    assert merge([tmp_path / "A_o.csv", tmp_path / "A_s.csv"], [tmp_path / "B_o.csv", tmp_path / "B_s.csv"], out, None, ann / "real") == 0
+    adj = read_csv(out / "adjudication_real.csv")
+    assert adj and all(r["field"] == "readability" for r in adj)
+    fill(out / "adjudication_real.csv", tmp_path / "adj.csv", lambda r: r.update(adjudicated_value="4"))
+    assert merge([tmp_path / "A_o.csv", tmp_path / "A_s.csv"], [tmp_path / "B_o.csv", tmp_path / "B_s.csv"], out,
+                 tmp_path / "adj.csv", ann / "real") == 0
+    res = score(read_csv(out / "consensus_real_outputs.csv"), read_csv(out / "consensus_real_sentences.csv"),
+                read_csv(priv / "condition_mapping_real.csv"))
+    assert res["summary"]["C4"]["supported_rate"] == 1.0 and res["summary"]["C1"]["readability"] == 4

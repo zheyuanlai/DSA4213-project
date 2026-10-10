@@ -56,3 +56,13 @@ def test_paired_bootstrap_basic():
     cl = cluster_bootstrap({"x1": 1.0, "x2": 1.0, "y1": 0.0, "y2": 0.0}, {"x1": 0.0, "x2": 0.0, "y1": 0.0, "y2": 0.0},
                            {"x1": "x", "x2": "x", "y1": "y", "y2": "y"}, n_boot=500)
     assert cl["n_clusters"] == 2 and cl["diff"] == 0.5
+
+
+def test_numeric_fact_recall_no_false_matches_from_downscaling():
+    # regression for audit finding: '0.61' must not match 66.0 via the x0.01 path, nor p=0.08 match many facts
+    facts = [{"fact_id": f"f{i}", "value": v, "tolerance": 0.05} for i, v in enumerate([66.0, 61.2, 31.1, 23.5, 4.8, 7.6])]
+    # before the fix p = 0.08 matched 5 of 6 facts; now only the conversion-consistent 7.6% -> 0.076 ~ 0.08 remains
+    assert numeric_fact_recall("Nothing numeric here except p = 0.08.", facts)["n_value_present"] <= 1
+    hits = {f["fact_id"] for f in numeric_fact_recall("Latency was 0.61 s.", facts)["facts"] if f["value_present"]}
+    assert "f0" not in hits  # 0.61 must not match 66.0 (only 61.2% -> 0.612 is a valid conversion)
+    assert numeric_fact_recall("Pass rate 66.0% vs 61.2%.", facts)["n_value_present"] == 2

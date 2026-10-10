@@ -57,6 +57,15 @@ def transition(before: int, after: int, gold: int) -> str:
 def score(consensus: list[dict[str, str]], mapping: list[dict[str, str]], gold: dict[str, dict[str, Any]],
           rubric: dict[str, dict[str, Any]], runs_dir: Optional[Path] = None, itt: bool = True) -> dict[str, Any]:
     lab = {r["output_id"]: r for r in consensus}
+    completed_ids = {m["output_id"] for m in mapping if m["status"] == "completed" and m["output_id"]}
+    missing = sorted(completed_ids - set(lab))
+    if missing:
+        raise ValueError(f"{len(missing)} completed outputs have no consensus label (e.g. {missing[:3]}); refusing to "
+                         f"score (a stale mapping or an incomplete consensus would silently bias results)")
+    for oid in completed_ids:
+        lv = (lab[oid].get("expressed_level") or "").strip()
+        if lv not in ("", "0", "1", "2"):
+            raise ValueError(f"invalid consensus expressed_level {lv!r} for {oid}")
     cell: dict[tuple[str, str], Optional[dict[str, str]]] = {}
     for m in mapping:
         key = (m["case_id"], m["condition"])
@@ -78,6 +87,8 @@ def score(consensus: list[dict[str, str]], mapping: list[dict[str, str]], gold: 
             row = row or {}
             d: dict[str, Any] = {"missing_output": missing}
             if g["category"] in ORDINAL_CATEGORIES:
+                if not missing and (row.get("expressed_level") or "") == "" and (row.get("focal_addressed") or "no") == "yes":
+                    raise ValueError(f"ordinal case {case}/{c}: expressed_level blank although focal_addressed=yes")
                 hat = int(row.get("expressed_level") or 0)
                 if (row.get("focal_addressed") or "no") == "no":
                     hat = 0
@@ -210,7 +221,7 @@ def main(argv=None) -> int:
     out.mkdir(parents=True, exist_ok=True)
     cons, mapping = read_csv(Path(a.consensus)), read_csv(Path(a.mapping))
     gold, rubric = load_jsonl(Path(a.gold)), load_jsonl(Path(a.rubric))
-    if any(not (r.get("expressed_level") or r.get("findings_covered") or r.get("unsupported_claims")) for r in cons) and not cons:
+    if not cons:
         print("consensus file is empty")
         return 1
     for itt in (True, False):

@@ -134,9 +134,10 @@ def numeric_fact_recall(passage: str, facts: list[dict[str, Any]]) -> dict[str, 
         v, tol = float(f["value"]), float(f["tolerance"])
         found = False
         for tok, x in nums:
-            t = max(tol, 0.5 * 10 ** (-_decimals(tok))) + 1e-9
             for k in (1.0, 100.0, 0.01, 1000.0, 0.001):
-                if abs(abs(x) - abs(v * k)) <= t * (k if k > 1 else 1):
+                # tolerance scales with the conversion factor; never looser than the written precision
+                t = max(tol * k, 0.5 * 10 ** (-_decimals(tok))) + 1e-9
+                if abs(abs(x) - abs(v * k)) <= t:
                     found = True
         hits.append({"fact_id": f["fact_id"], "value_present": found})
     n = len(hits)

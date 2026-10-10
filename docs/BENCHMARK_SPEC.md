@@ -28,8 +28,10 @@ that is justified within its correct scope. This is not the most certain-soundin
 * Case IDs: `{SIG|ROB|GEN|CON|EFF|CIT|NUM|NEG}-p{1,2,3}{a,b}`.
 * **Ordinal** categories (6): statistical significance, robustness, generalization,
   consistency, efficiency, citation support. In each, the 4 TEST cases are **two `ℓ=2`** and
-  **two non-strong** (`p2`: one 2 + one 1; `p3`: one 2 + one 0). Which member (`a`/`b`) is
-  strong varies. So across the 24 ordinal TEST cases: 12 strong, 6 `ℓ=1`, 6 `ℓ=0`.
+  **two non-strong** (one `ℓ=1`, one `ℓ=0`). Each TEST pair contains one `ℓ=2` member. Which pair
+  holds the `ℓ=1` case and which member (`a`/`b`) is strong varies by category. Across the 24 ordinal TEST cases: 12 strong, 6 `ℓ=1`, 6 `ℓ=0`.
+  (Correction 2026-10-10, after the freeze, documentation only: an earlier wording said p2 always held the `ℓ=1` case. That is
+  false for robustness. The gold data and its frozen hash are unchanged.)
 * **Separate-protocol** categories (2): numerical reporting and negative results. These have
   **no ordinal label**. They are scored on numeric facts and on negative-finding recall.
 
