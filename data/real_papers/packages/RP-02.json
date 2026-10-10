@@ -1,0 +1,90 @@
+{
+ "case_id": "RP-02",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "According to Method M, do persona instructions shift language-model outputs for a medical question, and does this sensitivity differ between larger and smaller models and across embedding choices?",
+  "methods_summary": "Method M audits whether an intervention on the prompt changes an LLM's output distribution. It samples k responses to the original prompt and k to the perturbed prompt, embeds them, and forms two sets of pairwise cosine similarities: within original responses (null) and between original and perturbed responses. The Jensen-Shannon divergence between these two similarity distributions is the effect size (omega); a permutation test over the pooled responses gives a p-value. The paper notes that a Bonferroni adjustment can be used when many perturbations are tested.",
+  "experimental_setup": "A healthcare question is posed to each model, with and without a prepended instruction 'Act as {role}'. Four roles are medical professions and four are unrelated (comedian, robot from the future, NeurIPS reviewer, child); the setup treats little shift for medical roles and a shift for unrelated roles as the expected pattern. Models: GPT-4 and GPT-3.5 (described as large) and several smaller open models. Default embedding: text-embedding-ada-002; an appendix repeats the persona experiment with three other embedding models. Each cell is a separate test.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Persona-perturbation audit across seven models with the default embedding (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Medical vs non-medical personas: effect sizes and significance for the two large models (GPT-4, GPT-3.5)"},
+     {"comparison_id": "cmp2", "description": "Medical vs non-medical personas: effect sizes and significance for the smaller models"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Sensitivity of the audit to the choice of embedding model (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Effect sizes and significance under Ada vs Jasper, Stella and Kalm embeddings"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Effect-size estimates (omega) by persona instruction and model for a medical-advice prompt. Stars: two-sided permutation-test significance, * p<0.05, ** p<0.01, *** p<0.001. First four personas are medical roles (expected: little shift); last four are non-medical (expected: shift).",
+    "columns": [
+     {"column_id": "gpt4", "header": "GPT-4", "unit": null, "higher_is_better": null},
+     {"column_id": "gpt35", "header": "GPT-3.5", "unit": null, "higher_is_better": null},
+     {"column_id": "llama8b", "header": "Llama-3.1-8B", "unit": null, "higher_is_better": null},
+     {"column_id": "gpt2", "header": "GPT-2", "unit": null, "higher_is_better": null},
+     {"column_id": "gemma9b", "header": "Gemma-2-9B", "unit": null, "higher_is_better": null},
+     {"column_id": "phi3", "header": "Phi-3-mini", "unit": null, "higher_is_better": null},
+     {"column_id": "mistral7b", "header": "Mistral-7B", "unit": null, "higher_is_better": null}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Doctor", "cells": {"gpt4": {"text": "0.22", "value": 0.22, "spread": null}, "gpt35": {"text": "0.21", "value": 0.21, "spread": null}, "llama8b": {"text": "0.20", "value": 0.2, "spread": null}, "gpt2": {"text": "0.20", "value": 0.2, "spread": null}, "gemma9b": {"text": "0.41**", "value": 0.41, "spread": null}, "phi3": {"text": "0.16", "value": 0.16, "spread": null}, "mistral7b": {"text": "0.31*", "value": 0.31, "spread": null}}},
+     {"row_id": "r2", "label": "Nurse", "cells": {"gpt4": {"text": "0.20", "value": 0.2, "spread": null}, "gpt35": {"text": "0.20", "value": 0.2, "spread": null}, "llama8b": {"text": "0.25", "value": 0.25, "spread": null}, "gpt2": {"text": "0.30*", "value": 0.3, "spread": null}, "gemma9b": {"text": "0.24*", "value": 0.24, "spread": null}, "phi3": {"text": "0.22", "value": 0.22, "spread": null}, "mistral7b": {"text": "0.24", "value": 0.24, "spread": null}}},
+     {"row_id": "r3", "label": "Medical Practitioner", "cells": {"gpt4": {"text": "0.25", "value": 0.25, "spread": null}, "gpt35": {"text": "0.19", "value": 0.19, "spread": null}, "llama8b": {"text": "0.25", "value": 0.25, "spread": null}, "gpt2": {"text": "0.33**", "value": 0.33, "spread": null}, "gemma9b": {"text": "0.30*", "value": 0.3, "spread": null}, "phi3": {"text": "0.18", "value": 0.18, "spread": null}, "mistral7b": {"text": "0.20", "value": 0.2, "spread": null}}},
+     {"row_id": "r4", "label": "Medical Supervisor", "cells": {"gpt4": {"text": "0.22", "value": 0.22, "spread": null}, "gpt35": {"text": "0.17", "value": 0.17, "spread": null}, "llama8b": {"text": "0.20", "value": 0.2, "spread": null}, "gpt2": {"text": "0.19", "value": 0.19, "spread": null}, "gemma9b": {"text": "0.17", "value": 0.17, "spread": null}, "phi3": {"text": "0.25", "value": 0.25, "spread": null}, "mistral7b": {"text": "0.20", "value": 0.2, "spread": null}}},
+     {"row_id": "r5", "label": "Comedian", "cells": {"gpt4": {"text": "0.32***", "value": 0.32, "spread": null}, "gpt35": {"text": "0.24", "value": 0.24, "spread": null}, "llama8b": {"text": "0.36***", "value": 0.36, "spread": null}, "gpt2": {"text": "0.26", "value": 0.26, "spread": null}, "gemma9b": {"text": "0.23", "value": 0.23, "spread": null}, "phi3": {"text": "0.23", "value": 0.23, "spread": null}, "mistral7b": {"text": "0.20", "value": 0.2, "spread": null}}},
+     {"row_id": "r6", "label": "Robot From The Future", "cells": {"gpt4": {"text": "0.15", "value": 0.15, "spread": null}, "gpt35": {"text": "0.26*", "value": 0.26, "spread": null}, "llama8b": {"text": "0.31**", "value": 0.31, "spread": null}, "gpt2": {"text": "0.23", "value": 0.23, "spread": null}, "gemma9b": {"text": "0.18", "value": 0.18, "spread": null}, "phi3": {"text": "0.23", "value": 0.23, "spread": null}, "mistral7b": {"text": "0.24", "value": 0.24, "spread": null}}},
+     {"row_id": "r7", "label": "NeurIPS Reviewer", "cells": {"gpt4": {"text": "0.28**", "value": 0.28, "spread": null}, "gpt35": {"text": "0.28*", "value": 0.28, "spread": null}, "llama8b": {"text": "0.30**", "value": 0.3, "spread": null}, "gpt2": {"text": "0.17", "value": 0.17, "spread": null}, "gemma9b": {"text": "0.19", "value": 0.19, "spread": null}, "phi3": {"text": "0.24", "value": 0.24, "spread": null}, "mistral7b": {"text": "0.28", "value": 0.28, "spread": null}}},
+     {"row_id": "r8", "label": "Child", "cells": {"gpt4": {"text": "0.27", "value": 0.27, "spread": null}, "gpt35": {"text": "0.33**", "value": 0.33, "spread": null}, "llama8b": {"text": "0.19", "value": 0.19, "spread": null}, "gpt2": {"text": "0.27*", "value": 0.27, "spread": null}, "gemma9b": {"text": "0.14", "value": 0.14, "spread": null}, "phi3": {"text": "0.20", "value": 0.2, "spread": null}, "mistral7b": {"text": "0.37**", "value": 0.37, "spread": null}}}
+    ],
+    "notes": "GPT-4 and GPT-3.5 are grouped as 'large models' in the source; the others as 'smaller models'. Two smaller-model columns (SmolLM-135M, MagicPrompt) were dropped to fit the size limit. Point estimates only; no standard deviations are shown in this table. No multiple-comparison correction is indicated for the stars."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Effect-size estimates by persona under different embedding models (Ada = text-embedding-ada-002, the default). Stars as in T1.",
+    "columns": [
+     {"column_id": "ada", "header": "Ada", "unit": null, "higher_is_better": null},
+     {"column_id": "jasper", "header": "Jasper", "unit": null, "higher_is_better": null},
+     {"column_id": "stella", "header": "Stella", "unit": null, "higher_is_better": null},
+     {"column_id": "kalm", "header": "Kalm", "unit": null, "higher_is_better": null}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Act as a doctor", "cells": {"ada": {"text": "0.21", "value": 0.21, "spread": null}, "jasper": {"text": "0.07***", "value": 0.07, "spread": null}, "stella": {"text": "0.07***", "value": 0.07, "spread": null}, "kalm": {"text": "0.03***", "value": 0.03, "spread": null}}},
+     {"row_id": "r2", "label": "Act as a nurse", "cells": {"ada": {"text": "0.20", "value": 0.2, "spread": null}, "jasper": {"text": "0.03***", "value": 0.03, "spread": null}, "stella": {"text": "0.03***", "value": 0.03, "spread": null}, "kalm": {"text": "0.02***", "value": 0.02, "spread": null}}},
+     {"row_id": "r3", "label": "Act as a medical practitioner", "cells": {"ada": {"text": "0.19", "value": 0.19, "spread": null}, "jasper": {"text": "0.05***", "value": 0.05, "spread": null}, "stella": {"text": "0.04***", "value": 0.04, "spread": null}, "kalm": {"text": "0.02**", "value": 0.02, "spread": null}}},
+     {"row_id": "r4", "label": "Act as a medical supervisor", "cells": {"ada": {"text": "0.17", "value": 0.17, "spread": null}, "jasper": {"text": "0.09***", "value": 0.09, "spread": null}, "stella": {"text": "0.08***", "value": 0.08, "spread": null}, "kalm": {"text": "0.05***", "value": 0.05, "spread": null}}},
+     {"row_id": "r5", "label": "Act as a comedian", "cells": {"ada": {"text": "0.24", "value": 0.24, "spread": null}, "jasper": {"text": "0.36***", "value": 0.36, "spread": null}, "stella": {"text": "0.31***", "value": 0.31, "spread": null}, "kalm": {"text": "0.23***", "value": 0.23, "spread": null}}},
+     {"row_id": "r6", "label": "Act as a robot from the future", "cells": {"ada": {"text": "0.26*", "value": 0.26, "spread": null}, "jasper": {"text": "0.04***", "value": 0.04, "spread": null}, "stella": {"text": "0.04***", "value": 0.04, "spread": null}, "kalm": {"text": "0.05***", "value": 0.05, "spread": null}}},
+     {"row_id": "r7", "label": "Act as a NeurIPS reviewer", "cells": {"ada": {"text": "0.28*", "value": 0.28, "spread": null}, "jasper": {"text": "0.14***", "value": 0.14, "spread": null}, "stella": {"text": "0.13***", "value": 0.13, "spread": null}, "kalm": {"text": "0.13***", "value": 0.13, "spread": null}}},
+     {"row_id": "r8", "label": "Act as a child", "cells": {"ada": {"text": "0.33**", "value": 0.33, "spread": null}, "jasper": {"text": "0.48***", "value": 0.48, "spread": null}, "stella": {"text": "0.41***", "value": 0.41, "spread": null}, "kalm": {"text": "0.35***", "value": 0.35, "spread": null}}}
+    ],
+    "notes": "Appendix table. The source table does not name the generating LLM; its Ada column coincides with the GPT-3.5 point estimates in T1."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "Rejection implies a detectable shift in meaning; non-rejection means “no detectable semantic shift under s,” but does not imply that the full text-generation distribution is identical."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed framework (distribution-based perturbation analysis, DBPA) renamed to 'Method M'. Tables used: Table 1 (effect sizes by persona and model) and appendix table on embedding models. Abstract, results prose, discussion and summary-of-findings table withheld.",
+  "citation": "Paulius Rauba, Qiyao Wei, Mihaela van der Schaar (2025). Statistical Hypothesis Testing for Auditing Robustness in Language Models. arXiv:2506.07947",
+  "url": "https://arxiv.org/abs/2506.07947",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "b6bc584cae57a338bf4c5ea09a4ee47b2a41ee3ef0a002c2bf81bf055491ce93"
+ }
+}

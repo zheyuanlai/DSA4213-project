@@ -1,0 +1,84 @@
+{
+ "case_id": "RP-10",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does fine-tuning on self-generated concise reasoning (Method M) shorten LLM reasoning without reducing accuracy, compared with prompting and other fine-tuning approaches, and does the effect transfer across math datasets?",
+  "methods_summary": "Method M is a self-training recipe for shorter chain-of-thought. For each training question, the model samples reasoning paths while conditioned on 8 concise few-shot exemplars (here written by GPT-4o), plus paths from its default distribution; the shortest correct path per question is kept, and the model is fine-tuned on these paths. Method M-FS samples a single few-shot-conditioned path instead of best-of-N. Baselines: zero-shot prompting (including an explicit 'be concise' instruction), fine-tuning on external reasoning (GPT-4o chain-of-thought), naive best-of-N self-training without exemplars (16 paths), and Rational Metareasoning.",
+  "experimental_setup": "Five post-trained models (Llama-3.2-3B, Gemma-2-2B, Qwen2.5-3B, Qwen2.5-Math-1.5B, DeepSeekMath-7B), fine-tuned separately for GSM8K and MATH; evaluation on the GSM8K test set and MATH500 with greedy decoding. Accuracy is parsed from final answers; length is the mean number of output tokens over all outputs, correct or not. Relative metrics divide by the zero-shot baseline prompt. Method M uses 16 few-shot-conditioned plus 16 default paths per question; the budget-matched variant uses 8 plus 8.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Concise-reasoning methods on GSM8K and MATH (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs zero-shot baseline: accuracy and output length"},
+     {"comparison_id": "cmp2", "description": "Method M vs other length-reduction approaches (concise prompting, FT on GPT-4o CoT, naive best-of-N, Rational Metareasoning)"},
+     {"comparison_id": "cmp3", "description": "Method M full-budget vs budget-matched generation"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Cross-task generalization (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "In-domain vs out-of-domain relative accuracy and length"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Accuracy and reasoning length on GSM8K and MATH500, averaged across five models (Llama-3.2-3B, Gemma-2-2B, Qwen2.5-3B, Qwen2.5-Math-1.5B, DeepSeekMath-7B). Rel. Acc / Rel. Len = accuracy / output length relative to the zero-shot baseline prompt (%); values in parentheses are standard deviations as reported.",
+    "columns": [
+     {"column_id": "gsm_acc", "header": "GSM8K Acc", "unit": "%", "higher_is_better": true},
+     {"column_id": "gsm_racc", "header": "GSM8K Rel. Acc", "unit": "%", "higher_is_better": true},
+     {"column_id": "gsm_rlen", "header": "GSM8K Rel. Len", "unit": "%", "higher_is_better": false},
+     {"column_id": "math_acc", "header": "MATH Acc", "unit": "%", "higher_is_better": true},
+     {"column_id": "math_racc", "header": "MATH Rel. Acc", "unit": "%", "higher_is_better": true},
+     {"column_id": "math_rlen", "header": "MATH Rel. Len", "unit": "%", "higher_is_better": false}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Zero-shot: baseline prompt", "cells": {"gsm_acc": {"text": "78.06", "value": 78.06, "spread": null}, "gsm_racc": {"text": "100.00 (0.00)", "value": 100.0, "spread": null}, "gsm_rlen": {"text": "100.00 (0.00)", "value": 100.0, "spread": null}, "math_acc": {"text": "46.40", "value": 46.4, "spread": null}, "math_racc": {"text": "100.00 (0.00)", "value": 100.0, "spread": null}, "math_rlen": {"text": "100.00 (0.00)", "value": 100.0, "spread": null}}},
+     {"row_id": "r2", "label": "Zero-shot: 'Be Concise' prompt", "cells": {"gsm_acc": {"text": "77.98", "value": 77.98, "spread": null}, "gsm_racc": {"text": "99.85 (1.18)", "value": 99.85, "spread": null}, "gsm_rlen": {"text": "88.46 (10.37)", "value": 88.46, "spread": null}, "math_acc": {"text": "47.76", "value": 47.76, "spread": null}, "math_racc": {"text": "102.71 (7.59)", "value": 102.71, "spread": null}, "math_rlen": {"text": "92.66 (7.46)", "value": 92.66, "spread": null}}},
+     {"row_id": "r3", "label": "FT on GPT-4o CoT", "cells": {"gsm_acc": {"text": "76.36", "value": 76.36, "spread": null}, "gsm_racc": {"text": "97.65 (3.63)", "value": 97.65, "spread": null}, "gsm_rlen": {"text": "67.60 (16.70)", "value": 67.6, "spread": null}, "math_acc": {"text": "40.44", "value": 40.44, "spread": null}, "math_racc": {"text": "90.52 (15.07)", "value": 90.52, "spread": null}, "math_rlen": {"text": "87.21 (22.22)", "value": 87.21, "spread": null}}},
+     {"row_id": "r4", "label": "FT on naive best-of-N (shortest correct of 16)", "cells": {"gsm_acc": {"text": "77.12", "value": 77.12, "spread": null}, "gsm_racc": {"text": "98.79 (1.64)", "value": 98.79, "spread": null}, "gsm_rlen": {"text": "87.17 (8.79)", "value": 87.17, "spread": null}, "math_acc": {"text": "47.64", "value": 47.64, "spread": null}, "math_racc": {"text": "101.74 (7.04)", "value": 101.74, "spread": null}, "math_rlen": {"text": "89.89 (3.99)", "value": 89.89, "spread": null}}},
+     {"row_id": "r5", "label": "FT with Rational Metareasoning", "cells": {"gsm_acc": {"text": "76.15", "value": 76.15, "spread": null}, "gsm_racc": {"text": "97.21 (5.74)", "value": 97.21, "spread": null}, "gsm_rlen": {"text": "84.93 (5.09)", "value": 84.93, "spread": null}, "math_acc": {"text": "47.56", "value": 47.56, "spread": null}, "math_racc": {"text": "103.02 (6.56)", "value": 103.02, "spread": null}, "math_rlen": {"text": "90.56 (5.25)", "value": 90.56, "spread": null}}},
+     {"row_id": "r6", "label": "Method M-FS (few-shot only)", "cells": {"gsm_acc": {"text": "78.07", "value": 78.07, "spread": null}, "gsm_racc": {"text": "99.94 (1.69)", "value": 99.94, "spread": null}, "gsm_rlen": {"text": "73.15 (13.49)", "value": 73.15, "spread": null}, "math_acc": {"text": "47.36", "value": 47.36, "spread": null}, "math_racc": {"text": "101.87 (5.33)", "value": 101.87, "spread": null}, "math_rlen": {"text": "87.58 (6.60)", "value": 87.58, "spread": null}}},
+     {"row_id": "r7", "label": "Method M (few-shot + best-of-N)", "cells": {"gsm_acc": {"text": "75.88", "value": 75.88, "spread": null}, "gsm_racc": {"text": "97.00 (4.11)", "value": 97.0, "spread": null}, "gsm_rlen": {"text": "64.25 (16.66)", "value": 64.25, "spread": null}, "math_acc": {"text": "47.36", "value": 47.36, "spread": null}, "math_racc": {"text": "102.56 (6.24)", "value": 102.56, "spread": null}, "math_rlen": {"text": "76.30 (10.56)", "value": 76.3, "spread": null}}},
+     {"row_id": "r8", "label": "Method M, budget-matched", "cells": {"gsm_acc": {"text": "76.24", "value": 76.24, "spread": null}, "gsm_racc": {"text": "97.44 (3.67)", "value": 97.44, "spread": null}, "gsm_rlen": {"text": "67.15 (16.41)", "value": 67.15, "spread": null}, "math_acc": {"text": "47.52", "value": 47.52, "spread": null}, "math_racc": {"text": "101.58 (9.53)", "value": 101.58, "spread": null}, "math_rlen": {"text": "80.43 (9.04)", "value": 80.43, "spread": null}}}
+    ],
+    "notes": "Subset of the source table; absolute length (tokens) columns and rows (an authors' hand-crafted prompt, direct-answer FT, human-CoT FT, and few-shot variants with human or self-generated exemplars) dropped. Greedy decoding; no significance tests reported."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Cross-task transfer of Method M (few-shot + best-of-N): models fine-tuned on one dataset and evaluated on both, averaged across the five models; relative to the zero-shot baseline on each evaluation dataset.",
+    "columns": [
+     {"column_id": "racc", "header": "Rel. Acc (%)", "unit": "%", "higher_is_better": true},
+     {"column_id": "rlen", "header": "Rel. Len (%)", "unit": "%", "higher_is_better": false}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Train GSM8K, test GSM8K (in-domain)", "cells": {"racc": {"text": "97.00", "value": 97.0, "spread": null}, "rlen": {"text": "64.25", "value": 64.25, "spread": null}}},
+     {"row_id": "r2", "label": "Train GSM8K, test MATH (out-of-domain)", "cells": {"racc": {"text": "99.21", "value": 99.21, "spread": null}, "rlen": {"text": "88.34", "value": 88.34, "spread": null}}},
+     {"row_id": "r3", "label": "Train MATH, test MATH (in-domain)", "cells": {"racc": {"text": "102.56", "value": 102.56, "spread": null}, "rlen": {"text": "76.30", "value": 76.3, "spread": null}}},
+     {"row_id": "r4", "label": "Train MATH, test GSM8K (out-of-domain)", "cells": {"racc": {"text": "98.53", "value": 98.53, "spread": null}, "rlen": {"text": "90.36", "value": 90.36, "spread": null}}}
+    ],
+    "notes": "Values verbatim from the source's cross-task table; no standard deviations given."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "Length is defined as the average number of output tokens in all reasoning paths, including incorrect ones, as output tokens incur inference costs in deployment scenarios regardless of their correctness."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed few-shot-conditioned (best-of-N) self-training methods FS-GPT4o and FS-GPT4o-BoN renamed to 'Method M-FS' and 'Method M'. Tables used: main results (tab:main_results, subset) and cross-task evaluation (tab:cross_task_evaluation). Abstract, results prose, discussion and conclusion withheld. v3 (2025-06-10) source.",
+  "citation": "Tergel Munkhbat, Namgyu Ho, Seo Hyun Kim, Yongjin Yang, Yujin Kim, Se-Young Yun (2025). Self-Training Elicits Concise Reasoning in Large Language Models. arXiv:2502.20122",
+  "url": "https://arxiv.org/abs/2502.20122",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "3824399711e84dacce2ea498db962fc64fe6196aae4b2d890a844ab14889f261"
+ }
+}

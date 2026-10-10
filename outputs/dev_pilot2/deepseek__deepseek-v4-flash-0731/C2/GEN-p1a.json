@@ -1,0 +1,253 @@
+{
+ "run_id": "dev_pilot2:C2:GEN-p1a",
+ "case_id": "GEN-p1a",
+ "condition": "C2",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:53:44Z",
+ "finished_at": "2026-10-10T10:53:51Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "direct": "05717fc50a3c348844fc5fd91d7223d1e3c3ee14de6d62b2968cca636c6d8e3a"
+ },
+ "outline": null,
+ "drafts": [
+  {
+   "stage": "direct_draft",
+   "passage": "Wrenfold outperformed Fennick-Base on the unseen test set from the training domains (Banking: 93.1% vs 91.6%; Travel: 92.4% vs 90.9% macro-F1). This advantage also held across all three held-out domains, with Wrenfold achieving higher macro-F1 than Fennick-Base on Insurance (85.7% vs 81.2%), Telecom (83.9% vs 80.4%), and Utilities (86.2% vs 82.0%). However, no statistical tests were reported, so the reliability of these differences is not established.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Wrenfold outperformed Fennick-Base on the unseen test set from the training domains (Banking: 93.1% vs 91.6%; Travel: 92.4% vs 90.9% macro-F1).",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "This advantage also held across all three held-out domains, with Wrenfold achieving higher macro-F1 than Fennick-Base on Insurance (85.7% vs 81.2%), Telecom (83.9% vs 80.4%), and Utilities (86.2% vs 82.0%).",
+     "evidence_ids": [
+      "T1.r3.wren",
+      "T1.r3.fenn",
+      "T1.r4.wren",
+      "T1.r4.fenn",
+      "T1.r5.wren",
+      "T1.r5.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "However, no statistical tests were reported, so the reliability of these differences is not established.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "generic_revision",
+   "passage": "Wrenfold showed higher mean macro-F1 than Fennick-Base on the unseen test set from the training domains (Banking: 93.1% vs 91.6%; Travel: 92.4% vs 90.9%). Wrenfold also showed higher mean macro-F1 than Fennick-Base on all three held-out domains (Insurance: 85.7% vs 81.2%; Telecom: 83.9% vs 80.4%; Utilities: 86.2% vs 82.0%). These results provide evidence of generalization to new domains within the Harrowgate corpus, but not beyond the corpus itself, and no statistical tests were reported, so the reliability of the differences is not established. As a reference point, the Keyword-SVM baseline achieved substantially lower mean macro-F1 across all evaluation sets (70.3%–84.2%).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Wrenfold showed higher mean macro-F1 than Fennick-Base on the unseen test set from the training domains (Banking: 93.1% vs 91.6%; Travel: 92.4% vs 90.9%).",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Wrenfold also showed higher mean macro-F1 than Fennick-Base on all three held-out domains (Insurance: 85.7% vs 81.2%; Telecom: 83.9% vs 80.4%; Utilities: 86.2% vs 82.0%).",
+     "evidence_ids": [
+      "T1.r3.wren",
+      "T1.r3.fenn",
+      "T1.r4.wren",
+      "T1.r4.fenn",
+      "T1.r5.wren",
+      "T1.r5.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results provide evidence of generalization to new domains within the Harrowgate corpus, but not beyond the corpus itself, and no statistical tests were reported, so the reliability of the differences is not established.",
+     "evidence_ids": [],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "As a reference point, the Keyword-SVM baseline achieved substantially lower mean macro-F1 across all evaluation sets (70.3%–84.2%).",
+     "evidence_ids": [
+      "T1.r1.svm",
+      "T1.r2.svm",
+      "T1.r3.svm",
+      "T1.r4.svm",
+      "T1.r5.svm"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": "1. **Overstated generalization claim**: The draft says the advantage \"held across all three held-out domains,\" but the package only reports means over 5 seeds with no statistical tests. Without significance testing, you cannot claim the advantage \"held\" — only that mean scores were higher. Revise to \"Wrenfold showed higher mean macro-F1 than Fennick-Base on all three held-out domains.\"\n\n2. **Missing scope limitation**: The draft doesn't note that all models were trained only on Banking/Travel domains, so the held-out results show generalization to *unseen domains within the same corpus*, not beyond it. Add: \"This provides evidence of generalization to new domains within the Harrowgate corpus, but not beyond the corpus itself.\"\n\n3. **No adverse findings reported**: The draft omits that Keyword-SVM performed substantially worse (e.g., 70.3–84.2%), which contextualizes the comparison. Consider mentioning this as a reference point.",
+ "claim_traces": [],
+ "final_passage": "Wrenfold showed higher mean macro-F1 than Fennick-Base on the unseen test set from the training domains (Banking: 93.1% vs 91.6%; Travel: 92.4% vs 90.9%). Wrenfold also showed higher mean macro-F1 than Fennick-Base on all three held-out domains (Insurance: 85.7% vs 81.2%; Telecom: 83.9% vs 80.4%; Utilities: 86.2% vs 82.0%). These results provide evidence of generalization to new domains within the Harrowgate corpus, but not beyond the corpus itself, and no statistical tests were reported, so the reliability of the differences is not established. As a reference point, the Keyword-SVM baseline achieved substantially lower mean macro-F1 across all evaluation sets (70.3%–84.2%).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Wrenfold showed higher mean macro-F1 than Fennick-Base on the unseen test set from the training domains (Banking: 93.1% vs 91.6%; Travel: 92.4% vs 90.9%).",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Wrenfold also showed higher mean macro-F1 than Fennick-Base on all three held-out domains (Insurance: 85.7% vs 81.2%; Telecom: 83.9% vs 80.4%; Utilities: 86.2% vs 82.0%).",
+   "evidence_ids": [
+    "T1.r3.wren",
+    "T1.r3.fenn",
+    "T1.r4.wren",
+    "T1.r4.fenn",
+    "T1.r5.wren",
+    "T1.r5.fenn"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "These results provide evidence of generalization to new domains within the Harrowgate corpus, but not beyond the corpus itself, and no statistical tests were reported, so the reliability of the differences is not established.",
+   "evidence_ids": [],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "As a reference point, the Keyword-SVM baseline achieved substantially lower mean macro-F1 across all evaluation sets (70.3%–84.2%).",
+   "evidence_ids": [
+    "T1.r1.svm",
+    "T1.r2.svm",
+    "T1.r3.svm",
+    "T1.r4.svm",
+    "T1.r5.svm"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "GEN-p1a:shared_direct:writer_direct:897752e0f3",
+   "role": "writer_direct",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629211-JbzcR9w698H3ZsDtzsEp",
+   "finish_reason": "stop",
+   "prompt_tokens": 1087,
+   "completion_tokens": 269,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002275,
+   "cost_is_estimate": false,
+   "latency_s": 2.059,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1a:C2:reviewer_generic:f3ba0ebf53",
+   "role": "reviewer_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629213-dSHK8L37Vh0U04UZxZ1j",
+   "finish_reason": "stop",
+   "prompt_tokens": 1172,
+   "completion_tokens": 200,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000155936,
+   "cost_is_estimate": false,
+   "latency_s": 5.19,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1a:C2:reviser_generic:1f032d2cb2",
+   "role": "reviser_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629219-ozyZT2yD7Wr7y76f69Nj",
+   "finish_reason": "stop",
+   "prompt_tokens": 1458,
+   "completion_tokens": 352,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00030268,
+   "cost_is_estimate": false,
+   "latency_s": 1.857,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 3,
+  "n_model_calls_condition_only": 2,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 3717,
+  "completion_tokens": 821,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00068612,
+  "cost_usd_condition_only": 0.00045862,
+  "any_cost_estimated": false,
+  "latency_s": 9.106,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -1,0 +1,81 @@
+{
+ "case_id": "RP-01",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does Method M detect that a benchmark was included in a language model's pretraining data more reliably than existing statistical membership tests across four benchmarks, and does it avoid flagging data the model never saw?",
+  "methods_summary": "Method M is a dataset-membership test for content owners. Before release, each document is rephrased several times by an instruction-tuned LLM, each rephrase carrying a text watermark generated with a different secret key. One rephrased version is published and the others are kept private. To test whether a model was trained on the published version, Method M compares the model's perplexity on the public rephrase with the average perplexity of the private rephrases of the same document, using a one-sided paired t-test (largest 5% of differences clipped). Ablations drop the pairing or the watermarking. Baselines are PaCoST and LLM DI.",
+  "experimental_setup": "Watermarked public and private rephrases of TriviaQA, ARC-C, MMLU and GSM8K (1,000 examples each) were generated with Llama3-70B-Instruct. Pythia-1B was continually pretrained on 6.7B tokens of OpenWebText mixed with the public versions; each benchmark appears exactly once and makes up less than 0.001% of the corpus. Every method returns a p-value for the null hypothesis of no membership. False positives are checked on an uncontaminated Pythia-1B and on held-out subsets watermarked with the same public key. The tables report one p-value per cell; no repeated training runs are reported for these results.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Intentional-contamination experiment: membership p-values on four benchmarks (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs PaCoST and LLM DI (same/different): p-values on TriviaQA, ARC-C, MMLU, GSM8K"},
+     {"comparison_id": "cmp2", "description": "Method M vs its ablations without paired tests and without watermarking"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "False-positive checks on data not seen in training (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M p-values on an uncontaminated model and on held-out subsets of a contaminated model"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "P-values for detecting test-set contamination in a continually pretrained Pythia-1B model (lower = stronger evidence of membership). For LLM DI, 'same' uses rephrases of the benchmark questions as the validation set and 'different' uses a disjoint set of unseen questions from the same benchmark.",
+    "columns": [
+     {"column_id": "triviaqa", "header": "TriviaQA", "unit": "p-value", "higher_is_better": false},
+     {"column_id": "arcc", "header": "ARC-C", "unit": "p-value", "higher_is_better": false},
+     {"column_id": "mmlu", "header": "MMLU", "unit": "p-value", "higher_is_better": false},
+     {"column_id": "gsm8k", "header": "GSM8K", "unit": "p-value", "higher_is_better": false}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "PaCoST", "cells": {"triviaqa": {"text": "1.6e-3", "value": 0.0016, "spread": null}, "arcc": {"text": "0.33", "value": 0.33, "spread": null}, "mmlu": {"text": "0.19", "value": 0.19, "spread": null}, "gsm8k": {"text": "0.21", "value": 0.21, "spread": null}}},
+     {"row_id": "r2", "label": "LLM DI (same)", "cells": {"triviaqa": {"text": "0.43", "value": 0.43, "spread": null}, "arcc": {"text": "0.31", "value": 0.31, "spread": null}, "mmlu": {"text": "0.46", "value": 0.46, "spread": null}, "gsm8k": {"text": "0.30", "value": 0.3, "spread": null}}},
+     {"row_id": "r3", "label": "LLM DI (different)", "cells": {"triviaqa": {"text": "0.02", "value": 0.02, "spread": null}, "arcc": {"text": "0.53", "value": 0.53, "spread": null}, "mmlu": {"text": "0.03", "value": 0.03, "spread": null}, "gsm8k": {"text": "0.71", "value": 0.71, "spread": null}}},
+     {"row_id": "r4", "label": "Method M (w/o paired tests)", "cells": {"triviaqa": {"text": "0.14", "value": 0.14, "spread": null}, "arcc": {"text": "0.07", "value": 0.07, "spread": null}, "mmlu": {"text": "0.08", "value": 0.08, "spread": null}, "gsm8k": {"text": "0.02", "value": 0.02, "spread": null}}},
+     {"row_id": "r5", "label": "Method M (w/o watermarking)", "cells": {"triviaqa": {"text": "0.02", "value": 0.02, "spread": null}, "arcc": {"text": "5.1e-3", "value": 0.0051, "spread": null}, "mmlu": {"text": "0.02", "value": 0.02, "spread": null}, "gsm8k": {"text": "1.4e-3", "value": 0.0014, "spread": null}}},
+     {"row_id": "r6", "label": "Method M", "cells": {"triviaqa": {"text": "1.2e-4", "value": 0.00012, "spread": null}, "arcc": {"text": "2.8e-4", "value": 0.00028, "spread": null}, "mmlu": {"text": "7.0e-4", "value": 0.0007, "spread": null}, "gsm8k": {"text": "6.6e-6", "value": 6.6e-06, "spread": null}}}
+    ],
+    "notes": "Values copied verbatim from the paper's main results table. The original marks p < 0.05 in bold; bolding is not reproduced. Each benchmark subsample (1,000 examples) appears once in a 6.7B-token training corpus."
+   },
+   {
+    "table_id": "T2",
+    "caption": "False-positive analysis: Method M p-values when the tested data were NOT in training. 'Uncontaminated' = a pretrained Pythia-1B model never exposed to the watermarked data; 'Contaminated (held-out)' = testing held-out subsets (same distribution and same public watermark key, different examples) on the contaminated Pythia-1B model.",
+    "columns": [
+     {"column_id": "uncont", "header": "Pythia Uncontaminated", "unit": "p-value", "higher_is_better": null},
+     {"column_id": "cont_heldout", "header": "Pythia Contaminated (held-out subsets)", "unit": "p-value", "higher_is_better": null}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "TriviaQA", "cells": {"uncont": {"text": "0.52", "value": 0.52, "spread": null}, "cont_heldout": {"text": "0.28", "value": 0.28, "spread": null}}},
+     {"row_id": "r2", "label": "ARC-C", "cells": {"uncont": {"text": "0.31", "value": 0.31, "spread": null}, "cont_heldout": {"text": "0.56", "value": 0.56, "spread": null}}},
+     {"row_id": "r3", "label": "MMLU", "cells": {"uncont": {"text": "0.54", "value": 0.54, "spread": null}, "cont_heldout": {"text": "0.15", "value": 0.15, "spread": null}}},
+     {"row_id": "r4", "label": "GSM8K", "cells": {"uncont": {"text": "0.38", "value": 0.38, "spread": null}, "cont_heldout": {"text": "0.47", "value": 0.47, "spread": null}}},
+     {"row_id": "r5", "label": "Abstracts", "cells": {"uncont": {"text": "0.55", "value": 0.55, "spread": null}, "cont_heldout": {"text": "0.07", "value": 0.07, "spread": null}}},
+     {"row_id": "r6", "label": "Blogs", "cells": {"uncont": {"text": "0.21", "value": 0.21, "spread": null}, "cont_heldout": {"text": "0.73", "value": 0.73, "spread": null}}}
+    ],
+    "notes": "High p-values here mean the test did not (falsely) detect membership. 'Abstracts' and 'Blogs' are two additional real-world document collections used in case studies. A further table with five other off-the-shelf LLMs was dropped."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "PaCoST employs a paired t-test that compares model confidence on original and rephrased versions, while LLM DI aggregates multiple membership inference attacks (MIAs) to perform statistical testing."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed method STAMP renamed to 'Method M'. Tables used: main results (p-values, 'experiments.main_results') and false-positive analysis ('main_fpr_analysis2'). Abstract, results prose and conclusion withheld. arXiv e-print as served on 2026-10-10 (latest version, v2 dated 2025-06-08).",
+  "citation": "Saksham Rastogi, Pratyush Maini, Danish Pruthi (2025). STAMP Your Content: Proving Dataset Membership via Watermarked Rephrasings. arXiv:2504.13416",
+  "url": "https://arxiv.org/abs/2504.13416",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "eda3bf9eca30ba93908c9066d1551a11aa1e3370459dd6144438f17062625aff"
+ }
+}

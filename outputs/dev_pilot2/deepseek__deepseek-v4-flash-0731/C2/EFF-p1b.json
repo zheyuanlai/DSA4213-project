@@ -1,0 +1,245 @@
+{
+ "run_id": "dev_pilot2:C2:EFF-p1b",
+ "case_id": "EFF-p1b",
+ "condition": "C2",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:52:53Z",
+ "finished_at": "2026-10-10T10:53:00Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "direct": "7d47be5e7170d97b2be7e3c20d23d22f75f512cf196af55a7903d3dff3bc852a"
+ },
+ "outline": null,
+ "drafts": [
+  {
+   "stage": "direct_draft",
+   "passage": "On the Brindle-Voice test set, Brisling achieved a WER of 6.4% with a median latency of 41 ms per utterance, whereas Talmar achieved a slightly lower WER of 6.1% but with a substantially higher median latency of 118 ms per utterance. Brisling required only 4.0 decoder passes per utterance compared to Talmar's 37.6 passes, indicating a large reduction in decoding steps. However, the latency comparison is confounded by different hardware and precision settings: Brisling was measured on a Corvex A2 accelerator in fp16, while Talmar's latency was taken from its original paper on a Corvex A1 accelerator in fp32, and no statistical tests were reported for any of these differences.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brindle-Voice test set, Brisling achieved a WER of 6.4% with a median latency of 41 ms per utterance, whereas Talmar achieved a slightly lower WER of 6.1% but with a substantially higher median latency of 118 ms per utterance.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r1.lat",
+      "T1.r2.wer",
+      "T1.r2.lat"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Brisling required only 4.0 decoder passes per utterance compared to Talmar's 37.6 passes, indicating a large reduction in decoding steps.",
+     "evidence_ids": [
+      "T1.r1.passes",
+      "T1.r2.passes"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "However, the latency comparison is confounded by different hardware and precision settings: Brisling was measured on a Corvex A2 accelerator in fp16, while Talmar's latency was taken from its original paper on a Corvex A1 accelerator in fp32, and no statistical tests were reported for any of these differences.",
+     "evidence_ids": [
+      "T1.r1.src",
+      "T1.r2.src",
+      "S1"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "generic_revision",
+   "passage": "On the Brindle-Voice test set, Brisling achieved a WER of 6.4% with a median latency of 41 ms per utterance, whereas Talmar achieved a slightly lower WER of 6.1% but with a median latency of 118 ms per utterance. Brisling used fewer decoder passes per utterance (4.0 vs 37.6), though no significance test was reported for this difference. The latency comparison is confounded because Brisling was measured on a Corvex A2 accelerator in fp16, while Talmar's latency was taken from its original paper on a Corvex A1 accelerator in fp32, so Brisling's latency advantage cannot be quantified from these data. For context, Greedy-CTC, a reference point, achieved a WER of 8.9% with a median latency of 22 ms on the same hardware as Brisling.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brindle-Voice test set, Brisling achieved a WER of 6.4% with a median latency of 41 ms per utterance, whereas Talmar achieved a slightly lower WER of 6.1% but with a median latency of 118 ms per utterance.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r1.lat",
+      "T1.r2.wer",
+      "T1.r2.lat"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Brisling used fewer decoder passes per utterance (4.0 vs 37.6), though no significance test was reported for this difference.",
+     "evidence_ids": [
+      "T1.r1.passes",
+      "T1.r2.passes"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The latency comparison is confounded because Brisling was measured on a Corvex A2 accelerator in fp16, while Talmar's latency was taken from its original paper on a Corvex A1 accelerator in fp32, so Brisling's latency advantage cannot be quantified from these data.",
+     "evidence_ids": [
+      "T1.r1.src",
+      "T1.r2.src"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "For context, Greedy-CTC, a reference point, achieved a WER of 8.9% with a median latency of 22 ms on the same hardware as Brisling.",
+     "evidence_ids": [
+      "T1.r3.wer",
+      "T1.r3.lat"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": "1. **Confounded latency comparison is understated.** The draft says latency is \"confounded,\" but the package shows Talmar's 118 ms was measured on *different hardware* (A1 vs A2) and *different precision* (fp32 vs fp16). This makes the 2.9× speedup claim unsupported. Revise to state explicitly that Brisling's latency advantage cannot be quantified from these data.\n\n2. **\"Large reduction in decoding steps\" overreaches.** Passes differ (4.0 vs 37.6), but no statistical test supports \"large\" as a reliable claim. Suggest: \"Brisling used fewer decoder passes (4.0 vs 37.6), though no significance test was reported.\"\n\n3. **Missing key comparison.** The research question asks about Brisling vs Talmar, but the draft omits Greedy-CTC (8.9% WER, 22 ms), which provides essential context for interpreting Brisling's efficiency-accuracy trade-off. Add one sentence reporting this reference point.",
+ "claim_traces": [],
+ "final_passage": "On the Brindle-Voice test set, Brisling achieved a WER of 6.4% with a median latency of 41 ms per utterance, whereas Talmar achieved a slightly lower WER of 6.1% but with a median latency of 118 ms per utterance. Brisling used fewer decoder passes per utterance (4.0 vs 37.6), though no significance test was reported for this difference. The latency comparison is confounded because Brisling was measured on a Corvex A2 accelerator in fp16, while Talmar's latency was taken from its original paper on a Corvex A1 accelerator in fp32, so Brisling's latency advantage cannot be quantified from these data. For context, Greedy-CTC, a reference point, achieved a WER of 8.9% with a median latency of 22 ms on the same hardware as Brisling.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Brindle-Voice test set, Brisling achieved a WER of 6.4% with a median latency of 41 ms per utterance, whereas Talmar achieved a slightly lower WER of 6.1% but with a median latency of 118 ms per utterance.",
+   "evidence_ids": [
+    "T1.r1.wer",
+    "T1.r1.lat",
+    "T1.r2.wer",
+    "T1.r2.lat"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Brisling used fewer decoder passes per utterance (4.0 vs 37.6), though no significance test was reported for this difference.",
+   "evidence_ids": [
+    "T1.r1.passes",
+    "T1.r2.passes"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "The latency comparison is confounded because Brisling was measured on a Corvex A2 accelerator in fp16, while Talmar's latency was taken from its original paper on a Corvex A1 accelerator in fp32, so Brisling's latency advantage cannot be quantified from these data.",
+   "evidence_ids": [
+    "T1.r1.src",
+    "T1.r2.src"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "For context, Greedy-CTC, a reference point, achieved a WER of 8.9% with a median latency of 22 ms on the same hardware as Brisling.",
+   "evidence_ids": [
+    "T1.r3.wer",
+    "T1.r3.lat"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "EFF-p1b:shared_direct:writer_direct:eed119ade7",
+   "role": "writer_direct",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629157-TScFk6qXjsCTFe85eSMS",
+   "finish_reason": "stop",
+   "prompt_tokens": 1196,
+   "completion_tokens": 276,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00024472,
+   "cost_is_estimate": false,
+   "latency_s": 5.404,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C2:reviewer_generic:543f46a634",
+   "role": "reviewer_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629163-ft8PoznFZoZvBJ0eW7mR",
+   "finish_reason": "stop",
+   "prompt_tokens": 1304,
+   "completion_tokens": 219,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000172568,
+   "cost_is_estimate": false,
+   "latency_s": 5.308,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C2:reviser_generic:58189141a4",
+   "role": "reviser_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629168-APOAgjl0nn6Z2ksmHQ9Y",
+   "finish_reason": "stop",
+   "prompt_tokens": 1609,
+   "completion_tokens": 329,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002713,
+   "cost_is_estimate": false,
+   "latency_s": 1.839,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 3,
+  "n_model_calls_condition_only": 2,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 4109,
+  "completion_tokens": 824,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00068859,
+  "cost_usd_condition_only": 0.00044387,
+  "any_cost_estimated": false,
+  "latency_s": 12.551,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

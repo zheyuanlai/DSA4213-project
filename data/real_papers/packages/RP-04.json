@@ -1,0 +1,90 @@
+{
+ "case_id": "RP-04",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Do the Amharic-specific Model M encoders retrieve passages more effectively than general-purpose multilingual embedding models, and does any advantage carry over to a different Amharic test collection?",
+  "methods_summary": "Model M is a family of three Amharic dense bi-encoder retrievers (40M, 42M and 110M parameters) built on Amharic BERT/RoBERTa encoders with a 512-token context. They are trained on Amharic query-passage pairs with a multiple-negatives ranking loss (4 epochs, sentence-transformers). Baselines are general-purpose multilingual embedding models used without Amharic fine-tuning: gte-modernbert-base, gte-multilingual-base, multilingual-e5-large-instruct and snowflake-arctic-embed-l-v2.0.",
+  "experimental_setup": "Main data: an Amharic passage retrieval set built from an Amharic news classification corpus, using each headline as a query and its article body as the only relevant passage (about 45K pairs after de-duplication; 10% held out, stratified by news category). Model M is trained on the remaining 90%. Metrics: MRR@k, NDCG@k (binary relevance) and Recall@k. Generalization: zero-shot evaluation on 2AIRTC, a separate TREC-style Amharic collection with manually assessed topics. Significance for the main table uses a paired t-test; no seeds or variance are reported.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "In-domain Amharic passage retrieval (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Model M-110M vs the strongest multilingual baseline on MRR@10, NDCG@10 and Recall@10/50/100"},
+     {"comparison_id": "cmp2", "description": "Smaller Model M variants (40M, 42M) vs multilingual baselines"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Zero-shot generalization to the 2AIRTC collection (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Model M variants vs multilingual baselines on 2AIRTC"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "In-domain results on the Amharic Passage Retrieval test split (bi-encoder dense retrievers). Multilingual models are used off the shelf; Model M variants are trained on the dataset's training split. † = statistically significant improvement (p < 0.05, paired t-test) over the strongest multilingual baseline.",
+    "columns": [
+     {"column_id": "params", "header": "Params", "unit": null, "higher_is_better": null},
+     {"column_id": "mrr10", "header": "MRR@10", "unit": null, "higher_is_better": true},
+     {"column_id": "ndcg10", "header": "NDCG@10", "unit": null, "higher_is_better": true},
+     {"column_id": "r10", "header": "Recall@10", "unit": null, "higher_is_better": true},
+     {"column_id": "r50", "header": "Recall@50", "unit": null, "higher_is_better": true},
+     {"column_id": "r100", "header": "Recall@100", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "gte-modernbert-base", "cells": {"params": {"text": "149M", "value": 149.0, "spread": null}, "mrr10": {"text": "0.019", "value": 0.019, "spread": null}, "ndcg10": {"text": "0.023", "value": 0.023, "spread": null}, "r10": {"text": "0.033", "value": 0.033, "spread": null}, "r50": {"text": "0.051", "value": 0.051, "spread": null}, "r100": {"text": "0.067", "value": 0.067, "spread": null}}},
+     {"row_id": "r2", "label": "gte-multilingual-base", "cells": {"params": {"text": "305M", "value": 305.0, "spread": null}, "mrr10": {"text": "0.600", "value": 0.6, "spread": null}, "ndcg10": {"text": "0.638", "value": 0.638, "spread": null}, "r10": {"text": "0.760", "value": 0.76, "spread": null}, "r50": {"text": "0.851", "value": 0.851, "spread": null}, "r100": {"text": "0.882", "value": 0.882, "spread": null}}},
+     {"row_id": "r3", "label": "multilingual-e5-large-instruct", "cells": {"params": {"text": "560M", "value": 560.0, "spread": null}, "mrr10": {"text": "0.672", "value": 0.672, "spread": null}, "ndcg10": {"text": "0.709", "value": 0.709, "spread": null}, "r10": {"text": "0.825", "value": 0.825, "spread": null}, "r50": {"text": "0.911", "value": 0.911, "spread": null}, "r100": {"text": "0.931", "value": 0.931, "spread": null}}},
+     {"row_id": "r4", "label": "snowflake-arctic-embed-l-v2.0", "cells": {"params": {"text": "568M", "value": 568.0, "spread": null}, "mrr10": {"text": "0.659", "value": 0.659, "spread": null}, "ndcg10": {"text": "0.701", "value": 0.701, "spread": null}, "r10": {"text": "0.831", "value": 0.831, "spread": null}, "r50": {"text": "0.922", "value": 0.922, "spread": null}, "r100": {"text": "0.942", "value": 0.942, "spread": null}}},
+     {"row_id": "r5", "label": "Model M-40M", "cells": {"params": {"text": "40M", "value": 40.0, "spread": null}, "mrr10": {"text": "0.682", "value": 0.682, "spread": null}, "ndcg10": {"text": "0.720", "value": 0.72, "spread": null}, "r10": {"text": "0.843", "value": 0.843, "spread": null}, "r50": {"text": "0.931", "value": 0.931, "spread": null}, "r100": {"text": "0.954", "value": 0.954, "spread": null}}},
+     {"row_id": "r6", "label": "Model M-42M", "cells": {"params": {"text": "42M", "value": 42.0, "spread": null}, "mrr10": {"text": "0.735", "value": 0.735, "spread": null}, "ndcg10": {"text": "0.771", "value": 0.771, "spread": null}, "r10": {"text": "0.884", "value": 0.884, "spread": null}, "r50": {"text": "0.955", "value": 0.955, "spread": null}, "r100": {"text": "0.971", "value": 0.971, "spread": null}}},
+     {"row_id": "r7", "label": "Model M-110M", "cells": {"params": {"text": "110M", "value": 110.0, "spread": null}, "mrr10": {"text": "0.775†", "value": 0.775, "spread": null}, "ndcg10": {"text": "0.808†", "value": 0.808, "spread": null}, "r10": {"text": "0.913†", "value": 0.913, "spread": null}, "r50": {"text": "0.964†", "value": 0.964, "spread": null}, "r100": {"text": "0.979†", "value": 0.979, "spread": null}}}
+    ],
+    "notes": "Values verbatim; bold for best results not reproduced. The source does not name which multilingual model is 'strongest' for each metric."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Zero-shot transfer to 2AIRTC, a separate TREC-style Amharic ad hoc retrieval collection (12,583 documents, 240 topics; relevance judgments are sparse/incomplete).",
+    "columns": [
+     {"column_id": "params", "header": "Params", "unit": null, "higher_is_better": null},
+     {"column_id": "mrr100", "header": "MRR@100", "unit": null, "higher_is_better": true},
+     {"column_id": "ndcg100", "header": "NDCG@100", "unit": null, "higher_is_better": true},
+     {"column_id": "r100", "header": "Recall@100", "unit": null, "higher_is_better": true},
+     {"column_id": "r200", "header": "Recall@200", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "gte-modernbert-base", "cells": {"params": {"text": "149M", "value": 149.0, "spread": null}, "mrr100": {"text": "0.046", "value": 0.046, "spread": null}, "ndcg100": {"text": "0.017", "value": 0.017, "spread": null}, "r100": {"text": "0.021", "value": 0.021, "spread": null}, "r200": {"text": "0.033", "value": 0.033, "spread": null}}},
+     {"row_id": "r2", "label": "gte-multilingual-base", "cells": {"params": {"text": "305M", "value": 305.0, "spread": null}, "mrr100": {"text": "0.879", "value": 0.879, "spread": null}, "ndcg100": {"text": "0.749", "value": 0.749, "spread": null}, "r100": {"text": "0.790", "value": 0.79, "spread": null}, "r200": {"text": "0.865", "value": 0.865, "spread": null}}},
+     {"row_id": "r3", "label": "multilingual-e5-large-instruct", "cells": {"params": {"text": "560M", "value": 560.0, "spread": null}, "mrr100": {"text": "0.905", "value": 0.905, "spread": null}, "ndcg100": {"text": "0.808", "value": 0.808, "spread": null}, "r100": {"text": "0.853", "value": 0.853, "spread": null}, "r200": {"text": "0.911", "value": 0.911, "spread": null}}},
+     {"row_id": "r4", "label": "snowflake-arctic-embed-l-v2.0", "cells": {"params": {"text": "568M", "value": 568.0, "spread": null}, "mrr100": {"text": "0.876", "value": 0.876, "spread": null}, "ndcg100": {"text": "0.781", "value": 0.781, "spread": null}, "r100": {"text": "0.830", "value": 0.83, "spread": null}, "r200": {"text": "0.897", "value": 0.897, "spread": null}}},
+     {"row_id": "r5", "label": "Model M-40M", "cells": {"params": {"text": "40M", "value": 40.0, "spread": null}, "mrr100": {"text": "0.805", "value": 0.805, "spread": null}, "ndcg100": {"text": "0.667", "value": 0.667, "spread": null}, "r100": {"text": "0.727", "value": 0.727, "spread": null}, "r200": {"text": "0.828", "value": 0.828, "spread": null}}},
+     {"row_id": "r6", "label": "Model M-42M", "cells": {"params": {"text": "42M", "value": 42.0, "spread": null}, "mrr100": {"text": "0.853", "value": 0.853, "spread": null}, "ndcg100": {"text": "0.735", "value": 0.735, "spread": null}, "r100": {"text": "0.798", "value": 0.798, "spread": null}, "r200": {"text": "0.878", "value": 0.878, "spread": null}}},
+     {"row_id": "r7", "label": "Model M-110M", "cells": {"params": {"text": "110M", "value": 110.0, "spread": null}, "mrr100": {"text": "0.861", "value": 0.861, "spread": null}, "ndcg100": {"text": "0.770", "value": 0.77, "spread": null}, "r100": {"text": "0.830", "value": 0.83, "spread": null}, "r200": {"text": "0.910", "value": 0.91, "spread": null}}}
+    ],
+    "notes": "Appendix table. No significance markers are given in this table. Bold/second-best markers not reproduced."
+   }
+  ],
+  "statistical_tests": [
+   {"test_id": "S1", "experiment_id": "exp1", "comparison_id": "cmp1", "test_name": "paired t-test", "sidedness": null, "paired": true, "n": null, "n_unit": null, "statistic_name": null, "statistic": null, "df": null, "p_value": null, "p_value_text": "p < 0.05", "alpha": null, "ci_level": null, "ci_low": null, "ci_high": null, "effect_description": "improvement of Model M-110M over the strongest multilingual baseline, per metric in T1", "multiple_comparison_adjustment": null, "notes": "Reported only as † markers on all five T1 metrics; exact p-values, test statistic, n and sidedness not reported."}
+  ],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "2AIRTC, a TREC-style test collection for standardized Amharic IR evaluation, but it lacks baseline retrieval benchmarks and complete relevance judgments, making recall-based assessments unreliable."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "The authors' Amharic embedding models (BERT-Medium-Amharic-Embed, RoBERTa-Medium-Amharic-Embed, RoBERTa-Base-Amharic-Embed) renamed to 'Model M-40M/-42M/-110M'. Tables used: main bi-encoder comparison (tab:multilingual_vs_am) and appendix 2AIRTC zero-shot table (tab:zero). Not included: ColBERT/BM25 table and the fine-tuned multilingual model table. P1 is a partial sentence quoted from the related-work section. Abstract, results prose and conclusion withheld.",
+  "citation": "Kidist Amde Mekonnen, Yosef Worku Alemneh, Maarten de Rijke (2025). Optimized Text Embedding Models and Benchmarks for Amharic Passage Retrieval. arXiv:2505.19356",
+  "url": "https://arxiv.org/abs/2505.19356",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "59ac0343500653df33601d44c9fadcf9579180bf0d03b38c7e6d036a455b6922"
+ }
+}

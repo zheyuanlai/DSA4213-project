@@ -1,0 +1,85 @@
+{
+ "case_id": "RP-07",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does training a RAG reranker with Method M select relevant documents and support answer generation better than existing LLM-supervised reranker training objectives, consistently across datasets and reranker backbones?",
+  "methods_summary": "Method M trains the reranker of a retrieval-augmented QA system end to end from the reader's answer loss, without document relevance labels. Reranking is viewed as a document-level attention mask over independently encoded candidates; the hard top-k mask is relaxed into a stochastic, differentiable top-k selection so that the reader's language-modeling loss on the gold answer back-propagates into the reranker scores. Baselines are four LLM-supervised reranker training objectives: EMDR, PDist, LOOP and ADist. The reader's parameters are kept fixed in the comparisons.",
+  "experimental_setup": "Datasets: multi-hop HotpotQA, Musique and 2WikiHop in the distractor setting (gold documents are among the candidates; Musique padded with random candidates to 20 per query). Reader: FiD-Large. Reranker backbones: RankT5-Base and BGE-Base-Reranker. 'Reranker setting' measures whether the reranker ranks relevant documents in its top 5 for test questions; 'Generator setting' measures exact match of the generated answers. One run per configuration; no variance estimates or significance tests are reported.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Test-time document reranking quality on three multi-hop QA datasets with two reranker backbones (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs the best LLM-supervised baseline per dataset, RankT5 backbone"},
+     {"comparison_id": "cmp2", "description": "Method M vs the best LLM-supervised baseline per dataset, BGE-Base backbone"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "End-to-end answer quality (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs baselines in exact match across datasets and backbones"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Reranker setting: Recall@5 of relevant documents at test time (FiD-Large reader), for rerankers trained with each objective. Columns = dataset / reranker backbone.",
+    "columns": [
+     {"column_id": "hq_t5", "header": "HotpotQA / RankT5", "unit": null, "higher_is_better": true},
+     {"column_id": "mu_t5", "header": "Musique / RankT5", "unit": null, "higher_is_better": true},
+     {"column_id": "wk_t5", "header": "2WikiHop / RankT5", "unit": null, "higher_is_better": true},
+     {"column_id": "hq_bge", "header": "HotpotQA / BGE-Base", "unit": null, "higher_is_better": true},
+     {"column_id": "mu_bge", "header": "Musique / BGE-Base", "unit": null, "higher_is_better": true},
+     {"column_id": "wk_bge", "header": "2WikiHop / BGE-Base", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "EMDR", "cells": {"hq_t5": {"text": "78.7", "value": 78.7, "spread": null}, "mu_t5": {"text": "55.0", "value": 55.0, "spread": null}, "wk_t5": {"text": "62.9", "value": 62.9, "spread": null}, "hq_bge": {"text": "81.8", "value": 81.8, "spread": null}, "mu_bge": {"text": "53.6", "value": 53.6, "spread": null}, "wk_bge": {"text": "71.0", "value": 71.0, "spread": null}}},
+     {"row_id": "r2", "label": "PDist", "cells": {"hq_t5": {"text": "78.1", "value": 78.1, "spread": null}, "mu_t5": {"text": "52.7", "value": 52.7, "spread": null}, "wk_t5": {"text": "77.2", "value": 77.2, "spread": null}, "hq_bge": {"text": "81.2", "value": 81.2, "spread": null}, "mu_bge": {"text": "58.2", "value": 58.2, "spread": null}, "wk_bge": {"text": "76.6", "value": 76.6, "spread": null}}},
+     {"row_id": "r3", "label": "LOOP", "cells": {"hq_t5": {"text": "72.5", "value": 72.5, "spread": null}, "mu_t5": {"text": "53.3", "value": 53.3, "spread": null}, "wk_t5": {"text": "79.2", "value": 79.2, "spread": null}, "hq_bge": {"text": "80.4", "value": 80.4, "spread": null}, "mu_bge": {"text": "57.2", "value": 57.2, "spread": null}, "wk_bge": {"text": "76.0", "value": 76.0, "spread": null}}},
+     {"row_id": "r4", "label": "ADist", "cells": {"hq_t5": {"text": "71.3", "value": 71.3, "spread": null}, "mu_t5": {"text": "47.7", "value": 47.7, "spread": null}, "wk_t5": {"text": "72.4", "value": 72.4, "spread": null}, "hq_bge": {"text": "78.1", "value": 78.1, "spread": null}, "mu_bge": {"text": "46.0", "value": 46.0, "spread": null}, "wk_bge": {"text": "80.5", "value": 80.5, "spread": null}}},
+     {"row_id": "r5", "label": "Method M", "cells": {"hq_t5": {"text": "84.4", "value": 84.4, "spread": null}, "mu_t5": {"text": "57.9", "value": 57.9, "spread": null}, "wk_t5": {"text": "82.7", "value": 82.7, "spread": null}, "hq_bge": {"text": "81.1", "value": 81.1, "spread": null}, "mu_bge": {"text": "57.6", "value": 57.6, "spread": null}, "wk_bge": {"text": "81.4", "value": 81.4, "spread": null}}}
+    ],
+    "notes": "Restructured from the source's main multi-dataset table (one 'Recall@5, Reranker Setting' column per dataset/backbone block); values verbatim. Dropped: Mining-setting metrics, NDCG@5, MRR, SubEM, F1, and a separate table using CEPE-Llama2-7B on NQ/TQA. Single runs; no variance or significance tests reported."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Generator setting: exact match (EM) of answers generated by the fixed FiD-Large reader using documents selected by each trained reranker.",
+    "columns": [
+     {"column_id": "hq_t5", "header": "HotpotQA / RankT5", "unit": null, "higher_is_better": true},
+     {"column_id": "mu_t5", "header": "Musique / RankT5", "unit": null, "higher_is_better": true},
+     {"column_id": "wk_t5", "header": "2WikiHop / RankT5", "unit": null, "higher_is_better": true},
+     {"column_id": "hq_bge", "header": "HotpotQA / BGE-Base", "unit": null, "higher_is_better": true},
+     {"column_id": "mu_bge", "header": "Musique / BGE-Base", "unit": null, "higher_is_better": true},
+     {"column_id": "wk_bge", "header": "2WikiHop / BGE-Base", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "EMDR", "cells": {"hq_t5": {"text": "60.8", "value": 60.8, "spread": null}, "mu_t5": {"text": "39.6", "value": 39.6, "spread": null}, "wk_t5": {"text": "67.2", "value": 67.2, "spread": null}, "hq_bge": {"text": "60.8", "value": 60.8, "spread": null}, "mu_bge": {"text": "39.7", "value": 39.7, "spread": null}, "wk_bge": {"text": "68.9", "value": 68.9, "spread": null}}},
+     {"row_id": "r2", "label": "PDist", "cells": {"hq_t5": {"text": "60.8", "value": 60.8, "spread": null}, "mu_t5": {"text": "39.6", "value": 39.6, "spread": null}, "wk_t5": {"text": "70.2", "value": 70.2, "spread": null}, "hq_bge": {"text": "60.9", "value": 60.9, "spread": null}, "mu_bge": {"text": "39.4", "value": 39.4, "spread": null}, "wk_bge": {"text": "69.1", "value": 69.1, "spread": null}}},
+     {"row_id": "r3", "label": "LOOP", "cells": {"hq_t5": {"text": "60.0", "value": 60.0, "spread": null}, "mu_t5": {"text": "39.2", "value": 39.2, "spread": null}, "wk_t5": {"text": "71.6", "value": 71.6, "spread": null}, "hq_bge": {"text": "60.3", "value": 60.3, "spread": null}, "mu_bge": {"text": "39.7", "value": 39.7, "spread": null}, "wk_bge": {"text": "71.2", "value": 71.2, "spread": null}}},
+     {"row_id": "r4", "label": "ADist", "cells": {"hq_t5": {"text": "57.0", "value": 57.0, "spread": null}, "mu_t5": {"text": "35.4", "value": 35.4, "spread": null}, "wk_t5": {"text": "64.1", "value": 64.1, "spread": null}, "hq_bge": {"text": "59.8", "value": 59.8, "spread": null}, "mu_bge": {"text": "34.8", "value": 34.8, "spread": null}, "wk_bge": {"text": "70.7", "value": 70.7, "spread": null}}},
+     {"row_id": "r5", "label": "Method M", "cells": {"hq_t5": {"text": "61.1", "value": 61.1, "spread": null}, "mu_t5": {"text": "40.0", "value": 40.0, "spread": null}, "wk_t5": {"text": "71.8", "value": 71.8, "spread": null}, "hq_bge": {"text": "60.9", "value": 60.9, "spread": null}, "mu_bge": {"text": "39.9", "value": 39.9, "spread": null}, "wk_bge": {"text": "70.9", "value": 70.9, "spread": null}}}
+    ],
+    "notes": "Same source table as T1, 'EM, Generator Setting' column of each block; values verbatim."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "A key challenge is that the candidate documents d1, ..., dn lack relevance annotations, making it infeasible to directly fine-tune the reranker."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed training method G-Rerank renamed to 'Method M'. Tables used: main multi-dataset table with FiD-Large (tbl:multi dataset experiment), restructured into two tables (Reranker-setting Recall@5; Generator-setting EM). P1 is from the problem-setting paragraph (inline math rendered as plain text). Abstract, results prose and conclusion withheld. v2 (2025-06-08) source.",
+  "citation": "Siyuan Huang, Zhiyuan Ma, Jintao Du, Changhua Meng, Weiqiang Wang, Jingwen Leng, Minyi Guo, Zhouhan Lin (2025). Gumbel Reranking: Differentiable End-to-End Reranker Optimization. arXiv:2502.11116",
+  "url": "https://arxiv.org/abs/2502.11116",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "4e3b9c462b1ba124d9237393b435d46c4857eee03345c137226f181f60e81d72"
+ }
+}

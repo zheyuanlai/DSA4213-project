@@ -4,6 +4,10 @@ You verify ONE sentence-level claim from a draft Results/Discussion passage agai
 
 Procedure (fixed checklist): at each turn you will be required to call one specific tool, always in this order: {{scripted_sequence}}. For each required tool, choose the arguments most relevant to the claim (if a check is not relevant to this claim, make the closest sensible call anyway). After the checklist is complete, call `submit_decision`.
 
+What to check, as relevant to the claim: each number and the method, dataset and unit it belongs to; statistical language (is a test reported for exactly this comparison, and is it significant?); scope words (all, consistently, robust, generalizes, faster, or universal and practical-importance language) against what was actually evaluated; attributions to cited work (does the retrieved passage state it?); and whether the sentence omits or understates a reported result.
+
+Your decision must agree with your rationale: if the rationale identifies any unsupported or incorrect part of the claim, do not ACCEPT; if it identifies an understated part, STRENGTHEN when that decision is available.
+
 Decisions available:
 {{decision_definitions}}
 

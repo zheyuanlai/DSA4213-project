@@ -1,0 +1,1608 @@
+{
+ "run_id": "dev_pilot1:C5:NEG-p1a",
+ "case_id": "NEG-p1a",
+ "condition": "C5",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "3632667db22756f2",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:41:44Z",
+ "finished_at": "2026-10-10T10:42:25Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "afd6230c0d661dd57797bdb49340c9a5d628528e7f3fd92e90a30130640ba210"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Fernwood achieves a higher mean test AUROC (80.6) than Quillgate-GBDT (80.3) across the five benchmarks, but the difference is small (0.3 points) and no significance test was run.",
+    "evidence_ids": [
+     "T1.r6.gbdt",
+     "T1.r6.fern"
+    ],
+    "scope": "Mean over the five tabular benchmarks, test AUROC ×100",
+    "caveats": "No statistical test reported; difference may not be reliable."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Fernwood outperforms Quillgate-GBDT on three benchmarks (Alder-Credit: 82.1 vs 80.4; Birchfield-Churn: 87.3 vs 86.0; Edgerton-Default: 70.2 vs 67.8) but underperforms on two (Cobalt-Insure: 72.1 vs 73.9; Dunmore-Fraud: 91.1 vs 93.5).",
+    "evidence_ids": [
+     "T1.r1.gbdt",
+     "T1.r1.fern",
+     "T1.r2.gbdt",
+     "T1.r2.fern",
+     "T1.r3.gbdt",
+     "T1.r3.fern",
+     "T1.r4.gbdt",
+     "T1.r4.fern",
+     "T1.r5.gbdt",
+     "T1.r5.fern"
+    ],
+    "scope": "Per-benchmark test AUROC ×100 on the five benchmarks",
+    "caveats": "No significance tests; results are benchmark-specific."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Fernwood's mean AUROC (80.6) is higher than Mesh-MLP's (78.3), and Fernwood outperforms Mesh-MLP on all five benchmarks individually.",
+    "evidence_ids": [
+     "T1.r1.mlp",
+     "T1.r1.fern",
+     "T1.r2.mlp",
+     "T1.r2.fern",
+     "T1.r3.mlp",
+     "T1.r3.fern",
+     "T1.r4.mlp",
+     "T1.r4.fern",
+     "T1.r5.mlp",
+     "T1.r5.fern",
+     "T1.r6.mlp",
+     "T1.r6.fern"
+    ],
+    "scope": "Mean and per-benchmark test AUROC ×100 on the five benchmarks",
+    "caveats": "No significance tests; comparison to Quillgate-GBDT is the primary question."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported. Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5). Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+     "evidence_ids": [
+      "T1.r6.gbdt",
+      "T1.r6.fern"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+     "evidence_ids": [
+      "T1.r1.gbdt",
+      "T1.r1.fern",
+      "T1.r2.gbdt",
+      "T1.r2.fern",
+      "T1.r3.gbdt",
+      "T1.r3.fern",
+      "T1.r4.gbdt",
+      "T1.r4.fern",
+      "T1.r5.gbdt",
+      "T1.r5.fern"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+     "evidence_ids": [
+      "T1.r1.mlp",
+      "T1.r1.fern",
+      "T1.r2.mlp",
+      "T1.r2.fern",
+      "T1.r3.mlp",
+      "T1.r3.fern",
+      "T1.r4.mlp",
+      "T1.r4.fern",
+      "T1.r5.mlp",
+      "T1.r5.fern",
+      "T1.r6.mlp",
+      "T1.r6.fern"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported. Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5). Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+     "evidence_ids": [
+      "T1.r6.gbdt",
+      "T1.r6.fern"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+     "evidence_ids": [
+      "T1.r1.gbdt",
+      "T1.r1.fern",
+      "T1.r2.gbdt",
+      "T1.r2.fern",
+      "T1.r3.gbdt",
+      "T1.r3.fern",
+      "T1.r4.gbdt",
+      "T1.r4.fern",
+      "T1.r5.gbdt",
+      "T1.r5.fern"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+     "evidence_ids": [
+      "T1.r1.mlp",
+      "T1.r1.fern",
+      "T1.r2.mlp",
+      "T1.r2.fern",
+      "T1.r3.mlp",
+      "T1.r3.fern",
+      "T1.r4.mlp",
+      "T1.r4.fern",
+      "T1.r5.mlp",
+      "T1.r5.fern",
+      "T1.r6.mlp",
+      "T1.r6.fern"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+   "actions": [
+    {
+     "call_id": "call_50a13513f7bc448ca8f0d7f5",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r6"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_60e5b685cafb4285b58afb03",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_79c718c45af54da4a428f192",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": "80.6",
+      "evidence_id": "T1.r6.fern"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_952ad46486904954947c2d7d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": "80.3",
+      "evidence_id": "T1.r6.gbdt"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_50a13513f7bc448ca8f0d7f5",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test AUROC (×100) on five tabular benchmarks, mean ± SD over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r6.mlp",
+        "row": "Mean over 5 benchmarks",
+        "column": "Mesh-MLP",
+        "text": "78.3",
+        "value": 78.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.gbdt",
+        "row": "Mean over 5 benchmarks",
+        "column": "Quillgate-GBDT",
+        "text": "80.3",
+        "value": 80.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.fern",
+        "row": "Mean over 5 benchmarks",
+        "column": "Fernwood (ours)",
+        "text": "80.6",
+        "value": 80.6,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r6.mlp",
+      "T1.r6.gbdt",
+      "T1.r6.fern"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_60e5b685cafb4285b58afb03",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Fernwood vs Quillgate-GBDT: AUROC per benchmark and mean"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_79c718c45af54da4a428f192",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 80.6,
+      "actual": 80.6,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r6.fern",
+       "row": "Mean over 5 benchmarks",
+       "column": "Fernwood (ours)",
+       "text": "80.6",
+       "value": 80.6,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r6.fern"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_952ad46486904954947c2d7d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 80.3,
+      "actual": 80.3,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r6.gbdt",
+       "row": "Mean over 5 benchmarks",
+       "column": "Quillgate-GBDT",
+       "text": "80.3",
+       "value": 80.3,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r6.gbdt"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+    "revised_text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+    "evidence_ids": [
+     "T1.r6.fern",
+     "T1.r6.gbdt",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Mean AUROC values match exactly (Fernwood 80.6, GBDT 80.3, difference 0.3). No significance test was reported for exp1/cmp1, and the claim correctly states this without asserting significance.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+   "actions": [
+    {
+     "call_id": "call_5f51e52041b84c30b51f3f8e",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_f75ea31c04dc4012ba310b50",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 82.1,
+      "evidence_id": "T1.r1.fern"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_12826fa6448e40649b9bd296",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 80.4,
+      "evidence_id": "T1.r1.gbdt"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_24e9b004e0064a6e8613e39f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 87.3,
+      "evidence_id": "T1.r2.fern"
+     },
+     "policy": "adaptive",
+     "step": 4
+    },
+    {
+     "call_id": "call_51ff8b1545b44d688b496a0e",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 86.0,
+      "evidence_id": "T1.r2.gbdt"
+     },
+     "policy": "adaptive",
+     "step": 5
+    },
+    {
+     "call_id": "call_19fa45ae20cc4224a39747d3",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 70.2,
+      "evidence_id": "T1.r5.fern"
+     },
+     "policy": "adaptive",
+     "step": 6
+    },
+    {
+     "call_id": "call_bb8d0479f4924903ae99fceb",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 67.8,
+      "evidence_id": "T1.r5.gbdt"
+     },
+     "policy": "adaptive",
+     "step": 7
+    },
+    {
+     "call_id": "call_584961b740f3419b8a56a99d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 72.1,
+      "evidence_id": "T1.r3.fern"
+     },
+     "policy": "adaptive",
+     "step": 8
+    },
+    {
+     "call_id": "call_ff46b0d2dba245118350de9e",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 73.9,
+      "evidence_id": "T1.r3.gbdt"
+     },
+     "policy": "adaptive",
+     "step": 9
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_5f51e52041b84c30b51f3f8e",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test AUROC (×100) on five tabular benchmarks, mean ± SD over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mlp",
+        "row": "Alder-Credit",
+        "column": "Mesh-MLP",
+        "text": "78.9 ± 0.6",
+        "value": 78.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.gbdt",
+        "row": "Alder-Credit",
+        "column": "Quillgate-GBDT",
+        "text": "80.4 ± 0.3",
+        "value": 80.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.fern",
+        "row": "Alder-Credit",
+        "column": "Fernwood (ours)",
+        "text": "82.1 ± 0.4",
+        "value": 82.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mlp",
+        "row": "Birchfield-Churn",
+        "column": "Mesh-MLP",
+        "text": "85.2 ± 0.5",
+        "value": 85.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.gbdt",
+        "row": "Birchfield-Churn",
+        "column": "Quillgate-GBDT",
+        "text": "86.0 ± 0.2",
+        "value": 86.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.fern",
+        "row": "Birchfield-Churn",
+        "column": "Fernwood (ours)",
+        "text": "87.3 ± 0.3",
+        "value": 87.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mlp",
+        "row": "Cobalt-Insure",
+        "column": "Mesh-MLP",
+        "text": "70.6 ± 0.8",
+        "value": 70.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.gbdt",
+        "row": "Cobalt-Insure",
+        "column": "Quillgate-GBDT",
+        "text": "73.9 ± 0.4",
+        "value": 73.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.fern",
+        "row": "Cobalt-Insure",
+        "column": "Fernwood (ours)",
+        "text": "72.1 ± 0.5",
+        "value": 72.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mlp",
+        "row": "Dunmore-Fraud",
+        "column": "Mesh-MLP",
+        "text": "90.3 ± 0.4",
+        "value": 90.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.gbdt",
+        "row": "Dunmore-Fraud",
+        "column": "Quillgate-GBDT",
+        "text": "93.5 ± 0.2",
+        "value": 93.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.fern",
+        "row": "Dunmore-Fraud",
+        "column": "Fernwood (ours)",
+        "text": "91.1 ± 0.3",
+        "value": 91.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.mlp",
+        "row": "Edgerton-Default",
+        "column": "Mesh-MLP",
+        "text": "66.4 ± 0.9",
+        "value": 66.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.gbdt",
+        "row": "Edgerton-Default",
+        "column": "Quillgate-GBDT",
+        "text": "67.8 ± 0.5",
+        "value": 67.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.fern",
+        "row": "Edgerton-Default",
+        "column": "Fernwood (ours)",
+        "text": "70.2 ± 0.6",
+        "value": 70.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.mlp",
+        "row": "Mean over 5 benchmarks",
+        "column": "Mesh-MLP",
+        "text": "78.3",
+        "value": 78.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.gbdt",
+        "row": "Mean over 5 benchmarks",
+        "column": "Quillgate-GBDT",
+        "text": "80.3",
+        "value": 80.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.fern",
+        "row": "Mean over 5 benchmarks",
+        "column": "Fernwood (ours)",
+        "text": "80.6",
+        "value": 80.6,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mlp",
+      "T1.r1.gbdt",
+      "T1.r1.fern",
+      "T1.r2.mlp",
+      "T1.r2.gbdt",
+      "T1.r2.fern",
+      "T1.r3.mlp",
+      "T1.r3.gbdt",
+      "T1.r3.fern",
+      "T1.r4.mlp",
+      "T1.r4.gbdt",
+      "T1.r4.fern",
+      "T1.r5.mlp",
+      "T1.r5.gbdt",
+      "T1.r5.fern",
+      "T1.r6.mlp",
+      "T1.r6.gbdt",
+      "T1.r6.fern"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_f75ea31c04dc4012ba310b50",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 82.1,
+      "actual": 82.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.fern",
+       "row": "Alder-Credit",
+       "column": "Fernwood (ours)",
+       "text": "82.1 ± 0.4",
+       "value": 82.1,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.fern"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_12826fa6448e40649b9bd296",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 80.4,
+      "actual": 80.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.gbdt",
+       "row": "Alder-Credit",
+       "column": "Quillgate-GBDT",
+       "text": "80.4 ± 0.3",
+       "value": 80.4,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.gbdt"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_24e9b004e0064a6e8613e39f",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 87.3,
+      "actual": 87.3,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.fern",
+       "row": "Birchfield-Churn",
+       "column": "Fernwood (ours)",
+       "text": "87.3 ± 0.3",
+       "value": 87.3,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r2.fern"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_51ff8b1545b44d688b496a0e",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_19fa45ae20cc4224a39747d3",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_bb8d0479f4924903ae99fceb",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_584961b740f3419b8a56a99d",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_ff46b0d2dba245118350de9e",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+    "revised_text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+    "evidence_ids": [
+     "T1.r1.fern",
+     "T1.r1.gbdt",
+     "T1.r2.fern",
+     "T1.r2.gbdt",
+     "T1.r3.fern",
+     "T1.r3.gbdt",
+     "T1.r4.fern",
+     "T1.r4.gbdt",
+     "T1.r5.fern",
+     "T1.r5.gbdt"
+    ],
+    "rationale": "Table T1 confirms Fernwood > GBDT on Alder-Credit (82.1 vs 80.4) and Birchfield-Churn (87.3 vs 86.0). The remaining values (Edgerton, Cobalt, Dunmore) match the table values I retrieved directly from the full table lookup: Edgerton 70.2 vs 67.8 (Fernwood higher), Cobalt 72.1 vs 73.9 (GBDT higher), Dunmore 91.1 vs 93.5 (GBDT higher). All numbers and directions match.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+   "actions": [
+    {
+     "call_id": "call_f684128f644a4429830c4c5b",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_b2000239fa84400c910aa28d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 80.6,
+      "evidence_id": "T1.r6.fern"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_9135b1eb96f94f30b2dee24c",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 78.3,
+      "evidence_id": "T1.r6.mlp"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_dcab75f20cd043bf9db84cdf",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 82.1,
+      "evidence_id": "T1.r1.fern"
+     },
+     "policy": "adaptive",
+     "step": 4
+    },
+    {
+     "call_id": "call_78af80b31c9847598ccfb157",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 78.9,
+      "evidence_id": "T1.r1.mlp"
+     },
+     "policy": "adaptive",
+     "step": 5
+    },
+    {
+     "call_id": "call_e5df33d698d74c9dbfb96d7a",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 87.3,
+      "evidence_id": "T1.r2.fern"
+     },
+     "policy": "adaptive",
+     "step": 6
+    },
+    {
+     "call_id": "call_29590c5fb79f41999cbe64e8",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 85.2,
+      "evidence_id": "T1.r2.mlp"
+     },
+     "policy": "adaptive",
+     "step": 7
+    },
+    {
+     "call_id": "call_8f8f0479f6a84d08bc92b573",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 72.1,
+      "evidence_id": "T1.r3.fern"
+     },
+     "policy": "adaptive",
+     "step": 8
+    },
+    {
+     "call_id": "call_e25cde172202460194cd8b73",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 70.6,
+      "evidence_id": "T1.r3.mlp"
+     },
+     "policy": "adaptive",
+     "step": 9
+    },
+    {
+     "call_id": "call_8ed95f7b4d774b93ba1947d0",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 91.1,
+      "evidence_id": "T1.r4.fern"
+     },
+     "policy": "adaptive",
+     "step": 10
+    },
+    {
+     "call_id": "call_a0dfe227a68a49159f8a030f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 90.3,
+      "evidence_id": "T1.r4.mlp"
+     },
+     "policy": "adaptive",
+     "step": 11
+    },
+    {
+     "call_id": "call_1548c1d9b0fb4ee0bda923a8",
+     "tool": "compare_numbers",
+     "args": {},
+     "policy": "adaptive",
+     "step": 12
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_f684128f644a4429830c4c5b",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test AUROC (×100) on five tabular benchmarks, mean ± SD over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mlp",
+        "row": "Alder-Credit",
+        "column": "Mesh-MLP",
+        "text": "78.9 ± 0.6",
+        "value": 78.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.gbdt",
+        "row": "Alder-Credit",
+        "column": "Quillgate-GBDT",
+        "text": "80.4 ± 0.3",
+        "value": 80.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.fern",
+        "row": "Alder-Credit",
+        "column": "Fernwood (ours)",
+        "text": "82.1 ± 0.4",
+        "value": 82.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mlp",
+        "row": "Birchfield-Churn",
+        "column": "Mesh-MLP",
+        "text": "85.2 ± 0.5",
+        "value": 85.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.gbdt",
+        "row": "Birchfield-Churn",
+        "column": "Quillgate-GBDT",
+        "text": "86.0 ± 0.2",
+        "value": 86.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.fern",
+        "row": "Birchfield-Churn",
+        "column": "Fernwood (ours)",
+        "text": "87.3 ± 0.3",
+        "value": 87.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mlp",
+        "row": "Cobalt-Insure",
+        "column": "Mesh-MLP",
+        "text": "70.6 ± 0.8",
+        "value": 70.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.gbdt",
+        "row": "Cobalt-Insure",
+        "column": "Quillgate-GBDT",
+        "text": "73.9 ± 0.4",
+        "value": 73.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.fern",
+        "row": "Cobalt-Insure",
+        "column": "Fernwood (ours)",
+        "text": "72.1 ± 0.5",
+        "value": 72.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mlp",
+        "row": "Dunmore-Fraud",
+        "column": "Mesh-MLP",
+        "text": "90.3 ± 0.4",
+        "value": 90.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.gbdt",
+        "row": "Dunmore-Fraud",
+        "column": "Quillgate-GBDT",
+        "text": "93.5 ± 0.2",
+        "value": 93.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.fern",
+        "row": "Dunmore-Fraud",
+        "column": "Fernwood (ours)",
+        "text": "91.1 ± 0.3",
+        "value": 91.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.mlp",
+        "row": "Edgerton-Default",
+        "column": "Mesh-MLP",
+        "text": "66.4 ± 0.9",
+        "value": 66.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.gbdt",
+        "row": "Edgerton-Default",
+        "column": "Quillgate-GBDT",
+        "text": "67.8 ± 0.5",
+        "value": 67.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.fern",
+        "row": "Edgerton-Default",
+        "column": "Fernwood (ours)",
+        "text": "70.2 ± 0.6",
+        "value": 70.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.mlp",
+        "row": "Mean over 5 benchmarks",
+        "column": "Mesh-MLP",
+        "text": "78.3",
+        "value": 78.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.gbdt",
+        "row": "Mean over 5 benchmarks",
+        "column": "Quillgate-GBDT",
+        "text": "80.3",
+        "value": 80.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.fern",
+        "row": "Mean over 5 benchmarks",
+        "column": "Fernwood (ours)",
+        "text": "80.6",
+        "value": 80.6,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mlp",
+      "T1.r1.gbdt",
+      "T1.r1.fern",
+      "T1.r2.mlp",
+      "T1.r2.gbdt",
+      "T1.r2.fern",
+      "T1.r3.mlp",
+      "T1.r3.gbdt",
+      "T1.r3.fern",
+      "T1.r4.mlp",
+      "T1.r4.gbdt",
+      "T1.r4.fern",
+      "T1.r5.mlp",
+      "T1.r5.gbdt",
+      "T1.r5.fern",
+      "T1.r6.mlp",
+      "T1.r6.gbdt",
+      "T1.r6.fern"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_b2000239fa84400c910aa28d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 80.6,
+      "actual": 80.6,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r6.fern",
+       "row": "Mean over 5 benchmarks",
+       "column": "Fernwood (ours)",
+       "text": "80.6",
+       "value": 80.6,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r6.fern"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_9135b1eb96f94f30b2dee24c",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 78.3,
+      "actual": 78.3,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r6.mlp",
+       "row": "Mean over 5 benchmarks",
+       "column": "Mesh-MLP",
+       "text": "78.3",
+       "value": 78.3,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r6.mlp"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_dcab75f20cd043bf9db84cdf",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 82.1,
+      "actual": 82.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.fern",
+       "row": "Alder-Credit",
+       "column": "Fernwood (ours)",
+       "text": "82.1 ± 0.4",
+       "value": 82.1,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.fern"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_78af80b31c9847598ccfb157",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_e5df33d698d74c9dbfb96d7a",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_29590c5fb79f41999cbe64e8",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_8f8f0479f6a84d08bc92b573",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_e25cde172202460194cd8b73",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_8ed95f7b4d774b93ba1947d0",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_a0dfe227a68a49159f8a030f",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    },
+    {
+     "call_id": "call_1548c1d9b0fb4ee0bda923a8",
+     "tool": "compare_numbers",
+     "status": "TOOL_ERROR",
+     "data": {},
+     "returned_ids": [],
+     "message": "evidence-tool budget exhausted; call submit_decision",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+    "revised_text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+    "evidence_ids": [
+     "T1.r6.fern",
+     "T1.r6.mlp",
+     "T1.r1.fern",
+     "T1.r1.mlp",
+     "T1.r2.fern",
+     "T1.r2.mlp",
+     "T1.r3.fern",
+     "T1.r3.mlp",
+     "T1.r4.fern",
+     "T1.r4.mlp",
+     "T1.r5.fern",
+     "T1.r5.mlp"
+    ],
+    "rationale": "Mean values match: Fernwood 80.6 > Mesh-MLP 78.3. From the full table, Fernwood exceeds Mesh-MLP on all five benchmarks (82.1>78.9, 87.3>85.2, 72.1>70.6, 91.1>90.3, 70.2>66.4). No significance claim made.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported. Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5). Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+   "evidence_ids": [
+    "T1.r6.gbdt",
+    "T1.r6.fern"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+   "evidence_ids": [
+    "T1.r1.gbdt",
+    "T1.r1.fern",
+    "T1.r2.gbdt",
+    "T1.r2.fern",
+    "T1.r3.gbdt",
+    "T1.r3.fern",
+    "T1.r4.gbdt",
+    "T1.r4.fern",
+    "T1.r5.gbdt",
+    "T1.r5.fern"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+   "evidence_ids": [
+    "T1.r1.mlp",
+    "T1.r1.fern",
+    "T1.r2.mlp",
+    "T1.r2.fern",
+    "T1.r3.mlp",
+    "T1.r3.fern",
+    "T1.r4.mlp",
+    "T1.r4.fern",
+    "T1.r5.mlp",
+    "T1.r5.fern",
+    "T1.r6.mlp",
+    "T1.r6.fern"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NEG-p1a:shared_outline:outline:19922d5f92",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628422-5ykAt8IqSnJi6NIfjW6G",
+   "finish_reason": "stop",
+   "prompt_tokens": 1105,
+   "completion_tokens": 553,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00030954,
+   "cost_is_estimate": false,
+   "latency_s": 3.357,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:shared_outline:writer_from_outline:7b41941dd0",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628425-W9wCOUcMsw9RhZPtL471",
+   "finish_reason": "stop",
+   "prompt_tokens": 1720,
+   "completion_tokens": 414,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00035672,
+   "cost_is_estimate": false,
+   "latency_s": 2.082,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:91c7aa2a70",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628494-mRn3EZbdyzCB02S03gDk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2527,
+   "completion_tokens": 119,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000253792,
+   "cost_is_estimate": false,
+   "latency_s": 2.531,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:5e85ea5fde",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628496-YWzXLVViwlSbKYfxnqv5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3029,
+   "completion_tokens": 123,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001027232,
+   "cost_is_estimate": false,
+   "latency_s": 2.232,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:a88d2046cb",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628499-O49b96F4vOn6d8vSPBAD",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3437,
+   "completion_tokens": 171,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001076768,
+   "cost_is_estimate": false,
+   "latency_s": 3.186,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:18aba23faf",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628502-7gvQapPwyG6Xp9byknzs",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2640,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000244728,
+   "cost_is_estimate": false,
+   "latency_s": 3.674,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:980e805f35",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628505-ily62irvgFP2XetvJCQP",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4076,
+   "completion_tokens": 450,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000259376,
+   "cost_is_estimate": false,
+   "latency_s": 10.799,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:60dee3136c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628516-9B9xU1JFstlkwHlPCTTU",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5148,
+   "completion_tokens": 300,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000205056,
+   "cost_is_estimate": false,
+   "latency_s": 5.334,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:94e1119550",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628522-lwRDROPGBZYjr7ZZVSnw",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2594,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000240944,
+   "cost_is_estimate": false,
+   "latency_s": 1.55,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:50075bbc0a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628523-CcwKHNLjzleEQGN2zS61",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4030,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000168736,
+   "cost_is_estimate": false,
+   "latency_s": 2.354,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:7c9f454977",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628526-ALT7PsVRSXTucN2Q9yZw",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4432,
+   "completion_tokens": 450,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000181648,
+   "cost_is_estimate": false,
+   "latency_s": 5.139,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:C5:verify_adaptive:58a9abc61c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628531-yfbm3feh5MFee1sjY03o",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5334,
+   "completion_tokens": 273,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001706736,
+   "cost_is_estimate": false,
+   "latency_s": 4.084,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 12,
+  "n_model_calls_condition_only": 10,
+  "n_tool_calls": 25,
+  "tool_counts": {
+   "lookup_table": 3,
+   "get_test_metadata": 1,
+   "compare_numbers": 21
+  },
+  "prompt_tokens": 40072,
+  "completion_tokens": 3070,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00260161,
+  "cost_usd_condition_only": 0.00193535,
+  "any_cost_estimated": false,
+  "latency_s": 46.322,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

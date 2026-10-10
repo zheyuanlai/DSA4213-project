@@ -79,6 +79,7 @@ class ClaimTrace(_M):
     decision: Optional[VerificationDecision] = None
     model_calls: int = 0
     protocol_errors: list[str] = Field(default_factory=list)
+    ignored_parallel_calls: int = Field(default=0, description="extra tool calls in one turn, answered NOT EXECUTED")
     stop_reason: str = ""
 
 

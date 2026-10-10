@@ -1,0 +1,1025 @@
+{
+ "run_id": "dev_pilot3:C5:SIG-p1b",
+ "case_id": "SIG-p1b",
+ "condition": "C5",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:27:03Z",
+ "finished_at": "2026-10-10T11:27:31Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "1517526cabf82056d052175d3119e9568d36cad76ec1e8647594010957f59f41"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Tessaline achieves higher mean BLEU than Varrow-NMT on the Halvard-Parl English→Estonian test set (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), but no statistical test is reported for this comparison, so the difference is not established as significant.",
+    "evidence_ids": [
+     "T1.r1.bleu",
+     "T1.r2.bleu"
+    ],
+    "scope": "Halvard-Parl English→Estonian test set, BLEU, 8 seeds",
+    "caveats": "No significance test reported for Tessaline vs Varrow-NMT; difference in means only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Tessaline significantly outperforms PhraseGrid in BLEU on the same test set, with a mean paired difference of 6.35 BLEU points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8).",
+    "evidence_ids": [
+     "T1.r1.bleu",
+     "T1.r3.bleu",
+     "S1"
+    ],
+    "scope": "Halvard-Parl English→Estonian test set, BLEU, 8 paired seeds",
+    "caveats": "Comparison is to a phrase-based baseline, not to Varrow-NMT."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Tessaline also shows higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5), but no statistical tests are reported for these chrF differences.",
+    "evidence_ids": [
+     "T1.r1.chrf",
+     "T1.r2.chrf",
+     "T1.r3.chrf"
+    ],
+    "scope": "Halvard-Parl English→Estonian test set, chrF, 8 seeds",
+    "caveats": "No significance tests reported for chrF comparisons."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant. Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8). Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant.",
+     "evidence_ids": [
+      "T1.r1.bleu",
+      "T1.r2.bleu"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8).",
+     "evidence_ids": [
+      "T1.r1.bleu",
+      "T1.r3.bleu",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+     "evidence_ids": [
+      "T1.r1.chrf",
+      "T1.r2.chrf",
+      "T1.r3.chrf"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant. Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8). Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant.",
+     "evidence_ids": [
+      "T1.r1.bleu",
+      "T1.r2.bleu"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8).",
+     "evidence_ids": [
+      "T1.r1.bleu",
+      "T1.r3.bleu",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+     "evidence_ids": [
+      "T1.r1.chrf",
+      "T1.r2.chrf",
+      "T1.r3.chrf"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant.",
+   "actions": [
+    {
+     "call_id": "call_bdfc8609769b452b91bc398e",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_3bad53b293f5461ea4fc0e81",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_bdfc8609769b452b91bc398e",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "BLEU and chrF on the Halvard-Parl English→Estonian test set, mean ± SD over 8 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.bleu",
+        "row": "Tessaline (ours)",
+        "column": "BLEU",
+        "text": "28.4 ± 0.6",
+        "value": 28.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.chrf",
+        "row": "Tessaline (ours)",
+        "column": "chrF",
+        "text": "58.1 ± 0.8",
+        "value": 58.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.bleu",
+        "row": "Varrow-NMT",
+        "column": "BLEU",
+        "text": "27.6 ± 0.8",
+        "value": 27.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.chrf",
+        "row": "Varrow-NMT",
+        "column": "chrF",
+        "text": "57.7 ± 0.5",
+        "value": 57.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.bleu",
+        "row": "PhraseGrid",
+        "column": "BLEU",
+        "text": "22.1 ± 0.8",
+        "value": 22.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.chrf",
+        "row": "PhraseGrid",
+        "column": "chrF",
+        "text": "52.4 ± 0.5",
+        "value": 52.4,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.bleu",
+      "T1.r1.chrf",
+      "T1.r2.bleu",
+      "T1.r2.chrf",
+      "T1.r3.bleu",
+      "T1.r3.chrf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_3bad53b293f5461ea4fc0e81",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Tessaline vs Varrow-NMT, BLEU, Halvard-Parl test set"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant.",
+    "revised_text": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant.",
+    "evidence_ids": [
+     "T1.r1.bleu",
+     "T1.r2.bleu",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Table T1 confirms Tessaline BLEU 28.4±0.6 vs Varrow-NMT 27.6±0.8 over 8 seeds, so the mean is higher. No statistical test is reported for exp1/cmp1, so the claim correctly states the difference is not established as significant.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8).",
+   "actions": [
+    {
+     "call_id": "call_7d88ec2e560e4094803aa309",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_853b639c93f048e2bef1b6f9",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_dad6d87e457843e8a03ef71d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 6.35,
+      "evidence_id": "T1.r1.bleu",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r3.bleu"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_7d88ec2e560e4094803aa309",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "BLEU and chrF on the Halvard-Parl English→Estonian test set, mean ± SD over 8 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.bleu",
+        "row": "Tessaline (ours)",
+        "column": "BLEU",
+        "text": "28.4 ± 0.6",
+        "value": 28.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.chrf",
+        "row": "Tessaline (ours)",
+        "column": "chrF",
+        "text": "58.1 ± 0.8",
+        "value": 58.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.bleu",
+        "row": "Varrow-NMT",
+        "column": "BLEU",
+        "text": "27.6 ± 0.8",
+        "value": 27.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.chrf",
+        "row": "Varrow-NMT",
+        "column": "chrF",
+        "text": "57.7 ± 0.5",
+        "value": 57.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.bleu",
+        "row": "PhraseGrid",
+        "column": "BLEU",
+        "text": "22.1 ± 0.8",
+        "value": 22.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.chrf",
+        "row": "PhraseGrid",
+        "column": "chrF",
+        "text": "52.4 ± 0.5",
+        "value": 52.4,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.bleu",
+      "T1.r1.chrf",
+      "T1.r2.bleu",
+      "T1.r2.chrf",
+      "T1.r3.bleu",
+      "T1.r3.chrf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_853b639c93f048e2bef1b6f9",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Tessaline vs PhraseGrid, BLEU, Halvard-Parl test set",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp2",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 8,
+        "n_unit": "random seeds (paired by seed)",
+        "statistic_name": "t",
+        "statistic": 31.57,
+        "df": 7.0,
+        "p_value": 8.3e-09,
+        "p_value_text": "p < 0.001",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 5.87,
+        "ci_high": 6.83,
+        "effect_description": "mean paired difference in BLEU (Tessaline − PhraseGrid), BLEU points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=8 random seeds (paired by seed); t=31.57 (df=7); p < 0.001; 95% CI [5.87, 6.83] for mean paired difference in BLEU (Tessaline − PhraseGrid), BLEU points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_dad6d87e457843e8a03ef71d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 6.35,
+      "actual": 6.3,
+      "abs_error": 0.05,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.bleu",
+       "row": "Tessaline (ours)",
+       "column": "BLEU",
+       "text": "28.4 ± 0.6",
+       "value": 28.4,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r3.bleu",
+       "row": "PhraseGrid",
+       "column": "BLEU",
+       "text": "22.1 ± 0.8",
+       "value": 22.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.bleu"
+     },
+     "returned_ids": [
+      "T1.r1.bleu",
+      "T1.r3.bleu"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8).",
+    "revised_text": "Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8).",
+    "evidence_ids": [
+     "T1.r1.bleu",
+     "T1.r3.bleu",
+     "S1"
+    ],
+    "rationale": "The paired t-test (S1) reports p<0.001, 95% CI [5.87,6.83], n=8 for Tessaline−PhraseGrid BLEU difference, matching the claim. Mean difference 6.3 (28.4−22.1) matches claimed 6.35 within tolerance. All numbers and significance language are supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+   "actions": [
+    {
+     "call_id": "call_2b2ece82e8a94067ae851909",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_8bb18cf1c13a4568a0f387a1",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 58.1,
+      "evidence_id": "T1.r1.chrf"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_b147d3bf385b47818ed76be0",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 57.7,
+      "evidence_id": "T1.r2.chrf"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_1d26745bea9d41d6a8516570",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 52.4,
+      "evidence_id": "T1.r3.chrf"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_2b2ece82e8a94067ae851909",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "BLEU and chrF on the Halvard-Parl English→Estonian test set, mean ± SD over 8 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.bleu",
+        "row": "Tessaline (ours)",
+        "column": "BLEU",
+        "text": "28.4 ± 0.6",
+        "value": 28.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.chrf",
+        "row": "Tessaline (ours)",
+        "column": "chrF",
+        "text": "58.1 ± 0.8",
+        "value": 58.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.bleu",
+        "row": "Varrow-NMT",
+        "column": "BLEU",
+        "text": "27.6 ± 0.8",
+        "value": 27.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.chrf",
+        "row": "Varrow-NMT",
+        "column": "chrF",
+        "text": "57.7 ± 0.5",
+        "value": 57.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.bleu",
+        "row": "PhraseGrid",
+        "column": "BLEU",
+        "text": "22.1 ± 0.8",
+        "value": 22.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.chrf",
+        "row": "PhraseGrid",
+        "column": "chrF",
+        "text": "52.4 ± 0.5",
+        "value": 52.4,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.bleu",
+      "T1.r1.chrf",
+      "T1.r2.bleu",
+      "T1.r2.chrf",
+      "T1.r3.bleu",
+      "T1.r3.chrf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_8bb18cf1c13a4568a0f387a1",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 58.1,
+      "actual": 58.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.chrf",
+       "row": "Tessaline (ours)",
+       "column": "chrF",
+       "text": "58.1 ± 0.8",
+       "value": 58.1,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.chrf"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_b147d3bf385b47818ed76be0",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 57.7,
+      "actual": 57.7,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.chrf",
+       "row": "Varrow-NMT",
+       "column": "chrF",
+       "text": "57.7 ± 0.5",
+       "value": 57.7,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r2.chrf"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_1d26745bea9d41d6a8516570",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 52.4,
+      "actual": 52.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.chrf",
+       "row": "PhraseGrid",
+       "column": "chrF",
+       "text": "52.4 ± 0.5",
+       "value": 52.4,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.chrf"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+    "revised_text": "Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+    "evidence_ids": [
+     "T1.r1.chrf",
+     "T1.r2.chrf",
+     "T1.r3.chrf"
+    ],
+    "rationale": "chrF values match the table exactly: Tessaline 58.1±0.8, Varrow-NMT 57.7±0.5, PhraseGrid 52.4±0.5. Tessaline's mean is higher than both. The claim correctly notes no significance tests were reported for these chrF differences.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant. Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8). Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Halvard-Parl English→Estonian test set, Tessaline achieved a higher mean BLEU than Varrow-NMT (28.4 ± 0.6 vs 27.6 ± 0.8 over 8 seeds), although no statistical test was reported for this comparison, so the difference is not established as significant.",
+   "evidence_ids": [
+    "T1.r1.bleu",
+    "T1.r2.bleu"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Tessaline significantly outperformed the PhraseGrid baseline in BLEU, with a mean paired difference of 6.35 points (95% CI [5.87, 6.83], p < 0.001, paired t-test, n=8).",
+   "evidence_ids": [
+    "T1.r1.bleu",
+    "T1.r3.bleu",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Tessaline also showed higher mean chrF than both Varrow-NMT and PhraseGrid (58.1 ± 0.8 vs 57.7 ± 0.5 and 52.4 ± 0.5, respectively), though no significance tests were reported for these chrF differences.",
+   "evidence_ids": [
+    "T1.r1.chrf",
+    "T1.r2.chrf",
+    "T1.r3.chrf"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "SIG-p1b:shared_outline:outline:5cd31d3f15",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629831-lt9GNBZ1vD5CdcSclLhr",
+   "finish_reason": "stop",
+   "prompt_tokens": 1077,
+   "completion_tokens": 448,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00018406,
+   "cost_is_estimate": false,
+   "latency_s": 2.612,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:shared_outline:writer_from_outline:9200098f61",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629834-uzhMS5ouekQIzMM0D30b",
+   "finish_reason": "stop",
+   "prompt_tokens": 1571,
+   "completion_tokens": 289,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00030086,
+   "cost_is_estimate": false,
+   "latency_s": 1.269,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:d02d660f52",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631213-nix2Q3oKRSnbudSZ8AKO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2687,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026312,
+   "cost_is_estimate": false,
+   "latency_s": 1.993,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:a5e0145a6c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631215-IQk1NcxYg1hL6KCkb9xU",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3338,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.3584e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.615,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:e91107cd24",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631217-03j0WlSteuBgTYUHID9h",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3516,
+   "completion_tokens": 188,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.54944e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.476,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:3f15217e04",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631221-GknmX6g7e1DahLQgwqj6",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2677,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026224,
+   "cost_is_estimate": false,
+   "latency_s": 2.13,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:d30b5f03e8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631223-R8gJLfhUnIO9GsL2vNKX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3328,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.2704e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.858,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:3750c9bc44",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631225-AIt4yF3CEJy5u1eIVUA7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3743,
+   "completion_tokens": 110,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.48784e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.681,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:d0fac0d3dd",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631226-84ICUGeqgeF8qD2R63Tv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4087,
+   "completion_tokens": 194,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001055152,
+   "cost_is_estimate": false,
+   "latency_s": 3.958,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:b339f81860",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631230-zkWIw1uxU8vCLSVu9JSs",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2686,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00024904,
+   "cost_is_estimate": false,
+   "latency_s": 2.642,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:b84a1b23e3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631233-s7VtueLx3wFVXGCnRcRZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3237,
+   "completion_tokens": 176,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000113208,
+   "cost_is_estimate": false,
+   "latency_s": 2.267,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:cff6aa98d3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631235-oaBrtC8htQtJJdYAkrAI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3650,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.74176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.316,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:e30f0c10c5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631237-P6hBIuEcwkOK29qKt3vv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3862,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.24512e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.435,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1b:C5:verify_adaptive:4a87643ff5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631238-cAkaeTkQd1phe0T1rXob",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4073,
+   "completion_tokens": 185,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.0096e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.422,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 14,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 9,
+  "tool_counts": {
+   "lookup_table": 3,
+   "get_test_metadata": 2,
+   "compare_numbers": 4
+  },
+  "prompt_tokens": 43532,
+  "completion_tokens": 2112,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00202467,
+  "cost_usd_condition_only": 0.00153975,
+  "any_cost_estimated": false,
+  "latency_s": 30.674,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 4,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

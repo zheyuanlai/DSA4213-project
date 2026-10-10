@@ -1,0 +1,245 @@
+{
+ "run_id": "dev_pilot2:C7:GEN-p1a",
+ "case_id": "GEN-p1a",
+ "condition": "C7",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:56:12Z",
+ "finished_at": "2026-10-10T10:56:12Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "59893b0bf6c92ff730905e0ceee20b94d417c857c86e3d0a77cd903c90b1b63e"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Wrenfold outperforms Fennick-Base on the unseen test set (Banking and Travel), with macro-F1 differences of 1.5 and 1.5 percentage points respectively.",
+    "evidence_ids": [
+     "T1.r1.wren",
+     "T1.r1.fenn",
+     "T1.r2.wren",
+     "T1.r2.fenn"
+    ],
+    "scope": "Unseen test set (Banking and Travel), macro-F1, mean over 5 seeds",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Wrenfold outperforms Fennick-Base on all three held-out domains (Insurance, Telecom, Utilities), with macro-F1 differences of 4.5, 3.5, and 4.2 percentage points respectively.",
+    "evidence_ids": [
+     "T1.r3.wren",
+     "T1.r3.fenn",
+     "T1.r4.wren",
+     "T1.r4.fenn",
+     "T1.r5.wren",
+     "T1.r5.fenn"
+    ],
+    "scope": "Held-out domains (Insurance, Telecom, Utilities), macro-F1, mean over 5 seeds",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The advantage of Wrenfold over Fennick-Base is larger on held-out domains (3.5–4.5 percentage points) than on the unseen test set (1.5 percentage points), suggesting the advantage generalizes and may even increase outside the training domains.",
+    "evidence_ids": [
+     "T1.r1.wren",
+     "T1.r1.fenn",
+     "T1.r2.wren",
+     "T1.r2.fenn",
+     "T1.r3.wren",
+     "T1.r3.fenn",
+     "T1.r4.wren",
+     "T1.r4.fenn",
+     "T1.r5.wren",
+     "T1.r5.fenn"
+    ],
+    "scope": "Comparison across unseen test set and held-out domains, macro-F1, mean over 5 seeds",
+    "caveats": "No statistical tests reported; only three held-out domains evaluated; no cross-domain generalization beyond this corpus."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Wrenfold outperformed Fennick-Base on the unseen test set, with macro-F1 differences of 1.5 percentage points on both Banking (93.1% vs. 91.6%) and Travel (92.4% vs. 90.9%). The advantage generalized to all three held-out domains, with larger macro-F1 differences of 4.5 points on Insurance (85.7% vs. 81.2%), 3.5 points on Telecom (83.9% vs. 80.4%), and 4.2 points on Utilities (86.2% vs. 82.0%). These descriptive results suggest Wrenfold's advantage extends beyond the training domains and may even increase there, though no statistical tests were reported and only three held-out domains from this corpus were evaluated.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Wrenfold outperformed Fennick-Base on the unseen test set, with macro-F1 differences of 1.5 percentage points on both Banking (93.1% vs. 91.6%) and Travel (92.4% vs. 90.9%).",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The advantage generalized to all three held-out domains, with larger macro-F1 differences of 4.5 points on Insurance (85.7% vs. 81.2%), 3.5 points on Telecom (83.9% vs. 80.4%), and 4.2 points on Utilities (86.2% vs. 82.0%).",
+     "evidence_ids": [
+      "T1.r3.wren",
+      "T1.r3.fenn",
+      "T1.r4.wren",
+      "T1.r4.fenn",
+      "T1.r5.wren",
+      "T1.r5.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These descriptive results suggest Wrenfold's advantage extends beyond the training domains and may even increase there, though no statistical tests were reported and only three held-out domains from this corpus were evaluated.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn",
+      "T1.r3.wren",
+      "T1.r3.fenn",
+      "T1.r4.wren",
+      "T1.r4.fenn",
+      "T1.r5.wren",
+      "T1.r5.fenn"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [],
+ "final_passage": "Wrenfold outperformed Fennick-Base on the unseen test set, with macro-F1 differences of 1.5 percentage points on both Banking (93.1% vs. 91.6%) and Travel (92.4% vs. 90.9%). The advantage generalized to all three held-out domains, with larger macro-F1 differences of 4.5 points on Insurance (85.7% vs. 81.2%), 3.5 points on Telecom (83.9% vs. 80.4%), and 4.2 points on Utilities (86.2% vs. 82.0%). These descriptive results suggest Wrenfold's advantage extends beyond the training domains and may even increase there, though no statistical tests were reported and only three held-out domains from this corpus were evaluated.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Wrenfold outperformed Fennick-Base on the unseen test set, with macro-F1 differences of 1.5 percentage points on both Banking (93.1% vs. 91.6%) and Travel (92.4% vs. 90.9%).",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "The advantage generalized to all three held-out domains, with larger macro-F1 differences of 4.5 points on Insurance (85.7% vs. 81.2%), 3.5 points on Telecom (83.9% vs. 80.4%), and 4.2 points on Utilities (86.2% vs. 82.0%).",
+   "evidence_ids": [
+    "T1.r3.wren",
+    "T1.r3.fenn",
+    "T1.r4.wren",
+    "T1.r4.fenn",
+    "T1.r5.wren",
+    "T1.r5.fenn"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "These descriptive results suggest Wrenfold's advantage extends beyond the training domains and may even increase there, though no statistical tests were reported and only three held-out domains from this corpus were evaluated.",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn",
+    "T1.r3.wren",
+    "T1.r3.fenn",
+    "T1.r4.wren",
+    "T1.r4.fenn",
+    "T1.r5.wren",
+    "T1.r5.fenn"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "GEN-p1a:shared_outline:outline:feb6a1515c",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629221-rxrIBcmbKWhJzD1uwQ69",
+   "finish_reason": "stop",
+   "prompt_tokens": 1116,
+   "completion_tokens": 493,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00029428,
+   "cost_is_estimate": false,
+   "latency_s": 3.31,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1a:shared_outline:writer_from_outline:82ac0e3ec0",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "DeepInfra",
+   "generation_id": "gen-1791629224-JTe8pLmXXADrtle7l8x1",
+   "finish_reason": "stop",
+   "prompt_tokens": 1667,
+   "completion_tokens": 366,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001659,
+   "cost_is_estimate": false,
+   "latency_s": 16.819,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 2,
+  "n_model_calls_condition_only": 0,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 2783,
+  "completion_tokens": 859,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00046018,
+  "cost_usd_condition_only": 0,
+  "any_cost_estimated": false,
+  "latency_s": 20.129,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

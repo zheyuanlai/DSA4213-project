@@ -1,0 +1,87 @@
+{
+ "case_id": "RP-09",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does adding Method M to existing white-box knowledge-distillation losses improve the instruction-following quality of distilled student models, consistently across KD losses and evaluation sets, and which of its components drive the change?",
+  "methods_summary": "Method M is a plug-in curriculum for knowledge distillation of LLMs. A difficulty measurer ranks training samples by fusing two rankings (ROUGE-L of the student's output against the reference, and the student's cross-entropy) with reciprocal rank fusion, then splits them into 4 subsets from easy to hard. A scheduler adds one subset per stage, while the distillation temperature rises linearly from 1 to 2 and, for off-policy losses, the weight of the supervised loss decays from 0.3 to 0. It is combined with existing KD losses (e.g., KLD, GKD, SRKL) and compared with the same losses without it, plus SFT and SeqKD baselines.",
+  "experimental_setup": "Teacher GPT-2 1.5B fine-tuned on databricks-dolly-15K (12.5K train / 1K validation / 0.5K test after filtering); students are GPT-2 120M models distilled with each method for the same number of iterations, hyperparameters chosen on validation ROUGE-L. Evaluation on five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI) with ROUGE-L. Responses are sampled at temperature 1 and scores are averaged over five generations per prompt with five random seeds; the number of independent training runs is not stated.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Plug-in evaluation across KD losses, GPT-2 family (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Each KD loss with vs without Method M, per dataset and on average"},
+     {"comparison_id": "cmp2", "description": "Best distilled students vs the teacher"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Component ablation with KLD (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Full Method M vs variants without the temperature schedule and/or the supervised-ratio schedule, and vs plain KLD"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "ROUGE-L of GPT-2 students (0.1B) distilled from a GPT-2 1.5B teacher with different knowledge-distillation (KD) losses, with and without Method M, on five instruction-following test sets. Mean over 5 random seeds; Avg. = mean over the five datasets (gain over the same KD loss without Method M in parentheses).",
+    "columns": [
+     {"column_id": "dolly", "header": "DollyEval", "unit": null, "higher_is_better": true},
+     {"column_id": "selfinst", "header": "SelfInst", "unit": null, "higher_is_better": true},
+     {"column_id": "vicuna", "header": "VicunaEval", "unit": null, "higher_is_better": true},
+     {"column_id": "sni", "header": "S-NI", "unit": null, "higher_is_better": true},
+     {"column_id": "unni", "header": "UnNI", "unit": null, "higher_is_better": true},
+     {"column_id": "avg", "header": "Avg.", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Teacher (GPT-2 1.5B)", "cells": {"dolly": {"text": "27.19", "value": 27.19, "spread": null}, "selfinst": {"text": "14.04", "value": 14.04, "spread": null}, "vicuna": {"text": "16.47", "value": 16.47, "spread": null}, "sni": {"text": "27.66", "value": 27.66, "spread": null}, "unni": {"text": "31.86", "value": 31.86, "spread": null}, "avg": {"text": "23.44", "value": 23.44, "spread": null}}},
+     {"row_id": "r2", "label": "SFT", "cells": {"dolly": {"text": "23.33", "value": 23.33, "spread": null}, "selfinst": {"text": "10.01", "value": 10.01, "spread": null}, "vicuna": {"text": "14.72", "value": 14.72, "spread": null}, "sni": {"text": "16.38", "value": 16.38, "spread": null}, "unni": {"text": "19.57", "value": 19.57, "spread": null}, "avg": {"text": "16.80", "value": 16.8, "spread": null}}},
+     {"row_id": "r3", "label": "GKD (on-policy)", "cells": {"dolly": {"text": "24.67", "value": 24.67, "spread": null}, "selfinst": {"text": "11.48", "value": 11.48, "spread": null}, "vicuna": {"text": "15.66", "value": 15.66, "spread": null}, "sni": {"text": "23.81", "value": 23.81, "spread": null}, "unni": {"text": "25.26", "value": 25.26, "spread": null}, "avg": {"text": "20.17", "value": 20.17, "spread": null}}},
+     {"row_id": "r4", "label": "GKD (on-policy) + Method M", "cells": {"dolly": {"text": "26.61", "value": 26.61, "spread": null}, "selfinst": {"text": "12.62", "value": 12.62, "spread": null}, "vicuna": {"text": "16.73", "value": 16.73, "spread": null}, "sni": {"text": "27.02", "value": 27.02, "spread": null}, "unni": {"text": "29.61", "value": 29.61, "spread": null}, "avg": {"text": "22.51 (2.33 ↑)", "value": 22.51, "spread": null}}},
+     {"row_id": "r5", "label": "KLD", "cells": {"dolly": {"text": "23.49", "value": 23.49, "spread": null}, "selfinst": {"text": "10.33", "value": 10.33, "spread": null}, "vicuna": {"text": "14.96", "value": 14.96, "spread": null}, "sni": {"text": "19.71", "value": 19.71, "spread": null}, "unni": {"text": "22.01", "value": 22.01, "spread": null}, "avg": {"text": "18.10", "value": 18.1, "spread": null}}},
+     {"row_id": "r6", "label": "KLD + Method M", "cells": {"dolly": {"text": "24.87", "value": 24.87, "spread": null}, "selfinst": {"text": "11.56", "value": 11.56, "spread": null}, "vicuna": {"text": "16.13", "value": 16.13, "spread": null}, "sni": {"text": "21.59", "value": 21.59, "spread": null}, "unni": {"text": "24.34", "value": 24.34, "spread": null}, "avg": {"text": "19.70 (1.60 ↑)", "value": 19.7, "spread": null}}},
+     {"row_id": "r7", "label": "SRKL", "cells": {"dolly": {"text": "25.22", "value": 25.22, "spread": null}, "selfinst": {"text": "12.86", "value": 12.86, "spread": null}, "vicuna": {"text": "15.18", "value": 15.18, "spread": null}, "sni": {"text": "25.51", "value": 25.51, "spread": null}, "unni": {"text": "28.43", "value": 28.43, "spread": null}, "avg": {"text": "21.44", "value": 21.44, "spread": null}}},
+     {"row_id": "r8", "label": "SRKL + Method M", "cells": {"dolly": {"text": "26.17", "value": 26.17, "spread": null}, "selfinst": {"text": "13.28", "value": 13.28, "spread": null}, "vicuna": {"text": "16.66*", "value": 16.66, "spread": null}, "sni": {"text": "28.49*", "value": 28.49, "spread": null}, "unni": {"text": "30.12", "value": 30.12, "spread": null}, "avg": {"text": "22.94 (1.51 ↑)", "value": 22.94, "spread": null}}}
+    ],
+    "notes": "Subset of the source table: rows SeqKD (no Method M variant) and RKL, JSD, TVD, SKL (each with and without Method M) dropped; for each of these four dropped losses the source also shows a higher Avg. with Method M. * = student outperforms the teacher. Bold not reproduced. No standard deviations or significance tests are reported. An analogous OPT (2.7B -> 0.3B) table exists in the source but is not included."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Ablation of Method M's adaptive parameters with the KLD loss (GPT-2 students; ROUGE-L). 'temp.' = rising distillation temperature across stages; 'ratio' = decaying weight of the supervised (cross-entropy) loss.",
+    "columns": [
+     {"column_id": "dolly", "header": "DollyEval", "unit": null, "higher_is_better": true},
+     {"column_id": "selfinst", "header": "SelfInst", "unit": null, "higher_is_better": true},
+     {"column_id": "vicuna", "header": "VicunaEval", "unit": null, "higher_is_better": true},
+     {"column_id": "sni", "header": "S-NI", "unit": null, "higher_is_better": true},
+     {"column_id": "unni", "header": "UnNI", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "KLD", "cells": {"dolly": {"text": "23.49", "value": 23.49, "spread": null}, "selfinst": {"text": "10.33", "value": 10.33, "spread": null}, "vicuna": {"text": "14.96", "value": 14.96, "spread": null}, "sni": {"text": "19.70", "value": 19.7, "spread": null}, "unni": {"text": "22.01", "value": 22.01, "spread": null}}},
+     {"row_id": "r2", "label": "+ Method M (w/o temp. & ratio)", "cells": {"dolly": {"text": "23.21", "value": 23.21, "spread": null}, "selfinst": {"text": "10.42", "value": 10.42, "spread": null}, "vicuna": {"text": "14.79", "value": 14.79, "spread": null}, "sni": {"text": "18.97", "value": 18.97, "spread": null}, "unni": {"text": "21.85", "value": 21.85, "spread": null}}},
+     {"row_id": "r3", "label": "+ Method M (w/o temp.)", "cells": {"dolly": {"text": "22.04", "value": 22.04, "spread": null}, "selfinst": {"text": "8.70", "value": 8.7, "spread": null}, "vicuna": {"text": "14.93", "value": 14.93, "spread": null}, "sni": {"text": "19.63", "value": 19.63, "spread": null}, "unni": {"text": "21.77", "value": 21.77, "spread": null}}},
+     {"row_id": "r4", "label": "+ Method M (w/o ratio)", "cells": {"dolly": {"text": "24.33", "value": 24.33, "spread": null}, "selfinst": {"text": "11.47", "value": 11.47, "spread": null}, "vicuna": {"text": "15.76", "value": 15.76, "spread": null}, "sni": {"text": "20.98", "value": 20.98, "spread": null}, "unni": {"text": "23.87", "value": 23.87, "spread": null}}},
+     {"row_id": "r5", "label": "+ Method M (full)", "cells": {"dolly": {"text": "24.87", "value": 24.87, "spread": null}, "selfinst": {"text": "11.56", "value": 11.56, "spread": null}, "vicuna": {"text": "16.13", "value": 16.13, "spread": null}, "sni": {"text": "21.59", "value": 21.59, "spread": null}, "unni": {"text": "24.34", "value": 24.34, "spread": null}}}
+    ],
+    "notes": "Values verbatim (the KLD S-NI value is 19.70 here and 19.71 in the source's main table). 'w/o temp. & ratio' keeps only the easy-to-hard curriculum ordering."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "Rouge-L scores are used as the primary metric due to their strong correlation with human judgment [Agarwal et al., 2024]."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed curriculum framework POCL renamed to 'Method M'. Tables used: main GPT-2 results (tab:01, row subset) and adaptive-parameter ablation (tab:03). In P1 the citation command was rendered as a bracketed reference. Abstract, results prose and conclusion withheld.",
+  "citation": "Lingyuan Liu, Mengxiang Zhang (2025). Being Strong Progressively! Enhancing Knowledge Distillation of Large Language Models through a Curriculum Learning Framework. arXiv:2506.05695",
+  "url": "https://arxiv.org/abs/2506.05695",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "54b45edc515f24153163c70c7ab502f7f0afc0719f5eb351c92908380eb2df7a"
+ }
+}

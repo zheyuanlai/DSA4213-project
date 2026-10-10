@@ -123,6 +123,7 @@ def _totals(calls: list[CallRecord], own_calls: list[CallRecord], traces: list[C
         "decision_counts": dec_counts,
         "n_invalid_decisions": sum(1 for t in traces if t.decision and not t.decision.valid),
         "n_protocol_errors": sum(len(t.protocol_errors) for t in traces),
+        "n_ignored_parallel_calls": sum(t.ignored_parallel_calls for t in traces),
         "n_format_errors": sum(1 for c in calls if c.status == "format_error"),
     }
 

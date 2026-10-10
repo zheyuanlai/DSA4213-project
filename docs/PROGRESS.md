@@ -17,11 +17,20 @@ claims an experiment that was not run.
   - 7 manual routing health checks were made with direct `httpx` calls outside the CostGuard. Their provider-reported costs were back-filled into the ledger (total $0.0000082).
 - Ledger total after preflight: about $0.00033.
 
-## Phase 1: Data + method (in progress)
+## Phase 1: Data + method (done)
 - Schemas: `src/package_schema.py` (model-visible), `benchmarks/schema.py` (gold, evaluator-only), `src/schemas.py` (run records).
 - Deterministic evidence store and four tools: `src/evidence_store.py`, `src/tools.py`.
 - Agent finite-state machine, adaptive and scripted (`src/verifier.py`). Seven conditions run through one pipeline with shared upstream artifacts (`src/conditions.py`, `src/agent.py`). Resumable runner (`src/runner.py`).
 - Guarded OpenRouter client with offline mock (`src/openrouter_client.py`, `src/cost_guard.py`).
-- Offline test suite: 53 tests passing (mock client only; no paid calls).
-- Benchmark cases: being authored in two halves (SIG/ROB/GEN/CON and EFF/CIT/NUM/NEG). The source with gold is in the gitignored `private/benchmark_source/`.
+- Offline test suite: all tests passing (mock client only; no paid calls).
+- Benchmark: 48 cases written by two authoring subagents (SIG/ROB/GEN/CON and EFF/CIT/NUM/NEG) to the spec in `docs/BENCHMARK_SPEC.md`, then reviewed by the lead. All 48 pass `benchmarks.validate` (counts, splits, pairs, gold-evidence resolution, t/p/CI consistency, no rubric leakage). Built with `benchmarks.build`. TEST gold is private (`private/gold/test_gold.jsonl`), and its hash is in `benchmarks/build_hashes.json`.
+- Real-paper packages: 12 packages (RP-01…RP-12) from CC BY 4.0 / CC BY-SA 4.0 arXiv papers. The lead independently re-checked every licence against arXiv OAI metadata (12/12 match).
 - Related-work verification: `docs/RELATED_WORK_VERIFICATION.md` (all 11 proposal references verified against public sources; see the discrepancies noted there).
+
+## Phase 2: DEV pilot and freeze
+- `dev_pilot1` (4 DEV cases × 7 conditions, $0.029): found many parallel tool calls, so only the first call per turn is now executed.
+- `dev_pilot2` (16 DEV × 7 = 112 jobs, $0.155): 112/112 completed with no API errors. Verifiers mostly ACCEPT (~93% of claims), make correct numeric fixes, and made no STRENGTHEN decisions.
+  One parsing bug (`evidence_ids` as a JSON string) was found and fixed. One rationale/decision inconsistency (CIT-p1a) led to a shared verifier check-list.
+- `dev_pilot3` (verifier conditions only, re-run on identical cached drafts, 64 jobs, ~$0.05): no invalid decisions and similar edit rates.
+  C6 now removes an unsupported citation attribution. One imperfect correction was seen (C5: a wrong range changed to a less-wrong range).
+- Backbone pinned: DeepSeek V4 Flash 0731 (`docs/MODEL_SELECTION.md`). Freeze: `docs/PROTOCOL_FREEZE.md`, `benchmarks/freeze_manifest.json`.

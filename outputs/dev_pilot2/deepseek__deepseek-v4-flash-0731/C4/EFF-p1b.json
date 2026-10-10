@@ -1,0 +1,1032 @@
+{
+ "run_id": "dev_pilot2:C4:EFF-p1b",
+ "case_id": "EFF-p1b",
+ "condition": "C4",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:53:46Z",
+ "finished_at": "2026-10-10T10:54:12Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "1a49fee310c7b7157cb480c133ef98cd6297b2ea361935c035982f5b6022820e"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Brisling has lower median latency (41 ms) than Talmar (118 ms) on the Brindle-Voice test set, but this comparison is confounded by different hardware and precision (Brisling on Corvex A2 fp16 vs Talmar on Corvex A1 fp32).",
+    "evidence_ids": [
+     "T1.r1.lat",
+     "T1.r2.lat",
+     "T1.r1.src",
+     "T1.r2.src"
+    ],
+    "scope": "Brindle-Voice test set, batch size 1, median latency per utterance",
+    "caveats": "Latency measured on different accelerators and precisions; Talmar latency copied from original paper, not re-measured."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Brisling uses 4.0 decoder passes per utterance versus Talmar's 37.6 passes, indicating a large reduction in decoding steps.",
+    "evidence_ids": [
+     "T1.r1.passes",
+     "T1.r2.passes"
+    ],
+    "scope": "Brindle-Voice test set, decoder passes per utterance",
+    "caveats": "Passes are averaged over the test set; no statistical test reported."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Brisling's WER (6.4%) is slightly higher than Talmar's (6.1%) on the Brindle-Voice test set, but the difference is small and no statistical test was reported, so it cannot be claimed as significant.",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r2.wer"
+    ],
+    "scope": "Brindle-Voice test set, WER (%)",
+    "caveats": "No statistical test reported; difference may not be reliable."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Brisling has higher WER (6.4%) than Greedy-CTC (8.9%)? Actually, Brisling has lower WER (6.4%) than Greedy-CTC (8.9%), and higher latency (41 ms vs 22 ms).",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r3.wer",
+     "T1.r1.lat",
+     "T1.r3.lat"
+    ],
+    "scope": "Brindle-Voice test set, WER and latency",
+    "caveats": "No statistical test reported; latency measured on same hardware for both."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32. Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps. In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant. Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32.",
+     "evidence_ids": [
+      "T1.r1.lat",
+      "T1.r2.lat",
+      "T1.r1.src",
+      "T1.r2.src"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps.",
+     "evidence_ids": [
+      "T1.r1.passes",
+      "T1.r2.passes"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r2.wer"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r3.wer",
+      "T1.r1.lat",
+      "T1.r3.lat"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32. Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps. In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant. Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32.",
+     "evidence_ids": [
+      "T1.r1.lat",
+      "T1.r2.lat",
+      "T1.r1.src",
+      "T1.r2.src"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps.",
+     "evidence_ids": [
+      "T1.r1.passes",
+      "T1.r2.passes"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r2.wer"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r3.wer",
+      "T1.r1.lat",
+      "T1.r3.lat"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32.",
+   "actions": [
+    {
+     "call_id": "call_2c96d6b29259447eb29880b0",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_3f06c7e917b8498783b2b3d9",
+     "tool": "lookup_table",
+     "args": {
+      "row_id": "r2",
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_2c96d6b29259447eb29880b0",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "Talmar latency is the value reported by Ruiz-Hale et al. (2023) on Corvex A1 (fp32, batch size 1); all other latencies were measured by us on Corvex A2 (fp16, batch size 1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Brisling (ours)",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.passes",
+        "row": "Brisling (ours)",
+        "column": "Decoder passes per utterance",
+        "text": "4.0",
+        "value": 4.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.lat",
+        "row": "Brisling (ours)",
+        "column": "Median latency (ms/utterance)",
+        "text": "41",
+        "value": 41.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.src",
+        "row": "Brisling (ours)",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r1.passes",
+      "T1.r1.lat",
+      "T1.r1.src"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_3f06c7e917b8498783b2b3d9",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "Talmar latency is the value reported by Ruiz-Hale et al. (2023) on Corvex A1 (fp32, batch size 1); all other latencies were measured by us on Corvex A2 (fp16, batch size 1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Talmar",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.passes",
+        "row": "Talmar",
+        "column": "Decoder passes per utterance",
+        "text": "37.6",
+        "value": 37.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.lat",
+        "row": "Talmar",
+        "column": "Median latency (ms/utterance)",
+        "text": "118",
+        "value": 118.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.src",
+        "row": "Talmar",
+        "column": "Latency measured on",
+        "text": "Corvex A1, fp32 (Ruiz-Hale et al., 2023)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r2.wer",
+      "T1.r2.passes",
+      "T1.r2.lat",
+      "T1.r2.src"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32.",
+    "revised_text": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32.",
+    "evidence_ids": [
+     "T1.r1.lat",
+     "T1.r2.lat",
+     "T1.r1.src",
+     "T1.r2.src"
+    ],
+    "rationale": "Table T1 confirms Brisling median latency 41 ms (Corvex A2, fp16) and Talmar 118 ms (Corvex A1, fp32, from Ruiz-Hale et al. 2023). The claim's numbers, the \"substantially lower\" comparison, and the confound description all match the evidence exactly.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps.",
+   "actions": [
+    {
+     "call_id": "call_ce14ae59df2449169b9b10cc",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "passes"
+     },
+     "policy": "adaptive",
+     "step": 1
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_ce14ae59df2449169b9b10cc",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "Talmar latency is the value reported by Ruiz-Hale et al. (2023) on Corvex A1 (fp32, batch size 1); all other latencies were measured by us on Corvex A2 (fp16, batch size 1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r1.passes",
+        "row": "Brisling (ours)",
+        "column": "Decoder passes per utterance",
+        "text": "4.0",
+        "value": 4.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.passes",
+        "row": "Talmar",
+        "column": "Decoder passes per utterance",
+        "text": "37.6",
+        "value": 37.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.passes",
+        "row": "Greedy-CTC",
+        "column": "Decoder passes per utterance",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.passes",
+      "T1.r2.passes",
+      "T1.r3.passes"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps.",
+    "revised_text": "Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps.",
+    "evidence_ids": [
+     "T1.r1.passes",
+     "T1.r2.passes"
+    ],
+    "rationale": "Table T1 reports Brisling at 4.0 decoder passes and Talmar at 37.6 passes per utterance, matching the claim exactly. The characterization as a large reduction is a reasonable description of the reported values.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 2,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant.",
+   "actions": [
+    {
+     "call_id": "call_a2bae31979c24906bc6be18f",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "wer"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_7287d22c976f4edd821467cd",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a2bae31979c24906bc6be18f",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "Talmar latency is the value reported by Ruiz-Hale et al. (2023) on Corvex A1 (fp32, batch size 1); all other latencies were measured by us on Corvex A2 (fp16, batch size 1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Brisling (ours)",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Talmar",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.wer",
+        "row": "Greedy-CTC",
+        "column": "WER (%)",
+        "text": "8.9",
+        "value": 8.9,
+        "unit": "%",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r2.wer",
+      "T1.r3.wer"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_7287d22c976f4edd821467cd",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Brisling vs Talmar: latency, decoder passes and WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant.",
+    "revised_text": "In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant.",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r2.wer",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "WER values match the table (Brisling 6.4%, Talmar 6.1%), and no statistical test was reported for exp1/cmp1, so the claim that the difference cannot be claimed as significant is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+   "actions": [
+    {
+     "call_id": "call_a83631b5510849c4853a710c",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_a7d9bb6e8aa542adbd39b6cd",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a83631b5510849c4853a710c",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "Talmar latency is the value reported by Ruiz-Hale et al. (2023) on Corvex A1 (fp32, batch size 1); all other latencies were measured by us on Corvex A2 (fp16, batch size 1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Brisling (ours)",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.passes",
+        "row": "Brisling (ours)",
+        "column": "Decoder passes per utterance",
+        "text": "4.0",
+        "value": 4.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.lat",
+        "row": "Brisling (ours)",
+        "column": "Median latency (ms/utterance)",
+        "text": "41",
+        "value": 41.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.src",
+        "row": "Brisling (ours)",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Talmar",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.passes",
+        "row": "Talmar",
+        "column": "Decoder passes per utterance",
+        "text": "37.6",
+        "value": 37.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.lat",
+        "row": "Talmar",
+        "column": "Median latency (ms/utterance)",
+        "text": "118",
+        "value": 118.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.src",
+        "row": "Talmar",
+        "column": "Latency measured on",
+        "text": "Corvex A1, fp32 (Ruiz-Hale et al., 2023)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.wer",
+        "row": "Greedy-CTC",
+        "column": "WER (%)",
+        "text": "8.9",
+        "value": 8.9,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.passes",
+        "row": "Greedy-CTC",
+        "column": "Decoder passes per utterance",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.lat",
+        "row": "Greedy-CTC",
+        "column": "Median latency (ms/utterance)",
+        "text": "22",
+        "value": 22.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.src",
+        "row": "Greedy-CTC",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r1.passes",
+      "T1.r1.lat",
+      "T1.r1.src",
+      "T1.r2.wer",
+      "T1.r2.passes",
+      "T1.r2.lat",
+      "T1.r2.src",
+      "T1.r3.wer",
+      "T1.r3.passes",
+      "T1.r3.lat",
+      "T1.r3.src"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_a7d9bb6e8aa542adbd39b6cd",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Brisling vs Greedy-CTC: latency and WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+    "revised_text": "Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r3.wer",
+     "T1.r1.lat",
+     "T1.r3.lat",
+     "T1.r1.src",
+     "T1.r3.src",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "Table T1 confirms Brisling WER 6.4% vs Greedy-CTC 8.9% (lower WER for Brisling), and latency 41 ms vs 22 ms (higher for Brisling). Both Brisling and Greedy-CTC latencies were measured on Corvex A2 fp16 (this work), so \"same hardware\" is accurate. No significance claim is made.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32. Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps. In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant. Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Brindle-Voice test set, Brisling achieved a median latency of 41 ms per utterance, substantially lower than Talmar's 118 ms, although this comparison is confounded by the fact that Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency was copied from its original paper, which used the previous-generation Corvex A1 in fp32.",
+   "evidence_ids": [
+    "T1.r1.lat",
+    "T1.r2.lat",
+    "T1.r1.src",
+    "T1.r2.src"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Brisling required only 4.0 decoder passes per utterance compared with Talmar's 37.6, reflecting a large reduction in decoding steps.",
+   "evidence_ids": [
+    "T1.r1.passes",
+    "T1.r2.passes"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "In terms of accuracy, Brisling's WER of 6.4% was slightly higher than Talmar's 6.1%, but no statistical test was reported, so this difference cannot be claimed as significant.",
+   "evidence_ids": [
+    "T1.r1.wer",
+    "T1.r2.wer"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Relative to the Greedy-CTC reference, Brisling achieved a lower WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms), with both measured on the same hardware.",
+   "evidence_ids": [
+    "T1.r1.wer",
+    "T1.r3.wer",
+    "T1.r1.lat",
+    "T1.r3.lat"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "EFF-p1b:shared_outline:outline:03d3939895",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629170-492Xg7dVdhT74DBLd1SF",
+   "finish_reason": "stop",
+   "prompt_tokens": 1225,
+   "completion_tokens": 527,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002269,
+   "cost_is_estimate": false,
+   "latency_s": 3.274,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:shared_outline:writer_from_outline:96f4deed33",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629173-SJXz3qRTXIjbWpUiyV5e",
+   "finish_reason": "stop",
+   "prompt_tokens": 1813,
+   "completion_tokens": 344,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00035014,
+   "cost_is_estimate": false,
+   "latency_s": 1.783,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:fec388178b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629216-OydjYof8ZBYNNGmEHas2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2829,
+   "completion_tokens": 116,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000279576,
+   "cost_is_estimate": false,
+   "latency_s": 2.1,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:ccbd59c7bc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629218-kHnZHIvwav2XTvDPiITq",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3391,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.56448e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.406,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:99b81c430f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629220-9UibL5wVbyrsqOB4NCAU",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3852,
+   "completion_tokens": 193,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001063824,
+   "cost_is_estimate": false,
+   "latency_s": 2.785,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:8929f6c1c0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629223-77jBWgSHHLX1pxwozSVJ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2765,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026048,
+   "cost_is_estimate": false,
+   "latency_s": 3.376,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:8332269826",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629226-SN1w4cVkfcuYGDHWqzHh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3150,
+   "completion_tokens": 154,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.9744e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.358,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:c5344fd26f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629228-4lMuBSYTQygSCWOkAqxE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2777,
+   "completion_tokens": 117,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.7152e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.906,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:5d7f6260ab",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629231-hqHGA4rsEcUm8XCVk3j2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3263,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.6984e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.758,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:6abbb46e3c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629233-GvUjpdAhauBXGGKnR8o0",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3436,
+   "completion_tokens": 173,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.63056e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.574,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:e3c2c0753e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629236-LvqGut0BHOsjye0Jy68Y",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2802,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.0872e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.294,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:5b50b06006",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629237-dDt6kdg0sAMbuaOKZZJp",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3790,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00013336,
+   "cost_is_estimate": false,
+   "latency_s": 1.408,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1b:C4:verify_adaptive:8864b4e357",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629238-vwy0Sc9Y6l437xpeRrp1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3963,
+   "completion_tokens": 235,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001054272,
+   "cost_is_estimate": false,
+   "latency_s": 3.074,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 13,
+  "n_model_calls_condition_only": 11,
+  "n_tool_calls": 7,
+  "tool_counts": {
+   "lookup_table": 5,
+   "get_test_metadata": 2
+  },
+  "prompt_tokens": 39056,
+  "completion_tokens": 2172,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00190897,
+  "cost_usd_condition_only": 0.00133193,
+  "any_cost_estimated": false,
+  "latency_s": 30.096,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 2,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

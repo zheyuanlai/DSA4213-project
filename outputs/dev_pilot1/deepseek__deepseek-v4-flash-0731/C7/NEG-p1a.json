@@ -1,0 +1,256 @@
+{
+ "run_id": "dev_pilot1:C7:NEG-p1a",
+ "case_id": "NEG-p1a",
+ "condition": "C7",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "3632667db22756f2",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:42:51Z",
+ "finished_at": "2026-10-10T10:42:51Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "afd6230c0d661dd57797bdb49340c9a5d628528e7f3fd92e90a30130640ba210"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Fernwood achieves a higher mean test AUROC (80.6) than Quillgate-GBDT (80.3) across the five benchmarks, but the difference is small (0.3 points) and no significance test was run.",
+    "evidence_ids": [
+     "T1.r6.gbdt",
+     "T1.r6.fern"
+    ],
+    "scope": "Mean over the five tabular benchmarks, test AUROC ×100",
+    "caveats": "No statistical test reported; difference may not be reliable."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Fernwood outperforms Quillgate-GBDT on three benchmarks (Alder-Credit: 82.1 vs 80.4; Birchfield-Churn: 87.3 vs 86.0; Edgerton-Default: 70.2 vs 67.8) but underperforms on two (Cobalt-Insure: 72.1 vs 73.9; Dunmore-Fraud: 91.1 vs 93.5).",
+    "evidence_ids": [
+     "T1.r1.gbdt",
+     "T1.r1.fern",
+     "T1.r2.gbdt",
+     "T1.r2.fern",
+     "T1.r3.gbdt",
+     "T1.r3.fern",
+     "T1.r4.gbdt",
+     "T1.r4.fern",
+     "T1.r5.gbdt",
+     "T1.r5.fern"
+    ],
+    "scope": "Per-benchmark test AUROC ×100 on the five benchmarks",
+    "caveats": "No significance tests; results are benchmark-specific."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Fernwood's mean AUROC (80.6) is higher than Mesh-MLP's (78.3), and Fernwood outperforms Mesh-MLP on all five benchmarks individually.",
+    "evidence_ids": [
+     "T1.r1.mlp",
+     "T1.r1.fern",
+     "T1.r2.mlp",
+     "T1.r2.fern",
+     "T1.r3.mlp",
+     "T1.r3.fern",
+     "T1.r4.mlp",
+     "T1.r4.fern",
+     "T1.r5.mlp",
+     "T1.r5.fern",
+     "T1.r6.mlp",
+     "T1.r6.fern"
+    ],
+    "scope": "Mean and per-benchmark test AUROC ×100 on the five benchmarks",
+    "caveats": "No significance tests; comparison to Quillgate-GBDT is the primary question."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported. Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5). Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+     "evidence_ids": [
+      "T1.r6.gbdt",
+      "T1.r6.fern"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+     "evidence_ids": [
+      "T1.r1.gbdt",
+      "T1.r1.fern",
+      "T1.r2.gbdt",
+      "T1.r2.fern",
+      "T1.r3.gbdt",
+      "T1.r3.fern",
+      "T1.r4.gbdt",
+      "T1.r4.fern",
+      "T1.r5.gbdt",
+      "T1.r5.fern"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+     "evidence_ids": [
+      "T1.r1.mlp",
+      "T1.r1.fern",
+      "T1.r2.mlp",
+      "T1.r2.fern",
+      "T1.r3.mlp",
+      "T1.r3.fern",
+      "T1.r4.mlp",
+      "T1.r4.fern",
+      "T1.r5.mlp",
+      "T1.r5.fern",
+      "T1.r6.mlp",
+      "T1.r6.fern"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [],
+ "final_passage": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported. Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5). Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Across the five tabular benchmarks, Fernwood achieved a slightly higher mean test AUROC (80.6) than Quillgate-GBDT (80.3), a difference of 0.3 points for which no significance test was reported.",
+   "evidence_ids": [
+    "T1.r6.gbdt",
+    "T1.r6.fern"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Per benchmark, Fernwood outperformed Quillgate-GBDT on Alder-Credit (82.1 vs 80.4), Birchfield-Churn (87.3 vs 86.0), and Edgerton-Default (70.2 vs 67.8), but underperformed on Cobalt-Insure (72.1 vs 73.9) and Dunmore-Fraud (91.1 vs 93.5).",
+   "evidence_ids": [
+    "T1.r1.gbdt",
+    "T1.r1.fern",
+    "T1.r2.gbdt",
+    "T1.r2.fern",
+    "T1.r3.gbdt",
+    "T1.r3.fern",
+    "T1.r4.gbdt",
+    "T1.r4.fern",
+    "T1.r5.gbdt",
+    "T1.r5.fern"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Fernwood's mean AUROC (80.6) also exceeded Mesh-MLP's (78.3), and Fernwood was higher than Mesh-MLP on all five benchmarks individually.",
+   "evidence_ids": [
+    "T1.r1.mlp",
+    "T1.r1.fern",
+    "T1.r2.mlp",
+    "T1.r2.fern",
+    "T1.r3.mlp",
+    "T1.r3.fern",
+    "T1.r4.mlp",
+    "T1.r4.fern",
+    "T1.r5.mlp",
+    "T1.r5.fern",
+    "T1.r6.mlp",
+    "T1.r6.fern"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NEG-p1a:shared_outline:outline:19922d5f92",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628422-5ykAt8IqSnJi6NIfjW6G",
+   "finish_reason": "stop",
+   "prompt_tokens": 1105,
+   "completion_tokens": 553,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00030954,
+   "cost_is_estimate": false,
+   "latency_s": 3.357,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p1a:shared_outline:writer_from_outline:7b41941dd0",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628425-W9wCOUcMsw9RhZPtL471",
+   "finish_reason": "stop",
+   "prompt_tokens": 1720,
+   "completion_tokens": 414,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00035672,
+   "cost_is_estimate": false,
+   "latency_s": 2.082,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 2,
+  "n_model_calls_condition_only": 0,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 2825,
+  "completion_tokens": 967,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00066626,
+  "cost_usd_condition_only": 0,
+  "any_cost_estimated": false,
+  "latency_s": 5.439,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -76,6 +76,20 @@ def claim_user_message(context: str, draft: Draft, idx: int) -> str:
     )
 
 
+def _parse_ids(raw: Any) -> list[str]:
+    """evidence_ids should be a list; tolerate a JSON-encoded list or a comma-separated string."""
+    if isinstance(raw, str):
+        txt = raw.strip()
+        try:
+            parsed = json.loads(txt)
+            raw = parsed if isinstance(parsed, list) else [txt]
+        except json.JSONDecodeError:
+            raw = [x.strip().strip('"\'') for x in txt.strip("[]").split(",") if x.strip()]
+    if not isinstance(raw, list):
+        return []
+    return [str(x).strip() for x in raw if isinstance(x, (str, int)) and str(x).strip()]
+
+
 def validate_decision(args: dict[str, Any] | None, claim: ClaimDraft, observed: set[str], allowed: list[str]) -> VerificationDecision:
     notes: list[str] = []
     if args is None:
@@ -84,7 +98,7 @@ def validate_decision(args: dict[str, Any] | None, claim: ClaimDraft, observed: 
     dec = str(args.get("decision", "")).strip().upper()
     rationale = str(args.get("rationale", ""))[:1200]
     revised = str(args.get("revised_text") or "").strip()
-    ids = [str(x) for x in (args.get("evidence_ids") or []) if isinstance(x, (str, int))]
+    ids = _parse_ids(args.get("evidence_ids"))
     valid = True
     if dec not in allowed:
         return VerificationDecision(claim_id=claim.claim_id, decision="FLAG", original_text=claim.text,
@@ -182,8 +196,15 @@ def verify_claim(client: BaseClient, store: EvidenceStore, system: str, context:
             trace.decision = dec
             trace.stop_reason = "decision" if dec.valid else "invalid_decision_fallback"
             break
-        # ---- EXECUTE_TOOL / OBSERVE
-        for tc in res.tool_calls:
+        # ---- EXECUTE_TOOL / OBSERVE (one call per turn: the policy chooses the NEXT check
+        # after seeing each observation; extra parallel calls are answered NOT EXECUTED)
+        for k, tc in enumerate(res.tool_calls):
+            if k > 0:
+                trace.ignored_parallel_calls += 1
+                messages.append({"role": "tool", "tool_call_id": tc.id, "content": json.dumps(
+                    {"status": "NOT_EXECUTED", "message": "Only one tool call per turn is processed. "
+                     "Re-issue this call in a later turn if it is still needed."})})
+                continue
             step = len(trace.actions) + 1
             policy = "scripted" if cfg.mode == "scripted" else "adaptive"
             action = ToolAction(call_id=tc.id, tool=tc.name, args=tc.arguments or {}, policy=policy, step=step)

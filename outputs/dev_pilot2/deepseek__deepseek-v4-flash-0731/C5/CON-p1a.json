@@ -1,0 +1,1813 @@
+{
+ "run_id": "dev_pilot2:C5:CON-p1a",
+ "case_id": "CON-p1a",
+ "condition": "C5",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:50:36Z",
+ "finished_at": "2026-10-10T10:51:15Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "98e824dfae62e51fcaccd853230d35d23ca696d5c8bf42eff48702fa00733a14"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Ferrule achieves higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with differences ranging from 0.7 to 1.2 percentage points.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.arb",
+     "T1.r2.fer",
+     "T1.r2.arb",
+     "T1.r3.fer",
+     "T1.r3.arb",
+     "T1.r4.fer",
+     "T1.r4.arb",
+     "T1.r5.fer",
+     "T1.r5.arb",
+     "T1.r6.fer",
+     "T1.r6.arb"
+    ],
+    "scope": "Six binary-classification datasets (2,400–310,000 rows), test AUROC (×100), mean over 5 seeds, fixed 70/10/20 split, 50-trial hyperparameter search.",
+    "caveats": "No statistical tests were reported, so the consistency of the advantage across datasets cannot be formally assessed; the differences are small (≤1.2 points)."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Ferrule also outperforms logistic regression on all six datasets, with larger margins (3.6–4.4 percentage points) than against Arbor-GBT.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.lr",
+     "T1.r2.fer",
+     "T1.r2.lr",
+     "T1.r3.fer",
+     "T1.r3.lr",
+     "T1.r4.fer",
+     "T1.r4.lr",
+     "T1.r5.fer",
+     "T1.r5.lr",
+     "T1.r6.fer",
+     "T1.r6.lr"
+    ],
+    "scope": "Same six datasets and evaluation conditions as F1.",
+    "caveats": "No statistical tests reported; logistic regression is a simple reference, not a tuned competitor."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The evidence supports that Ferrule outperforms Arbor-GBT on this specific suite, but the absence of statistical tests means the result cannot be claimed as statistically significant or reliable beyond the observed means.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.arb",
+     "T1.r2.fer",
+     "T1.r2.arb",
+     "T1.r3.fer",
+     "T1.r3.arb",
+     "T1.r4.fer",
+     "T1.r4.arb",
+     "T1.r5.fer",
+     "T1.r5.arb",
+     "T1.r6.fer",
+     "T1.r6.arb"
+    ],
+    "scope": "All six datasets in the suite; test AUROC means.",
+    "caveats": "No statistical tests reported; conclusions are limited to the evaluated datasets and settings."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims). Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points. These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r6.fer",
+      "T1.r6.arb"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points.",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.lr",
+      "T1.r2.fer",
+      "T1.r2.lr",
+      "T1.r3.fer",
+      "T1.r3.lr",
+      "T1.r4.fer",
+      "T1.r4.lr",
+      "T1.r5.fer",
+      "T1.r5.lr",
+      "T1.r6.fer",
+      "T1.r6.lr"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r6.fer",
+      "T1.r6.arb"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims). Ferrule also outperformed logistic regression on all six datasets, with margins of 3.3–4.6 percentage points. These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r6.fer",
+      "T1.r6.arb"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Ferrule also outperformed logistic regression on all six datasets, with margins of 3.3–4.6 percentage points.",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.lr",
+      "T1.r2.fer",
+      "T1.r2.lr",
+      "T1.r3.fer",
+      "T1.r3.lr",
+      "T1.r4.fer",
+      "T1.r4.lr",
+      "T1.r5.fer",
+      "T1.r5.lr",
+      "T1.r6.fer",
+      "T1.r6.lr"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r6.fer",
+      "T1.r6.arb"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+   "actions": [
+    {
+     "call_id": "call_792f54b7d6d54739b85c0252",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_e4dd96a701f54072ad111f01",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.7,
+      "evidence_id": "T1.r1.fer",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.arb"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_97d47a54284b4210a623f1fb",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 1.2,
+      "evidence_id": "T1.r2.fer",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.arb"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_a0167f0ab80245998ec21aa8",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.9,
+      "evidence_id": "T1.r3.fer",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r3.arb"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_792f54b7d6d54739b85c0252",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test AUROC (×100) on the six-dataset suite, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.rows",
+        "row": "Fairhaven-Credit",
+        "column": "Dataset rows",
+        "text": "30,000",
+        "value": 30000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.fer",
+        "row": "Fairhaven-Credit",
+        "column": "Ferrule",
+        "text": "81.6",
+        "value": 81.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.arb",
+        "row": "Fairhaven-Credit",
+        "column": "Arbor-GBT",
+        "text": "80.9",
+        "value": 80.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.lr",
+        "row": "Fairhaven-Credit",
+        "column": "Logistic regression",
+        "text": "77.2",
+        "value": 77.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.rows",
+        "row": "Molton-Churn",
+        "column": "Dataset rows",
+        "text": "7,000",
+        "value": 7000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.fer",
+        "row": "Molton-Churn",
+        "column": "Ferrule",
+        "text": "88.3",
+        "value": 88.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.arb",
+        "row": "Molton-Churn",
+        "column": "Arbor-GBT",
+        "text": "87.1",
+        "value": 87.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.lr",
+        "row": "Molton-Churn",
+        "column": "Logistic regression",
+        "text": "84.0",
+        "value": 84.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.rows",
+        "row": "Ivel-Fraud",
+        "column": "Dataset rows",
+        "text": "310,000",
+        "value": 310000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.fer",
+        "row": "Ivel-Fraud",
+        "column": "Ferrule",
+        "text": "93.7",
+        "value": 93.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.arb",
+        "row": "Ivel-Fraud",
+        "column": "Arbor-GBT",
+        "text": "92.8",
+        "value": 92.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.lr",
+        "row": "Ivel-Fraud",
+        "column": "Logistic regression",
+        "text": "89.5",
+        "value": 89.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.rows",
+        "row": "Pemberly-Claims",
+        "column": "Dataset rows",
+        "text": "2,400",
+        "value": 2400.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r4.fer",
+        "row": "Pemberly-Claims",
+        "column": "Ferrule",
+        "text": "76.4",
+        "value": 76.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.arb",
+        "row": "Pemberly-Claims",
+        "column": "Arbor-GBT",
+        "text": "75.6",
+        "value": 75.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.lr",
+        "row": "Pemberly-Claims",
+        "column": "Logistic regression",
+        "text": "73.1",
+        "value": 73.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.rows",
+        "row": "Selwyn-Default",
+        "column": "Dataset rows",
+        "text": "45,000",
+        "value": 45000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r5.fer",
+        "row": "Selwyn-Default",
+        "column": "Ferrule",
+        "text": "84.9",
+        "value": 84.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.arb",
+        "row": "Selwyn-Default",
+        "column": "Arbor-GBT",
+        "text": "84.1",
+        "value": 84.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.lr",
+        "row": "Selwyn-Default",
+        "column": "Logistic regression",
+        "text": "80.3",
+        "value": 80.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.rows",
+        "row": "Brook-Retention",
+        "column": "Dataset rows",
+        "text": "12,500",
+        "value": 12500.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r6.fer",
+        "row": "Brook-Retention",
+        "column": "Ferrule",
+        "text": "90.2",
+        "value": 90.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.arb",
+        "row": "Brook-Retention",
+        "column": "Arbor-GBT",
+        "text": "89.0",
+        "value": 89.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.lr",
+        "row": "Brook-Retention",
+        "column": "Logistic regression",
+        "text": "86.6",
+        "value": 86.6,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.rows",
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r1.lr",
+      "T1.r2.rows",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r2.lr",
+      "T1.r3.rows",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r3.lr",
+      "T1.r4.rows",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r4.lr",
+      "T1.r5.rows",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r5.lr",
+      "T1.r6.rows",
+      "T1.r6.fer",
+      "T1.r6.arb",
+      "T1.r6.lr"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_e4dd96a701f54072ad111f01",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 0.7,
+      "actual": 0.7,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.fer",
+       "row": "Fairhaven-Credit",
+       "column": "Ferrule",
+       "text": "81.6",
+       "value": 81.6,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.arb",
+       "row": "Fairhaven-Credit",
+       "column": "Arbor-GBT",
+       "text": "80.9",
+       "value": 80.9,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.fer"
+     },
+     "returned_ids": [
+      "T1.r1.fer",
+      "T1.r1.arb"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_97d47a54284b4210a623f1fb",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 1.2,
+      "actual": 1.2,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.fer",
+       "row": "Molton-Churn",
+       "column": "Ferrule",
+       "text": "88.3",
+       "value": 88.3,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.arb",
+       "row": "Molton-Churn",
+       "column": "Arbor-GBT",
+       "text": "87.1",
+       "value": 87.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r2.fer"
+     },
+     "returned_ids": [
+      "T1.r2.fer",
+      "T1.r2.arb"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_a0167f0ab80245998ec21aa8",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 0.9,
+      "actual": 0.9,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.fer",
+       "row": "Ivel-Fraud",
+       "column": "Ferrule",
+       "text": "93.7",
+       "value": 93.7,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r3.arb",
+       "row": "Ivel-Fraud",
+       "column": "Arbor-GBT",
+       "text": "92.8",
+       "value": 92.8,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.fer"
+     },
+     "returned_ids": [
+      "T1.r3.fer",
+      "T1.r3.arb"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+    "revised_text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.arb",
+     "T1.r2.fer",
+     "T1.r2.arb",
+     "T1.r3.fer",
+     "T1.r3.arb",
+     "T1.r4.fer",
+     "T1.r4.arb",
+     "T1.r5.fer",
+     "T1.r5.arb",
+     "T1.r6.fer",
+     "T1.r6.arb"
+    ],
+    "rationale": "Ferrule exceeds Arbor-GBT on all six datasets (r1:81.6>80.9, r2:88.3>87.1, r3:93.7>92.8, r4:76.4>75.6, r5:84.9>84.1, r6:90.2>89.0). Margins are 0.7,1.2,0.9,0.8,0.8,1.2, i.e. 0.7–1.2. Examples match (93.7 vs 92.8; 76.4 vs 75.6).",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 4,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points.",
+   "actions": [
+    {
+     "call_id": "call_197d56bff2964cee806cd0ca",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_905f08ee411d4ab5a8c0c48e",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.4,
+      "evidence_id": "T1.r1.fer",
+      "reference_evidence_id": "T1.r1.lr",
+      "mode": "difference"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_0b61ec132f05436893f54169",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.3,
+      "evidence_id": "T1.r2.fer",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.lr"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_e41c64cb2cb344e08e5b3614",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.2,
+      "evidence_id": "T1.r3.fer",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r3.lr"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_197d56bff2964cee806cd0ca",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test AUROC (×100) on the six-dataset suite, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.rows",
+        "row": "Fairhaven-Credit",
+        "column": "Dataset rows",
+        "text": "30,000",
+        "value": 30000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.fer",
+        "row": "Fairhaven-Credit",
+        "column": "Ferrule",
+        "text": "81.6",
+        "value": 81.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.arb",
+        "row": "Fairhaven-Credit",
+        "column": "Arbor-GBT",
+        "text": "80.9",
+        "value": 80.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.lr",
+        "row": "Fairhaven-Credit",
+        "column": "Logistic regression",
+        "text": "77.2",
+        "value": 77.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.rows",
+        "row": "Molton-Churn",
+        "column": "Dataset rows",
+        "text": "7,000",
+        "value": 7000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.fer",
+        "row": "Molton-Churn",
+        "column": "Ferrule",
+        "text": "88.3",
+        "value": 88.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.arb",
+        "row": "Molton-Churn",
+        "column": "Arbor-GBT",
+        "text": "87.1",
+        "value": 87.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.lr",
+        "row": "Molton-Churn",
+        "column": "Logistic regression",
+        "text": "84.0",
+        "value": 84.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.rows",
+        "row": "Ivel-Fraud",
+        "column": "Dataset rows",
+        "text": "310,000",
+        "value": 310000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.fer",
+        "row": "Ivel-Fraud",
+        "column": "Ferrule",
+        "text": "93.7",
+        "value": 93.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.arb",
+        "row": "Ivel-Fraud",
+        "column": "Arbor-GBT",
+        "text": "92.8",
+        "value": 92.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.lr",
+        "row": "Ivel-Fraud",
+        "column": "Logistic regression",
+        "text": "89.5",
+        "value": 89.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.rows",
+        "row": "Pemberly-Claims",
+        "column": "Dataset rows",
+        "text": "2,400",
+        "value": 2400.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r4.fer",
+        "row": "Pemberly-Claims",
+        "column": "Ferrule",
+        "text": "76.4",
+        "value": 76.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.arb",
+        "row": "Pemberly-Claims",
+        "column": "Arbor-GBT",
+        "text": "75.6",
+        "value": 75.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.lr",
+        "row": "Pemberly-Claims",
+        "column": "Logistic regression",
+        "text": "73.1",
+        "value": 73.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.rows",
+        "row": "Selwyn-Default",
+        "column": "Dataset rows",
+        "text": "45,000",
+        "value": 45000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r5.fer",
+        "row": "Selwyn-Default",
+        "column": "Ferrule",
+        "text": "84.9",
+        "value": 84.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.arb",
+        "row": "Selwyn-Default",
+        "column": "Arbor-GBT",
+        "text": "84.1",
+        "value": 84.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.lr",
+        "row": "Selwyn-Default",
+        "column": "Logistic regression",
+        "text": "80.3",
+        "value": 80.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.rows",
+        "row": "Brook-Retention",
+        "column": "Dataset rows",
+        "text": "12,500",
+        "value": 12500.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r6.fer",
+        "row": "Brook-Retention",
+        "column": "Ferrule",
+        "text": "90.2",
+        "value": 90.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.arb",
+        "row": "Brook-Retention",
+        "column": "Arbor-GBT",
+        "text": "89.0",
+        "value": 89.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.lr",
+        "row": "Brook-Retention",
+        "column": "Logistic regression",
+        "text": "86.6",
+        "value": 86.6,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.rows",
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r1.lr",
+      "T1.r2.rows",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r2.lr",
+      "T1.r3.rows",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r3.lr",
+      "T1.r4.rows",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r4.lr",
+      "T1.r5.rows",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r5.lr",
+      "T1.r6.rows",
+      "T1.r6.fer",
+      "T1.r6.arb",
+      "T1.r6.lr"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_905f08ee411d4ab5a8c0c48e",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 4.4,
+      "actual": 4.4,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.fer",
+       "row": "Fairhaven-Credit",
+       "column": "Ferrule",
+       "text": "81.6",
+       "value": 81.6,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.lr",
+       "row": "Fairhaven-Credit",
+       "column": "Logistic regression",
+       "text": "77.2",
+       "value": 77.2,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.fer"
+     },
+     "returned_ids": [
+      "T1.r1.fer",
+      "T1.r1.lr"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_0b61ec132f05436893f54169",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 4.3,
+      "actual": 4.3,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.fer",
+       "row": "Molton-Churn",
+       "column": "Ferrule",
+       "text": "88.3",
+       "value": 88.3,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.lr",
+       "row": "Molton-Churn",
+       "column": "Logistic regression",
+       "text": "84.0",
+       "value": 84.0,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r2.fer"
+     },
+     "returned_ids": [
+      "T1.r2.fer",
+      "T1.r2.lr"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_e41c64cb2cb344e08e5b3614",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 4.2,
+      "actual": 4.2,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.fer",
+       "row": "Ivel-Fraud",
+       "column": "Ferrule",
+       "text": "93.7",
+       "value": 93.7,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r3.lr",
+       "row": "Ivel-Fraud",
+       "column": "Logistic regression",
+       "text": "89.5",
+       "value": 89.5,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.fer"
+     },
+     "returned_ids": [
+      "T1.r3.fer",
+      "T1.r3.lr"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "WEAKEN",
+    "original_text": "Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points.",
+    "revised_text": "Ferrule also outperformed logistic regression on all six datasets, with margins of 3.3–4.6 percentage points.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.lr",
+     "T1.r2.fer",
+     "T1.r2.lr",
+     "T1.r3.fer",
+     "T1.r3.lr",
+     "T1.r4.fer",
+     "T1.r4.lr",
+     "T1.r5.fer",
+     "T1.r5.lr",
+     "T1.r6.fer",
+     "T1.r6.lr"
+    ],
+    "rationale": "Ferrule beats LR on all six datasets (81.6>77.2, 88.3>84.0, 93.7>89.5, 76.4>73.1, 84.9>80.3, 90.2>86.6). Margins: 4.4, 4.3, 4.2, 3.3, 4.6, 3.6. The claimed range 3.6–4.4 is wrong: actual range is 3.3–4.6.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 4,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+   "actions": [
+    {
+     "call_id": "call_411aac70368b44f0948e8d46",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_3ec0b329927d485285d88fe9",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_411aac70368b44f0948e8d46",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test AUROC (×100) on the six-dataset suite, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.rows",
+        "row": "Fairhaven-Credit",
+        "column": "Dataset rows",
+        "text": "30,000",
+        "value": 30000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.fer",
+        "row": "Fairhaven-Credit",
+        "column": "Ferrule",
+        "text": "81.6",
+        "value": 81.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.arb",
+        "row": "Fairhaven-Credit",
+        "column": "Arbor-GBT",
+        "text": "80.9",
+        "value": 80.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.lr",
+        "row": "Fairhaven-Credit",
+        "column": "Logistic regression",
+        "text": "77.2",
+        "value": 77.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.rows",
+        "row": "Molton-Churn",
+        "column": "Dataset rows",
+        "text": "7,000",
+        "value": 7000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.fer",
+        "row": "Molton-Churn",
+        "column": "Ferrule",
+        "text": "88.3",
+        "value": 88.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.arb",
+        "row": "Molton-Churn",
+        "column": "Arbor-GBT",
+        "text": "87.1",
+        "value": 87.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.lr",
+        "row": "Molton-Churn",
+        "column": "Logistic regression",
+        "text": "84.0",
+        "value": 84.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.rows",
+        "row": "Ivel-Fraud",
+        "column": "Dataset rows",
+        "text": "310,000",
+        "value": 310000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.fer",
+        "row": "Ivel-Fraud",
+        "column": "Ferrule",
+        "text": "93.7",
+        "value": 93.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.arb",
+        "row": "Ivel-Fraud",
+        "column": "Arbor-GBT",
+        "text": "92.8",
+        "value": 92.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.lr",
+        "row": "Ivel-Fraud",
+        "column": "Logistic regression",
+        "text": "89.5",
+        "value": 89.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.rows",
+        "row": "Pemberly-Claims",
+        "column": "Dataset rows",
+        "text": "2,400",
+        "value": 2400.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r4.fer",
+        "row": "Pemberly-Claims",
+        "column": "Ferrule",
+        "text": "76.4",
+        "value": 76.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.arb",
+        "row": "Pemberly-Claims",
+        "column": "Arbor-GBT",
+        "text": "75.6",
+        "value": 75.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.lr",
+        "row": "Pemberly-Claims",
+        "column": "Logistic regression",
+        "text": "73.1",
+        "value": 73.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.rows",
+        "row": "Selwyn-Default",
+        "column": "Dataset rows",
+        "text": "45,000",
+        "value": 45000.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r5.fer",
+        "row": "Selwyn-Default",
+        "column": "Ferrule",
+        "text": "84.9",
+        "value": 84.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.arb",
+        "row": "Selwyn-Default",
+        "column": "Arbor-GBT",
+        "text": "84.1",
+        "value": 84.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.lr",
+        "row": "Selwyn-Default",
+        "column": "Logistic regression",
+        "text": "80.3",
+        "value": 80.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.rows",
+        "row": "Brook-Retention",
+        "column": "Dataset rows",
+        "text": "12,500",
+        "value": 12500.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r6.fer",
+        "row": "Brook-Retention",
+        "column": "Ferrule",
+        "text": "90.2",
+        "value": 90.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.arb",
+        "row": "Brook-Retention",
+        "column": "Arbor-GBT",
+        "text": "89.0",
+        "value": 89.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.lr",
+        "row": "Brook-Retention",
+        "column": "Logistic regression",
+        "text": "86.6",
+        "value": 86.6,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.rows",
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r1.lr",
+      "T1.r2.rows",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r2.lr",
+      "T1.r3.rows",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r3.lr",
+      "T1.r4.rows",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r4.lr",
+      "T1.r5.rows",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r5.lr",
+      "T1.r6.rows",
+      "T1.r6.fer",
+      "T1.r6.arb",
+      "T1.r6.lr"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_3ec0b329927d485285d88fe9",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Ferrule vs Arbor-GBT, test AUROC, per dataset"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+    "revised_text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.arb",
+     "T1.r2.fer",
+     "T1.r2.arb",
+     "T1.r3.fer",
+     "T1.r3.arb",
+     "T1.r4.fer",
+     "T1.r4.arb",
+     "T1.r5.fer",
+     "T1.r5.arb",
+     "T1.r6.fer",
+     "T1.r6.arb",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Table T1 shows Ferrule higher than Arbor-GBT on all six datasets (81.6>80.9, 88.3>87.1, 93.7>92.8, 76.4>75.6, 84.9>84.1, 90.2>89.0). No statistical test was reported for exp1/cmp1, so the claim that the advantage cannot be called significant/reliable is accurate and appropriately scoped to this suite.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims). Ferrule also outperformed logistic regression on all six datasets, with margins of 3.3–4.6 percentage points. These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+   "evidence_ids": [
+    "T1.r1.fer",
+    "T1.r1.arb",
+    "T1.r2.fer",
+    "T1.r2.arb",
+    "T1.r3.fer",
+    "T1.r3.arb",
+    "T1.r4.fer",
+    "T1.r4.arb",
+    "T1.r5.fer",
+    "T1.r5.arb",
+    "T1.r6.fer",
+    "T1.r6.arb"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Ferrule also outperformed logistic regression on all six datasets, with margins of 3.3–4.6 percentage points.",
+   "evidence_ids": [
+    "T1.r1.fer",
+    "T1.r1.lr",
+    "T1.r2.fer",
+    "T1.r2.lr",
+    "T1.r3.fer",
+    "T1.r3.lr",
+    "T1.r4.fer",
+    "T1.r4.lr",
+    "T1.r5.fer",
+    "T1.r5.lr",
+    "T1.r6.fer",
+    "T1.r6.lr"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+   "evidence_ids": [
+    "T1.r1.fer",
+    "T1.r1.arb",
+    "T1.r2.fer",
+    "T1.r2.arb",
+    "T1.r3.fer",
+    "T1.r3.arb",
+    "T1.r4.fer",
+    "T1.r4.arb",
+    "T1.r5.fer",
+    "T1.r5.arb",
+    "T1.r6.fer",
+    "T1.r6.arb"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "CON-p1a:shared_outline:outline:fccb5d36dd",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628931-8pYTXdta1lzlmTvT5v0O",
+   "finish_reason": "stop",
+   "prompt_tokens": 1035,
+   "completion_tokens": 611,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00031598,
+   "cost_is_estimate": false,
+   "latency_s": 10.62,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:shared_outline:writer_from_outline:94bf862ae1",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628942-2C03qZcI1PWrgONWPobL",
+   "finish_reason": "stop",
+   "prompt_tokens": 1721,
+   "completion_tokens": 462,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0003703,
+   "cost_is_estimate": false,
+   "latency_s": 1.831,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:b7ece2af7c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629026-Bnn1rOtmArhj3m3n97YW",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2563,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000238216,
+   "cost_is_estimate": false,
+   "latency_s": 1.677,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:974153f230",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629028-CTHsGCVQKWz76ywj1vnC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4277,
+   "completion_tokens": 450,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000277064,
+   "cost_is_estimate": false,
+   "latency_s": 5.121,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:8bbc528f66",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629033-EQxPA4GxZ7Xq7snv5Y7b",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5142,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001320288,
+   "cost_is_estimate": false,
+   "latency_s": 2.031,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:dbcf483b08",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629035-pYmvwROX6wfsYN9BuoQm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5471,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.3736e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.803,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:ac17655922",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629037-F7ZdEvEaYMs7eQsZeBXG",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5800,
+   "completion_tokens": 329,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001392208,
+   "cost_is_estimate": false,
+   "latency_s": 4.078,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:7420e84a07",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629041-KW8JeJJk8e4Gix8laAgu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2516,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000233816,
+   "cost_is_estimate": false,
+   "latency_s": 2.642,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:6fefc46b69",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629043-4GZFgfUsqEzkjbDS9d8W",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4230,
+   "completion_tokens": 450,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002947392,
+   "cost_is_estimate": false,
+   "latency_s": 4.679,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:62e3191a98",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629048-Mf6WhK08tgZNfSp4lsoF",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5100,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001283328,
+   "cost_is_estimate": false,
+   "latency_s": 3.016,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:4bded2ef0f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629051-n837UBuUGk1Z3oWi9cRc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5428,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.17632e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.641,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:03c27a46cc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629053-xxfSGZgndVRiij2qt9Um",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5756,
+   "completion_tokens": 337,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001374608,
+   "cost_is_estimate": false,
+   "latency_s": 4.032,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:e5e4aa6c61",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629057-cYL4SEdZnW5L181ghFhL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2529,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000249216,
+   "cost_is_estimate": false,
+   "latency_s": 3.066,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:7f884de47e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629060-8ZlJS0ZmFDd8C3tA3nRX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4343,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002038352,
+   "cost_is_estimate": false,
+   "latency_s": 1.641,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:C5:verify_adaptive:c217a03091",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629062-VsnM5vZy3oMPbTXp2Egs",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4515,
+   "completion_tokens": 303,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001283328,
+   "cost_is_estimate": false,
+   "latency_s": 3.779,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 15,
+  "n_model_calls_condition_only": 13,
+  "n_tool_calls": 10,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 6,
+   "get_test_metadata": 1
+  },
+  "prompt_tokens": 60426,
+  "completion_tokens": 3638,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00301404,
+  "cost_usd_condition_only": 0.00232776,
+  "any_cost_estimated": false,
+  "latency_s": 51.657,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 2,
+   "WEAKEN": 1
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 9,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

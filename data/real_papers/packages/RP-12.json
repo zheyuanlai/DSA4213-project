@@ -1,0 +1,91 @@
+{
+ "case_id": "RP-12",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "When a pretrained LLM is given a different tokenizer without any further training, does initializing the unseen-token embeddings with Method M preserve the original model's benchmark performance better than simple and published initialization methods?",
+  "methods_summary": "Method M is a training-free way to swap a pretrained model's tokenizer for a donor model's tokenizer. Tokens shared by both vocabularies act as anchors. For each token that exists only in the donor vocabulary, Method M uses a greedy sparse-approximation algorithm to express the token's donor embedding as a sparse linear combination of k anchor embeddings in the donor model, then applies the same coefficients to the anchors' embeddings in the base model. Baselines: zero vectors (ZeroEmbed), the mean embedding (MeanEmbed), and published methods FOCUS, WECHSEL, CLPTransfer and ZETT, all applied zero-shot without their usual continued training.",
+  "experimental_setup": "Two settings: the Llama 3 vocabulary (about 128k tokens) transplanted into Mistral NeMo 12B (about 131k; about 54% overlap), and the Qwen 2.5 vocabulary (about 152k) transplanted into Llama 3 1B (about 128k; about 86% overlap). Evaluation with the EleutherAI LM Evaluation Harness: MMLU, ARC-Challenge, XNLI, AGIEval, Lambada (zero-shot), GSM8K (5-shot), Belebele, and WikiText bits per byte. The harness's bootstrapped standard errors are about 0.003 to 0.014 for the accuracy metrics (see T1 notes).",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Llama 3 -> Mistral NeMo 12B transplant (vocabulary overlap about 54%) (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs ZeroEmbed, MeanEmbed and FOCUS"},
+     {"comparison_id": "cmp2", "description": "Method M vs the original model (performance preservation), including GSM8K"},
+     {"comparison_id": "cmp3", "description": "Effect of the number of anchors k"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Qwen 2.5 -> Llama 3 1B transplant (vocabulary overlap about 86%) (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs published zero-shot methods (CLPTransfer, FOCUS, WECHSEL, ZETT)"},
+     {"comparison_id": "cmp2", "description": "Method M vs simple ZeroEmbed / MeanEmbed initialization"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Zero-shot tokenizer transplant Llama 3 -> Mistral NeMo (12B): Mistral NeMo with the Llama 3 tokenizer and newly initialized embeddings for unseen tokens, vs the original model. Accuracy metrics as fractions; WikiText in bits per byte (lower is better).",
+    "columns": [
+     {"column_id": "mmlu", "header": "MMLU", "unit": null, "higher_is_better": true},
+     {"column_id": "arcc", "header": "ARC-C", "unit": null, "higher_is_better": true},
+     {"column_id": "xnli", "header": "XNLI", "unit": null, "higher_is_better": true},
+     {"column_id": "gsm8k", "header": "GSM8K", "unit": null, "higher_is_better": true},
+     {"column_id": "agieval", "header": "AGIEval", "unit": null, "higher_is_better": true},
+     {"column_id": "lambada", "header": "Lambada (EN)", "unit": null, "higher_is_better": true},
+     {"column_id": "wikitext", "header": "WikiText (bits/byte)", "unit": null, "higher_is_better": false}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Baseline (Mistral NeMo, original tokenizer)", "cells": {"mmlu": {"text": "0.6452", "value": 0.6452, "spread": null}, "arcc": {"text": "0.5811", "value": 0.5811, "spread": null}, "xnli": {"text": "0.4367", "value": 0.4367, "spread": null}, "gsm8k": {"text": "0.5588", "value": 0.5588, "spread": null}, "agieval": {"text": "0.3752", "value": 0.3752, "spread": null}, "lambada": {"text": "0.7819", "value": 0.7819, "spread": null}, "wikitext": {"text": "0.5296", "value": 0.5296, "spread": null}}},
+     {"row_id": "r2", "label": "Method M (k=8)", "cells": {"mmlu": {"text": "0.6129", "value": 0.6129, "spread": null}, "arcc": {"text": "0.5179", "value": 0.5179, "spread": null}, "xnli": {"text": "0.3782", "value": 0.3782, "spread": null}, "gsm8k": {"text": "0.1289", "value": 0.1289, "spread": null}, "agieval": {"text": "0.3137", "value": 0.3137, "spread": null}, "lambada": {"text": "0.6897", "value": 0.6897, "spread": null}, "wikitext": {"text": "0.7798", "value": 0.7798, "spread": null}}},
+     {"row_id": "r3", "label": "Method M (k=64)", "cells": {"mmlu": {"text": "0.6222", "value": 0.6222, "spread": null}, "arcc": {"text": "0.5273", "value": 0.5273, "spread": null}, "xnli": {"text": "0.3780", "value": 0.378, "spread": null}, "gsm8k": {"text": "0.1463", "value": 0.1463, "spread": null}, "agieval": {"text": "0.3158", "value": 0.3158, "spread": null}, "lambada": {"text": "0.6895", "value": 0.6895, "spread": null}, "wikitext": {"text": "0.7417", "value": 0.7417, "spread": null}}},
+     {"row_id": "r4", "label": "FOCUS", "cells": {"mmlu": {"text": "0.2299", "value": 0.2299, "spread": null}, "arcc": {"text": "0.2585", "value": 0.2585, "spread": null}, "xnli": {"text": "0.3286", "value": 0.3286, "spread": null}, "gsm8k": {"text": "0.0076", "value": 0.0076, "spread": null}, "agieval": {"text": "0.2447", "value": 0.2447, "spread": null}, "lambada": {"text": "0.0000", "value": 0.0, "spread": null}, "wikitext": {"text": "5.8441", "value": 5.8441, "spread": null}}},
+     {"row_id": "r5", "label": "ZeroEmbed", "cells": {"mmlu": {"text": "0.5852", "value": 0.5852, "spread": null}, "arcc": {"text": "0.4949", "value": 0.4949, "spread": null}, "xnli": {"text": "0.3689", "value": 0.3689, "spread": null}, "gsm8k": {"text": "0.0334", "value": 0.0334, "spread": null}, "agieval": {"text": "0.2905", "value": 0.2905, "spread": null}, "lambada": {"text": "0.6598", "value": 0.6598, "spread": null}, "wikitext": {"text": "0.9881", "value": 0.9881, "spread": null}}},
+     {"row_id": "r6", "label": "MeanEmbed", "cells": {"mmlu": {"text": "0.5936", "value": 0.5936, "spread": null}, "arcc": {"text": "0.4966", "value": 0.4966, "spread": null}, "xnli": {"text": "0.3693", "value": 0.3693, "spread": null}, "gsm8k": {"text": "0.0523", "value": 0.0523, "spread": null}, "agieval": {"text": "0.2952", "value": 0.2952, "spread": null}, "lambada": {"text": "0.6670", "value": 0.667, "spread": null}, "wikitext": {"text": "0.8993", "value": 0.8993, "spread": null}}}
+    ],
+    "notes": "Row Method M (k=32) and relative-change rows dropped. Representative bootstrapped standard errors reported by the source (separate table): MMLU 0.004, ARC Challenge 0.014, GSM8K 0.013, XNLI 0.003, AGIEval 0.005, Lambada (EN) 0.006; none for WikiText. Single evaluation per model."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Zero-shot tokenizer transplant Qwen 2.5 -> Llama 3 (1B): same protocol as T1.",
+    "columns": [
+     {"column_id": "mmlu", "header": "MMLU", "unit": null, "higher_is_better": true},
+     {"column_id": "arcc", "header": "ARC-C", "unit": null, "higher_is_better": true},
+     {"column_id": "gsm8k", "header": "GSM8K", "unit": null, "higher_is_better": true},
+     {"column_id": "belebele", "header": "Belebele", "unit": null, "higher_is_better": true},
+     {"column_id": "wikitext", "header": "WikiText (bits/byte)", "unit": null, "higher_is_better": false}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Baseline (Llama 1B, original tokenizer)", "cells": {"mmlu": {"text": "0.3673", "value": 0.3673, "spread": null}, "arcc": {"text": "0.3626", "value": 0.3626, "spread": null}, "gsm8k": {"text": "0.0675", "value": 0.0675, "spread": null}, "belebele": {"text": "0.2813", "value": 0.2813, "spread": null}, "wikitext": {"text": "0.6605", "value": 0.6605, "spread": null}}},
+     {"row_id": "r2", "label": "Method M (k=64)", "cells": {"mmlu": {"text": "0.3640", "value": 0.364, "spread": null}, "arcc": {"text": "0.3626", "value": 0.3626, "spread": null}, "gsm8k": {"text": "0.0144", "value": 0.0144, "spread": null}, "belebele": {"text": "0.2704", "value": 0.2704, "spread": null}, "wikitext": {"text": "0.7159", "value": 0.7159, "spread": null}}},
+     {"row_id": "r3", "label": "CLPTransfer", "cells": {"mmlu": {"text": "0.2295", "value": 0.2295, "spread": null}, "arcc": {"text": "0.2858", "value": 0.2858, "spread": null}, "gsm8k": {"text": "0.0000", "value": 0.0, "spread": null}, "belebele": {"text": "0.2299", "value": 0.2299, "spread": null}, "wikitext": {"text": "6791.6044", "value": 6791.6044, "spread": null}}},
+     {"row_id": "r4", "label": "FOCUS", "cells": {"mmlu": {"text": "0.2695", "value": 0.2695, "spread": null}, "arcc": {"text": "0.3549", "value": 0.3549, "spread": null}, "gsm8k": {"text": "0.0174", "value": 0.0174, "spread": null}, "belebele": {"text": "0.2478", "value": 0.2478, "spread": null}, "wikitext": {"text": "0.8870", "value": 0.887, "spread": null}}},
+     {"row_id": "r5", "label": "WECHSEL", "cells": {"mmlu": {"text": "0.2314", "value": 0.2314, "spread": null}, "arcc": {"text": "0.2389", "value": 0.2389, "spread": null}, "gsm8k": {"text": "0.0099", "value": 0.0099, "spread": null}, "belebele": {"text": "0.2470", "value": 0.247, "spread": null}, "wikitext": {"text": "3.1852", "value": 3.1852, "spread": null}}},
+     {"row_id": "r6", "label": "ZETT", "cells": {"mmlu": {"text": "0.2634", "value": 0.2634, "spread": null}, "arcc": {"text": "0.3055", "value": 0.3055, "spread": null}, "gsm8k": {"text": "0.0000", "value": 0.0, "spread": null}, "belebele": {"text": "0.2480", "value": 0.248, "spread": null}, "wikitext": {"text": "1.1426", "value": 1.1426, "spread": null}}},
+     {"row_id": "r7", "label": "ZeroEmbed", "cells": {"mmlu": {"text": "0.3640", "value": 0.364, "spread": null}, "arcc": {"text": "0.3626", "value": 0.3626, "spread": null}, "gsm8k": {"text": "0.0144", "value": 0.0144, "spread": null}, "belebele": {"text": "0.2648", "value": 0.2648, "spread": null}, "wikitext": {"text": "0.7169", "value": 0.7169, "spread": null}}},
+     {"row_id": "r8", "label": "MeanEmbed", "cells": {"mmlu": {"text": "0.3641", "value": 0.3641, "spread": null}, "arcc": {"text": "0.3626", "value": 0.3626, "spread": null}, "gsm8k": {"text": "0.0144", "value": 0.0144, "spread": null}, "belebele": {"text": "0.2577", "value": 0.2577, "spread": null}, "wikitext": {"text": "0.7180", "value": 0.718, "spread": null}}}
+    ],
+    "notes": "Rows Method M (k=8, k=32) and relative-change rows dropped. No standard error is reported for Belebele or WikiText."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "Naive (random/zero) initialization typically degrades performance substantially [Hewitt, 2021]."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "OMP-based method renamed 'Method M'. Tables used: tab:llama-mistral-results, tab:llama_qwen_benchmarks (row subsets); standard errors from tab:stderr_summary quoted in T1 notes. P1 is from the related-work section; citation rendered as text. CC BY-SA 4.0: share derived package under the same license. Abstract/results prose/conclusion withheld.",
+  "citation": "Charles Goddard, Fernando Fernandes Neto (2025). Training-Free Tokenizer Transplantation via Orthogonal Matching Pursuit. arXiv:2506.06607",
+  "url": "https://arxiv.org/abs/2506.06607",
+  "license": "http://creativecommons.org/licenses/by-sa/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "3c5cd156e023cce5a2a6ab5b0d6aeb378f15c705fbd7357a8f8820c301d31314"
+ }
+}

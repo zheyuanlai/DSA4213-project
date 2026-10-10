@@ -1,0 +1,1283 @@
+{
+ "run_id": "dev_pilot3:C5:GEN-p1b",
+ "case_id": "GEN-p1b",
+ "condition": "C5",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:20:26Z",
+ "finished_at": "2026-10-10T11:21:00Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "03d93e50f9b840ab14617dc8dec483523844fd4a12fffaafa2c82214ba0afff7"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Wrenfold outperforms Fennick-Base on the unseen Banking and Travel test sets by 1.5 and 1.5 percentage points in macro-F1, respectively.",
+    "evidence_ids": [
+     "T1.r1.wren",
+     "T1.r1.fenn",
+     "T1.r2.wren",
+     "T1.r2.fenn"
+    ],
+    "scope": "Unseen test sets of Banking and Travel domains, macro-F1, mean over 5 seeds.",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "The evidence does not support generalization beyond the Banking and Travel domains, as no other domains were evaluated.",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2"
+    ],
+    "scope": "Only Banking and Travel domains in the Harrowgate corpus.",
+    "caveats": "No cross-domain or out-of-domain evaluation was conducted."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Both Wrenfold and Fennick-Base substantially outperform the Keyword-SVM reference on both domains, with Wrenfold leading by 8.9 and 8.9 percentage points respectively.",
+    "evidence_ids": [
+     "T1.r1.wren",
+     "T1.r1.svm",
+     "T1.r2.wren",
+     "T1.r2.svm"
+    ],
+    "scope": "Unseen test sets of Banking and Travel, macro-F1.",
+    "caveats": "No statistical tests reported."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain. However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant. The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains. Both neural models substantially outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant.",
+     "evidence_ids": [],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Both neural models substantially outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.svm",
+      "T1.r2.wren",
+      "T1.r2.svm"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain. However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant. The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains. Both neural models outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain and Fennick-Base by 7.4 percentage points.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant.",
+     "evidence_ids": [],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Both neural models outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain and Fennick-Base by 7.4 percentage points.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.svm",
+      "T1.r2.wren",
+      "T1.r2.svm",
+      "T1.r1.fenn",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain.",
+   "actions": [
+    {
+     "call_id": "call_4cd3030d73044085868bc52a",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_02fc15ccbcf84c83a4885541",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 93.1,
+      "evidence_id": "T1.r1.wren"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_28d4225cabda48e7b3864bf8",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 92.4,
+      "evidence_id": "T1.r2.wren"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_9c1faa6388894267a1d2c52e",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 1.5,
+      "evidence_id": "T1.r1.wren",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.fenn"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_4cd3030d73044085868bc52a",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Macro-F1 (%) by evaluation set, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.n",
+        "row": "Unseen test set – Banking",
+        "column": "Test utterances",
+        "text": "2,710",
+        "value": 2710.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.wren",
+        "row": "Unseen test set – Banking",
+        "column": "Wrenfold",
+        "text": "93.1",
+        "value": 93.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.fenn",
+        "row": "Unseen test set – Banking",
+        "column": "Fennick-Base",
+        "text": "91.6",
+        "value": 91.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.svm",
+        "row": "Unseen test set – Banking",
+        "column": "Keyword-SVM",
+        "text": "84.2",
+        "value": 84.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.n",
+        "row": "Unseen test set – Travel",
+        "column": "Test utterances",
+        "text": "2,760",
+        "value": 2760.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.wren",
+        "row": "Unseen test set – Travel",
+        "column": "Wrenfold",
+        "text": "92.4",
+        "value": 92.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.fenn",
+        "row": "Unseen test set – Travel",
+        "column": "Fennick-Base",
+        "text": "90.9",
+        "value": 90.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.svm",
+        "row": "Unseen test set – Travel",
+        "column": "Keyword-SVM",
+        "text": "83.5",
+        "value": 83.5,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.n",
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r1.svm",
+      "T1.r2.n",
+      "T1.r2.wren",
+      "T1.r2.fenn",
+      "T1.r2.svm"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_02fc15ccbcf84c83a4885541",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 93.1,
+      "actual": 93.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.wren",
+       "row": "Unseen test set – Banking",
+       "column": "Wrenfold",
+       "text": "93.1",
+       "value": 93.1,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.wren"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_28d4225cabda48e7b3864bf8",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 92.4,
+      "actual": 92.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.wren",
+       "row": "Unseen test set – Travel",
+       "column": "Wrenfold",
+       "text": "92.4",
+       "value": 92.4,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r2.wren"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_9c1faa6388894267a1d2c52e",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 1.5,
+      "actual": 1.5,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.wren",
+       "row": "Unseen test set – Banking",
+       "column": "Wrenfold",
+       "text": "93.1",
+       "value": 93.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.fenn",
+       "row": "Unseen test set – Banking",
+       "column": "Fennick-Base",
+       "text": "91.6",
+       "value": 91.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.wren"
+     },
+     "returned_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain.",
+    "revised_text": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain.",
+    "evidence_ids": [
+     "T1.r1.wren",
+     "T1.r1.fenn",
+     "T1.r2.wren",
+     "T1.r2.fenn"
+    ],
+    "rationale": "Wrenfold values match table (93.1% Banking, 92.4% Travel). Differences vs Fennick-Base are 1.5 pp in each domain (93.1-91.6=1.5; 92.4-90.9=1.5). All numbers and scope match the evidence.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant.",
+   "actions": [
+    {
+     "call_id": "call_3418a06d23b1409188c53512",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_3418a06d23b1409188c53512",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Wrenfold vs Fennick-Base, macro-F1, unseen test set"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant.",
+    "revised_text": "However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "No statistical test is reported for the Wrenfold vs Fennick-Base comparison (exp1/cmp1). The claim correctly states the differences are descriptive only and cannot be interpreted as significant, which matches the absence of a reported test.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 2,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains.",
+   "actions": [
+    {
+     "call_id": "call_364d7edffae8455580a002ca",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_17203a0736e1415db7a841cc",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_364d7edffae8455580a002ca",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Macro-F1 (%) by evaluation set, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.n",
+        "row": "Unseen test set – Banking",
+        "column": "Test utterances",
+        "text": "2,710",
+        "value": 2710.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.wren",
+        "row": "Unseen test set – Banking",
+        "column": "Wrenfold",
+        "text": "93.1",
+        "value": 93.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.fenn",
+        "row": "Unseen test set – Banking",
+        "column": "Fennick-Base",
+        "text": "91.6",
+        "value": 91.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.svm",
+        "row": "Unseen test set – Banking",
+        "column": "Keyword-SVM",
+        "text": "84.2",
+        "value": 84.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.n",
+        "row": "Unseen test set – Travel",
+        "column": "Test utterances",
+        "text": "2,760",
+        "value": 2760.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.wren",
+        "row": "Unseen test set – Travel",
+        "column": "Wrenfold",
+        "text": "92.4",
+        "value": 92.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.fenn",
+        "row": "Unseen test set – Travel",
+        "column": "Fennick-Base",
+        "text": "90.9",
+        "value": 90.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.svm",
+        "row": "Unseen test set – Travel",
+        "column": "Keyword-SVM",
+        "text": "83.5",
+        "value": 83.5,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.n",
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r1.svm",
+      "T1.r2.n",
+      "T1.r2.wren",
+      "T1.r2.fenn",
+      "T1.r2.svm"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_17203a0736e1415db7a841cc",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Wrenfold vs Fennick-Base, macro-F1, unseen test set"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains.",
+    "revised_text": "The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "The evaluation was conducted only on Banking and Travel unseen test sets (T1 rows r1, r2). No other domains were evaluated, and no statistical test was reported. The claim correctly states the scope limitation and that no evidence of generalization to other domains exists.",
+    "valid": true,
+    "validation_notes": [
+     "cited ids not returned by this claim's tool calls: ['T1.r1', 'T1.r2']"
+    ]
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Both neural models substantially outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain.",
+   "actions": [
+    {
+     "call_id": "call_ed69c4caa6b6499e9e3cc3fb",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_cd70e005e7ae4b60b394c4e2",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 8.9,
+      "evidence_id": "T1.r1.wren",
+      "reference_evidence_id": "T1.r1.svm",
+      "mode": "difference"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_5747fa18464e4d0bad019c2d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 8.9,
+      "evidence_id": "T1.r2.wren",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.svm"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_9fe0739179844310bb573f55",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 7.4,
+      "evidence_id": "T1.r1.fenn",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.svm"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_ed69c4caa6b6499e9e3cc3fb",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Macro-F1 (%) by evaluation set, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.n",
+        "row": "Unseen test set – Banking",
+        "column": "Test utterances",
+        "text": "2,710",
+        "value": 2710.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.wren",
+        "row": "Unseen test set – Banking",
+        "column": "Wrenfold",
+        "text": "93.1",
+        "value": 93.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.fenn",
+        "row": "Unseen test set – Banking",
+        "column": "Fennick-Base",
+        "text": "91.6",
+        "value": 91.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.svm",
+        "row": "Unseen test set – Banking",
+        "column": "Keyword-SVM",
+        "text": "84.2",
+        "value": 84.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.n",
+        "row": "Unseen test set – Travel",
+        "column": "Test utterances",
+        "text": "2,760",
+        "value": 2760.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.wren",
+        "row": "Unseen test set – Travel",
+        "column": "Wrenfold",
+        "text": "92.4",
+        "value": 92.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.fenn",
+        "row": "Unseen test set – Travel",
+        "column": "Fennick-Base",
+        "text": "90.9",
+        "value": 90.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.svm",
+        "row": "Unseen test set – Travel",
+        "column": "Keyword-SVM",
+        "text": "83.5",
+        "value": 83.5,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.n",
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r1.svm",
+      "T1.r2.n",
+      "T1.r2.wren",
+      "T1.r2.fenn",
+      "T1.r2.svm"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_cd70e005e7ae4b60b394c4e2",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 8.9,
+      "actual": 8.9,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.wren",
+       "row": "Unseen test set – Banking",
+       "column": "Wrenfold",
+       "text": "93.1",
+       "value": 93.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.svm",
+       "row": "Unseen test set – Banking",
+       "column": "Keyword-SVM",
+       "text": "84.2",
+       "value": 84.2,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.wren"
+     },
+     "returned_ids": [
+      "T1.r1.wren",
+      "T1.r1.svm"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_5747fa18464e4d0bad019c2d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 8.9,
+      "actual": 8.9,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.wren",
+       "row": "Unseen test set – Travel",
+       "column": "Wrenfold",
+       "text": "92.4",
+       "value": 92.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.svm",
+       "row": "Unseen test set – Travel",
+       "column": "Keyword-SVM",
+       "text": "83.5",
+       "value": 83.5,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r2.wren"
+     },
+     "returned_ids": [
+      "T1.r2.wren",
+      "T1.r2.svm"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_9fe0739179844310bb573f55",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 7.4,
+      "actual": 7.4,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.fenn",
+       "row": "Unseen test set – Banking",
+       "column": "Fennick-Base",
+       "text": "91.6",
+       "value": 91.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.svm",
+       "row": "Unseen test set – Banking",
+       "column": "Keyword-SVM",
+       "text": "84.2",
+       "value": 84.2,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.fenn"
+     },
+     "returned_ids": [
+      "T1.r1.fenn",
+      "T1.r1.svm"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "WEAKEN",
+    "original_text": "Both neural models substantially outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain.",
+    "revised_text": "Both neural models outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain and Fennick-Base by 7.4 percentage points.",
+    "evidence_ids": [
+     "T1.r1.wren",
+     "T1.r1.svm",
+     "T1.r2.wren",
+     "T1.r2.svm",
+     "T1.r1.fenn",
+     "T1.r2.fenn"
+    ],
+    "rationale": "Wrenfold leads SVM by 8.9pp on both domains (93.1-84.2, 92.4-83.5), verified. But Fennick-Base leads SVM by only 7.4pp (91.6-84.2, 90.9-83.5), not 8.9. The claim's \"8.9 percentage points on each domain\" applies only to Wrenfold, not both neural models. Also \"substantially\" is descriptive; no test reported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain. However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant. The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains. Both neural models outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain and Fennick-Base by 7.4 percentage points.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base by 1.5 percentage points in each domain.",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "However, because no statistical tests were reported, these differences are descriptive only and cannot be interpreted as significant.",
+   "evidence_ids": [],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "The evaluation was limited to the Banking and Travel domains, so the results do not provide evidence that Wrenfold's advantage generalizes to other domains.",
+   "evidence_ids": [
+    "T1.r1",
+    "T1.r2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Both neural models outperformed the Keyword-SVM reference, with Wrenfold leading by 8.9 percentage points on each domain and Fennick-Base by 7.4 percentage points.",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.svm",
+    "T1.r2.wren",
+    "T1.r2.svm",
+    "T1.r1.fenn",
+    "T1.r2.fenn"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "GEN-p1b:shared_outline:outline:95eda6ba16",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629314-LNAYtknaAoIl3t0XTLts",
+   "finish_reason": "stop",
+   "prompt_tokens": 952,
+   "completion_tokens": 332,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00022624,
+   "cost_is_estimate": false,
+   "latency_s": 2.462,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:shared_outline:writer_from_outline:46038bb475",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629316-mmdmEqjNAFID1s585p8n",
+   "finish_reason": "stop",
+   "prompt_tokens": 1332,
+   "completion_tokens": 272,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026264,
+   "cost_is_estimate": false,
+   "latency_s": 1.885,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:91419bb6b8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630816-lHVosByR4tmUoeNycwYl",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2594,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000240944,
+   "cost_is_estimate": false,
+   "latency_s": 1.512,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:5d7e2a40a8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630817-24vz7FO7rqnkMVaCNWjC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3251,
+   "completion_tokens": 310,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000149816,
+   "cost_is_estimate": false,
+   "latency_s": 3.187,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:0ea56582ac",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630820-LG63Xii5erRGiQPH23I7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3841,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.42256e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.405,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:2923a5330e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630822-f8TQVb4oyx4TzrdN9R64",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4051,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.7832e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.537,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:32f7378825",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630823-KKuVTogYIabXuncHEbEg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4386,
+   "completion_tokens": 195,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00011028,
+   "cost_is_estimate": false,
+   "latency_s": 2.949,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:d096461730",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630826-ynF8zP4Hl1fwiWiLb8tS",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2535,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000241032,
+   "cost_is_estimate": false,
+   "latency_s": 1.613,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:e43af30239",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630828-Opw7Lvbx9xievFdeeh77",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2711,
+   "completion_tokens": 153,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.26592e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.28,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:214e13d984",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630830-Kqq8sn6B2RXH8MjB2B77",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2554,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.08592e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.789,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:f4433f1ca7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630832-kkjAH1mqifCGmfEZaPbz",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3211,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001042192,
+   "cost_is_estimate": false,
+   "latency_s": 1.398,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:dfef6a98e4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630834-7BWMrGN2mnvffgncfHzI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3387,
+   "completion_tokens": 169,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.09376e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.783,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:5a414339c6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630837-K1JfvcirAFE3nJMTJ60U",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2574,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.26192e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.467,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:2c32c14918",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630838-qKTdbgpxT6MFVbHjkTIv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3231,
+   "completion_tokens": 202,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000119544,
+   "cost_is_estimate": false,
+   "latency_s": 2.737,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:aacf528564",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630841-uP5rstyXCbgedgV6xvJP",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3704,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.27296e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.817,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:5910b26950",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630843-ErfVcQEqZ879n9RhjXIv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4037,
+   "completion_tokens": 202,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001032272,
+   "cost_is_estimate": false,
+   "latency_s": 2.498,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C5:verify_adaptive:755edb5ac0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630845-0MgG9tIeF2fYzgFRmENt",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4512,
+   "completion_tokens": 292,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000146976,
+   "cost_is_estimate": false,
+   "latency_s": 4.268,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 17,
+  "n_model_calls_condition_only": 15,
+  "n_tool_calls": 11,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 6,
+   "get_test_metadata": 2
+  },
+  "prompt_tokens": 52863,
+  "completion_tokens": 2689,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00219678,
+  "cost_usd_condition_only": 0.0017079,
+  "any_cost_estimated": false,
+  "latency_s": 37.587,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 3,
+   "WEAKEN": 1
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 5,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

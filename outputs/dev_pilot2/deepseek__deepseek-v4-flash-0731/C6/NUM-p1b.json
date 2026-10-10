@@ -1,0 +1,964 @@
+{
+ "run_id": "dev_pilot2:C6:NUM-p1b",
+ "case_id": "NUM-p1b",
+ "condition": "C6",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:02:08Z",
+ "finished_at": "2026-10-10T11:02:38Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "direct": "5eab9fd6633eb18eb515882976c8fa67e7e1905e665d011f2041f3e6ebfaa0ed"
+ },
+ "outline": null,
+ "drafts": [
+  {
+   "stage": "direct_draft",
+   "passage": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement. On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively. These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement.",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r3.kpy"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively.",
+     "evidence_ids": [
+      "T1.r1.kpyx",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r3"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement. On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively. These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement.",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r3.kpy"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively.",
+     "evidence_ids": [
+      "T1.r1.kpyx",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r3"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement.",
+   "actions": [
+    {
+     "call_id": "call_d3a1828e9c5740d795db0931",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_60af703dc1b648999b3d10c7",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.8,
+      "evidence_id": "T1.r1.kpy",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r3.kpy"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_0ea9c00dcd2e4335b1ee92ea",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_d3a1828e9c5740d795db0931",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Failure rate (%) on Kiln-Py and Kiln-PyX (greedy decoding, one sample per problem).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.params",
+        "row": "Ostler",
+        "column": "Parameters (B)",
+        "text": "13",
+        "value": 13.0,
+        "unit": "B",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.kpy",
+        "row": "Ostler",
+        "column": "Kiln-Py failure rate (%)",
+        "text": "38.8",
+        "value": 38.8,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.kpyx",
+        "row": "Ostler",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "76.5",
+        "value": 76.5,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.params",
+        "row": "Gimlet-S (ours)",
+        "column": "Parameters (B)",
+        "text": "3",
+        "value": 3.0,
+        "unit": "B",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.kpy",
+        "row": "Gimlet-S (ours)",
+        "column": "Kiln-Py failure rate (%)",
+        "text": "41.3",
+        "value": 41.3,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.kpyx",
+        "row": "Gimlet-S (ours)",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "78.1",
+        "value": 78.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.params",
+        "row": "Gimlet-L (ours)",
+        "column": "Parameters (B)",
+        "text": "13",
+        "value": 13.0,
+        "unit": "B",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.kpy",
+        "row": "Gimlet-L (ours)",
+        "column": "Kiln-Py failure rate (%)",
+        "text": "34.0",
+        "value": 34.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.kpyx",
+        "row": "Gimlet-L (ours)",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "68.9",
+        "value": 68.9,
+        "unit": "%",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.params",
+      "T1.r1.kpy",
+      "T1.r1.kpyx",
+      "T1.r2.params",
+      "T1.r2.kpy",
+      "T1.r2.kpyx",
+      "T1.r3.params",
+      "T1.r3.kpy",
+      "T1.r3.kpyx"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_60af703dc1b648999b3d10c7",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 4.8,
+      "actual": 4.8,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.kpy",
+       "row": "Ostler",
+       "column": "Kiln-Py failure rate (%)",
+       "text": "38.8",
+       "value": 38.8,
+       "unit": "%",
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r3.kpy",
+       "row": "Gimlet-L (ours)",
+       "column": "Kiln-Py failure rate (%)",
+       "text": "34.0",
+       "value": 34.0,
+       "unit": "%",
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r3.kpy"
+     },
+     "returned_ids": [
+      "T1.r1.kpy",
+      "T1.r3.kpy"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_0ea9c00dcd2e4335b1ee92ea",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Gimlet-L vs Ostler: failure rate on Kiln-Py and Kiln-PyX"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement.",
+    "revised_text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement.",
+    "evidence_ids": [
+     "T1.r1.kpy",
+     "T1.r3.kpy",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Table T1 shows Gimlet-L at 34.0% vs Ostler at 38.8% on Kiln-Py, a 4.8-point difference, matching the claim. No statistical test was reported, but the claim does not assert significance.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively.",
+   "actions": [
+    {
+     "call_id": "call_68cd591ed6144281a54a0906",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "kpyx"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_7d9a53cb8b714498baf21864",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 68.9,
+      "evidence_id": "T1.r3.kpyx"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_a23dbc8bc8434a45966cea64",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 76.5,
+      "evidence_id": "T1.r1.kpyx"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_4013430315724f9ca86cf2ba",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_68cd591ed6144281a54a0906",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Failure rate (%) on Kiln-Py and Kiln-PyX (greedy decoding, one sample per problem).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.kpyx",
+        "row": "Ostler",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "76.5",
+        "value": 76.5,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.kpyx",
+        "row": "Gimlet-S (ours)",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "78.1",
+        "value": 78.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.kpyx",
+        "row": "Gimlet-L (ours)",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "68.9",
+        "value": 68.9,
+        "unit": "%",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.kpyx",
+      "T1.r2.kpyx",
+      "T1.r3.kpyx"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_7d9a53cb8b714498baf21864",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 68.9,
+      "actual": 68.9,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.kpyx",
+       "row": "Gimlet-L (ours)",
+       "column": "Kiln-PyX failure rate (%)",
+       "text": "68.9",
+       "value": 68.9,
+       "unit": "%",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r3.kpyx"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_a23dbc8bc8434a45966cea64",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 76.5,
+      "actual": 76.5,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.kpyx",
+       "row": "Ostler",
+       "column": "Kiln-PyX failure rate (%)",
+       "text": "76.5",
+       "value": 76.5,
+       "unit": "%",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.kpyx"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_4013430315724f9ca86cf2ba",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Gimlet-L vs Ostler: failure rate on Kiln-Py and Kiln-PyX"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively.",
+    "revised_text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively.",
+    "evidence_ids": [
+     "T1.r3.kpyx",
+     "T1.r1.kpyx",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Table T1 confirms Gimlet-L failure rate 68.9% on Kiln-PyX vs Ostler 76.5% (lower is better), so Gimlet-L outperformed Ostler. Numbers match exactly. No statistical test was reported, but the claim does not assert significance.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+   "actions": [
+    {
+     "call_id": "call_1f27e9d1d75243d59a9a56f0",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_7c8405921a7749e0a1acdcd9",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_1f27e9d1d75243d59a9a56f0",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Failure rate (%) on Kiln-Py and Kiln-PyX (greedy decoding, one sample per problem).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.params",
+        "row": "Ostler",
+        "column": "Parameters (B)",
+        "text": "13",
+        "value": 13.0,
+        "unit": "B",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.kpy",
+        "row": "Ostler",
+        "column": "Kiln-Py failure rate (%)",
+        "text": "38.8",
+        "value": 38.8,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.kpyx",
+        "row": "Ostler",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "76.5",
+        "value": 76.5,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.params",
+        "row": "Gimlet-S (ours)",
+        "column": "Parameters (B)",
+        "text": "3",
+        "value": 3.0,
+        "unit": "B",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.kpy",
+        "row": "Gimlet-S (ours)",
+        "column": "Kiln-Py failure rate (%)",
+        "text": "41.3",
+        "value": 41.3,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.kpyx",
+        "row": "Gimlet-S (ours)",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "78.1",
+        "value": 78.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.params",
+        "row": "Gimlet-L (ours)",
+        "column": "Parameters (B)",
+        "text": "13",
+        "value": 13.0,
+        "unit": "B",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.kpy",
+        "row": "Gimlet-L (ours)",
+        "column": "Kiln-Py failure rate (%)",
+        "text": "34.0",
+        "value": 34.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.kpyx",
+        "row": "Gimlet-L (ours)",
+        "column": "Kiln-PyX failure rate (%)",
+        "text": "68.9",
+        "value": 68.9,
+        "unit": "%",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.params",
+      "T1.r1.kpy",
+      "T1.r1.kpyx",
+      "T1.r2.params",
+      "T1.r2.kpy",
+      "T1.r2.kpyx",
+      "T1.r3.params",
+      "T1.r3.kpy",
+      "T1.r3.kpyx"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_7c8405921a7749e0a1acdcd9",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Gimlet-L vs Ostler: failure rate on Kiln-Py and Kiln-PyX"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+    "revised_text": "These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+    "evidence_ids": [
+     "T1.r1.kpy",
+     "T1.r1.kpyx",
+     "T1.r3.kpy",
+     "T1.r3.kpyx",
+     "T1.r1.params",
+     "T1.r3.params",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Gimlet-L (13B) has lower failure rate than Ostler (13B) on both benchmarks: 34.0 vs 38.8 on Kiln-Py, 68.9 vs 76.5 on Kiln-PyX. No statistical test was reported, and the claim explicitly notes this, so it does not overstate significance.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement. On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively. These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement.",
+   "evidence_ids": [
+    "T1.r1.kpy",
+    "T1.r3.kpy"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively.",
+   "evidence_ids": [
+    "T1.r1.kpyx",
+    "T1.r3.kpyx"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+   "evidence_ids": [
+    "T1.r1",
+    "T1.r3"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NUM-p1b:shared_direct:writer_direct:d73ec1798f",
+   "role": "writer_direct",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629627-hnSda7CH1x1JjO0uFXxh",
+   "finish_reason": "stop",
+   "prompt_tokens": 964,
+   "completion_tokens": 199,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00019068,
+   "cost_is_estimate": false,
+   "latency_s": 1.896,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:60a963ab7b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629718-5zfrhisEIMEpKx8w1vvb",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2486,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000231176,
+   "cost_is_estimate": false,
+   "latency_s": 1.512,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:a4f9c91800",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629720-rlkLB8t29Ut2nvE5KEdx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3237,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001170672,
+   "cost_is_estimate": false,
+   "latency_s": 3.098,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:5b78a497a3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629723-1TSlLjcHIigwc1Cf0C0r",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3575,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.08176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.4,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:8444ed222d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629724-rbwxL9oQR1BwiUBNYiFh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3755,
+   "completion_tokens": 174,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.28304e-05,
+   "cost_is_estimate": false,
+   "latency_s": 4.111,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:5dfb79429d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629728-EMpOuJgv9Si18C3VQ5KB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2488,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000236104,
+   "cost_is_estimate": false,
+   "latency_s": 1.508,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:1d8d63f2cc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629730-PKbv1ebqz1mZMchlXJlS",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2852,
+   "completion_tokens": 124,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.74112e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.212,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:b327dda45e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629733-tghRJXiISaP6FKxERsiz",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3171,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.73408e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.68,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:50baa805c7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629736-qmbyuM7QxhxAjtnQcBwj",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3386,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.41856e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.484,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:a7729e7672",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629737-6uNSX5Zx9L19Y1mvQ6f9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3566,
+   "completion_tokens": 182,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.83104e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.976,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:8610f883b7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629740-8LiYRZdhvI8c8pCzk60C",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2491,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.95712e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.577,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:61f9d38153",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629742-g4xTM7edWwE6sNRdSzuA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3342,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001157472,
+   "cost_is_estimate": false,
+   "latency_s": 1.492,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C6:verify_adaptive:a92c2fe219",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629744-HglsHDujpkebDbK6k4Kr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3522,
+   "completion_tokens": 227,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.63184e-05,
+   "cost_is_estimate": false,
+   "latency_s": 4.109,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 13,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 9,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 3,
+   "get_test_metadata": 3
+  },
+  "prompt_tokens": 38835,
+  "completion_tokens": 1500,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00146756,
+  "cost_usd_condition_only": 0.00127688,
+  "any_cost_estimated": false,
+  "latency_s": 31.055,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 2,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

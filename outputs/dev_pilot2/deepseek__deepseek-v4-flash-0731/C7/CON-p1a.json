@@ -1,0 +1,293 @@
+{
+ "run_id": "dev_pilot2:C7:CON-p1a",
+ "case_id": "CON-p1a",
+ "condition": "C7",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:51:39Z",
+ "finished_at": "2026-10-10T10:51:39Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "98e824dfae62e51fcaccd853230d35d23ca696d5c8bf42eff48702fa00733a14"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Ferrule achieves higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with differences ranging from 0.7 to 1.2 percentage points.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.arb",
+     "T1.r2.fer",
+     "T1.r2.arb",
+     "T1.r3.fer",
+     "T1.r3.arb",
+     "T1.r4.fer",
+     "T1.r4.arb",
+     "T1.r5.fer",
+     "T1.r5.arb",
+     "T1.r6.fer",
+     "T1.r6.arb"
+    ],
+    "scope": "Six binary-classification datasets (2,400–310,000 rows), test AUROC (×100), mean over 5 seeds, fixed 70/10/20 split, 50-trial hyperparameter search.",
+    "caveats": "No statistical tests were reported, so the consistency of the advantage across datasets cannot be formally assessed; the differences are small (≤1.2 points)."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Ferrule also outperforms logistic regression on all six datasets, with larger margins (3.6–4.4 percentage points) than against Arbor-GBT.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.lr",
+     "T1.r2.fer",
+     "T1.r2.lr",
+     "T1.r3.fer",
+     "T1.r3.lr",
+     "T1.r4.fer",
+     "T1.r4.lr",
+     "T1.r5.fer",
+     "T1.r5.lr",
+     "T1.r6.fer",
+     "T1.r6.lr"
+    ],
+    "scope": "Same six datasets and evaluation conditions as F1.",
+    "caveats": "No statistical tests reported; logistic regression is a simple reference, not a tuned competitor."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The evidence supports that Ferrule outperforms Arbor-GBT on this specific suite, but the absence of statistical tests means the result cannot be claimed as statistically significant or reliable beyond the observed means.",
+    "evidence_ids": [
+     "T1.r1.fer",
+     "T1.r1.arb",
+     "T1.r2.fer",
+     "T1.r2.arb",
+     "T1.r3.fer",
+     "T1.r3.arb",
+     "T1.r4.fer",
+     "T1.r4.arb",
+     "T1.r5.fer",
+     "T1.r5.arb",
+     "T1.r6.fer",
+     "T1.r6.arb"
+    ],
+    "scope": "All six datasets in the suite; test AUROC means.",
+    "caveats": "No statistical tests reported; conclusions are limited to the evaluated datasets and settings."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims). Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points. These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r6.fer",
+      "T1.r6.arb"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points.",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.lr",
+      "T1.r2.fer",
+      "T1.r2.lr",
+      "T1.r3.fer",
+      "T1.r3.lr",
+      "T1.r4.fer",
+      "T1.r4.lr",
+      "T1.r5.fer",
+      "T1.r5.lr",
+      "T1.r6.fer",
+      "T1.r6.lr"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+     "evidence_ids": [
+      "T1.r1.fer",
+      "T1.r1.arb",
+      "T1.r2.fer",
+      "T1.r2.arb",
+      "T1.r3.fer",
+      "T1.r3.arb",
+      "T1.r4.fer",
+      "T1.r4.arb",
+      "T1.r5.fer",
+      "T1.r5.arb",
+      "T1.r6.fer",
+      "T1.r6.arb"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [],
+ "final_passage": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims). Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points. These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Ferrule achieved higher mean test AUROC than Arbor-GBT on all six datasets in the suite, with margins ranging from 0.7 to 1.2 percentage points (e.g., 93.7 vs. 92.8 on Ivel-Fraud and 76.4 vs. 75.6 on Pemberly-Claims).",
+   "evidence_ids": [
+    "T1.r1.fer",
+    "T1.r1.arb",
+    "T1.r2.fer",
+    "T1.r2.arb",
+    "T1.r3.fer",
+    "T1.r3.arb",
+    "T1.r4.fer",
+    "T1.r4.arb",
+    "T1.r5.fer",
+    "T1.r5.arb",
+    "T1.r6.fer",
+    "T1.r6.arb"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Ferrule also outperformed logistic regression on all six datasets, with larger margins of 3.6–4.4 percentage points.",
+   "evidence_ids": [
+    "T1.r1.fer",
+    "T1.r1.lr",
+    "T1.r2.fer",
+    "T1.r2.lr",
+    "T1.r3.fer",
+    "T1.r3.lr",
+    "T1.r4.fer",
+    "T1.r4.lr",
+    "T1.r5.fer",
+    "T1.r5.lr",
+    "T1.r6.fer",
+    "T1.r6.lr"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "These results support that Ferrule outperforms Arbor-GBT on this specific suite, but because no statistical tests were reported, the advantage cannot be claimed as statistically significant or reliable beyond the observed means.",
+   "evidence_ids": [
+    "T1.r1.fer",
+    "T1.r1.arb",
+    "T1.r2.fer",
+    "T1.r2.arb",
+    "T1.r3.fer",
+    "T1.r3.arb",
+    "T1.r4.fer",
+    "T1.r4.arb",
+    "T1.r5.fer",
+    "T1.r5.arb",
+    "T1.r6.fer",
+    "T1.r6.arb"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "CON-p1a:shared_outline:outline:fccb5d36dd",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628931-8pYTXdta1lzlmTvT5v0O",
+   "finish_reason": "stop",
+   "prompt_tokens": 1035,
+   "completion_tokens": 611,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00031598,
+   "cost_is_estimate": false,
+   "latency_s": 10.62,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p1a:shared_outline:writer_from_outline:94bf862ae1",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628942-2C03qZcI1PWrgONWPobL",
+   "finish_reason": "stop",
+   "prompt_tokens": 1721,
+   "completion_tokens": 462,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0003703,
+   "cost_is_estimate": false,
+   "latency_s": 1.831,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 2,
+  "n_model_calls_condition_only": 0,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 2756,
+  "completion_tokens": 1073,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00068628,
+  "cost_usd_condition_only": 0,
+  "any_cost_estimated": false,
+  "latency_s": 12.451,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

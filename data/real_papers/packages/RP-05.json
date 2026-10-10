@@ -1,0 +1,63 @@
+{
+ "case_id": "RP-05",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does Method M produce news summaries that follow a requested discourse structure more closely than prompting-based LLM baselines, and does this come at a cost in content accuracy?",
+  "methods_summary": "The task is to summarize a news article into a sequence of sentences that each play a requested discourse role (e.g., introductory element, contextual detail, source attribution). A sentence-level discourse classifier, trained on Dataset D and reported at over 90% validation accuracy, guides generation. Method M (beam variant) writes the summary one target role at a time: LLaMa-3-8B proposes candidate sentences (beam size 16) and the classifier keeps those that best match the target role. Method M (edit variant) drafts a full summary and repeatedly regenerates sentences whose predicted role is wrong.",
+  "experimental_setup": "Data: Dataset D, news articles paired with social-media and newsletter summaries labelled with sentence-level discourse roles; target role sequences are sampled randomly per generation. Baselines: DeepSeek-V3, Claude-3.5-Sonnet, GPT-4o, Qwen-2.5 and LLaMa-3-8B prompted directly (the paper states that vanilla generation keeps the best of 16 samples according to the same classifier), plus LLaMa-3-8B fine-tuned with PEFT on Dataset D. Metrics: ROUGE-L, FactCC and AlignScore for content; Match Score, Levenshtein distance and LCS between predicted and target role sequences, using either the automatic classifier or two human annotators.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Structure-controlled summarization: content accuracy and structural adherence (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M (beam variant) vs proprietary and open-source prompting baselines on structural metrics (automatic and human)"},
+     {"comparison_id": "cmp2", "description": "Method M (beam variant) vs baselines on content-accuracy metrics (ROUGE-L, FactCC, AlignScore)"},
+     {"comparison_id": "cmp3", "description": "Method M edit variant vs beam variant, and fine-tuned LLaMa-3-8B vs vanilla LLaMa-3-8B"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Structure-controlled news summarization on the test data of Dataset D (the paper's new news-summary dataset). Content accuracy: ROUGE-L (%), FactCC, AlignScore. Structural adherence to the target discourse-label sequence: Match Score (MS) and Levenshtein distance (Lev), computed from labels assigned by the automatic discourse labeler ('Auto') or by human annotators ('Human').",
+    "columns": [
+     {"column_id": "rl", "header": "ROUGE-L (%)", "unit": "%", "higher_is_better": true},
+     {"column_id": "factcc", "header": "FactCC", "unit": null, "higher_is_better": true},
+     {"column_id": "align", "header": "AlignScore", "unit": null, "higher_is_better": true},
+     {"column_id": "auto_ms", "header": "Auto MS", "unit": null, "higher_is_better": true},
+     {"column_id": "auto_lev", "header": "Auto Lev", "unit": null, "higher_is_better": false},
+     {"column_id": "hum_ms", "header": "Human MS", "unit": null, "higher_is_better": true},
+     {"column_id": "hum_lev", "header": "Human Lev", "unit": null, "higher_is_better": false}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "DeepSeek-V3", "cells": {"rl": {"text": "47.15", "value": 47.15, "spread": null}, "factcc": {"text": "0.47", "value": 0.47, "spread": null}, "align": {"text": "0.3886", "value": 0.3886, "spread": null}, "auto_ms": {"text": "0.26", "value": 0.26, "spread": null}, "auto_lev": {"text": "0.64", "value": 0.64, "spread": null}, "hum_ms": {"text": "0.24", "value": 0.24, "spread": null}, "hum_lev": {"text": "0.65", "value": 0.65, "spread": null}}},
+     {"row_id": "r2", "label": "Claude", "cells": {"rl": {"text": "34.30", "value": 34.3, "spread": null}, "factcc": {"text": "0.70", "value": 0.7, "spread": null}, "align": {"text": "0.3882", "value": 0.3882, "spread": null}, "auto_ms": {"text": "0.25", "value": 0.25, "spread": null}, "auto_lev": {"text": "0.68", "value": 0.68, "spread": null}, "hum_ms": {"text": "0.20", "value": 0.2, "spread": null}, "hum_lev": {"text": "0.49", "value": 0.49, "spread": null}}},
+     {"row_id": "r3", "label": "GPT-4o", "cells": {"rl": {"text": "29.51", "value": 29.51, "spread": null}, "factcc": {"text": "0.63", "value": 0.63, "spread": null}, "align": {"text": "0.3884", "value": 0.3884, "spread": null}, "auto_ms": {"text": "0.11", "value": 0.11, "spread": null}, "auto_lev": {"text": "0.80", "value": 0.8, "spread": null}, "hum_ms": {"text": "0.15", "value": 0.15, "spread": null}, "hum_lev": {"text": "0.58", "value": 0.58, "spread": null}}},
+     {"row_id": "r4", "label": "Qwen-2.5", "cells": {"rl": {"text": "40.82", "value": 40.82, "spread": null}, "factcc": {"text": "0.58", "value": 0.58, "spread": null}, "align": {"text": "0.3888", "value": 0.3888, "spread": null}, "auto_ms": {"text": "0.24", "value": 0.24, "spread": null}, "auto_lev": {"text": "0.66", "value": 0.66, "spread": null}, "hum_ms": {"text": "0.15", "value": 0.15, "spread": null}, "hum_lev": {"text": "0.52", "value": 0.52, "spread": null}}},
+     {"row_id": "r5", "label": "LLaMa-3-8B", "cells": {"rl": {"text": "47.18", "value": 47.18, "spread": null}, "factcc": {"text": "0.50", "value": 0.5, "spread": null}, "align": {"text": "0.3496", "value": 0.3496, "spread": null}, "auto_ms": {"text": "0.21", "value": 0.21, "spread": null}, "auto_lev": {"text": "0.77", "value": 0.77, "spread": null}, "hum_ms": {"text": "0.24", "value": 0.24, "spread": null}, "hum_lev": {"text": "0.49", "value": 0.49, "spread": null}}},
+     {"row_id": "r6", "label": "LLaMa-3-8B, fine-tuned", "cells": {"rl": {"text": "22.01", "value": 22.01, "spread": null}, "factcc": {"text": "0.61", "value": 0.61, "spread": null}, "align": {"text": "0.3495", "value": 0.3495, "spread": null}, "auto_ms": {"text": "0.14", "value": 0.14, "spread": null}, "auto_lev": {"text": "0.77", "value": 0.77, "spread": null}, "hum_ms": {"text": "0.18", "value": 0.18, "spread": null}, "hum_lev": {"text": "0.55", "value": 0.55, "spread": null}}},
+     {"row_id": "r7", "label": "LLaMa-3-8B + Method M (edit variant)", "cells": {"rl": {"text": "15.28", "value": 15.28, "spread": null}, "factcc": {"text": "0.59", "value": 0.59, "spread": null}, "align": {"text": "-", "value": null, "spread": null}, "auto_ms": {"text": "0.51", "value": 0.51, "spread": null}, "auto_lev": {"text": "0.48", "value": 0.48, "spread": null}, "hum_ms": {"text": "0.24", "value": 0.24, "spread": null}, "hum_lev": {"text": "0.65", "value": 0.65, "spread": null}}},
+     {"row_id": "r8", "label": "LLaMa-3-8B + Method M (beam variant)", "cells": {"rl": {"text": "42.98", "value": 42.98, "spread": null}, "factcc": {"text": "0.64", "value": 0.64, "spread": null}, "align": {"text": "0.3890", "value": 0.389, "spread": null}, "auto_ms": {"text": "0.72", "value": 0.72, "spread": null}, "auto_lev": {"text": "0.32", "value": 0.32, "spread": null}, "hum_ms": {"text": "0.55", "value": 0.55, "spread": null}, "hum_lev": {"text": "0.17", "value": 0.17, "spread": null}}}
+    ],
+    "notes": "Dropped: O1 row (several metrics missing) and the two LCS columns (automatic and human). '-' = not reported in the source. Bold/underline markers not reproduced. Single run per system; no variance or significance tests reported. Human structural labels come from two annotators on 100 summaries per model."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "FactCC is a model-based metric that classifies whether each generated sentence is factually consistent with the source document."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "The authors' generation methods (sentence-level discourse-driven beam search; iterative editing) renamed to 'Method M (beam variant)' / 'Method M (edit variant)'. Table used: main results (tab:main_result), subset of rows/columns. The paper uses the name DiscoSum for both its dataset and its algorithm, so the dataset is also renamed ('Dataset D'). Human-preference MRR and beam-size results are figures and were not used. Abstract, results prose and conclusion withheld.",
+  "citation": "Alexander Spangher, Tenghao Huang, Jialiang Gu, Jiatong Shi, Muhao Chen (2025). DiscoSum: Discourse-aware News Summarization. arXiv:2506.06930",
+  "url": "https://arxiv.org/abs/2506.06930",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "fe47ec019a0a9672bae44ae521877995952c692c4b8e1f1ee20966c74ea0e09a"
+ }
+}

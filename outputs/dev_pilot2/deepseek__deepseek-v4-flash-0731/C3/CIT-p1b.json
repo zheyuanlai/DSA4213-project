@@ -1,0 +1,1492 @@
+{
+ "run_id": "dev_pilot2:C3:CIT-p1b",
+ "case_id": "CIT-p1b",
+ "condition": "C3",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:46:12Z",
+ "finished_at": "2026-10-10T10:47:19Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "baf5833ad0eaef2c597f3cfc97e1fdfb980f25667bb1aa1d5cd68e6c93496b20"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Verisum reduces the hallucination rate on Tamsin-News to 8.7%, compared to 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone.",
+    "evidence_ids": [
+     "T1.r1.hall",
+     "T1.r2.hall",
+     "T1.r3.hall"
+    ],
+    "scope": "Tamsin-News test split (3,000 articles), hallucination rate metric",
+    "caveats": "Single training run; no statistical tests reported."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "The reduction from Corran-Sum to Verisum (15.1% to 8.7%, a 42% relative decrease) is larger than the reduction from Corran-Sum to Corran-Sum + salience filter (15.1% to 11.0%, a 27% relative decrease) in this evaluation.",
+    "evidence_ids": [
+     "T1.r1.hall",
+     "T1.r2.hall",
+     "T1.r3.hall"
+    ],
+    "scope": "Tamsin-News test split, hallucination rate",
+    "caveats": "No statistical test; single run; comparison is within this dataset only."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The 27% relative reduction from salience pre-filtering in this study is similar to the 31% average reduction reported by Varga & Sandoval (2021), though the absolute rates differ (11.0% vs 9.8% on average).",
+    "evidence_ids": [
+     "T1.r2.hall",
+     "P1"
+    ],
+    "scope": "Tamsin-News test split vs three news benchmarks in P1",
+    "caveats": "Different datasets and implementations; no statistical comparison."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "ROUGE-L for Verisum (38.9) is slightly higher than for Corran-Sum (38.2) and Corran-Sum + salience filter (38.0), but differences are small and no significance test is reported.",
+    "evidence_ids": [
+     "T1.r1.rougeL",
+     "T1.r2.rougeL",
+     "T1.r3.rougeL"
+    ],
+    "scope": "Tamsin-News test split, ROUGE-L",
+    "caveats": "No statistical test; single run."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone. The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once. The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations. ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone.",
+     "evidence_ids": [
+      "T1.r1.hall",
+      "T1.r2.hall",
+      "T1.r3.hall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once.",
+     "evidence_ids": [
+      "T1.r1.hall",
+      "T1.r2.hall",
+      "T1.r3.hall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations.",
+     "evidence_ids": [
+      "T1.r2.hall",
+      "P1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+     "evidence_ids": [
+      "T1.r1.rougeL",
+      "T1.r2.rougeL",
+      "T1.r3.rougeL"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_scripted",
+   "passage": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone. The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once. The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations. ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone.",
+     "evidence_ids": [
+      "T1.r1.hall",
+      "T1.r2.hall",
+      "T1.r3.hall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once.",
+     "evidence_ids": [
+      "T1.r1.hall",
+      "T1.r2.hall",
+      "T1.r3.hall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations.",
+     "evidence_ids": [
+      "T1.r2.hall",
+      "P1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+     "evidence_ids": [
+      "T1.r1.rougeL",
+      "T1.r2.rougeL",
+      "T1.r3.rougeL"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone.",
+   "actions": [
+    {
+     "call_id": "call_142999d9fe654b0baf7635db",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_a6cb550dbd1a43b4ae7d1b22",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 8.7,
+      "evidence_id": "T1.r3.hall"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_431f280d94434f1197910703",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_a5e817774a484e7fb8bd43e3",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "Tamsin-News test split"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_142999d9fe654b0baf7635db",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Hallucination rate and ROUGE-L on the Tamsin-News test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hall",
+        "row": "Corran-Sum",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.rougeL",
+        "row": "Corran-Sum",
+        "column": "ROUGE-L",
+        "text": "38.2",
+        "value": 38.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hall",
+        "row": "Corran-Sum + salience filter",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "11.0",
+        "value": 11.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.rougeL",
+        "row": "Corran-Sum + salience filter",
+        "column": "ROUGE-L",
+        "text": "38.0",
+        "value": 38.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hall",
+        "row": "Verisum (ours)",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "8.7",
+        "value": 8.7,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.rougeL",
+        "row": "Verisum (ours)",
+        "column": "ROUGE-L",
+        "text": "38.9",
+        "value": 38.9,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hall",
+      "T1.r1.rougeL",
+      "T1.r2.hall",
+      "T1.r2.rougeL",
+      "T1.r3.hall",
+      "T1.r3.rougeL"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_a6cb550dbd1a43b4ae7d1b22",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 8.7,
+      "actual": 8.7,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.hall",
+       "row": "Verisum (ours)",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "8.7",
+       "value": 8.7,
+       "unit": "%",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r3.hall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_431f280d94434f1197910703",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Verisum vs Corran-Sum: hallucination rate"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_a5e817774a484e7fb8bd43e3",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Varga & Sandoval (2021)",
+        "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+        "text": "Across the three news summarization benchmarks we evaluated, salience pre-filtering reduced the share of summaries containing an unsupported entity by 31% relative to the unfiltered summarizer (from 14.2% to 9.8% on average), while ROUGE-L changed by less than 0.5 points. The filter scores each source sentence with a lightweight classifier and removes sentences scoring below 0.35."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone.",
+    "revised_text": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone.",
+    "evidence_ids": [
+     "T1.r1.hall",
+     "T1.r2.hall",
+     "T1.r3.hall"
+    ],
+    "rationale": "All three hallucination rates match the table exactly: Verisum 8.7% (T1.r3.hall), Corran-Sum + salience filter 11.0% (T1.r2.hall), Corran-Sum 15.1% (T1.r1.hall). The claim reports values only, with no significance assertion, so it is supported as stated.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once.",
+   "actions": [
+    {
+     "call_id": "call_ed59c58473234be9be5aa9f7",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_f010ecc3b7d242bda6cb94ab",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 42,
+      "evidence_id": "T1.r1.hall",
+      "mode": "percent_change",
+      "reference_evidence_id": "T1.r3.hall"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_3d04d45864104de49d1080db",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_01619e08634f418c9dd177f6",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_ed59c58473234be9be5aa9f7",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Hallucination rate and ROUGE-L on the Tamsin-News test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hall",
+        "row": "Corran-Sum",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.rougeL",
+        "row": "Corran-Sum",
+        "column": "ROUGE-L",
+        "text": "38.2",
+        "value": 38.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hall",
+        "row": "Corran-Sum + salience filter",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "11.0",
+        "value": 11.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.rougeL",
+        "row": "Corran-Sum + salience filter",
+        "column": "ROUGE-L",
+        "text": "38.0",
+        "value": 38.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hall",
+        "row": "Verisum (ours)",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "8.7",
+        "value": 8.7,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.rougeL",
+        "row": "Verisum (ours)",
+        "column": "ROUGE-L",
+        "text": "38.9",
+        "value": 38.9,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hall",
+      "T1.r1.rougeL",
+      "T1.r2.hall",
+      "T1.r2.rougeL",
+      "T1.r3.hall",
+      "T1.r3.rougeL"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_f010ecc3b7d242bda6cb94ab",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "percent_change",
+      "claimed": 42.0,
+      "actual": 73.563218,
+      "abs_error": 31.563218,
+      "tolerance": 0.7356321839080461,
+      "match": false,
+      "evidence": {
+       "evidence_id": "T1.r1.hall",
+       "row": "Corran-Sum",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "15.1",
+       "value": 15.1,
+       "unit": "%",
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r3.hall",
+       "row": "Verisum (ours)",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "8.7",
+       "value": 8.7,
+       "unit": "%",
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r3.hall",
+      "unit_note": "percent change relative to the reference"
+     },
+     "returned_ids": [
+      "T1.r1.hall",
+      "T1.r3.hall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_3d04d45864104de49d1080db",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Verisum vs Corran-Sum: hallucination rate"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_01619e08634f418c9dd177f6",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Varga & Sandoval (2021)",
+        "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+        "text": "Across the three news summarization benchmarks we evaluated, salience pre-filtering reduced the share of summaries containing an unsupported entity by 31% relative to the unfiltered summarizer (from 14.2% to 9.8% on average), while ROUGE-L changed by less than 0.5 points. The filter scores each source sentence with a lightweight classifier and removes sentences scoring below 0.35."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once.",
+    "revised_text": "The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once.",
+    "evidence_ids": [
+     "T1.r1.hall",
+     "T1.r2.hall",
+     "T1.r3.hall",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Relative reduction Corran-Sum→Verisum: (15.1-8.7)/15.1 = 42.4% ≈ 42%. Corran-Sum→salience filter: (15.1-11.0)/15.1 = 27.2% ≈ 27%. So 42% > 27% is supported. No statistical test reported (absent:test:exp1/cmp1) and single run per system is stated in methods, matching the claim's caveats.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 6,
+   "protocol_errors": [
+    "invalid decision: WEAKEN without revised_text"
+   ],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations.",
+   "actions": [
+    {
+     "call_id": "call_65da404a24744db1aa9a984a",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_dadfc5e0741e498cb2d8529f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 27,
+      "evidence_id": "T1.r2.hall",
+      "reference_evidence_id": "T1.r1.hall",
+      "mode": "percent_change"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_d58fca4419554f95b652ffa7",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_c52fbf8af2be493195405aa7",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_65da404a24744db1aa9a984a",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Hallucination rate and ROUGE-L on the Tamsin-News test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hall",
+        "row": "Corran-Sum",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.rougeL",
+        "row": "Corran-Sum",
+        "column": "ROUGE-L",
+        "text": "38.2",
+        "value": 38.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hall",
+        "row": "Corran-Sum + salience filter",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "11.0",
+        "value": 11.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.rougeL",
+        "row": "Corran-Sum + salience filter",
+        "column": "ROUGE-L",
+        "text": "38.0",
+        "value": 38.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hall",
+        "row": "Verisum (ours)",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "8.7",
+        "value": 8.7,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.rougeL",
+        "row": "Verisum (ours)",
+        "column": "ROUGE-L",
+        "text": "38.9",
+        "value": 38.9,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hall",
+      "T1.r1.rougeL",
+      "T1.r2.hall",
+      "T1.r2.rougeL",
+      "T1.r3.hall",
+      "T1.r3.rougeL"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_dadfc5e0741e498cb2d8529f",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "percent_change",
+      "claimed": 27.0,
+      "actual": -27.152318,
+      "abs_error": 54.152318,
+      "tolerance": 0.5,
+      "match": false,
+      "evidence": {
+       "evidence_id": "T1.r2.hall",
+       "row": "Corran-Sum + salience filter",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "11.0",
+       "value": 11.0,
+       "unit": "%",
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r1.hall",
+       "row": "Corran-Sum",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "15.1",
+       "value": 15.1,
+       "unit": "%",
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r2.hall",
+      "sign_mismatch": true,
+      "unit_note": "percent change relative to the reference"
+     },
+     "returned_ids": [
+      "T1.r2.hall",
+      "T1.r1.hall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_d58fca4419554f95b652ffa7",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Corran-Sum + salience filter vs Corran-Sum: hallucination rate"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_c52fbf8af2be493195405aa7",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Varga & Sandoval (2021)",
+        "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+        "text": "Across the three news summarization benchmarks we evaluated, salience pre-filtering reduced the share of summaries containing an unsupported entity by 31% relative to the unfiltered summarizer (from 14.2% to 9.8% on average), while ROUGE-L changed by less than 0.5 points. The filter scores each source sentence with a lightweight classifier and removes sentences scoring below 0.35."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations.",
+    "revised_text": "The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations.",
+    "evidence_ids": [
+     "T1.r2.hall",
+     "T1.r1.hall",
+     "P1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "The 27% relative reduction (11.0 vs 15.1) is confirmed by the table. P1 reports a 31% average reduction (14.2% to 9.8%) across three benchmarks. The claim's comparison of 27% vs 31% and absolute rates (11.0% vs 9.8%) across different datasets/implementations is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+   "actions": [
+    {
+     "call_id": "call_7708cddb8c684bd5a5b2b18a",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_25b6a299a3ec49cab7c5d5a0",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 38.9,
+      "evidence_id": "T1.r3.rougeL"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_1c763dfc071f44cabf1aacdb",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_29bd95d54feb414c95d84ee6",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_7708cddb8c684bd5a5b2b18a",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Hallucination rate and ROUGE-L on the Tamsin-News test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hall",
+        "row": "Corran-Sum",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.rougeL",
+        "row": "Corran-Sum",
+        "column": "ROUGE-L",
+        "text": "38.2",
+        "value": 38.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hall",
+        "row": "Corran-Sum + salience filter",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "11.0",
+        "value": 11.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.rougeL",
+        "row": "Corran-Sum + salience filter",
+        "column": "ROUGE-L",
+        "text": "38.0",
+        "value": 38.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hall",
+        "row": "Verisum (ours)",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "8.7",
+        "value": 8.7,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.rougeL",
+        "row": "Verisum (ours)",
+        "column": "ROUGE-L",
+        "text": "38.9",
+        "value": 38.9,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hall",
+      "T1.r1.rougeL",
+      "T1.r2.hall",
+      "T1.r2.rougeL",
+      "T1.r3.hall",
+      "T1.r3.rougeL"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_25b6a299a3ec49cab7c5d5a0",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 38.9,
+      "actual": 38.9,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.rougeL",
+       "row": "Verisum (ours)",
+       "column": "ROUGE-L",
+       "text": "38.9",
+       "value": 38.9,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.rougeL"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_1c763dfc071f44cabf1aacdb",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Verisum vs Corran-Sum: hallucination rate"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_29bd95d54feb414c95d84ee6",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Varga & Sandoval (2021)",
+        "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+        "text": "Across the three news summarization benchmarks we evaluated, salience pre-filtering reduced the share of summaries containing an unsupported entity by 31% relative to the unfiltered summarizer (from 14.2% to 9.8% on average), while ROUGE-L changed by less than 0.5 points. The filter scores each source sentence with a lightweight classifier and removes sentences scoring below 0.35."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+    "revised_text": "ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+    "evidence_ids": [
+     "T1.r1.rougeL",
+     "T1.r2.rougeL",
+     "T1.r3.rougeL",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "ROUGE-L values match the table exactly (Verisum 38.9, Corran-Sum 38.2, salience filter 38.0). No statistical test is reported for the ROUGE-L comparisons, so the claim that differences are small and untested is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone. The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once. The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations. ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Tamsin-News test split, Verisum achieved a hallucination rate of 8.7%, compared with 11.0% for Corran-Sum with salience pre-filtering and 15.1% for Corran-Sum alone.",
+   "evidence_ids": [
+    "T1.r1.hall",
+    "T1.r2.hall",
+    "T1.r3.hall"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "The relative reduction from Corran-Sum to Verisum (42%) was larger than that from Corran-Sum to Corran-Sum with salience pre-filtering (27%) in this evaluation, though no statistical test was reported and each system was run once.",
+   "evidence_ids": [
+    "T1.r1.hall",
+    "T1.r2.hall",
+    "T1.r3.hall"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "The 27% relative reduction from salience pre-filtering here is similar to the 31% average reduction reported by Varga & Sandoval (2021), although the absolute hallucination rates differ (11.0% vs. 9.8% on average) across different datasets and implementations.",
+   "evidence_ids": [
+    "T1.r2.hall",
+    "P1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "ROUGE-L for Verisum (38.9) was slightly higher than for Corran-Sum (38.2) and Corran-Sum with salience pre-filtering (38.0), but these differences are small and no significance test was reported.",
+   "evidence_ids": [
+    "T1.r1.rougeL",
+    "T1.r2.rougeL",
+    "T1.r3.rougeL"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "CIT-p1b:shared_outline:outline:667fbd429d",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628762-RCiJBaPH9mFJ22DC44UN",
+   "finish_reason": "stop",
+   "prompt_tokens": 1215,
+   "completion_tokens": 530,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0003185,
+   "cost_is_estimate": false,
+   "latency_s": 4.104,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:shared_outline:writer_from_outline:37627d238a",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791628766-oQIW2e4kiRkbkuS5FImi",
+   "finish_reason": "stop",
+   "prompt_tokens": 1805,
+   "completion_tokens": 359,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00035322,
+   "cost_is_estimate": false,
+   "latency_s": 12.193,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:86b654b379",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628778-dlkDPMDrsP2Rxuq7NkrK",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2690,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000249128,
+   "cost_is_estimate": false,
+   "latency_s": 2.226,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:5dab88b547",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628780-DLIOYWg6OAiCucpK95gE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3240,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.5224e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.678,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:81ce6d28ec",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628782-PODpV2YgULXogaMueC2o",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3453,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.03456e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.751,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:da8662c718",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628784-FkboL31ShYfR2pOHZJSf",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3624,
+   "completion_tokens": 55,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.98864e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.406,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:a489eb85ee",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628785-bVhmggn4mpwiMkkhUDnc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3852,
+   "completion_tokens": 199,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.61552e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.4,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:9ab731fe93",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628789-FTeGfMLdcntWEOxUy9OQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2689,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00024904,
+   "cost_is_estimate": false,
+   "latency_s": 2.539,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:28ab7ee9ab",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628791-bzXeGHuoSgcknlGKBRvy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3239,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.5432e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.479,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:ea0544e149",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628794-QnBF4FMaForTODC1oV5D",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3597,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.30176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.753,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:30aea83e7d",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628795-R71dL3nZxtwK1nqxpRPB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3768,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.94272e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.417,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:fbc72354a5",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628797-gJk0HWfu8rvcGuXZXThb",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3991,
+   "completion_tokens": 260,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001144912,
+   "cost_is_estimate": false,
+   "latency_s": 4.189,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:489314a6cf",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628801-ql8D0lcuLTfh2daB4hMX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4390,
+   "completion_tokens": 235,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000121192,
+   "cost_is_estimate": false,
+   "latency_s": 4.125,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:94d854406b",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628805-5TY6d5EykZdseNBTHZPO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2683,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000248776,
+   "cost_is_estimate": false,
+   "latency_s": 2.72,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:6fa8cc897d",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628808-ng5tEuFwiMPjq8cOcYhL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3233,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.4904e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.4,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:bab3492e81",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628810-CmuY7zDbcseswGXiNCRj",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3597,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.30176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.697,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:a7396bb003",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628812-a14SsRBvv31Hhnytyo8R",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3773,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.98672e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.493,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:b5db6ddd48",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628814-6HD47H5b9bKz04Ecnr6y",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3996,
+   "completion_tokens": 209,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001014672,
+   "cost_is_estimate": false,
+   "latency_s": 4.546,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:1eeb5af6a7",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628818-WRfq0liRFtMJqXMkgMiq",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2697,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000249744,
+   "cost_is_estimate": false,
+   "latency_s": 1.978,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:947637a695",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628820-TM1KvY0HJHkhgudKiWeW",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3247,
+   "completion_tokens": 71,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.6368e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.05,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:58c6967c4b",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628822-AE1ZFAudHnhFkmIyJo5K",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3463,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.12256e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.758,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:2f4a8b2b79",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628824-5pvgTESiwkX2jmPE0bQa",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3634,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.94464e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.498,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p1b:C3:verify_scripted:7275f3acf0",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791628825-MTLwsANrX3TV8cs2a2KI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3857,
+   "completion_tokens": 199,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.65952e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.35,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 23,
+  "n_model_calls_condition_only": 21,
+  "n_tool_calls": 16,
+  "tool_counts": {
+   "lookup_table": 4,
+   "compare_numbers": 4,
+   "get_test_metadata": 4,
+   "retrieve_passage": 4
+  },
+  "prompt_tokens": 75733,
+  "completion_tokens": 3017,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00298647,
+  "cost_usd_condition_only": 0.00231475,
+  "any_cost_estimated": false,
+  "latency_s": 66.75,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 1,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

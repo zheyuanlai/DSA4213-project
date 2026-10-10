@@ -70,10 +70,15 @@ def check_stat_test(case_id: str, s) -> list[str]:
     name = s.test_name.lower()
     if s.statistic is not None and s.df is not None and s.p_value is not None and "t-test" in name:
         p = _p_from_t(s.statistic, s.df, two_sided=(s.sidedness != "one-sided"))
-        # allow rounding of reported p; compare on log scale for small p
-        ok = abs(p - s.p_value) <= max(0.006, 0.15 * s.p_value)
-        if not ok:
-            errs.append(f"{case_id}/{s.test_id}: t={s.statistic}, df={s.df} implies p={p:.4g}, reported {s.p_value}")
+        if s.multiple_comparison_adjustment:
+            # reported p is the ADJUSTED p: it can only be >= the raw p implied by (t, df)
+            if s.p_value + max(0.0006, 0.05 * p) < p:
+                errs.append(f"{case_id}/{s.test_id}: adjusted p {s.p_value} is smaller than raw p {p:.4g} implied by t, df")
+        else:
+            # allow rounding of reported p
+            ok = abs(p - s.p_value) <= max(0.006, 0.15 * s.p_value)
+            if not ok:
+                errs.append(f"{case_id}/{s.test_id}: t={s.statistic}, df={s.df} implies p={p:.4g}, reported {s.p_value}")
         if s.paired and s.n is not None and abs(s.df - (s.n - 1)) > 1e-9:
             errs.append(f"{case_id}/{s.test_id}: paired t-test with n={s.n} should have df={s.n-1}, got {s.df}")
     if s.ci_low is not None and s.ci_high is not None:

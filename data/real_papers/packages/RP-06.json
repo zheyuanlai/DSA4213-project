@@ -1,0 +1,89 @@
+{
+ "case_id": "RP-06",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does training a translation model with Method M improve translation quality over supervised fine-tuning and reinforcement-learning baselines, and is the improvement consistent across low- and high-resource target languages and metrics?",
+  "methods_summary": "Method M fine-tunes a neural MT model with two losses at once: cross-entropy on labeled sentence pairs and an 'energy' loss given by the negative score of a reference-free quality estimator (COMET-KIWI) on the model's own sampled translations of unlabeled source sentences; gradients pass through the estimator into the MT model via a straight-through estimator. Method M-static keeps the estimator fixed; Method M-dynamic also updates it contrastively to prefer gold over sampled translations. Two data techniques are added: filtering labeled pairs by estimator score (FILTER) and pairing each labeled batch with similar unlabeled sources (NN). RL baselines (REINFORCE, PPO) use the same estimator score as reward.",
+  "experimental_setup": "MT model: mBART-50 (about 610M parameters, monolingual pretraining only). Data: IWSLT2017 English-German/Chinese (50K pairs sampled) and ML50 English-Bengali, -Azerbaijani, -Mongolian, -Marathi, -Kazakh; one fifth of the pairs are used as labeled data and all source sentences as unlabeled data. Training: 10 epochs with early stopping on validation COMET-KIWI. Metrics: SacreBLEU, COMET-KIWI (reference-free), COMET (reference-based) and XCOMET. Main-table numbers are means over three seeds.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Main comparison with supervised fine-tuning on seven language pairs (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M (static and dynamic) vs supervised fine-tuning, low-resource pairs (BN, AZ, MN, MR, KA)"},
+     {"comparison_id": "cmp2", "description": "Method M (static and dynamic) vs supervised fine-tuning, high-resource pairs (DE, ZH)"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Comparison with RL baselines, averaged over four languages (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs REINFORCE and PPO on BLEU, COMET-KIWI, COMET, XCOMET"},
+     {"comparison_id": "cmp2", "description": "Method M-dynamic with vs without the FILTER/NN data techniques"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "English-to-X translation quality on seven target languages (training-set sizes: BN 4K, AZ 5K, MN 7K, MR 9K, KA 12K, DE 50K, ZH 50K sentence pairs). Each value is the average of three runs with different seeds. Method M variants use labeled-data filtering and nearest-neighbour unlabeled batches.",
+    "columns": [
+     {"column_id": "bn", "header": "EN-BN", "unit": null, "higher_is_better": true},
+     {"column_id": "az", "header": "EN-AZ", "unit": null, "higher_is_better": true},
+     {"column_id": "mn", "header": "EN-MN", "unit": null, "higher_is_better": true},
+     {"column_id": "mr", "header": "EN-MR", "unit": null, "higher_is_better": true},
+     {"column_id": "ka", "header": "EN-KA", "unit": null, "higher_is_better": true},
+     {"column_id": "de", "header": "EN-DE", "unit": null, "higher_is_better": true},
+     {"column_id": "zh", "header": "EN-ZH", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Supervised, COMET", "cells": {"bn": {"text": "65.72", "value": 65.72, "spread": null}, "az": {"text": "71.95", "value": 71.95, "spread": null}, "mn": {"text": "70.80", "value": 70.8, "spread": null}, "mr": {"text": "57.64", "value": 57.64, "spread": null}, "ka": {"text": "73.92", "value": 73.92, "spread": null}, "de": {"text": "79.01", "value": 79.01, "spread": null}, "zh": {"text": "77.71", "value": 77.71, "spread": null}}},
+     {"row_id": "r2", "label": "Method M-static, COMET", "cells": {"bn": {"text": "65.86", "value": 65.86, "spread": null}, "az": {"text": "75.17", "value": 75.17, "spread": null}, "mn": {"text": "76.10", "value": 76.1, "spread": null}, "mr": {"text": "58.37", "value": 58.37, "spread": null}, "ka": {"text": "74.48", "value": 74.48, "spread": null}, "de": {"text": "78.71", "value": 78.71, "spread": null}, "zh": {"text": "77.73", "value": 77.73, "spread": null}}},
+     {"row_id": "r3", "label": "Method M-dynamic, COMET", "cells": {"bn": {"text": "67.06", "value": 67.06, "spread": null}, "az": {"text": "75.10", "value": 75.1, "spread": null}, "mn": {"text": "75.85", "value": 75.85, "spread": null}, "mr": {"text": "58.45", "value": 58.45, "spread": null}, "ka": {"text": "74.27", "value": 74.27, "spread": null}, "de": {"text": "79.66", "value": 79.66, "spread": null}, "zh": {"text": "77.88", "value": 77.88, "spread": null}}},
+     {"row_id": "r4", "label": "Supervised, BLEU", "cells": {"bn": {"text": "5.76", "value": 5.76, "spread": null}, "az": {"text": "5.61", "value": 5.61, "spread": null}, "mn": {"text": "4.16", "value": 4.16, "spread": null}, "mr": {"text": "6.43", "value": 6.43, "spread": null}, "ka": {"text": "9.93", "value": 9.93, "spread": null}, "de": {"text": "24.24", "value": 24.24, "spread": null}, "zh": {"text": "20.02", "value": 20.02, "spread": null}}},
+     {"row_id": "r5", "label": "Method M-static, BLEU", "cells": {"bn": {"text": "6.22", "value": 6.22, "spread": null}, "az": {"text": "6.51", "value": 6.51, "spread": null}, "mn": {"text": "6.62", "value": 6.62, "spread": null}, "mr": {"text": "6.22", "value": 6.22, "spread": null}, "ka": {"text": "9.93", "value": 9.93, "spread": null}, "de": {"text": "23.70", "value": 23.7, "spread": null}, "zh": {"text": "20.01", "value": 20.01, "spread": null}}},
+     {"row_id": "r6", "label": "Method M-dynamic, BLEU", "cells": {"bn": {"text": "6.04", "value": 6.04, "spread": null}, "az": {"text": "6.78", "value": 6.78, "spread": null}, "mn": {"text": "6.64", "value": 6.64, "spread": null}, "mr": {"text": "6.45", "value": 6.45, "spread": null}, "ka": {"text": "9.65", "value": 9.65, "spread": null}, "de": {"text": "25.29", "value": 25.29, "spread": null}, "zh": {"text": "20.10", "value": 20.1, "spread": null}}}
+    ],
+    "notes": "Restructured from the source's two main-results tables (low- and high-resource pairs): rows are system x metric, columns are language pairs; values verbatim. COMET-KIWI and XCOMET per-language columns dropped. The source labels Kazakh as 'EN-KA'. Seed means only; no standard deviations or significance tests reported."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Results averaged over four target languages (German, Chinese, Bengali, Marathi), including reinforcement-learning baselines that use the same quality estimator as reward. +Mono = the quality-estimator-based loss is also applied to unlabeled (monolingual) source sentences; -Mono = without them.",
+    "columns": [
+     {"column_id": "bleu", "header": "BLEU", "unit": null, "higher_is_better": true},
+     {"column_id": "kiwi", "header": "COMET-KIWI", "unit": null, "higher_is_better": true},
+     {"column_id": "comet", "header": "COMET", "unit": null, "higher_is_better": true},
+     {"column_id": "xcomet", "header": "XCOMET", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Supervised", "cells": {"bleu": {"text": "14.11", "value": 14.11, "spread": null}, "kiwi": {"text": "68.31", "value": 68.31, "spread": null}, "comet": {"text": "70.02", "value": 70.02, "spread": null}, "xcomet": {"text": "60.05", "value": 60.05, "spread": null}}},
+     {"row_id": "r2", "label": "REINFORCE (+Mono)", "cells": {"bleu": {"text": "13.88", "value": 13.88, "spread": null}, "kiwi": {"text": "67.49", "value": 67.49, "spread": null}, "comet": {"text": "69.16", "value": 69.16, "spread": null}, "xcomet": {"text": "59.99", "value": 59.99, "spread": null}}},
+     {"row_id": "r3", "label": "REINFORCE (-Mono)", "cells": {"bleu": {"text": "13.79", "value": 13.79, "spread": null}, "kiwi": {"text": "66.81", "value": 66.81, "spread": null}, "comet": {"text": "68.79", "value": 68.79, "spread": null}, "xcomet": {"text": "59.33", "value": 59.33, "spread": null}}},
+     {"row_id": "r4", "label": "PPO (+Mono)", "cells": {"bleu": {"text": "13.94", "value": 13.94, "spread": null}, "kiwi": {"text": "66.81", "value": 66.81, "spread": null}, "comet": {"text": "69.10", "value": 69.1, "spread": null}, "xcomet": {"text": "59.68", "value": 59.68, "spread": null}}},
+     {"row_id": "r5", "label": "PPO (-Mono)", "cells": {"bleu": {"text": "13.58", "value": 13.58, "spread": null}, "kiwi": {"text": "66.38", "value": 66.38, "spread": null}, "comet": {"text": "68.70", "value": 68.7, "spread": null}, "xcomet": {"text": "59.31", "value": 59.31, "spread": null}}},
+     {"row_id": "r6", "label": "Method M-static (+Mono, FILTER & NN)", "cells": {"bleu": {"text": "14.04", "value": 14.04, "spread": null}, "kiwi": {"text": "69.41", "value": 69.41, "spread": null}, "comet": {"text": "70.17", "value": 70.17, "spread": null}, "xcomet": {"text": "60.92", "value": 60.92, "spread": null}}},
+     {"row_id": "r7", "label": "Method M-dynamic (+Mono, no FILTER/NN)", "cells": {"bleu": {"text": "14.36", "value": 14.36, "spread": null}, "kiwi": {"text": "67.94", "value": 67.94, "spread": null}, "comet": {"text": "70.23", "value": 70.23, "spread": null}, "xcomet": {"text": "59.77", "value": 59.77, "spread": null}}},
+     {"row_id": "r8", "label": "Method M-dynamic (+Mono, FILTER & NN)", "cells": {"bleu": {"text": "14.47", "value": 14.47, "spread": null}, "kiwi": {"text": "69.97", "value": 69.97, "spread": null}, "comet": {"text": "70.76", "value": 70.76, "spread": null}, "xcomet": {"text": "60.86", "value": 60.86, "spread": null}}}
+    ],
+    "notes": "RL baselines were run without the FILTER/NN data techniques. Rows dropped: supervised+FILTER and other Method M data-technique combinations. COMET-KIWI is also the quality estimator used inside training and for early stopping."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "The reward is normalized through (1) scaling the reward between the running max and running min of the current epoch and (2) subtracting the running average of the current epoch."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed method QE-EBM (variants QE-STATIC, QE-DYNAMIC) renamed to 'Method M-static' / 'Method M-dynamic'. Tables used: main results for low- and high-resource pairs (tab:main_lr, tab:main_hr; COMET and BLEU only, restructured) and the four-language average table (tab:averaged_by_lang, row subset). P1 describes the REINFORCE baseline. Abstract, results prose and conclusion withheld.",
+  "citation": "Gahyun Yoo, Jay Yoon Lee (2024). QE-EBM: Using Quality Estimators as Energy Loss for Machine Translation. arXiv:2410.10228",
+  "url": "https://arxiv.org/abs/2410.10228",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "5dc4795fce2f7ec4c4dc8fea8bfa2c60a277424740da9223423c1eab752fc72d"
+ }
+}

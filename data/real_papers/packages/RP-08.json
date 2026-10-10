@@ -1,0 +1,88 @@
+{
+ "case_id": "RP-08",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does refining LLM-generated utterances with Method M yield better training data for zero-shot intent detection in unseen domains than existing synthetic-data approaches, and how much of the gain depends on fine-tuning the rewriting model?",
+  "methods_summary": "Method M is a two-step data-augmentation approach for intent detection in domains with no labeled examples. First, an open LLM (Zephyr-7B-beta or Llama3-8B-Instruct) generates utterances for each unseen intent zero-shot. Second, a Flan-T5-large sequence-to-sequence rewriter, fine-tuned on seen domains to map LLM-generated utterances to real human utterances of the same intent (7 inputs to 1 output), rewrites them. The refined utterances train the intent classifier. Baselines: ZeroGen (directly generated utterances, including ChatGPT) and SuperGen (generated utterances selected by generation probability). The ablation uses the rewriter without fine-tuning (NFT).",
+  "experimental_setup": "Datasets: Clinc150 (10 domains, 150 intents) and SGD (20 domains, 46 intents). Each experiment randomly splits domains into seen and unseen (Clinc150: 5 unseen domains; SGD: 8 unseen), repeated over 5 different splits; results are averaged over these 5 runs. A DistilBERT classifier is trained on 100 (Clinc150) or 200 (SGD) synthetic utterances per unseen intent and evaluated on real user utterances from the unseen domains. Metric: accuracy.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Comparison with synthetic-data baselines (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs ZeroGen and SuperGen with the same generator LLM (Zephyr, Llama3), SGD and Clinc150"},
+     {"comparison_id": "cmp2", "description": "Method M with open 7-8B generators vs ZeroGen with ChatGPT"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Ablation: fine-tuned vs non-fine-tuned rewriter (T2)",
+    "comparisons": [
+     {"comparison_id": "c1", "description": "Fine-tuned vs NFT, 1x, SGD / Zephyr"},
+     {"comparison_id": "c2", "description": "Fine-tuned vs NFT, 1x, SGD / Llama3"},
+     {"comparison_id": "c3", "description": "Fine-tuned vs NFT, 1x, Clinc150 / Zephyr"},
+     {"comparison_id": "c4", "description": "Fine-tuned vs NFT, 1x, Clinc150 / Llama3"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Zero-shot intent classification accuracy (%) on unseen domains, for a DistilBERT classifier trained on synthetic utterances from each data-generation approach. Mean over 5 random seen/unseen domain splits, standard deviation in parentheses. The LLM used for generation is given in brackets.",
+    "columns": [
+     {"column_id": "sgd", "header": "SGD", "unit": "%", "higher_is_better": true},
+     {"column_id": "clinc", "header": "Clinc150", "unit": "%", "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "ZeroGen (Zephyr)", "cells": {"sgd": {"text": "61.3 (4.9)", "value": 61.3, "spread": null}, "clinc": {"text": "69.9 (2.0)", "value": 69.9, "spread": null}}},
+     {"row_id": "r2", "label": "ZeroGen (Llama3)", "cells": {"sgd": {"text": "68.7 (4.0)", "value": 68.7, "spread": null}, "clinc": {"text": "73.8 (1.9)", "value": 73.8, "spread": null}}},
+     {"row_id": "r3", "label": "ZeroGen (ChatGPT)", "cells": {"sgd": {"text": "60.2 (10.0)", "value": 60.2, "spread": null}, "clinc": {"text": "71.3 (1.5)", "value": 71.3, "spread": null}}},
+     {"row_id": "r4", "label": "SuperGen (Zephyr)", "cells": {"sgd": {"text": "58.9 (5.0)", "value": 58.9, "spread": null}, "clinc": {"text": "65.8 (2.5)", "value": 65.8, "spread": null}}},
+     {"row_id": "r5", "label": "SuperGen (Llama3)", "cells": {"sgd": {"text": "67.4 (2.4)", "value": 67.4, "spread": null}, "clinc": {"text": "71.4 (2.2)", "value": 71.4, "spread": null}}},
+     {"row_id": "r6", "label": "Method M (Zephyr)", "cells": {"sgd": {"text": "72.2 (5.3)", "value": 72.2, "spread": null}, "clinc": {"text": "76.0 (0.8)", "value": 76.0, "spread": null}}},
+     {"row_id": "r7", "label": "Method M (Llama3)", "cells": {"sgd": {"text": "72.4 (5.2)", "value": 72.4, "spread": null}, "clinc": {"text": "76.9 (1.7)", "value": 76.9, "spread": null}}}
+    ],
+    "notes": "Values verbatim; bold not reproduced. No significance test is reported for this comparison."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Ablation: accuracy (%) on unseen domains with the Method M rewriter fine-tuned on seen domains vs not fine-tuned (NFT), averaged over 5 trials. ** = fine-tuned significantly outperforms NFT at alpha = 0.05 (one-tailed paired t-test). 1x = default number of generated training utterances per intent; 2x = double.",
+    "columns": [
+     {"column_id": "sgd_z", "header": "SGD / Zephyr", "unit": "%", "higher_is_better": true},
+     {"column_id": "sgd_l", "header": "SGD / Llama3", "unit": "%", "higher_is_better": true},
+     {"column_id": "cl_z", "header": "Clinc150 / Zephyr", "unit": "%", "higher_is_better": true},
+     {"column_id": "cl_l", "header": "Clinc150 / Llama3", "unit": "%", "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "1x: Method M (NFT)", "cells": {"sgd_z": {"text": "65.0", "value": 65.0, "spread": null}, "sgd_l": {"text": "67.5", "value": 67.5, "spread": null}, "cl_z": {"text": "73.3", "value": 73.3, "spread": null}, "cl_l": {"text": "73.8", "value": 73.8, "spread": null}}},
+     {"row_id": "r2", "label": "1x: Method M", "cells": {"sgd_z": {"text": "72.2**", "value": 72.2, "spread": null}, "sgd_l": {"text": "72.4**", "value": 72.4, "spread": null}, "cl_z": {"text": "76.0**", "value": 76.0, "spread": null}, "cl_l": {"text": "76.9**", "value": 76.9, "spread": null}}},
+     {"row_id": "r3", "label": "2x: Method M (NFT)", "cells": {"sgd_z": {"text": "62.9", "value": 62.9, "spread": null}, "sgd_l": {"text": "67.8", "value": 67.8, "spread": null}, "cl_z": {"text": "74.2", "value": 74.2, "spread": null}, "cl_l": {"text": "76.3", "value": 76.3, "spread": null}}},
+     {"row_id": "r4", "label": "2x: Method M", "cells": {"sgd_z": {"text": "72.4**", "value": 72.4, "spread": null}, "sgd_l": {"text": "72.5**", "value": 72.5, "spread": null}, "cl_z": {"text": "77.2**", "value": 77.2, "spread": null}, "cl_l": {"text": "78.1**", "value": 78.1, "spread": null}}}
+    ],
+    "notes": "Values verbatim; bold not reproduced. Exact p-values, test statistics and the pairing unit are not reported."
+   }
+  ],
+  "statistical_tests": [
+   {"test_id": "S1", "experiment_id": "exp2", "comparison_id": "c1", "test_name": "paired t-test", "sidedness": "one-sided", "paired": true, "n": null, "n_unit": null, "statistic_name": null, "statistic": null, "df": null, "p_value": null, "p_value_text": "significant at alpha = 0.05 (marked **)", "alpha": 0.05, "ci_level": null, "ci_low": null, "ci_high": null, "effect_description": "accuracy of fine-tuned minus non-fine-tuned rewriter (T2, 1x rows)", "multiple_comparison_adjustment": null, "notes": "2x rows are also marked ** in the source."},
+   {"test_id": "S2", "experiment_id": "exp2", "comparison_id": "c2", "test_name": "paired t-test", "sidedness": "one-sided", "paired": true, "n": null, "n_unit": null, "statistic_name": null, "statistic": null, "df": null, "p_value": null, "p_value_text": "significant at alpha = 0.05 (marked **)", "alpha": 0.05, "ci_level": null, "ci_low": null, "ci_high": null, "effect_description": "accuracy of fine-tuned minus non-fine-tuned rewriter (T2, 1x rows)", "multiple_comparison_adjustment": null, "notes": "2x rows are also marked ** in the source."},
+   {"test_id": "S3", "experiment_id": "exp2", "comparison_id": "c3", "test_name": "paired t-test", "sidedness": "one-sided", "paired": true, "n": null, "n_unit": null, "statistic_name": null, "statistic": null, "df": null, "p_value": null, "p_value_text": "significant at alpha = 0.05 (marked **)", "alpha": 0.05, "ci_level": null, "ci_low": null, "ci_high": null, "effect_description": "accuracy of fine-tuned minus non-fine-tuned rewriter (T2, 1x rows)", "multiple_comparison_adjustment": null, "notes": "2x rows are also marked ** in the source."},
+   {"test_id": "S4", "experiment_id": "exp2", "comparison_id": "c4", "test_name": "paired t-test", "sidedness": "one-sided", "paired": true, "n": null, "n_unit": null, "statistic_name": null, "statistic": null, "df": null, "p_value": null, "p_value_text": "significant at alpha = 0.05 (marked **)", "alpha": 0.05, "ci_level": null, "ci_low": null, "ci_high": null, "effect_description": "accuracy of fine-tuned minus non-fine-tuned rewriter (T2, 1x rows)", "multiple_comparison_adjustment": null, "notes": "2x rows are also marked ** in the source."}
+  ],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "The zero-shot use of an LLM for this task leads to suboptimal utterances that cannot directly be used as a replacement for human-generated data to train the intent classifier [Ye et al., 2022 (ZeroGen)]."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed utterance Refiner renamed to 'Method M'. Tables used: baseline comparison (tab:other baseline) and fine-tuning ablation (tab:T5_FT_NFT). In P1 the source's citation command was rendered as a bracketed reference. Abstract, results prose and conclusion withheld. v2 (2024-10-15) source.",
+  "citation": "I-Fan Lin, Faegheh Hasibi, Suzan Verberne (2024). Generate then Refine: Data Augmentation for Zero-shot Intent Detection. arXiv:2410.01953",
+  "url": "https://arxiv.org/abs/2410.01953",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "82f0bcdf1aae6abcd76bb5c0b8f9a1de7a7b573deaca6d1ab31e7f96732d0a29"
+ }
+}

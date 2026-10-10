@@ -1,0 +1,14 @@
+# DEV-pilot configuration (DEV split only). Not the frozen primary config.
+model:
+  id: deepseek/deepseek-v4-flash-0731
+  provider_routing: {order: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], only: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], allow_fallbacks: true, require_parameters: true}
+  decoding: {temperature: 0, reasoning: {enabled: false}}
+  pricing: {prompt_per_mtok: 0.14, completion_per_mtok: 0.28}
+  timeout_s: 120
+  max_retries: 3
+verifier: {max_tool_calls: 4, max_claims: 6}
+budget:
+  hard_cap_usd: 12.0
+  stage_caps: {preflight: 0.50, dev: 1.50, main: 6.00, real: 2.50, buffer: 1.50}
+  max_inflight: 2
+paths: {ledger: outputs/cost_ledger.jsonl}

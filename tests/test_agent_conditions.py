@@ -225,3 +225,38 @@ def test_shared_artifact_cache_not_mixed_between_mock_and_real(record, tmp_path)
     c2 = MockClient(mock_responder, model_id="other/model")
     s2 = SharedArtifacts(c2, record, tmp_path / "_shared" / record.case_id, {"case_id": record.case_id, "stage": "dev"})
     assert s2._load("direct") is None  # different model -> cache not reused
+
+
+def test_parallel_calls_only_first_executed(pkg):
+    def responder(messages, tools, tool_choice, role):
+        if not any(m["role"] == "tool" for m in messages):
+            return {"tool_calls": [_tc(1, "lookup_table", {"table_id": "T1"}),
+                                   _tc(2, "compare_numbers", {"claimed": 83.7, "evidence_id": "T1.r1.acc"}),
+                                   _tc(3, "get_test_metadata", {"experiment_id": "exp1", "comparison_id": "cmp1"})]}
+        return {"tool_calls": [_tc(4, "submit_decision", {"rationale": "r", "decision": "ACCEPT", "revised_text": "",
+                                                          "evidence_ids": ["T1"]})]}
+
+    client = MockClient(responder)
+    _, traces = verify_draft(client, pkg, _draft(), VerifierConfig(mode="adaptive", can_strengthen=True),
+                             {"case_id": "u", "stage": "dev"}, [])
+    t = traces[0]
+    assert [a.tool for a in t.actions] == ["lookup_table"] and t.ignored_parallel_calls == 2
+    # every tool_call id still received a tool message (valid protocol)
+    last = client.calls[-1]["messages"]
+    answered = {m["tool_call_id"] for m in last if m["role"] == "tool"}
+    assert answered == {"c1", "c2", "c3"}
+
+
+def test_evidence_ids_string_tolerated():
+    claim = ClaimDraft(claim_id="s1", text="A beats B by 2 points.")
+    for raw in ('["T1.r1.a", "T1.r2.a"]', "T1.r1.a, T1.r2.a", ["T1.r1.a", "T1.r2.a"]):
+        d = validate_decision({"rationale": "r", "decision": "WEAKEN", "revised_text": "A beats B by 1 point.",
+                               "evidence_ids": raw}, claim, {"T1.r1.a", "T1.r2.a"}, ["ACCEPT", "WEAKEN"])
+        assert d.valid and d.evidence_ids == ["T1.r1.a", "T1.r2.a"], raw
+
+
+def test_verifier_prompts_share_checklist():
+    a, s = load("verifier_adaptive.md"), load("verifier_scripted.md")
+    for block in ("What to check", "Your decision must agree with your rationale"):
+        ia, is_ = a.index(block), s.index(block)
+        assert a[ia:ia + 300] == s[is_:is_ + 300]

@@ -1,0 +1,78 @@
+{
+ "case_id": "RP-11",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does Method M (and its calibrated variant Method M+) give larger certified robustness to edit-distance perturbations than fixed-rate smoothing baselines, consistently across text classification datasets, and at what cost in clean accuracy?",
+  "methods_summary": "Method M is a randomized-smoothing certification method for text classifiers against edit-distance attacks. At prediction time, tokens of the input are randomly deleted and a base classifier votes over many deleted copies; unlike the fixed-rate deletion baseline CERT-ED, Method M lets the deletion rate depend on input length (parameters: a lower bound on the deletion probability and a length constant), and the paper derives a matching certificate. Method M+ further sets the rate per length bin using an empirical calibration on the training set. RanMASK masks a fixed fraction of tokens and certifies only Hamming distance.",
+  "experimental_setup": "Base model: pretrained RoBERTa, fine-tuned with the same procedure for all smoothed models; NoSmooth is the plain classifier. Datasets: Yelp five-class sentiment (10,000 sampled test reviews), SpamAssassin spam detection, and LUN unreliable-news detection. Inference uses 1,000 Monte Carlo samples for prediction and 4,000 for certification. Metrics: clean accuracy; certified radius (CR, set to 0 for misclassified inputs); log10 cardinality of the certified region (CC); and a Wasserstein distance measuring how CR tracks input length.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Certified robustness vs clean accuracy on Yelp (5-class sentiment), SpamAssassin (spam) and LUN (unreliable news) (T1, T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M and Method M+ vs CERT-ED and RanMASK: mean certified radius and certified-region cardinality per dataset"},
+     {"comparison_id": "cmp2", "description": "Clean-accuracy cost of certification: smoothed models vs NoSmooth, and Method M/M+ vs CERT-ED"},
+     {"comparison_id": "cmp3", "description": "Adaptation to input length (Wasserstein distance) across methods"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Clean accuracy (%) and mean certified radius (Mean CR, ± standard error across test examples) for RoBERTa-based classifiers on three datasets. Percentages after RanMASK / CERT-ED / Method M give the masking or deletion rate setting; NoSmooth has no certificate.",
+    "columns": [
+     {"column_id": "yelp_acc", "header": "Yelp clean acc.", "unit": "%", "higher_is_better": true},
+     {"column_id": "yelp_cr", "header": "Yelp mean CR", "unit": null, "higher_is_better": true},
+     {"column_id": "spam_acc", "header": "SpamAssassin clean acc.", "unit": "%", "higher_is_better": true},
+     {"column_id": "spam_cr", "header": "SpamAssassin mean CR", "unit": null, "higher_is_better": true},
+     {"column_id": "lun_acc", "header": "LUN clean acc.", "unit": "%", "higher_is_better": true},
+     {"column_id": "lun_cr", "header": "LUN mean CR", "unit": null, "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "NoSmooth", "cells": {"yelp_acc": {"text": "69.25", "value": 69.25, "spread": null}, "yelp_cr": {"text": "---", "value": null, "spread": null}, "spam_acc": {"text": "93.48", "value": 93.48, "spread": null}, "spam_cr": {"text": "---", "value": null, "spread": null}, "lun_acc": {"text": "99.16", "value": 99.16, "spread": null}, "lun_cr": {"text": "---", "value": null, "spread": null}}},
+     {"row_id": "r2", "label": "RanMASK, 90%", "cells": {"yelp_acc": {"text": "57.15", "value": 57.15, "spread": null}, "yelp_cr": {"text": "0.61 ± 0.013", "value": 0.61, "spread": 0.013}, "spam_acc": {"text": "86.87", "value": 86.87, "spread": null}, "spam_cr": {"text": "2.33 ± 0.012", "value": 2.33, "spread": 0.012}, "lun_acc": {"text": "97.91", "value": 97.91, "spread": null}, "lun_cr": {"text": "4.83 ± 0.022", "value": 4.83, "spread": 0.022}}},
+     {"row_id": "r3", "label": "CERT-ED, 90%", "cells": {"yelp_acc": {"text": "58.57", "value": 58.57, "spread": null}, "yelp_cr": {"text": "0.75 ± 0.013", "value": 0.75, "spread": 0.013}, "spam_acc": {"text": "88.26", "value": 88.26, "spread": null}, "spam_cr": {"text": "2.35 ± 0.012", "value": 2.35, "spread": 0.012}, "lun_acc": {"text": "98.20", "value": 98.2, "spread": null}, "lun_cr": {"text": "4.94 ± 0.019", "value": 4.94, "spread": 0.019}}},
+     {"row_id": "r4", "label": "Method M, 90%", "cells": {"yelp_acc": {"text": "56.98", "value": 56.98, "spread": null}, "yelp_cr": {"text": "0.99 ± 0.023", "value": 0.99, "spread": 0.023}, "spam_acc": {"text": "87.99", "value": 87.99, "spread": null}, "spam_cr": {"text": "2.86 ± 0.018", "value": 2.86, "spread": 0.018}, "lun_acc": {"text": "97.88", "value": 97.88, "spread": null}, "lun_cr": {"text": "5.65 ± 0.028", "value": 5.65, "spread": 0.028}}},
+     {"row_id": "r5", "label": "Method M+", "cells": {"yelp_acc": {"text": "56.22", "value": 56.22, "spread": null}, "yelp_cr": {"text": "0.77 ± 0.016", "value": 0.77, "spread": 0.016}, "spam_acc": {"text": "88.06", "value": 88.06, "spread": null}, "spam_cr": {"text": "2.77 ± 0.016", "value": 2.77, "spread": 0.016}, "lun_acc": {"text": "95.09", "value": 95.09, "spread": null}, "lun_cr": {"text": "10.69 ± 0.088", "value": 10.69, "spread": 0.088}}}
+    ],
+    "notes": "Restructured from the source's appendix certificate table (one block per dataset); values verbatim, bold not reproduced. '---' = not applicable. A further block labelled 'Yelp' a second time (apparently a different dataset) was not used because its label is ambiguous. Standard errors reflect variability across test examples for a single trained model; no repeated training runs or significance tests are reported."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Aggregate log10 cardinality of the certified region (median; first quartile for Yelp, where the median is zero) and Wasserstein distance between standardized distributions of certified radius and input length (smaller = better adaptation to input length).",
+    "columns": [
+     {"column_id": "yelp_cc", "header": "Yelp agg. log(CC)", "unit": null, "higher_is_better": true},
+     {"column_id": "spam_cc", "header": "SpamAssassin agg. log(CC)", "unit": null, "higher_is_better": true},
+     {"column_id": "lun_cc", "header": "LUN agg. log(CC)", "unit": null, "higher_is_better": true},
+     {"column_id": "yelp_w", "header": "Yelp Wass. dist.", "unit": null, "higher_is_better": false},
+     {"column_id": "spam_w", "header": "SpamAssassin Wass. dist.", "unit": null, "higher_is_better": false},
+     {"column_id": "lun_w", "header": "LUN Wass. dist.", "unit": null, "higher_is_better": false}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "RanMASK, 90%", "cells": {"yelp_cc": {"text": "0.00", "value": 0.0, "spread": null}, "spam_cc": {"text": "14.02", "value": 14.02, "spread": null}, "lun_cc": {"text": "34.51", "value": 34.51, "spread": null}, "yelp_w": {"text": "0.31", "value": 0.31, "spread": null}, "spam_w": {"text": "0.43", "value": 0.43, "spread": null}, "lun_w": {"text": "0.31", "value": 0.31, "spread": null}}},
+     {"row_id": "r2", "label": "CERT-ED, 90%", "cells": {"yelp_cc": {"text": "7.16", "value": 7.16, "spread": null}, "spam_cc": {"text": "14.49", "value": 14.49, "spread": null}, "lun_cc": {"text": "37.68", "value": 37.68, "spread": null}, "yelp_w": {"text": "0.26", "value": 0.26, "spread": null}, "spam_w": {"text": "0.42", "value": 0.42, "spread": null}, "lun_w": {"text": "0.34", "value": 0.34, "spread": null}}},
+     {"row_id": "r3", "label": "Method M, 90%", "cells": {"yelp_cc": {"text": "6.89", "value": 6.89, "spread": null}, "spam_cc": {"text": "14.77", "value": 14.77, "spread": null}, "lun_cc": {"text": "38.90", "value": 38.9, "spread": null}, "yelp_w": {"text": "0.28", "value": 0.28, "spread": null}, "spam_w": {"text": "0.20", "value": 0.2, "spread": null}, "lun_w": {"text": "0.30", "value": 0.3, "spread": null}}},
+     {"row_id": "r4", "label": "Method M+", "cells": {"yelp_cc": {"text": "6.78", "value": 6.78, "spread": null}, "spam_cc": {"text": "14.01", "value": 14.01, "spread": null}, "lun_cc": {"text": "66.90", "value": 66.9, "spread": null}, "yelp_w": {"text": "0.24", "value": 0.24, "spread": null}, "spam_w": {"text": "0.24", "value": 0.24, "spread": null}, "lun_w": {"text": "0.24", "value": 0.24, "spread": null}}}
+    ],
+    "notes": "Same source table as T1. For RanMASK log(CC) is an exact count under Hamming distance; for the deletion-based methods it is a lower bound under edit distance (underestimating by at most one order of magnitude, per the source)."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "We additionally include RanMASK [Zeng et al., 2023] as a baseline that supports a more limited Hamming distance certificate. It uses a masking mechanism, where the fraction of masked tokens is fixed."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed methods AdaptDel and AdaptDel+ renamed to 'Method M' and 'Method M+'. Table used: appendix certificate-statistics table (tbl:cr-statistics-small), restructured into two tables; the block whose label duplicates 'Yelp' was omitted. P1: LaTeX macros and the citation rendered as text, and the math symbol for the masking rate omitted ('the fraction of masked tokens $p_\\mask$ is fixed' -> 'the fraction of masked tokens is fixed'). Abstract, results prose and conclusion withheld.",
+  "citation": "Zhuoqun Huang, Neil G. Marchant, Olga Ohrimenko, Benjamin I. P. Rubinstein (2025). AdaptDel: Adaptable Deletion Rate Randomized Smoothing for Certified Robustness. arXiv:2511.09316",
+  "url": "https://arxiv.org/abs/2511.09316",
+  "license": "http://creativecommons.org/licenses/by/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "c83cb754758eaaeda904381f1026d990bfe023d997834bfd8107ed72d417ac5b"
+ }
+}

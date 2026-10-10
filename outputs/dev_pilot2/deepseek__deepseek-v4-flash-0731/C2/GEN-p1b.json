@@ -1,0 +1,221 @@
+{
+ "run_id": "dev_pilot2:C2:GEN-p1b",
+ "case_id": "GEN-p1b",
+ "condition": "C2",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:55:13Z",
+ "finished_at": "2026-10-10T10:55:24Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "direct": "d7f3152a9cf0776ed23cc5589e3ab581705b056f039e1a2536785679bcd262dc"
+ },
+ "outline": null,
+ "drafts": [
+  {
+   "stage": "direct_draft",
+   "passage": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base (91.6% and 90.9%) by 1.5 percentage points in both domains. These results demonstrate a consistent advantage for Wrenfold over Fennick-Base on the held-out test data from the two training domains, but they do not provide evidence about generalization to other, unseen domains because no such evaluation was conducted. No statistical tests were reported, so the observed differences cannot be characterized as statistically significant.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the unseen Banking and Travel test sets, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, outperforming Fennick-Base (91.6% and 90.9%) by 1.5 percentage points in both domains.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "These results demonstrate a consistent advantage for Wrenfold over Fennick-Base on the held-out test data from the two training domains, but they do not provide evidence about generalization to other, unseen domains because no such evaluation was conducted.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "No statistical tests were reported, so the observed differences cannot be characterized as statistically significant.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "generic_revision",
+   "passage": "On the unseen test sets from the Banking and Travel domains, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, which are higher than Fennick-Base's scores of 91.6% and 90.9%. Because these test sets are drawn from the same domains used for training, the results reflect only in-domain held-out performance and provide no evidence about generalization to other, unseen domains. No statistical tests were reported, so the observed differences cannot be characterized as statistically significant or as indicating practical importance.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the unseen test sets from the Banking and Travel domains, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, which are higher than Fennick-Base's scores of 91.6% and 90.9%.",
+     "evidence_ids": [
+      "T1.r1.wren",
+      "T1.r1.fenn",
+      "T1.r2.wren",
+      "T1.r2.fenn"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Because these test sets are drawn from the same domains used for training, the results reflect only in-domain held-out performance and provide no evidence about generalization to other, unseen domains.",
+     "evidence_ids": [
+      "P1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "No statistical tests were reported, so the observed differences cannot be characterized as statistically significant or as indicating practical importance.",
+     "evidence_ids": [
+      "S1"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": "1. **Overstated consistency claim**: The 1.5-point gap in both domains is presented as a \"consistent advantage,\" but with no statistical tests, this is unsupported. Revise to \"Wrenfold scored higher in both domains\" without implying reliability.  \n2. **Missing scope caveat**: The draft correctly notes no cross-domain evidence, but should explicitly state that the test sets are from the *same* Banking/Travel domains used for training, so results only reflect in-domain held-out performance.  \n3. **Minor precision issue**: \"Outperforming\" implies a meaningful difference; given no significance testing, use \"higher scores\" instead.  \n4. **Clarity**: The final sentence is good but could specify that the absence of tests means no claim of statistical significance or practical importance can be made.",
+ "claim_traces": [],
+ "final_passage": "On the unseen test sets from the Banking and Travel domains, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, which are higher than Fennick-Base's scores of 91.6% and 90.9%. Because these test sets are drawn from the same domains used for training, the results reflect only in-domain held-out performance and provide no evidence about generalization to other, unseen domains. No statistical tests were reported, so the observed differences cannot be characterized as statistically significant or as indicating practical importance.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the unseen test sets from the Banking and Travel domains, Wrenfold achieved macro-F1 scores of 93.1% and 92.4%, respectively, which are higher than Fennick-Base's scores of 91.6% and 90.9%.",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Because these test sets are drawn from the same domains used for training, the results reflect only in-domain held-out performance and provide no evidence about generalization to other, unseen domains.",
+   "evidence_ids": [
+    "P1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "No statistical tests were reported, so the observed differences cannot be characterized as statistically significant or as indicating practical importance.",
+   "evidence_ids": [
+    "S1"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "GEN-p1b:shared_direct:writer_direct:9ca36d1eb7",
+   "role": "writer_direct",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629301-PuyktbCH9sIvRcB5f0Gx",
+   "finish_reason": "stop",
+   "prompt_tokens": 923,
+   "completion_tokens": 224,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00019194,
+   "cost_is_estimate": false,
+   "latency_s": 2.086,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C2:reviewer_generic:6c455e818e",
+   "role": "reviewer_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629303-Dsn55ZiWXUDroVGQKpnK",
+   "finish_reason": "stop",
+   "prompt_tokens": 1000,
+   "completion_tokens": 168,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000132352,
+   "cost_is_estimate": false,
+   "latency_s": 4.158,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p1b:C2:reviser_generic:fae7c34cf3",
+   "role": "reviser_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629307-DmSQWRmCcj3r2u5WzA9Z",
+   "finish_reason": "stop",
+   "prompt_tokens": 1254,
+   "completion_tokens": 208,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002338,
+   "cost_is_estimate": false,
+   "latency_s": 6.303,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 3,
+  "n_model_calls_condition_only": 2,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 3177,
+  "completion_tokens": 600,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00055809,
+  "cost_usd_condition_only": 0.00036615,
+  "any_cost_estimated": false,
+  "latency_s": 12.547,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

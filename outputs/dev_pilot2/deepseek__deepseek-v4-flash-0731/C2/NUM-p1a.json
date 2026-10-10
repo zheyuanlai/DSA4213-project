@@ -1,0 +1,245 @@
+{
+ "run_id": "dev_pilot2:C2:NUM-p1a",
+ "case_id": "NUM-p1a",
+ "condition": "C2",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T10:58:34Z",
+ "finished_at": "2026-10-10T10:58:51Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "direct": "bbcf13017be378eb860fa03be66d1aa3772214c0d39275b8537cf421513867b1"
+ },
+ "outline": null,
+ "drafts": [
+  {
+   "stage": "direct_draft",
+   "passage": "Gimlet-L outperforms Ostler on both benchmarks, achieving a pass rate of 66.0% versus 61.2% on Kiln-Py and 31.1% versus 23.5% on Kiln-PyX. The improvement is larger on the repository-level Kiln-PyX (7.6 percentage points) than on the function-level Kiln-Py (4.8 percentage points). No statistical tests were reported, so the reliability of these differences is not established.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Gimlet-L outperforms Ostler on both benchmarks, achieving a pass rate of 66.0% versus 61.2% on Kiln-Py and 31.1% versus 23.5% on Kiln-PyX.",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r3.kpy",
+      "T1.r1.kpyx",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The improvement is larger on the repository-level Kiln-PyX (7.6 percentage points) than on the function-level Kiln-Py (4.8 percentage points).",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r3.kpy",
+      "T1.r1.kpyx",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "No statistical tests were reported, so the reliability of these differences is not established.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "generic_revision",
+   "passage": "In this evaluation, Gimlet-L achieved higher pass rates than Ostler on both benchmarks under the specified greedy-decoding, single-sample protocol: 66.0% versus 61.2% on Kiln-Py and 31.1% versus 23.5% on Kiln-PyX. The observed differences were larger on the repository-level Kiln-PyX (7.6 percentage points) than on the function-level Kiln-Py (4.8 percentage points), though this is a descriptive observation and not a statistically tested interaction effect. Gimlet-S (58.7% on Kiln-Py, 21.9% on Kiln-PyX) also fell below Gimlet-L, consistent with the pattern that larger models with execution feedback performed better in this setup. No statistical tests were reported, so the reliability of these differences is not established.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "In this evaluation, Gimlet-L achieved higher pass rates than Ostler on both benchmarks under the specified greedy-decoding, single-sample protocol: 66.0% versus 61.2% on Kiln-Py and 31.1% versus 23.5% on Kiln-PyX.",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r1.kpyx",
+      "T1.r3.kpy",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The observed differences were larger on the repository-level Kiln-PyX (7.6 percentage points) than on the function-level Kiln-Py (4.8 percentage points), though this is a descriptive observation and not a statistically tested interaction effect.",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r1.kpyx",
+      "T1.r3.kpy",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Gimlet-S (58.7% on Kiln-Py, 21.9% on Kiln-PyX) also fell below Gimlet-L, consistent with the pattern that larger models with execution feedback performed better in this setup.",
+     "evidence_ids": [
+      "T1.r2.kpy",
+      "T1.r2.kpyx",
+      "T1.r3.kpy",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, so the reliability of these differences is not established.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": "1. **Overstated causal claim**: \"Gimlet-L outperforms Ostler\" implies a general conclusion, but the evidence is limited to two specific benchmarks with one greedy-decoding sample per problem. Suggest: \"In this evaluation, Gimlet-L achieved higher pass rates than Ostler on both benchmarks.\"\n\n2. **Missing scope caveat**: The draft omits that results apply only to the tested settings (greedy decoding, one sample/problem). Suggest adding: \"under the specified greedy-decoding, single-sample protocol.\"\n\n3. **Unsupported \"improvement\" framing**: The comparison of improvement magnitudes (7.6 vs 4.8 points) is descriptive but could imply meaningful difference without statistical support. Suggest explicitly noting this is a descriptive observation, not a tested interaction effect.\n\n4. **Incomplete reporting**: The draft doesn't mention Gimlet-S (r2), which is relevant context for the research question. Suggest adding one clause noting Gimlet-S (58.7/21.9) also falls below Gimlet-L, strengthening the pattern.",
+ "claim_traces": [],
+ "final_passage": "In this evaluation, Gimlet-L achieved higher pass rates than Ostler on both benchmarks under the specified greedy-decoding, single-sample protocol: 66.0% versus 61.2% on Kiln-Py and 31.1% versus 23.5% on Kiln-PyX. The observed differences were larger on the repository-level Kiln-PyX (7.6 percentage points) than on the function-level Kiln-Py (4.8 percentage points), though this is a descriptive observation and not a statistically tested interaction effect. Gimlet-S (58.7% on Kiln-Py, 21.9% on Kiln-PyX) also fell below Gimlet-L, consistent with the pattern that larger models with execution feedback performed better in this setup. No statistical tests were reported, so the reliability of these differences is not established.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "In this evaluation, Gimlet-L achieved higher pass rates than Ostler on both benchmarks under the specified greedy-decoding, single-sample protocol: 66.0% versus 61.2% on Kiln-Py and 31.1% versus 23.5% on Kiln-PyX.",
+   "evidence_ids": [
+    "T1.r1.kpy",
+    "T1.r1.kpyx",
+    "T1.r3.kpy",
+    "T1.r3.kpyx"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "The observed differences were larger on the repository-level Kiln-PyX (7.6 percentage points) than on the function-level Kiln-Py (4.8 percentage points), though this is a descriptive observation and not a statistically tested interaction effect.",
+   "evidence_ids": [
+    "T1.r1.kpy",
+    "T1.r1.kpyx",
+    "T1.r3.kpy",
+    "T1.r3.kpyx"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Gimlet-S (58.7% on Kiln-Py, 21.9% on Kiln-PyX) also fell below Gimlet-L, consistent with the pattern that larger models with execution feedback performed better in this setup.",
+   "evidence_ids": [
+    "T1.r2.kpy",
+    "T1.r2.kpyx",
+    "T1.r3.kpy",
+    "T1.r3.kpyx"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "No statistical tests were reported, so the reliability of these differences is not established.",
+   "evidence_ids": [],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NUM-p1a:shared_direct:writer_direct:fd03f52487",
+   "role": "writer_direct",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629502-zRw9XhCQbt1NwkqkADfW",
+   "finish_reason": "stop",
+   "prompt_tokens": 958,
+   "completion_tokens": 208,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00019236,
+   "cost_is_estimate": false,
+   "latency_s": 1.456,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1a:C2:reviewer_generic:f15e91a9ce",
+   "role": "reviewer_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629504-WfS0OUflVDzU44uHPUSW",
+   "finish_reason": "stop",
+   "prompt_tokens": 1014,
+   "completion_tokens": 217,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00014652,
+   "cost_is_estimate": false,
+   "latency_s": 4.615,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1a:C2:reviser_generic:8b54b535c4",
+   "role": "reviser_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629508-S4VYOy1v7uUTe1IKJHWr",
+   "finish_reason": "stop",
+   "prompt_tokens": 1317,
+   "completion_tokens": 350,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00028238,
+   "cost_is_estimate": false,
+   "latency_s": 12.347,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 3,
+  "n_model_calls_condition_only": 2,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 3289,
+  "completion_tokens": 775,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00062126,
+  "cost_usd_condition_only": 0.0004289,
+  "any_cost_estimated": false,
+  "latency_s": 18.418,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

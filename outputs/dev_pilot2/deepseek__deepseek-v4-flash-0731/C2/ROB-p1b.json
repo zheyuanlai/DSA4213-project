@@ -1,0 +1,232 @@
+{
+ "run_id": "dev_pilot2:C2:ROB-p1b",
+ "case_id": "ROB-p1b",
+ "condition": "C2",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:02:40Z",
+ "finished_at": "2026-10-10T11:02:46Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "direct": "2c7d723eb60dbf673c40aed1cc4387f1dbf9b33ff6760aeaa361c2e025c1a78c"
+ },
+ "outline": null,
+ "drafts": [
+  {
+   "stage": "direct_draft",
+   "passage": "On the original Corvane-News NER labels, Thornbill-NER achieved a mean test F1 of 91.4% ± 0.4% (worst-seed 90.9%, range 0.9 points), compared to 90.8% ± 0.5% for Lindgren-Tagger (worst-seed 90.1%, range 1.2 points). The provided evidence does not include any experiments with label noise, so the robustness of Thornbill-NER to label noise cannot be assessed from this package. No statistical tests were reported, so the observed F1 difference between the two models cannot be claimed as significant.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the original Corvane-News NER labels, Thornbill-NER achieved a mean test F1 of 91.4% ± 0.4% (worst-seed 90.9%, range 0.9 points), compared to 90.8% ± 0.5% for Lindgren-Tagger (worst-seed 90.1%, range 1.2 points).",
+     "evidence_ids": [
+      "T1.r1.f1",
+      "T1.r1.worst",
+      "T1.r1.range",
+      "T1.r2.f1",
+      "T1.r2.worst",
+      "T1.r2.range"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The provided evidence does not include any experiments with label noise, so the robustness of Thornbill-NER to label noise cannot be assessed from this package.",
+     "evidence_ids": [],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "No statistical tests were reported, so the observed F1 difference between the two models cannot be claimed as significant.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "generic_revision",
+   "passage": "On the original Corvane-News NER labels, Thornbill-NER achieved a mean test F1 of 91.4% ± 0.4% (worst-seed 90.9%, range 0.9 points), compared to 90.8% ± 0.5% for Lindgren-Tagger (worst-seed 90.1%, range 1.2 points). The package contains no label-noise perturbations, so the research question of whether Thornbill-NER is robust to label noise is unanswerable from this evidence. No perturbation condition was evaluated, so the pre-specified robustness criterion cannot be applied and no robustness determination is possible. The 0.6-point mean difference between the two models is descriptive only, as no statistical tests were reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the original Corvane-News NER labels, Thornbill-NER achieved a mean test F1 of 91.4% ± 0.4% (worst-seed 90.9%, range 0.9 points), compared to 90.8% ± 0.5% for Lindgren-Tagger (worst-seed 90.1%, range 1.2 points).",
+     "evidence_ids": [
+      "T1.r1.f1",
+      "T1.r1.worst",
+      "T1.r1.range",
+      "T1.r2.f1",
+      "T1.r2.worst",
+      "T1.r2.range"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The package contains no label-noise perturbations, so the research question of whether Thornbill-NER is robust to label noise is unanswerable from this evidence.",
+     "evidence_ids": [],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "No perturbation condition was evaluated, so the pre-specified robustness criterion cannot be applied and no robustness determination is possible.",
+     "evidence_ids": [],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "The 0.6-point mean difference between the two models is descriptive only, as no statistical tests were reported.",
+     "evidence_ids": [
+      "T1.r1.f1",
+      "T1.r2.f1"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": "1. **Unanswered research question**: The draft correctly notes the absence of label-noise experiments, but the passage should explicitly state that the research question remains unanswered, not merely \"cannot be assessed.\" Suggest: \"The package contains no label-noise perturbations, so the research question is unanswerable from this evidence.\"\n\n2. **Missing robustness criterion application**: The pre-specified criterion (≤2.0-point drop) is irrelevant without perturbation data, but the draft should explicitly state that no robustness determination is possible, not just imply it. Suggest adding: \"No perturbation condition was evaluated, so the robustness criterion cannot be applied.\"\n\n3. **Unnecessary significance caveat**: The third sentence is redundant given the draft already notes the absence of noise experiments; the F1 difference is descriptive only. Suggest merging: \"The 0.6-point mean difference is descriptive only, as no statistical tests were reported.\"",
+ "claim_traces": [],
+ "final_passage": "On the original Corvane-News NER labels, Thornbill-NER achieved a mean test F1 of 91.4% ± 0.4% (worst-seed 90.9%, range 0.9 points), compared to 90.8% ± 0.5% for Lindgren-Tagger (worst-seed 90.1%, range 1.2 points). The package contains no label-noise perturbations, so the research question of whether Thornbill-NER is robust to label noise is unanswerable from this evidence. No perturbation condition was evaluated, so the pre-specified robustness criterion cannot be applied and no robustness determination is possible. The 0.6-point mean difference between the two models is descriptive only, as no statistical tests were reported.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the original Corvane-News NER labels, Thornbill-NER achieved a mean test F1 of 91.4% ± 0.4% (worst-seed 90.9%, range 0.9 points), compared to 90.8% ± 0.5% for Lindgren-Tagger (worst-seed 90.1%, range 1.2 points).",
+   "evidence_ids": [
+    "T1.r1.f1",
+    "T1.r1.worst",
+    "T1.r1.range",
+    "T1.r2.f1",
+    "T1.r2.worst",
+    "T1.r2.range"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "The package contains no label-noise perturbations, so the research question of whether Thornbill-NER is robust to label noise is unanswerable from this evidence.",
+   "evidence_ids": [],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "No perturbation condition was evaluated, so the pre-specified robustness criterion cannot be applied and no robustness determination is possible.",
+   "evidence_ids": [],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "The 0.6-point mean difference between the two models is descriptive only, as no statistical tests were reported.",
+   "evidence_ids": [
+    "T1.r1.f1",
+    "T1.r2.f1"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "ROB-p1b:shared_direct:writer_direct:70f8760fc8",
+   "role": "writer_direct",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629748-CGS2mXdHDDbGA29pYDLF",
+   "finish_reason": "stop",
+   "prompt_tokens": 981,
+   "completion_tokens": 223,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00017674,
+   "cost_is_estimate": false,
+   "latency_s": 1.985,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p1b:C2:reviewer_generic:5e1d7920f4",
+   "role": "reviewer_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629750-fU1ZdSqVfMccozY0Hcjc",
+   "finish_reason": "stop",
+   "prompt_tokens": 1071,
+   "completion_tokens": 182,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000142296,
+   "cost_is_estimate": false,
+   "latency_s": 5.169,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p1b:C2:reviser_generic:47a5b486e3",
+   "role": "reviser_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629755-2LumQkrfd2ILP1BqnyKw",
+   "finish_reason": "stop",
+   "prompt_tokens": 1339,
+   "completion_tokens": 297,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00024758,
+   "cost_is_estimate": false,
+   "latency_s": 1.346,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 3,
+  "n_model_calls_condition_only": 2,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 3391,
+  "completion_tokens": 702,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00056662,
+  "cost_usd_condition_only": 0.00038988,
+  "any_cost_estimated": false,
+  "latency_s": 8.5,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

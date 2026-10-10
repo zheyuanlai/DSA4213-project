@@ -1,0 +1,1189 @@
+{
+ "run_id": "dev_pilot3:C3:EFF-p1a",
+ "case_id": "EFF-p1a",
+ "condition": "C3",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:15:47Z",
+ "finished_at": "2026-10-10T11:16:17Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "a778aa73dc7fcf9b4dc25d663ebc239e05221ead099e0828b67325906eaec9c9"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Brisling has lower median latency than Talmar (41 ms vs 118 ms per utterance) on the Brindle-Voice test set, but higher WER (6.4% vs 6.1%).",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r1.lat",
+     "T1.r2.wer",
+     "T1.r2.lat"
+    ],
+    "scope": "Brindle-Voice test set, batch size 1, fp16, Corvex A2, Lumen 3.1",
+    "caveats": "No statistical tests reported; single test set; latency is median over 2,000 utterances."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Brisling uses far fewer decoder passes than Talmar (4.0 vs 37.6 per utterance).",
+    "evidence_ids": [
+     "T1.r1.passes",
+     "T1.r2.passes"
+    ],
+    "scope": "Brindle-Voice test set",
+    "caveats": "Passes are averaged over the test set."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Brisling has higher WER than Greedy-CTC (6.4% vs 8.9%) but lower median latency (41 ms vs 22 ms).",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r1.lat",
+     "T1.r3.wer",
+     "T1.r3.lat"
+    ],
+    "scope": "Brindle-Voice test set, batch size 1, fp16, Corvex A2, Lumen 3.1",
+    "caveats": "No statistical tests reported; single test set; latency is median over 2,000 utterances."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%). This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance). Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%).",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r1.lat",
+      "T1.r2.wer",
+      "T1.r2.lat"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance).",
+     "evidence_ids": [
+      "T1.r1.passes",
+      "T1.r2.passes"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r1.lat",
+      "T1.r3.wer",
+      "T1.r3.lat"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_scripted",
+   "passage": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%). This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance). Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%).",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r1.lat",
+      "T1.r2.wer",
+      "T1.r2.lat"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance).",
+     "evidence_ids": [
+      "T1.r1.passes",
+      "T1.r2.passes"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r1.lat",
+      "T1.r3.wer",
+      "T1.r3.lat"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%).",
+   "actions": [
+    {
+     "call_id": "call_92ddef8cc6874897a575cd10",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_4295c42bd48f4c8baba2d80d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 41,
+      "evidence_id": "T1.r1.lat"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_21b4f1a156c7412986cc8380",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_c651e438c3954cbeae66f1cb",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "Brisling Talmar latency WER"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_92ddef8cc6874897a575cd10",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "All latencies measured by us on Corvex A2 (fp16, batch size 1, Lumen 3.1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Brisling (ours)",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.passes",
+        "row": "Brisling (ours)",
+        "column": "Decoder passes per utterance",
+        "text": "4.0",
+        "value": 4.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.lat",
+        "row": "Brisling (ours)",
+        "column": "Median latency (ms/utterance)",
+        "text": "41",
+        "value": 41.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.src",
+        "row": "Brisling (ours)",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Talmar",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.passes",
+        "row": "Talmar",
+        "column": "Decoder passes per utterance",
+        "text": "37.6",
+        "value": 37.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.lat",
+        "row": "Talmar",
+        "column": "Median latency (ms/utterance)",
+        "text": "118",
+        "value": 118.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.src",
+        "row": "Talmar",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.wer",
+        "row": "Greedy-CTC",
+        "column": "WER (%)",
+        "text": "8.9",
+        "value": 8.9,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.passes",
+        "row": "Greedy-CTC",
+        "column": "Decoder passes per utterance",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.lat",
+        "row": "Greedy-CTC",
+        "column": "Median latency (ms/utterance)",
+        "text": "22",
+        "value": 22.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.src",
+        "row": "Greedy-CTC",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r1.passes",
+      "T1.r1.lat",
+      "T1.r1.src",
+      "T1.r2.wer",
+      "T1.r2.passes",
+      "T1.r2.lat",
+      "T1.r2.src",
+      "T1.r3.wer",
+      "T1.r3.passes",
+      "T1.r3.lat",
+      "T1.r3.src"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_4295c42bd48f4c8baba2d80d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 41.0,
+      "actual": 41.0,
+      "abs_error": 0.0,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.lat",
+       "row": "Brisling (ours)",
+       "column": "Median latency (ms/utterance)",
+       "text": "41",
+       "value": 41.0,
+       "unit": "ms",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.lat"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_21b4f1a156c7412986cc8380",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Brisling vs Talmar: latency, decoder passes and WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_c651e438c3954cbeae66f1cb",
+     "tool": "retrieve_passage",
+     "status": "NOT_FOUND",
+     "data": {},
+     "returned_ids": [
+      "absent:passage"
+     ],
+     "message": "No cited passages were supplied in this package.",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%).",
+    "revised_text": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%).",
+    "evidence_ids": [
+     "T1.r1.lat",
+     "T1.r2.lat",
+     "T1.r1.wer",
+     "T1.r2.wer",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Table T1 confirms Brisling latency 41 ms vs Talmar 118 ms (lower is better) and WER 6.4% vs 6.1%. The claim states no significance, so no test is required. Numbers and scope match exactly.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance).",
+   "actions": [
+    {
+     "call_id": "call_0665d08822034f2b94dd81e8",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "passes"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_b06711819c6f4128a0a20587",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.0,
+      "evidence_id": "T1.r1.passes"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_574592424dac4cdaa7333d65",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_cb0b96bdc638435d9ddbffd7",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "decoder passes Brisling Talmar"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_0665d08822034f2b94dd81e8",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "All latencies measured by us on Corvex A2 (fp16, batch size 1, Lumen 3.1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r1.passes",
+        "row": "Brisling (ours)",
+        "column": "Decoder passes per utterance",
+        "text": "4.0",
+        "value": 4.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.passes",
+        "row": "Talmar",
+        "column": "Decoder passes per utterance",
+        "text": "37.6",
+        "value": 37.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.passes",
+        "row": "Greedy-CTC",
+        "column": "Decoder passes per utterance",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.passes",
+      "T1.r2.passes",
+      "T1.r3.passes"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_b06711819c6f4128a0a20587",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 4.0,
+      "actual": 4.0,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.passes",
+       "row": "Brisling (ours)",
+       "column": "Decoder passes per utterance",
+       "text": "4.0",
+       "value": 4.0,
+       "unit": null,
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.passes"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_574592424dac4cdaa7333d65",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Brisling vs Talmar: latency, decoder passes and WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_cb0b96bdc638435d9ddbffd7",
+     "tool": "retrieve_passage",
+     "status": "NOT_FOUND",
+     "data": {},
+     "returned_ids": [
+      "absent:passage"
+     ],
+     "message": "No cited passages were supplied in this package.",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance).",
+    "revised_text": "This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance).",
+    "evidence_ids": [
+     "T1.r1.passes",
+     "T1.r2.passes",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Table T1 reports Brisling passes=4.0 and Talmar passes=37.6, matching the claim exactly. The claim is descriptive (no significance language), so absence of a statistical test does not weaken it. No cited passage needed.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+   "actions": [
+    {
+     "call_id": "call_9a83850de4914b23bf2dc0ba",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_bb77b913ea8745b69c5ea21e",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 6.4,
+      "evidence_id": "T1.r1.wer"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_7db19eab141243f3a994f22b",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_7ae568a3651a42abb9d7628c",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "Greedy-CTC"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_9a83850de4914b23bf2dc0ba",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+      "notes": "All latencies measured by us on Corvex A2 (fp16, batch size 1, Lumen 3.1).",
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Brisling (ours)",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.passes",
+        "row": "Brisling (ours)",
+        "column": "Decoder passes per utterance",
+        "text": "4.0",
+        "value": 4.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.lat",
+        "row": "Brisling (ours)",
+        "column": "Median latency (ms/utterance)",
+        "text": "41",
+        "value": 41.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.src",
+        "row": "Brisling (ours)",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Talmar",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.passes",
+        "row": "Talmar",
+        "column": "Decoder passes per utterance",
+        "text": "37.6",
+        "value": 37.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.lat",
+        "row": "Talmar",
+        "column": "Median latency (ms/utterance)",
+        "text": "118",
+        "value": 118.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.src",
+        "row": "Talmar",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.wer",
+        "row": "Greedy-CTC",
+        "column": "WER (%)",
+        "text": "8.9",
+        "value": 8.9,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.passes",
+        "row": "Greedy-CTC",
+        "column": "Decoder passes per utterance",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.lat",
+        "row": "Greedy-CTC",
+        "column": "Median latency (ms/utterance)",
+        "text": "22",
+        "value": 22.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.src",
+        "row": "Greedy-CTC",
+        "column": "Latency measured on",
+        "text": "Corvex A2, fp16 (this work)",
+        "value": null,
+        "unit": null,
+        "higher_is_better": null
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r1.passes",
+      "T1.r1.lat",
+      "T1.r1.src",
+      "T1.r2.wer",
+      "T1.r2.passes",
+      "T1.r2.lat",
+      "T1.r2.src",
+      "T1.r3.wer",
+      "T1.r3.passes",
+      "T1.r3.lat",
+      "T1.r3.src"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_bb77b913ea8745b69c5ea21e",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 6.4,
+      "actual": 6.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.wer",
+       "row": "Brisling (ours)",
+       "column": "WER (%)",
+       "text": "6.4",
+       "value": 6.4,
+       "unit": "%",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.wer"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_7db19eab141243f3a994f22b",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Brisling vs Greedy-CTC: latency and WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_7ae568a3651a42abb9d7628c",
+     "tool": "retrieve_passage",
+     "status": "NOT_FOUND",
+     "data": {},
+     "returned_ids": [
+      "absent:passage"
+     ],
+     "message": "No cited passages were supplied in this package.",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+    "revised_text": "Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r1.lat",
+     "T1.r3.wer",
+     "T1.r3.lat",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "Table T1 confirms Brisling WER 6.4% vs Greedy-CTC 8.9% (lower is better, so Brisling reduced WER) and Brisling latency 41 ms vs Greedy-CTC 22 ms (higher latency). All numbers match. No statistical test reported, but the claim uses no significance language. Scope is the Brindle-Voice test set as stated.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%). This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance). Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Brindle-Voice test set, Brisling achieved a lower median latency than Talmar (41 ms vs 118 ms per utterance) but a slightly higher WER (6.4% vs 6.1%).",
+   "evidence_ids": [
+    "T1.r1.wer",
+    "T1.r1.lat",
+    "T1.r2.wer",
+    "T1.r2.lat"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "This latency advantage was accompanied by a substantially lower number of decoder passes (4.0 vs 37.6 per utterance).",
+   "evidence_ids": [
+    "T1.r1.passes",
+    "T1.r2.passes"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Relative to the Greedy-CTC reference, Brisling reduced WER (6.4% vs 8.9%) at the cost of higher median latency (41 ms vs 22 ms).",
+   "evidence_ids": [
+    "T1.r1.wer",
+    "T1.r1.lat",
+    "T1.r3.wer",
+    "T1.r3.lat"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "EFF-p1a:shared_outline:outline:404a0d75c3",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "DeepInfra",
+   "generation_id": "gen-1791629105-8RW42pPIafQvENQpAgWz",
+   "finish_reason": "stop",
+   "prompt_tokens": 1134,
+   "completion_tokens": 382,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001368,
+   "cost_is_estimate": false,
+   "latency_s": 5.991,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:shared_outline:writer_from_outline:078d5b6f2c",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629111-g83QfGMGg9H3Gdup3Oc4",
+   "finish_reason": "stop",
+   "prompt_tokens": 1564,
+   "completion_tokens": 229,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00028308,
+   "cost_is_estimate": false,
+   "latency_s": 2.1,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:f128c8b97f",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630536-j8XLlLCqSZTs508JGypR",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2752,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000254848,
+   "cost_is_estimate": false,
+   "latency_s": 1.46,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:16e502b1a1",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630538-5yaYOsUVLGaoO0IVbeU1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3705,
+   "completion_tokens": 67,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000125616,
+   "cost_is_estimate": false,
+   "latency_s": 1.594,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:746e8b7dc3",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630540-OvM13n4lvaGaD7fUVzvh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3915,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.71152e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.446,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:c249450539",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630541-wvJWQrwcpWiOtgykv9pM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4088,
+   "completion_tokens": 56,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.736e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.325,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:081fd2a04f",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630542-OI9caG6tE1jhwmdFqNCm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4187,
+   "completion_tokens": 189,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.1184e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.959,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:2e5cdbf619",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630545-u0coEPcXblEf8d36w1Nm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2714,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000255992,
+   "cost_is_estimate": false,
+   "latency_s": 1.602,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:88bca58d80",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630547-F8TeSm4HlNbi8aknqQc0",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3072,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.044e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.572,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:38b42509b2",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630549-EoWWtloMvv3ITQ5HWy7R",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3282,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.50336e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.732,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:988d519f5b",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630550-cEP9oL7fnLRGfVyAFgWc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3455,
+   "completion_tokens": 55,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.68256e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.393,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:fb64b24a26",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630552-toG9eBJ1cYOMKkO8JqCD",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3553,
+   "completion_tokens": 170,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.39984e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.826,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:2ea167ec66",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630555-BbAlvehFwNX2Ul1cflmA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2748,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.6384e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.29,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:c7177dc8a8",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630556-FO6U2tavWjKjojovAPEX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3701,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000125792,
+   "cost_is_estimate": false,
+   "latency_s": 1.795,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:c0cc0e766f",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630558-gFvKK6ny0tGBYsoYsPW7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3910,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.66752e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.012,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:86e72e2ee4",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630560-Eczo4LKsfj9RIJnjf74H",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4083,
+   "completion_tokens": 53,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.6128e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.302,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p1a:C3:verify_scripted:5c541a6bee",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791630563-2FB4oMZYuyy8dVdXIXmk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4179,
+   "completion_tokens": 221,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.8928e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.435,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 17,
+  "n_model_calls_condition_only": 15,
+  "n_tool_calls": 12,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 3,
+   "get_test_metadata": 3,
+   "retrieve_passage": 3
+  },
+  "prompt_tokens": 56042,
+  "completion_tokens": 1925,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0018622,
+  "cost_usd_condition_only": 0.00144232,
+  "any_cost_estimated": false,
+  "latency_s": 37.834,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

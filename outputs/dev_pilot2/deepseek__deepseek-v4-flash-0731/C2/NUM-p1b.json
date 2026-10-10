@@ -1,0 +1,220 @@
+{
+ "run_id": "dev_pilot2:C2:NUM-p1b",
+ "case_id": "NUM-p1b",
+ "condition": "C2",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:00:39Z",
+ "finished_at": "2026-10-10T11:00:45Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "direct": "5eab9fd6633eb18eb515882976c8fa67e7e1905e665d011f2041f3e6ebfaa0ed"
+ },
+ "outline": null,
+ "drafts": [
+  {
+   "stage": "direct_draft",
+   "passage": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement. On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively. These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a 4.8-percentage-point improvement.",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r3.kpy"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also outperformed Ostler, with failure rates of 68.9% versus 76.5%, respectively.",
+     "evidence_ids": [
+      "T1.r1.kpyx",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results indicate that Gimlet-L, a 13B-parameter model fine-tuned with execution feedback, consistently reduced failure rates relative to the similarly sized Ostler baseline on both benchmarks, although no statistical tests were reported.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r3"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "generic_revision",
+   "passage": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a raw difference of 4.8 percentage points. On the repository-level Kiln-PyX benchmark, Gimlet-L also showed a lower failure rate (68.9%) than Ostler (76.5%). Under greedy decoding with one sample per problem, Gimlet-L (13B parameters) showed lower failure rates than the similarly sized Ostler baseline in both evaluated benchmarks (Kiln-Py: 1,640 problems; Kiln-PyX: 820 problems), though no statistical tests were reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a raw difference of 4.8 percentage points.",
+     "evidence_ids": [
+      "T1.r1.kpy",
+      "T1.r3.kpy"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also showed a lower failure rate (68.9%) than Ostler (76.5%).",
+     "evidence_ids": [
+      "T1.r1.kpyx",
+      "T1.r3.kpyx"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Under greedy decoding with one sample per problem, Gimlet-L (13B parameters) showed lower failure rates than the similarly sized Ostler baseline in both evaluated benchmarks (Kiln-Py: 1,640 problems; Kiln-PyX: 820 problems), though no statistical tests were reported.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r3"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": "1. **Overstated consistency claim**: The draft says Gimlet-L “consistently reduced failure rates” on both benchmarks, but with only one dataset per condition and no statistical tests, “consistently” implies reliability beyond the evidence. Suggest replacing with “showed lower failure rates in both evaluated benchmarks.”\n\n2. **Missing scope limitation**: The draft does not state that results are limited to greedy decoding, one sample per problem, and the specific problem counts (1,640 and 820). Add this boundary to the final sentence.\n\n3. **Imprecise comparison phrasing**: “4.8-percentage-point improvement” is fine, but the draft omits that this is a relative difference in failure rates, not a tested effect. Suggest explicitly noting “a raw difference of 4.8 percentage points” to avoid implying significance.",
+ "claim_traces": [],
+ "final_passage": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a raw difference of 4.8 percentage points. On the repository-level Kiln-PyX benchmark, Gimlet-L also showed a lower failure rate (68.9%) than Ostler (76.5%). Under greedy decoding with one sample per problem, Gimlet-L (13B parameters) showed lower failure rates than the similarly sized Ostler baseline in both evaluated benchmarks (Kiln-Py: 1,640 problems; Kiln-PyX: 820 problems), though no statistical tests were reported.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On Kiln-Py, Gimlet-L achieved a lower failure rate (34.0%) than Ostler (38.8%), a raw difference of 4.8 percentage points.",
+   "evidence_ids": [
+    "T1.r1.kpy",
+    "T1.r3.kpy"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "On the repository-level Kiln-PyX benchmark, Gimlet-L also showed a lower failure rate (68.9%) than Ostler (76.5%).",
+   "evidence_ids": [
+    "T1.r1.kpyx",
+    "T1.r3.kpyx"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Under greedy decoding with one sample per problem, Gimlet-L (13B parameters) showed lower failure rates than the similarly sized Ostler baseline in both evaluated benchmarks (Kiln-Py: 1,640 problems; Kiln-PyX: 820 problems), though no statistical tests were reported.",
+   "evidence_ids": [
+    "T1.r1",
+    "T1.r3"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NUM-p1b:shared_direct:writer_direct:d73ec1798f",
+   "role": "writer_direct",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629627-hnSda7CH1x1JjO0uFXxh",
+   "finish_reason": "stop",
+   "prompt_tokens": 964,
+   "completion_tokens": 199,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00019068,
+   "cost_is_estimate": false,
+   "latency_s": 1.896,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C2:reviewer_generic:be577c0536",
+   "role": "reviewer_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791629629-IuOfROXDTkPKlWEmfn18",
+   "finish_reason": "stop",
+   "prompt_tokens": 1035,
+   "completion_tokens": 172,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000136488,
+   "cost_is_estimate": false,
+   "latency_s": 4.344,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p1b:C2:reviser_generic:ee98dacb88",
+   "role": "reviser_generic",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629633-Rx45ic7HhwN8nMmhFX81",
+   "finish_reason": "stop",
+   "prompt_tokens": 1293,
+   "completion_tokens": 232,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00024598,
+   "cost_is_estimate": false,
+   "latency_s": 1.743,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 3,
+  "n_model_calls_condition_only": 2,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 3292,
+  "completion_tokens": 603,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00057315,
+  "cost_usd_condition_only": 0.00038247,
+  "any_cost_estimated": false,
+  "latency_s": 7.983,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -1,0 +1,89 @@
+{
+ "case_id": "RP-03",
+ "category": null,
+ "split": "real",
+ "pair_id": null,
+ "package": {
+  "question": "Does filtering self-generated preference data with Method M improve multilingual instruction-following over other filtering and data-scheduling baselines, consistently across two models and training rounds, without degrading general knowledge and reasoning accuracy?",
+  "methods_summary": "Method M is a preference-data filter for multilingual self-rewarding alignment. During each training round it tracks a moving-average gradient per language (kept in low-rank compressed form), removes conflicting components between languages by gradient projection, and sums them into a consensus direction. In the next round, each newly generated preference pair is scored by the cosine similarity between its gradient and this consensus direction, and the top 50% per language are kept for length-penalised DPO. Baselines keep the top 50% by other criteria (random, length margin, self-reward margin), use no filtering (Mult-Full), train each language separately (Mono), or reschedule languages (UAB, LCL).",
+  "experimental_setup": "Seed models: instruction-tuned Llama3-8B and Gemma2-2B. Training prompts: 1K AlpaGasus prompts machine-translated into 9 further languages (100 prompts per language in multilingual runs). Each round generates and self-scores four responses per prompt, builds preference pairs, filters, and trains one DPO epoch; five rounds. Instruction-following: head-to-head win rate versus the seed model on the aya evaluation suite, judged by GPT-4o. Alignment tax: 5-shot accuracy on Global MMLU and multilingual ARC Challenge. No significance tests or confidence intervals are reported.",
+  "experiments": [
+   {
+    "experiment_id": "exp1",
+    "description": "Multilingual instruction-following after iterative self-rewarding with different preference-data filters (T1)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs Max-Reward (strongest other filter) in average win rate, Llama3-8B and Gemma2-2B"},
+     {"comparison_id": "cmp2", "description": "Method M vs unfiltered (Mult-Full), random filtering, and scheduling baselines (UAB, LCL)"},
+     {"comparison_id": "cmp3", "description": "Multilingual training (Mult-Full) vs monolingual training (Mono)"}
+    ]
+   },
+   {
+    "experiment_id": "exp2",
+    "description": "Alignment tax on knowledge/reasoning benchmarks (T2)",
+    "comparisons": [
+     {"comparison_id": "cmp1", "description": "Method M vs seed model and vs other filters on Global MMLU and ARC-C accuracy"}
+    ]
+   }
+  ],
+  "results_tables": [
+   {
+    "table_id": "T1",
+    "caption": "Average head-to-head win rate (%) against the seed model on the aya evaluation suite (10 training languages), by self-rewarding round, for Llama3-8B and Gemma2-2B.",
+    "columns": [
+     {"column_id": "ll_r3", "header": "Llama R3", "unit": "%", "higher_is_better": true},
+     {"column_id": "ll_r4", "header": "Llama R4", "unit": "%", "higher_is_better": true},
+     {"column_id": "ll_r5", "header": "Llama R5", "unit": "%", "higher_is_better": true},
+     {"column_id": "ge_r3", "header": "Gemma R3", "unit": "%", "higher_is_better": true},
+     {"column_id": "ge_r4", "header": "Gemma R4", "unit": "%", "higher_is_better": true},
+     {"column_id": "ge_r5", "header": "Gemma R5", "unit": "%", "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Mono", "cells": {"ll_r3": {"text": "63.80", "value": 63.8, "spread": null}, "ll_r4": {"text": "65.79", "value": 65.79, "spread": null}, "ll_r5": {"text": "66.08", "value": 66.08, "spread": null}, "ge_r3": {"text": "43.01", "value": 43.01, "spread": null}, "ge_r4": {"text": "39.09", "value": 39.09, "spread": null}, "ge_r5": {"text": "38.11", "value": 38.11, "spread": null}}},
+     {"row_id": "r2", "label": "Mult-Full", "cells": {"ll_r3": {"text": "61.75", "value": 61.75, "spread": null}, "ll_r4": {"text": "64.42", "value": 64.42, "spread": null}, "ll_r5": {"text": "66.52", "value": 66.52, "spread": null}, "ge_r3": {"text": "57.31", "value": 57.31, "spread": null}, "ge_r4": {"text": "57.51", "value": 57.51, "spread": null}, "ge_r5": {"text": "59.53", "value": 59.53, "spread": null}}},
+     {"row_id": "r3", "label": "UAB", "cells": {"ll_r3": {"text": "63.04", "value": 63.04, "spread": null}, "ll_r4": {"text": "64.51", "value": 64.51, "spread": null}, "ll_r5": {"text": "66.54", "value": 66.54, "spread": null}, "ge_r3": {"text": "59.63", "value": 59.63, "spread": null}, "ge_r4": {"text": "60.61", "value": 60.61, "spread": null}, "ge_r5": {"text": "60.85", "value": 60.85, "spread": null}}},
+     {"row_id": "r4", "label": "LCL", "cells": {"ll_r3": {"text": "63.96", "value": 63.96, "spread": null}, "ll_r4": {"text": "65.76", "value": 65.76, "spread": null}, "ll_r5": {"text": "66.67", "value": 66.67, "spread": null}, "ge_r3": {"text": "60.04", "value": 60.04, "spread": null}, "ge_r4": {"text": "60.52", "value": 60.52, "spread": null}, "ge_r5": {"text": "62.51", "value": 62.51, "spread": null}}},
+     {"row_id": "r5", "label": "Rand", "cells": {"ll_r3": {"text": "64.06", "value": 64.06, "spread": null}, "ll_r4": {"text": "65.21", "value": 65.21, "spread": null}, "ll_r5": {"text": "66.32", "value": 66.32, "spread": null}, "ge_r3": {"text": "57.98", "value": 57.98, "spread": null}, "ge_r4": {"text": "54.25", "value": 54.25, "spread": null}, "ge_r5": {"text": "57.25", "value": 57.25, "spread": null}}},
+     {"row_id": "r6", "label": "Max-Len", "cells": {"ll_r3": {"text": "59.88", "value": 59.88, "spread": null}, "ll_r4": {"text": "61.11", "value": 61.11, "spread": null}, "ll_r5": {"text": "67.03", "value": 67.03, "spread": null}, "ge_r3": {"text": "58.84", "value": 58.84, "spread": null}, "ge_r4": {"text": "58.94", "value": 58.94, "spread": null}, "ge_r5": {"text": "59.52", "value": 59.52, "spread": null}}},
+     {"row_id": "r7", "label": "Max-Reward", "cells": {"ll_r3": {"text": "67.23", "value": 67.23, "spread": null}, "ll_r4": {"text": "70.39", "value": 70.39, "spread": null}, "ll_r5": {"text": "70.64", "value": 70.64, "spread": null}, "ge_r3": {"text": "63.73", "value": 63.73, "spread": null}, "ge_r4": {"text": "67.72", "value": 67.72, "spread": null}, "ge_r5": {"text": "61.82", "value": 61.82, "spread": null}}},
+     {"row_id": "r8", "label": "Method M", "cells": {"ll_r3": {"text": "66.58", "value": 66.58, "spread": null}, "ll_r4": {"text": "69.99", "value": 69.99, "spread": null}, "ll_r5": {"text": "73.22", "value": 73.22, "spread": null}, "ge_r3": {"text": "65.54", "value": 65.54, "spread": null}, "ge_r4": {"text": "69.22", "value": 69.22, "spread": null}, "ge_r5": {"text": "66.36", "value": 66.36, "spread": null}}}
+    ],
+    "notes": "Rounds 1-2 and rows Min-Len, Min-Reward and Min-M (keeps the lowest-scoring samples) dropped. Rand is the average of 3 runs; all other rows are single runs. Win rates judged by GPT-4o. Per-language breakdowns in the source are not included here."
+   },
+   {
+    "table_id": "T2",
+    "caption": "Alignment tax: 5-shot accuracy (%) on Global MMLU and multilingual ARC Challenge after the final (fifth) self-rewarding round. 'Seed model' = accuracy before alignment.",
+    "columns": [
+     {"column_id": "ll_mmlu", "header": "Llama Global MMLU", "unit": "%", "higher_is_better": true},
+     {"column_id": "ll_arc", "header": "Llama ARC-C", "unit": "%", "higher_is_better": true},
+     {"column_id": "ge_mmlu", "header": "Gemma Global MMLU", "unit": "%", "higher_is_better": true},
+     {"column_id": "ge_arc", "header": "Gemma ARC-C", "unit": "%", "higher_is_better": true}
+    ],
+    "rows": [
+     {"row_id": "r1", "label": "Seed model", "cells": {"ll_mmlu": {"text": "48.67", "value": 48.67, "spread": null}, "ll_arc": {"text": "72.23", "value": 72.23, "spread": null}, "ge_mmlu": {"text": "38.88", "value": 38.88, "spread": null}, "ge_arc": {"text": "62.85", "value": 62.85, "spread": null}}},
+     {"row_id": "r2", "label": "Mult-Full", "cells": {"ll_mmlu": {"text": "49.47", "value": 49.47, "spread": null}, "ll_arc": {"text": "72.57", "value": 72.57, "spread": null}, "ge_mmlu": {"text": "40.48", "value": 40.48, "spread": null}, "ge_arc": {"text": "64.03", "value": 64.03, "spread": null}}},
+     {"row_id": "r3", "label": "Rand", "cells": {"ll_mmlu": {"text": "49.23", "value": 49.23, "spread": null}, "ll_arc": {"text": "72.42", "value": 72.42, "spread": null}, "ge_mmlu": {"text": "39.73", "value": 39.73, "spread": null}, "ge_arc": {"text": "63.12", "value": 63.12, "spread": null}}},
+     {"row_id": "r4", "label": "Min-Len", "cells": {"ll_mmlu": {"text": "50.62", "value": 50.62, "spread": null}, "ll_arc": {"text": "72.99", "value": 72.99, "spread": null}, "ge_mmlu": {"text": "37.00", "value": 37.0, "spread": null}, "ge_arc": {"text": "61.28", "value": 61.28, "spread": null}}},
+     {"row_id": "r5", "label": "Max-Len", "cells": {"ll_mmlu": {"text": "49.78", "value": 49.78, "spread": null}, "ll_arc": {"text": "72.79", "value": 72.79, "spread": null}, "ge_mmlu": {"text": "41.80", "value": 41.8, "spread": null}, "ge_arc": {"text": "64.35", "value": 64.35, "spread": null}}},
+     {"row_id": "r6", "label": "Max-Reward", "cells": {"ll_mmlu": {"text": "48.28", "value": 48.28, "spread": null}, "ll_arc": {"text": "72.09", "value": 72.09, "spread": null}, "ge_mmlu": {"text": "42.48", "value": 42.48, "spread": null}, "ge_arc": {"text": "64.48", "value": 64.48, "spread": null}}},
+     {"row_id": "r7", "label": "Method M", "cells": {"ll_mmlu": {"text": "48.90", "value": 48.9, "spread": null}, "ll_arc": {"text": "72.28", "value": 72.28, "spread": null}, "ge_mmlu": {"text": "39.18", "value": 39.18, "spread": null}, "ge_arc": {"text": "63.38", "value": 63.38, "spread": null}}}
+    ],
+    "notes": "Seed-model values are taken from the source table headers. Rounds 1-4 and rows Min-Reward and Min-M dropped. Single runs except Rand (3-run average)."
+   }
+  ],
+  "statistical_tests": [],
+  "source_passages": [
+   {"passage_id": "P1", "citation_key": "Source paper", "source_title": "Excerpt from the source paper's setup/related-work text (full attribution in source manifest)", "text": "Wang et al. (2021) previously observed that higher gradient similarity correlates with improved multilingual performance."}
+  ],
+  "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+ },
+ "source_manifest": {
+  "origin": "real_paper_derived",
+  "notes": "Proposed filter ConGrad (Max-ConGrad) renamed to 'Method M'. Tables used: main win-rate table (tab-instruction-following, rounds 3-5) and alignment-tax tables (tab-llama-tax, tab-gemma-tax, round 5). Licensed CC BY-SA 4.0: this derived package must be shared under the same license. Abstract, results prose and conclusion withheld. v2 (2025-11-11) source.",
+  "citation": "Jiangnan Li, Thuy-Trang Vu, Christian Herold, Amirhossein Tebbifakhr, Shahram Khadivi, Gholamreza Haffari (2025). CONGRAD:Conflicting Gradient Filtering for Multilingual Preference Alignment. arXiv:2503.23777",
+  "url": "https://arxiv.org/abs/2503.23777",
+  "license": "http://creativecommons.org/licenses/by-sa/4.0/",
+  "retrieved_on": "2026-10-10",
+  "extraction_method": "manual transcription from arXiv LaTeX source by Claude Code agent; tables subset; method renamed",
+  "sha256_of_source": "b1bc8194355d8435d7328e73548af469d2cdd3b0b50e34ea9f6a8d9349ff1ff6"
+ }
+}

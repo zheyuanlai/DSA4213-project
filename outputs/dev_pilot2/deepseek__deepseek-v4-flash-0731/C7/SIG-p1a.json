@@ -1,0 +1,209 @@
+{
+ "run_id": "dev_pilot2:C7:SIG-p1a",
+ "case_id": "SIG-p1a",
+ "condition": "C7",
+ "split": "dev",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "91723121b71eac8e",
+  "verifier_scripted.md": "343e2ae5428d2c48"
+ },
+ "code_hash": "09f36ed3dbb9ff12",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:05:40Z",
+ "finished_at": "2026-10-10T11:05:40Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "1e498b30ee7cf4b9d1f797bab8ffa806e9a9d2a3f8729f3b13f9174cdaa398a2"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Tessaline achieves higher BLEU than Varrow-NMT on the Halvard-Parl English→Estonian test set, with a statistically significant mean paired difference of 0.8 BLEU points (95% CI [0.2, 1.44], p=0.017, paired t-test over 8 seeds).",
+    "evidence_ids": [
+     "T1.r1.bleu",
+     "T1.r2.bleu",
+     "S2"
+    ],
+    "scope": "Halvard-Parl English→Estonian test set, BLEU, 8 seeds",
+    "caveats": "The effect size is small (0.8 points) and the confidence interval is wide; significance is based on a single test set and one language pair."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Tessaline substantially outperforms the PhraseGrid baseline in BLEU on the same test set, with a statistically significant mean paired difference of 6.3 BLEU points (95% CI [5.87, 6.83], p<0.001, paired t-test over 8 seeds).",
+    "evidence_ids": [
+     "T1.r1.bleu",
+     "T1.r3.bleu",
+     "S1"
+    ],
+    "scope": "Halvard-Parl English→Estonian test set, BLEU, 8 seeds",
+    "caveats": "PhraseGrid is a reference baseline, not the primary comparison; result is limited to this test set."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The BLEU advantage of Tessaline over Varrow-NMT is consistent with a small but statistically significant improvement, but the magnitude is modest relative to the gap over the phrase-based baseline.",
+    "evidence_ids": [
+     "F1",
+     "F2"
+    ],
+    "scope": "Halvard-Parl English→Estonian test set, BLEU",
+    "caveats": "No direct statistical comparison between the two differences was performed; interpretation is qualitative."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Halvard-Parl English→Estonian test set, Tessaline achieves a mean BLEU of 28.4 ± 0.6 over 8 seeds, compared to 27.6 ± 0.8 for Varrow-NMT, a statistically significant mean paired difference of 0.8 BLEU points (95% CI [0.2, 1.44], p = 0.017, paired t-test). Tessaline also substantially outperforms the PhraseGrid reference baseline, with a mean BLEU of 22.1 ± 0.8 and a statistically significant mean paired difference of 6.3 BLEU points (95% CI [5.87, 6.83], p < 0.001, paired t-test). The improvement over Varrow-NMT is small in magnitude relative to the gap over the phrase-based baseline, and these results are limited to this single test set and language pair.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Halvard-Parl English→Estonian test set, Tessaline achieves a mean BLEU of 28.4 ± 0.6 over 8 seeds, compared to 27.6 ± 0.8 for Varrow-NMT, a statistically significant mean paired difference of 0.8 BLEU points (95% CI [0.2, 1.44], p = 0.017, paired t-test).",
+     "evidence_ids": [
+      "T1.r1.bleu",
+      "T1.r2.bleu",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Tessaline also substantially outperforms the PhraseGrid reference baseline, with a mean BLEU of 22.1 ± 0.8 and a statistically significant mean paired difference of 6.3 BLEU points (95% CI [5.87, 6.83], p < 0.001, paired t-test).",
+     "evidence_ids": [
+      "T1.r1.bleu",
+      "T1.r3.bleu",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The improvement over Varrow-NMT is small in magnitude relative to the gap over the phrase-based baseline, and these results are limited to this single test set and language pair.",
+     "evidence_ids": [
+      "F1",
+      "F2"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [],
+ "final_passage": "On the Halvard-Parl English→Estonian test set, Tessaline achieves a mean BLEU of 28.4 ± 0.6 over 8 seeds, compared to 27.6 ± 0.8 for Varrow-NMT, a statistically significant mean paired difference of 0.8 BLEU points (95% CI [0.2, 1.44], p = 0.017, paired t-test). Tessaline also substantially outperforms the PhraseGrid reference baseline, with a mean BLEU of 22.1 ± 0.8 and a statistically significant mean paired difference of 6.3 BLEU points (95% CI [5.87, 6.83], p < 0.001, paired t-test). The improvement over Varrow-NMT is small in magnitude relative to the gap over the phrase-based baseline, and these results are limited to this single test set and language pair.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Halvard-Parl English→Estonian test set, Tessaline achieves a mean BLEU of 28.4 ± 0.6 over 8 seeds, compared to 27.6 ± 0.8 for Varrow-NMT, a statistically significant mean paired difference of 0.8 BLEU points (95% CI [0.2, 1.44], p = 0.017, paired t-test).",
+   "evidence_ids": [
+    "T1.r1.bleu",
+    "T1.r2.bleu",
+    "S2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Tessaline also substantially outperforms the PhraseGrid reference baseline, with a mean BLEU of 22.1 ± 0.8 and a statistically significant mean paired difference of 6.3 BLEU points (95% CI [5.87, 6.83], p < 0.001, paired t-test).",
+   "evidence_ids": [
+    "T1.r1.bleu",
+    "T1.r3.bleu",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "The improvement over Varrow-NMT is small in magnitude relative to the gap over the phrase-based baseline, and these results are limited to this single test set and language pair.",
+   "evidence_ids": [
+    "F1",
+    "F2"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "SIG-p1a:shared_outline:outline:9634ef09a9",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629814-oVMNMrxiKzcb8qJXa8Wh",
+   "finish_reason": "stop",
+   "prompt_tokens": 1170,
+   "completion_tokens": 439,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00028672,
+   "cost_is_estimate": false,
+   "latency_s": 2.859,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p1a:shared_outline:writer_from_outline:32ce2fbb7c",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791629817-NTs8VnLGvfzQV5qiJ0rY",
+   "finish_reason": "stop",
+   "prompt_tokens": 1655,
+   "completion_tokens": 288,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00031234,
+   "cost_is_estimate": false,
+   "latency_s": 1.489,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 2,
+  "n_model_calls_condition_only": 0,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 2825,
+  "completion_tokens": 727,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00059906,
+  "cost_usd_condition_only": 0,
+  "any_cost_estimated": false,
+  "latency_s": 4.348,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -1,0 +1,16 @@
+# FROZEN primary configuration for the held-out TEST run (and, unchanged, the real-paper study).
+# Selected on DEV only (docs/MODEL_SELECTION.md). Do not edit after freeze; see benchmarks/freeze_manifest.json.
+model:
+  id: deepseek/deepseek-v4-flash-0731
+  # fp8 endpoints that support tools + named tool_choice + json_schema; DeepInfra (cheapest) was rate-limited.
+  provider_routing: {order: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], only: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], allow_fallbacks: true, require_parameters: true}
+  decoding: {temperature: 0, reasoning: {enabled: false}}
+  pricing: {prompt_per_mtok: 0.14, completion_per_mtok: 0.28}   # upper bound over allowed endpoints (for pre-call cost reservation only)
+  timeout_s: 120
+  max_retries: 3
+verifier: {max_tool_calls: 4, max_claims: 6}   # per-claim evidence-tool budget; 1 post-draft verification pass
+budget:
+  hard_cap_usd: 12.0
+  stage_caps: {preflight: 0.50, dev: 1.50, main: 6.00, real: 2.50, buffer: 1.50}
+  max_inflight: 2
+paths: {ledger: outputs/cost_ledger.jsonl}
