@@ -150,14 +150,17 @@ def main() -> int:
     summ = df.groupby("condition").agg(**agg).reindex([c for c in conds if c in set(df.condition)])
     summ.to_csv(out / "summary_by_condition.csv")
     comps = {}
-    pairs = {cid: rec.pair_id for cid, rec in cases.items()}
+    # unpaired sets (real papers, diagnostic) have pair_id None: each case is then its own cluster
+    pairs = {cid: (rec.pair_id or cid) for cid, rec in cases.items()}
     for name, (x, y) in COMPARISONS.items():
         if x not in set(df.condition) or y not in set(df.condition):
             continue
         res = {}
         for met in AUTO_METRICS + [m for m in PROXY_METRICS if m in df] + (["num_value_recall"] if "num_value_recall" in df else []):
-            dx = {r.case_id: (float(r[met]) if pd.notna(r[met]) else None) for _, r in df[df.condition == x].iterrows()}
-            dy = {r.case_id: (float(r[met]) if pd.notna(r[met]) else None) for _, r in df[df.condition == y].iterrows()}
+            # paired comparisons use cases where BOTH runs completed (failed runs are reported in the summary table)
+            ok = lambda r: r["status"] == "completed" and pd.notna(r[met])  # noqa: E731
+            dx = {r.case_id: (float(r[met]) if ok(r) else None) for _, r in df[df.condition == x].iterrows()}
+            dy = {r.case_id: (float(r[met]) if ok(r) else None) for _, r in df[df.condition == y].iterrows()}
             res[met] = {"case_bootstrap": paired_bootstrap(dx, dy), "matched_pair_bootstrap": cluster_bootstrap(dx, dy, pairs)}
         comps[name] = res
     (out / "comparisons.json").write_text(json.dumps(comps, indent=1))

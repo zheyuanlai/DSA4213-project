@@ -9,6 +9,7 @@
 """
 from __future__ import annotations
 
+import fcntl
 import hashlib
 import json
 import subprocess
@@ -135,11 +136,24 @@ def run_experiment(cfg: dict[str, Any], cases: list[CaseRecord], conditions: lis
         client = make_client(cfg, guard)
     out_base = out_base or ROOT / "outputs"
     out_root = out_base / family / model_slug(client.model_id)
-    manifest = JobManifest(out_root / "job_manifest.json", events_path or out_base / "run_manifest.jsonl", run_tag)
+    out_root.mkdir(parents=True, exist_ok=True)
+    lock_f = open(out_root / ".run.lock", "w")
+    try:
+        fcntl.flock(lock_f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        raise RuntimeError(f"another runner process holds {out_root}/.run.lock; refusing to run concurrently")
+    mpath = out_root / "job_manifest.json"
+    if mpath.exists():
+        prev_tag = json.loads(mpath.read_text()).get("run_tag")
+        if prev_tag and prev_tag != run_tag:
+            raise ValueError(f"output family {family!r} already belongs to run tag {prev_tag!r}; resume with that tag "
+                             f"or choose a new --family for run tag {run_tag!r}")
+    manifest = JobManifest(mpath, events_path or out_base / "run_manifest.jsonl", run_tag)
     run_meta = {
         "run_tag": run_tag, "stage": stage, "prompt_hashes": prompt_hashes(), "code_hash": code_hash(),
         "config_hash": sha256_obj(cfg)[:16], "git_commit": git_commit(), "git_dirty": git_dirty(),
     }
+    run_meta["provenance"] = sha256_obj({"prompts": run_meta["prompt_hashes"], "config": cfg})[:16]
     atomic_write_json(out_root / f"run_meta_{run_tag}.json", {**run_meta, "config": cfg, "conditions": conditions,
                                                               "case_ids": [c.case_id for c in cases],
                                                               "is_mock": client.is_mock, "started_at": now_iso()})

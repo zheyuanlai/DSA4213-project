@@ -260,3 +260,25 @@ def test_verifier_prompts_share_checklist():
     for block in ("What to check", "Your decision must agree with your rationale"):
         ia, is_ = a.index(block), s.index(block)
         assert a[ia:ia + 300] == s[is_:is_ + 300]
+
+
+def test_repair_path_answers_every_tool_call(pkg):
+    state = {"n": 0}
+
+    def responder(messages, tools, tool_choice, role):
+        state["n"] += 1
+        if state["n"] == 1:
+            return {"tool_calls": [_tc(1, "lookup_table", {"table_id": "T1"})]}
+        if state["n"] == 2:  # parallel evidence call + invalid decision in the same turn
+            return {"tool_calls": [_tc(2, "get_test_metadata", {"experiment_id": "exp1", "comparison_id": "cmp1"}),
+                                   _tc(3, "submit_decision", {"rationale": "r", "decision": "WEAKEN", "revised_text": "x",
+                                                              "evidence_ids": ["nope"]})]}
+        return {"tool_calls": [_tc(4, "submit_decision", {"rationale": "r", "decision": "ACCEPT", "revised_text": "",
+                                                          "evidence_ids": ["T1"]})]}
+
+    client = MockClient(responder)
+    verify_draft(client, pkg, _draft(), VerifierConfig(mode="adaptive", can_strengthen=True), {"case_id": "u", "stage": "dev"}, [])
+    last = client.calls[-1]["messages"]
+    asked = {tc["id"] for m in last if m["role"] == "assistant" for tc in (m.get("tool_calls") or [])}
+    answered = {m["tool_call_id"] for m in last if m["role"] == "tool"}
+    assert asked == answered

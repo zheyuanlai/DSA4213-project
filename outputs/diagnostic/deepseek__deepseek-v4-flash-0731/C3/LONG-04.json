@@ -1,0 +1,1710 @@
+{
+ "run_id": "diag_v2:C3:LONG-04",
+ "case_id": "LONG-04",
+ "condition": "C3",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:30:07Z",
+ "finished_at": "2026-10-10T12:31:06Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "6c61bf2dba6fc2a779eb46f96133ba58e66f4c611a1f5adb2918ba025e39deb6"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Sprocket-AD achieves higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r2.avg",
+     "T1.r1.rook",
+     "T1.r2.rook",
+     "T1.r1.mall",
+     "T1.r2.mall",
+     "T1.r1.quay",
+     "T1.r2.quay",
+     "T1.r1.tind",
+     "T1.r2.tind",
+     "T1.r1.whit",
+     "T1.r2.whit"
+    ],
+    "scope": "Event-F1 (%) on the five benchmarks, mean over 3 seeds",
+    "caveats": "No statistical tests reported; differences may not be significant. Quayside-Grid v2 labels are from version 2 (P1), not comparable to version 1."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Sprocket-AD has lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+    "evidence_ids": [
+     "T2.r1.rook",
+     "T2.r2.rook",
+     "T2.r1.mall",
+     "T2.r2.mall",
+     "T2.r1.quay",
+     "T2.r2.quay",
+     "T2.r1.tind",
+     "T2.r2.tind",
+     "T2.r1.whit",
+     "T2.r2.whit"
+    ],
+    "scope": "Median detection delay (time steps) on the five benchmarks, mean over 3 seeds",
+    "caveats": "No statistical tests reported; mixed results across benchmarks."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Ablation shows the full Sprocket-AD (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%), indicating both components contribute to accuracy.",
+    "evidence_ids": [
+     "T3.r1.avg",
+     "T3.r2.avg",
+     "T3.r3.avg",
+     "T3.r4.avg"
+    ],
+    "scope": "Average event-F1 (%) over the five benchmarks, mean over 3 seeds",
+    "caveats": "No statistical tests reported; differences are small."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with fewer parameters not reported.",
+    "evidence_ids": [
+     "T5.r1.params",
+     "T5.r2.params",
+     "T5.r1.train",
+     "T5.r2.train",
+     "T5.r1.infer",
+     "T5.r2.infer",
+     "T5.r3.train",
+     "T5.r3.infer"
+    ],
+    "scope": "Parameters (M), training time per benchmark (min), inference time per window (ms)",
+    "caveats": "Dunmore-Iso parameters not reported; training time averaged over five benchmarks."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4). Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39). Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%). Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "T1.r1.rook",
+      "T1.r2.rook",
+      "T1.r1.mall",
+      "T1.r2.mall",
+      "T1.r1.quay",
+      "T1.r2.quay",
+      "T1.r1.tind",
+      "T1.r2.tind",
+      "T1.r1.whit",
+      "T1.r2.whit"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+     "evidence_ids": [
+      "T2.r1.rook",
+      "T2.r2.rook",
+      "T2.r1.mall",
+      "T2.r2.mall",
+      "T2.r1.quay",
+      "T2.r2.quay",
+      "T2.r1.tind",
+      "T2.r2.tind",
+      "T2.r1.whit",
+      "T2.r2.whit"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+     "evidence_ids": [
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "T3.r3.avg",
+      "T3.r4.avg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+     "evidence_ids": [
+      "T5.r1.params",
+      "T5.r2.params",
+      "T5.r1.train",
+      "T5.r2.train",
+      "T5.r1.infer",
+      "T5.r2.infer",
+      "T5.r3.train",
+      "T5.r3.infer"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_scripted",
+   "passage": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4). Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39). Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%). Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "T1.r1.rook",
+      "T1.r2.rook",
+      "T1.r1.mall",
+      "T1.r2.mall",
+      "T1.r1.quay",
+      "T1.r2.quay",
+      "T1.r1.tind",
+      "T1.r2.tind",
+      "T1.r1.whit",
+      "T1.r2.whit"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+     "evidence_ids": [
+      "T2.r1.rook",
+      "T2.r2.rook",
+      "T2.r1.mall",
+      "T2.r2.mall",
+      "T2.r1.quay",
+      "T2.r2.quay",
+      "T2.r1.tind",
+      "T2.r2.tind",
+      "T2.r1.whit",
+      "T2.r2.whit"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+     "evidence_ids": [
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "T3.r3.avg",
+      "T3.r4.avg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+     "evidence_ids": [
+      "T5.r1.params",
+      "T5.r2.params",
+      "T5.r1.train",
+      "T5.r2.train",
+      "T5.r1.infer",
+      "T5.r2.infer",
+      "T5.r3.train",
+      "T5.r3.infer"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+   "actions": [
+    {
+     "call_id": "call_18290f22457f443991ea9f8e",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_ccca5a18e1e24788a67f1d3d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 78.4,
+      "evidence_id": "T1.r1.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_c5c37de6ff154aea83ddee1b",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_d5c2a4e542ea489c90244fe7",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P2"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_18290f22457f443991ea9f8e",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Event-F1 (%) on the five benchmark test sets, mean over 3 seeds (Dunmore-Iso: single deterministic run).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.rook",
+        "row": "Sprocket-AD (ours)",
+        "column": "Rookhaven-Server",
+        "text": "88.7",
+        "value": 88.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.mall",
+        "row": "Sprocket-AD (ours)",
+        "column": "Mallowmere-Water",
+        "text": "74.2",
+        "value": 74.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.quay",
+        "row": "Sprocket-AD (ours)",
+        "column": "Quayside-Grid v2",
+        "text": "78.4",
+        "value": 78.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.tind",
+        "row": "Sprocket-AD (ours)",
+        "column": "Tinderbox-HVAC",
+        "text": "69.5",
+        "value": 69.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.whit",
+        "row": "Sprocket-AD (ours)",
+        "column": "Whitlow-Rail",
+        "text": "81.3",
+        "value": 81.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.avg",
+        "row": "Sprocket-AD (ours)",
+        "column": "Average",
+        "text": "78.4",
+        "value": 78.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.rook",
+        "row": "Lanyard-TS",
+        "column": "Rookhaven-Server",
+        "text": "86.9",
+        "value": 86.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mall",
+        "row": "Lanyard-TS",
+        "column": "Mallowmere-Water",
+        "text": "72.8",
+        "value": 72.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.quay",
+        "row": "Lanyard-TS",
+        "column": "Quayside-Grid v2",
+        "text": "78.4",
+        "value": 78.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.tind",
+        "row": "Lanyard-TS",
+        "column": "Tinderbox-HVAC",
+        "text": "67.1",
+        "value": 67.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.whit",
+        "row": "Lanyard-TS",
+        "column": "Whitlow-Rail",
+        "text": "80.6",
+        "value": 80.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.avg",
+        "row": "Lanyard-TS",
+        "column": "Average",
+        "text": "77.2",
+        "value": 77.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.rook",
+        "row": "Dunmore-Iso",
+        "column": "Rookhaven-Server",
+        "text": "71.4",
+        "value": 71.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mall",
+        "row": "Dunmore-Iso",
+        "column": "Mallowmere-Water",
+        "text": "60.3",
+        "value": 60.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.quay",
+        "row": "Dunmore-Iso",
+        "column": "Quayside-Grid v2",
+        "text": "65.9",
+        "value": 65.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.tind",
+        "row": "Dunmore-Iso",
+        "column": "Tinderbox-HVAC",
+        "text": "55.8",
+        "value": 55.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.whit",
+        "row": "Dunmore-Iso",
+        "column": "Whitlow-Rail",
+        "text": "70.2",
+        "value": 70.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.avg",
+        "row": "Dunmore-Iso",
+        "column": "Average",
+        "text": "64.7",
+        "value": 64.7,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.rook",
+      "T1.r1.mall",
+      "T1.r1.quay",
+      "T1.r1.tind",
+      "T1.r1.whit",
+      "T1.r1.avg",
+      "T1.r2.rook",
+      "T1.r2.mall",
+      "T1.r2.quay",
+      "T1.r2.tind",
+      "T1.r2.whit",
+      "T1.r2.avg",
+      "T1.r3.rook",
+      "T1.r3.mall",
+      "T1.r3.quay",
+      "T1.r3.tind",
+      "T1.r3.whit",
+      "T1.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_ccca5a18e1e24788a67f1d3d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 78.4,
+      "actual": 78.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.avg",
+       "row": "Sprocket-AD (ours)",
+       "column": "Average",
+       "text": "78.4",
+       "value": 78.4,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_c5c37de6ff154aea83ddee1b",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Sprocket-AD vs Lanyard-TS, event-F1 per benchmark"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_d5c2a4e542ea489c90244fe7",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P2",
+        "citation_key": "Ostrowska & Kalani (2022)",
+        "source_title": "Rethinking Point-Adjusted Evaluation for Time-Series Anomaly Detection",
+        "text": "Event-F1 counts an anomaly event as detected if any alarm falls inside the event window and charges false alarms per event-free window, which avoids the inflation produced by point-adjusted F1."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P2"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+    "revised_text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r2.avg",
+     "T1.r1.rook",
+     "T1.r2.rook",
+     "T1.r1.mall",
+     "T1.r2.mall",
+     "T1.r1.quay",
+     "T1.r2.quay",
+     "T1.r1.tind",
+     "T1.r2.tind",
+     "T1.r1.whit",
+     "T1.r2.whit",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "All numbers match T1 exactly: avg 78.4 vs 77.2; per-benchmark values (88.7/86.9, 74.2/72.8, 78.4/78.4, 69.5/67.1, 81.3/80.6) all correct. Claim uses no significance language, so absence of a test is fine. Scope (\"across the five benchmarks\") matches evaluation.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+   "actions": [
+    {
+     "call_id": "call_a468a656c95f4fe4a3b54171",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_d7e917bd3d584e80aa6364d0",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 12,
+      "evidence_id": "T2.r1.rook"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_19d31bc7657a42af83069f15",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_0bfb641ae8d74e5d9b7c0734",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P2"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a468a656c95f4fe4a3b54171",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Median detection delay (time steps) for detected events, mean over 3 seeds; lower is better.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.rook",
+        "row": "Sprocket-AD (ours)",
+        "column": "Rookhaven-Server",
+        "text": "12",
+        "value": 12.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.mall",
+        "row": "Sprocket-AD (ours)",
+        "column": "Mallowmere-Water",
+        "text": "30",
+        "value": 30.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.quay",
+        "row": "Sprocket-AD (ours)",
+        "column": "Quayside-Grid v2",
+        "text": "8",
+        "value": 8.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.tind",
+        "row": "Sprocket-AD (ours)",
+        "column": "Tinderbox-HVAC",
+        "text": "41",
+        "value": 41.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.whit",
+        "row": "Sprocket-AD (ours)",
+        "column": "Whitlow-Rail",
+        "text": "17",
+        "value": 17.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.rook",
+        "row": "Lanyard-TS",
+        "column": "Rookhaven-Server",
+        "text": "15",
+        "value": 15.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.mall",
+        "row": "Lanyard-TS",
+        "column": "Mallowmere-Water",
+        "text": "26",
+        "value": 26.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.quay",
+        "row": "Lanyard-TS",
+        "column": "Quayside-Grid v2",
+        "text": "9",
+        "value": 9.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.tind",
+        "row": "Lanyard-TS",
+        "column": "Tinderbox-HVAC",
+        "text": "39",
+        "value": 39.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.whit",
+        "row": "Lanyard-TS",
+        "column": "Whitlow-Rail",
+        "text": "21",
+        "value": 21.0,
+        "unit": "time steps",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.rook",
+      "T2.r1.mall",
+      "T2.r1.quay",
+      "T2.r1.tind",
+      "T2.r1.whit",
+      "T2.r2.rook",
+      "T2.r2.mall",
+      "T2.r2.quay",
+      "T2.r2.tind",
+      "T2.r2.whit"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_d7e917bd3d584e80aa6364d0",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 12.0,
+      "actual": 12.0,
+      "abs_error": 0.0,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r1.rook",
+       "row": "Sprocket-AD (ours)",
+       "column": "Rookhaven-Server",
+       "text": "12",
+       "value": 12.0,
+       "unit": "time steps",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T2.r1.rook"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_19d31bc7657a42af83069f15",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "Sprocket-AD vs Lanyard-TS, median detection delay per benchmark"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp3"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp3"
+    },
+    {
+     "call_id": "call_0bfb641ae8d74e5d9b7c0734",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P2",
+        "citation_key": "Ostrowska & Kalani (2022)",
+        "source_title": "Rethinking Point-Adjusted Evaluation for Time-Series Anomaly Detection",
+        "text": "Event-F1 counts an anomaly event as detected if any alarm falls inside the event window and charges false alarms per event-free window, which avoids the inflation produced by point-adjusted F1."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P2"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+    "revised_text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+    "evidence_ids": [
+     "T2.r1.rook",
+     "T2.r2.rook",
+     "T2.r1.mall",
+     "T2.r2.mall",
+     "T2.r1.quay",
+     "T2.r2.quay",
+     "T2.r1.tind",
+     "T2.r2.tind",
+     "T2.r1.whit",
+     "T2.r2.whit",
+     "absent:test:exp2/cmp3"
+    ],
+    "rationale": "All ten delay values match T2 exactly (rook 12/15, mall 30/26, quay 8/9, tind 41/39, whit 17/21). The claim reports directional differences without significance language, which is appropriate since no test was reported for exp2/cmp3.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+   "actions": [
+    {
+     "call_id": "call_c3d95d85fd3a4a4a951fdffb",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_d4b07b92eec447f0b4020ecc",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 78.4,
+      "evidence_id": "T3.r1.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_7b09d2a8226f4cc5995cba63",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp3",
+      "comparison_id": "cmp4"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_b04eefecffcd4c919dbf2763",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "ablation frequency branch adaptive thresholds"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_c3d95d85fd3a4a4a951fdffb",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "Ablation of Sprocket-AD: average event-F1 (%) over the five benchmarks, mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T3.r1.avg",
+        "row": "Sprocket-AD (full)",
+        "column": "Average event-F1 (%)",
+        "text": "78.4",
+        "value": 78.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.avg",
+        "row": "without frequency branch",
+        "column": "Average event-F1 (%)",
+        "text": "76.9",
+        "value": 76.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r3.avg",
+        "row": "without adaptive thresholds (single global threshold)",
+        "column": "Average event-F1 (%)",
+        "text": "77.5",
+        "value": 77.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r4.avg",
+        "row": "without both",
+        "column": "Average event-F1 (%)",
+        "text": "75.8",
+        "value": 75.8,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "T3.r3.avg",
+      "T3.r4.avg"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_d4b07b92eec447f0b4020ecc",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 78.4,
+      "actual": 78.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T3.r1.avg",
+       "row": "Sprocket-AD (full)",
+       "column": "Average event-F1 (%)",
+       "text": "78.4",
+       "value": 78.4,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T3.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_7b09d2a8226f4cc5995cba63",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp4",
+      "description": "Full Sprocket-AD vs variants without the frequency branch and/or adaptive thresholds"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp4"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp4"
+    },
+    {
+     "call_id": "call_b04eefecffcd4c919dbf2763",
+     "tool": "retrieve_passage",
+     "status": "NOT_FOUND",
+     "data": {},
+     "returned_ids": [
+      "absent:passage"
+     ],
+     "message": "No supplied passage matches this query. Available: P1 (Mbatha-Rourke & Ellery (2023)); P2 (Ostrowska & Kalani (2022))",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+    "revised_text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+    "evidence_ids": [
+     "T3.r1.avg",
+     "T3.r2.avg",
+     "T3.r3.avg",
+     "T3.r4.avg",
+     "absent:test:exp3/cmp4"
+    ],
+    "rationale": "All four numbers match T3 exactly (78.4, 76.9, 77.5, 75.8). The full model outperforms each variant, supporting that both components contribute. No statistical test was reported, but the claim uses \"contribute\"/\"outperforms\" descriptively without significance language, so it is supported as stated.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+   "actions": [
+    {
+     "call_id": "call_576e7dca50a34b1eaff09af8",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T5"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_e5f34ed9db184e0d9a29e750",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 3.2,
+      "evidence_id": "T5.r1.params"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_d173606d084f410fbdd0ae61",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp4",
+      "comparison_id": "cmp6"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_dc4c32d2658e491f96a89cae",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_576e7dca50a34b1eaff09af8",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T5",
+      "caption": "Model size and runtime (training time averaged over the five benchmarks).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T5.r1.params",
+        "row": "Sprocket-AD (ours)",
+        "column": "Parameters (M)",
+        "text": "3.2",
+        "value": 3.2,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T5.r1.train",
+        "row": "Sprocket-AD (ours)",
+        "column": "Training time per benchmark (min)",
+        "text": "14",
+        "value": 14.0,
+        "unit": "min",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T5.r1.infer",
+        "row": "Sprocket-AD (ours)",
+        "column": "Inference time per window (ms)",
+        "text": "0.9",
+        "value": 0.9,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T5.r2.params",
+        "row": "Lanyard-TS",
+        "column": "Parameters (M)",
+        "text": "5.8",
+        "value": 5.8,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T5.r2.train",
+        "row": "Lanyard-TS",
+        "column": "Training time per benchmark (min)",
+        "text": "22",
+        "value": 22.0,
+        "unit": "min",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T5.r2.infer",
+        "row": "Lanyard-TS",
+        "column": "Inference time per window (ms)",
+        "text": "1.4",
+        "value": 1.4,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T5.r3.train",
+        "row": "Dunmore-Iso",
+        "column": "Training time per benchmark (min)",
+        "text": "2",
+        "value": 2.0,
+        "unit": "min",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T5.r3.infer",
+        "row": "Dunmore-Iso",
+        "column": "Inference time per window (ms)",
+        "text": "0.3",
+        "value": 0.3,
+        "unit": "ms",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T5",
+      "T5.r1.params",
+      "T5.r1.train",
+      "T5.r1.infer",
+      "T5.r2.params",
+      "T5.r2.train",
+      "T5.r2.infer",
+      "T5.r3.train",
+      "T5.r3.infer"
+     ],
+     "message": "",
+     "provenance": "table T5"
+    },
+    {
+     "call_id": "call_e5f34ed9db184e0d9a29e750",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 3.2,
+      "actual": 3.2,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T5.r1.params",
+       "row": "Sprocket-AD (ours)",
+       "column": "Parameters (M)",
+       "text": "3.2",
+       "value": 3.2,
+       "unit": "M",
+       "higher_is_better": null
+      }
+     },
+     "returned_ids": [
+      "T5.r1.params"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_d173606d084f410fbdd0ae61",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp4/cmp6",
+      "description": "Sprocket-AD vs Lanyard-TS vs Dunmore-Iso, parameters, training and inference time"
+     },
+     "returned_ids": [
+      "absent:test:exp4/cmp6"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp4/cmp6"
+    },
+    {
+     "call_id": "call_dc4c32d2658e491f96a89cae",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Mbatha-Rourke & Ellery (2023)",
+        "source_title": "Quayside-Grid v2: Revised Event Labels for Substation Anomaly Detection",
+        "text": "Version 2 relabels 14 anomaly events whose boundaries were ambiguous in version 1 and adds 6 events recovered from substation maintenance logs; scores on the two versions are not directly comparable."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+    "revised_text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+    "evidence_ids": [
+     "T5.r1.params",
+     "T5.r2.params",
+     "T5.r1.train",
+     "T5.r2.train",
+     "T5.r1.infer",
+     "T5.r2.infer",
+     "T5.r3.train",
+     "T5.r3.infer",
+     "absent:test:exp4/cmp6"
+    ],
+    "rationale": "All numbers match T5 exactly: Sprocket-AD 3.2M/14min/0.9ms vs Lanyard-TS 5.8M/22min/1.4ms; Dunmore-Iso 2min/0.3ms with no params cell. No significance claim made; \"faster\"/\"more parameter-efficient\" are direct value comparisons. Scope (per benchmark, per window) matches table.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4). Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39). Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%). Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+   "evidence_ids": [
+    "T1.r1.avg",
+    "T1.r2.avg",
+    "T1.r1.rook",
+    "T1.r2.rook",
+    "T1.r1.mall",
+    "T1.r2.mall",
+    "T1.r1.quay",
+    "T1.r2.quay",
+    "T1.r1.tind",
+    "T1.r2.tind",
+    "T1.r1.whit",
+    "T1.r2.whit"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+   "evidence_ids": [
+    "T2.r1.rook",
+    "T2.r2.rook",
+    "T2.r1.mall",
+    "T2.r2.mall",
+    "T2.r1.quay",
+    "T2.r2.quay",
+    "T2.r1.tind",
+    "T2.r2.tind",
+    "T2.r1.whit",
+    "T2.r2.whit"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+   "evidence_ids": [
+    "T3.r1.avg",
+    "T3.r2.avg",
+    "T3.r3.avg",
+    "T3.r4.avg"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+   "evidence_ids": [
+    "T5.r1.params",
+    "T5.r2.params",
+    "T5.r1.train",
+    "T5.r2.train",
+    "T5.r1.infer",
+    "T5.r2.infer",
+    "T5.r3.train",
+    "T5.r3.infer"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-04:shared_outline:outline:7a71881462",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634989-KZwrVDHX64yMmCu1tdQK",
+   "finish_reason": "stop",
+   "prompt_tokens": 2081,
+   "completion_tokens": 874,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00053606,
+   "cost_is_estimate": false,
+   "latency_s": 3.792,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:shared_outline:writer_from_outline:1a5e92b344",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634993-ENzVIosJs2VM24Cn2h8u",
+   "finish_reason": "stop",
+   "prompt_tokens": 3038,
+   "completion_tokens": 676,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0006146,
+   "cost_is_estimate": false,
+   "latency_s": 3.872,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:881fae5813",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634997-ip8LwlnqZqh61dEG8x3g",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3833,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000349976,
+   "cost_is_estimate": false,
+   "latency_s": 1.945,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:b8b92bd1be",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634999-iTM35KTwX67s6SjJJNXB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5219,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001721312,
+   "cost_is_estimate": false,
+   "latency_s": 1.645,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:135f6262fe",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635000-Tvz6Ql4HQJX3jzWPGRAP",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5428,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.9392e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.377,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:21876af9f4",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635002-LBnpjns7ewj2MYEjbmbp",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5604,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.83168e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.061,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:2a2cb3742e",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635004-p9WMX8IuirchY8Xk6R0J",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5776,
+   "completion_tokens": 300,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001294528,
+   "cost_is_estimate": false,
+   "latency_s": 5.093,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:1f46bd3f15",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635009-XtwwNyUnlv4YTUFtcSYy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3776,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000344696,
+   "cost_is_estimate": false,
+   "latency_s": 1.667,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:4df672f628",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635011-VotHjjExArmqlyi09gTa",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4607,
+   "completion_tokens": 67,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001177472,
+   "cost_is_estimate": false,
+   "latency_s": 1.577,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:274533350a",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635013-konEgJICUpVlvZR5XGlu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4818,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.11456e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.701,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:74781eb1ff",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635014-65uK58xZD7RMv20jJTqJ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4994,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.00704e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.863,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:7ba4ed5aee",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635017-LCs3eejz4l02wdar3j5m",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5166,
+   "completion_tokens": 252,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001067232,
+   "cost_is_estimate": false,
+   "latency_s": 4.687,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:772af6262a",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635022-YbNOmZIFT1q3rPzLc3Qf",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3705,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000338712,
+   "cost_is_estimate": false,
+   "latency_s": 2.407,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:e8687c7f5a",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635025-1waJ8y0G87dKmY3LDQSm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4104,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.40112e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.542,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:f6de728251",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635026-XlE05wB75GP1GPuQYyxH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4317,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.88688e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.259,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:d80f5d3072",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635028-A6FAi62xc7JrpK50Tvd5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4492,
+   "completion_tokens": 54,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.05728e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.48,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:0d071738df",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635029-GtjiS1XThrKJGRoXVRu3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4619,
+   "completion_tokens": 209,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.08576e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.352,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:7be01c1dcc",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635033-82jXPAqQ65pf9gocgdV3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3748,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000342232,
+   "cost_is_estimate": false,
+   "latency_s": 1.904,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:4eab96c4a7",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635035-c63iGxycKfr72ONPt4jv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4415,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001011152,
+   "cost_is_estimate": false,
+   "latency_s": 1.511,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:1a4568129f",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635036-A3hu7RTL9PnAbr4ln1FO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4624,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.40736e-05,
+   "cost_is_estimate": false,
+   "latency_s": 13.832,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:c3d618ddae",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635050-bGzItRoHOGWQYtBYKJcy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4806,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.35264e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.293,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:C3:verify_scripted:6fe40dd965",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635051-v57SooKiyTfb2KQxu9cF",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4985,
+   "completion_tokens": 255,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001133984,
+   "cost_is_estimate": false,
+   "latency_s": 3.901,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 22,
+  "n_model_calls_condition_only": 20,
+  "n_tool_calls": 16,
+  "tool_counts": {
+   "lookup_table": 4,
+   "compare_numbers": 4,
+   "get_test_metadata": 4,
+   "retrieve_passage": 4
+  },
+  "prompt_tokens": 98155,
+  "completion_tokens": 3505,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00387768,
+  "cost_usd_condition_only": 0.00272702,
+  "any_cost_estimated": false,
+  "latency_s": 64.761,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

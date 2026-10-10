@@ -1,0 +1,309 @@
+{
+ "run_id": "diag_v2:C7:LONG-04",
+ "case_id": "LONG-04",
+ "condition": "C7",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:29:59Z",
+ "finished_at": "2026-10-10T12:30:07Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "6c61bf2dba6fc2a779eb46f96133ba58e66f4c611a1f5adb2918ba025e39deb6"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Sprocket-AD achieves higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r2.avg",
+     "T1.r1.rook",
+     "T1.r2.rook",
+     "T1.r1.mall",
+     "T1.r2.mall",
+     "T1.r1.quay",
+     "T1.r2.quay",
+     "T1.r1.tind",
+     "T1.r2.tind",
+     "T1.r1.whit",
+     "T1.r2.whit"
+    ],
+    "scope": "Event-F1 (%) on the five benchmarks, mean over 3 seeds",
+    "caveats": "No statistical tests reported; differences may not be significant. Quayside-Grid v2 labels are from version 2 (P1), not comparable to version 1."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Sprocket-AD has lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+    "evidence_ids": [
+     "T2.r1.rook",
+     "T2.r2.rook",
+     "T2.r1.mall",
+     "T2.r2.mall",
+     "T2.r1.quay",
+     "T2.r2.quay",
+     "T2.r1.tind",
+     "T2.r2.tind",
+     "T2.r1.whit",
+     "T2.r2.whit"
+    ],
+    "scope": "Median detection delay (time steps) on the five benchmarks, mean over 3 seeds",
+    "caveats": "No statistical tests reported; mixed results across benchmarks."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Ablation shows the full Sprocket-AD (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%), indicating both components contribute to accuracy.",
+    "evidence_ids": [
+     "T3.r1.avg",
+     "T3.r2.avg",
+     "T3.r3.avg",
+     "T3.r4.avg"
+    ],
+    "scope": "Average event-F1 (%) over the five benchmarks, mean over 3 seeds",
+    "caveats": "No statistical tests reported; differences are small."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with fewer parameters not reported.",
+    "evidence_ids": [
+     "T5.r1.params",
+     "T5.r2.params",
+     "T5.r1.train",
+     "T5.r2.train",
+     "T5.r1.infer",
+     "T5.r2.infer",
+     "T5.r3.train",
+     "T5.r3.infer"
+    ],
+    "scope": "Parameters (M), training time per benchmark (min), inference time per window (ms)",
+    "caveats": "Dunmore-Iso parameters not reported; training time averaged over five benchmarks."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4). Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39). Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%). Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "T1.r1.rook",
+      "T1.r2.rook",
+      "T1.r1.mall",
+      "T1.r2.mall",
+      "T1.r1.quay",
+      "T1.r2.quay",
+      "T1.r1.tind",
+      "T1.r2.tind",
+      "T1.r1.whit",
+      "T1.r2.whit"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+     "evidence_ids": [
+      "T2.r1.rook",
+      "T2.r2.rook",
+      "T2.r1.mall",
+      "T2.r2.mall",
+      "T2.r1.quay",
+      "T2.r2.quay",
+      "T2.r1.tind",
+      "T2.r2.tind",
+      "T2.r1.whit",
+      "T2.r2.whit"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+     "evidence_ids": [
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "T3.r3.avg",
+      "T3.r4.avg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+     "evidence_ids": [
+      "T5.r1.params",
+      "T5.r2.params",
+      "T5.r1.train",
+      "T5.r2.train",
+      "T5.r1.infer",
+      "T5.r2.infer",
+      "T5.r3.train",
+      "T5.r3.infer"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [],
+ "final_passage": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4). Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39). Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%). Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Sprocket-AD achieves a higher average event-F1 (78.4%) than Lanyard-TS (77.2%) across the five benchmarks, with higher event-F1 on four benchmarks (Rookhaven-Server 88.7 vs 86.9, Mallowmere-Water 74.2 vs 72.8, Tinderbox-HVAC 69.5 vs 67.1, Whitlow-Rail 81.3 vs 80.6) and equal event-F1 on Quayside-Grid v2 (78.4 vs 78.4).",
+   "evidence_ids": [
+    "T1.r1.avg",
+    "T1.r2.avg",
+    "T1.r1.rook",
+    "T1.r2.rook",
+    "T1.r1.mall",
+    "T1.r2.mall",
+    "T1.r1.quay",
+    "T1.r2.quay",
+    "T1.r1.tind",
+    "T1.r2.tind",
+    "T1.r1.whit",
+    "T1.r2.whit"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Sprocket-AD also shows lower median detection delay than Lanyard-TS on three benchmarks (Rookhaven-Server 12 vs 15, Quayside-Grid v2 8 vs 9, Whitlow-Rail 17 vs 21) but higher delay on two (Mallowmere-Water 30 vs 26, Tinderbox-HVAC 41 vs 39).",
+   "evidence_ids": [
+    "T2.r1.rook",
+    "T2.r2.rook",
+    "T2.r1.mall",
+    "T2.r2.mall",
+    "T2.r1.quay",
+    "T2.r2.quay",
+    "T2.r1.tind",
+    "T2.r2.tind",
+    "T2.r1.whit",
+    "T2.r2.whit"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Ablation results indicate that both the frequency branch and adaptive thresholds contribute to Sprocket-AD's accuracy, as the full model (78.4% average event-F1) outperforms variants without the frequency branch (76.9%), without adaptive thresholds (77.5%), and without both (75.8%).",
+   "evidence_ids": [
+    "T3.r1.avg",
+    "T3.r2.avg",
+    "T3.r3.avg",
+    "T3.r4.avg"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Sprocket-AD is more parameter-efficient (3.2M vs 5.8M parameters) and faster in training (14 vs 22 min) and inference (0.9 vs 1.4 ms per window) than Lanyard-TS, though Dunmore-Iso is faster in training (2 min) and inference (0.3 ms) with parameters not reported.",
+   "evidence_ids": [
+    "T5.r1.params",
+    "T5.r2.params",
+    "T5.r1.train",
+    "T5.r2.train",
+    "T5.r1.infer",
+    "T5.r2.infer",
+    "T5.r3.train",
+    "T5.r3.infer"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-04:shared_outline:outline:7a71881462",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634989-KZwrVDHX64yMmCu1tdQK",
+   "finish_reason": "stop",
+   "prompt_tokens": 2081,
+   "completion_tokens": 874,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00053606,
+   "cost_is_estimate": false,
+   "latency_s": 3.792,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-04:shared_outline:writer_from_outline:1a5e92b344",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634993-ENzVIosJs2VM24Cn2h8u",
+   "finish_reason": "stop",
+   "prompt_tokens": 3038,
+   "completion_tokens": 676,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0006146,
+   "cost_is_estimate": false,
+   "latency_s": 3.872,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 2,
+  "n_model_calls_condition_only": 0,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 5119,
+  "completion_tokens": 1550,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00115066,
+  "cost_usd_condition_only": 0,
+  "any_cost_estimated": false,
+  "latency_s": 7.664,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

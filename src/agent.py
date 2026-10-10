@@ -55,6 +55,12 @@ class SharedArtifacts:
         if p.exists():
             d = json.loads(p.read_text())
             if d.get("model_id") == self.client.model_id and d.get("is_mock") == self.client.is_mock:
+                want = self.base_ctx.get("provenance")
+                have = d.get("provenance")
+                # artifacts written before this guard have no provenance record (legacy) and are reused as before
+                if want is not None and have is not None and have != want:
+                    raise RuntimeError(f"shared artifact {p} was produced under different prompts/config "
+                                       f"({have} != {want}); use a new output family instead of reusing it")
                 return d
         return None
 
@@ -64,7 +70,8 @@ class SharedArtifacts:
         if self._direct is None:
             calls: list[CallRecord] = []
             ctx = {**self.base_ctx, "condition": "shared_direct"}
-            art: dict[str, Any] = {"model_id": self.client.model_id, "is_mock": self.client.is_mock, "created_at": now_iso()}
+            art: dict[str, Any] = {"model_id": self.client.model_id, "is_mock": self.client.is_mock, "created_at": now_iso(),
+                                   "provenance": self.base_ctx.get("provenance")}
             try:
                 d = direct_draft(self.client, self.record.package, ctx, calls)
                 art.update(status="ok", draft=d.model_dump(), sha256=sha256_obj(d.model_dump()))
@@ -81,7 +88,8 @@ class SharedArtifacts:
         if self._outline is None:
             calls: list[CallRecord] = []
             ctx = {**self.base_ctx, "condition": "shared_outline"}
-            art: dict[str, Any] = {"model_id": self.client.model_id, "is_mock": self.client.is_mock, "created_at": now_iso()}
+            art: dict[str, Any] = {"model_id": self.client.model_id, "is_mock": self.client.is_mock, "created_at": now_iso(),
+                                   "provenance": self.base_ctx.get("provenance")}
             try:
                 o = make_outline(self.client, self.record.package, ctx, calls)
                 art["outline"] = o.model_dump()
@@ -179,7 +187,8 @@ def run_case(client: BaseClient, record: CaseRecord, conditions: list[str], out_
              *, skip: Callable[[str, str], bool] = lambda c, k: False,
              on_done: Callable[[RunRecord], None] = lambda r: None, max_tool_calls: int = 4,
              max_claims: int = 6) -> list[RunRecord]:
-    base_ctx = {"case_id": record.case_id, "stage": run_meta["stage"], "run_tag": run_meta["run_tag"]}
+    base_ctx = {"case_id": record.case_id, "stage": run_meta["stage"], "run_tag": run_meta["run_tag"],
+                "provenance": run_meta.get("provenance")}
     shared = SharedArtifacts(client, record, out_root / "_shared" / record.case_id, base_ctx)
     out = []
     for code in conditions:

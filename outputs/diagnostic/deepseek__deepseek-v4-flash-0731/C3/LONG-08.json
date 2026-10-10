@@ -1,0 +1,1774 @@
+{
+ "run_id": "diag_v2:C3:LONG-08",
+ "case_id": "LONG-08",
+ "condition": "C3",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:33:14Z",
+ "finished_at": "2026-10-10T12:34:06Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "9c73d726673d50059377e9ce7ff54a3e0b7fcd2600be36c3dc1fc6b4ee28bb53"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Larchmont-GNN outperforms Quintrell-MP on average test ROC-AUC across the six scaffold-split datasets (79.4 vs 78.4), and achieves higher ROC-AUC on five of the six datasets (Gorseway-Perm, Hollin-Sol, Ivybridge-Tox, Jessamine-Kin, Kelso-Brain), with a tie on Lumley-Metab (69.8 vs 69.5).",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2"
+    ],
+    "scope": "Six scaffold-split datasets, test ROC-AUC (×100), mean over 5 seeds",
+    "caveats": "No statistical tests reported; differences are small (0.1–1.6 points) and may not be significant."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Larchmont-GNN does not outperform Avonlea-Chem-XL, a much larger pretrained model, on average test ROC-AUC (79.4 vs 80.0) and is lower on five of six datasets (all except Hollin-Sol, where it is 84.1 vs 83.5).",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r3"
+    ],
+    "scope": "Six scaffold-split datasets, test ROC-AUC (×100), mean over 5 seeds",
+    "caveats": "Avonlea-Chem-XL is a reference model with 310M parameters and 2400 GPU-hours pretraining cost; no statistical tests reported."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Ablation shows each Larchmont-GNN component contributes to performance: removing ring-aware pooling lowers average ROC-AUC from 79.4 to 78.7, removing distance features lowers it to 78.9, and removing both lowers it to 78.0.",
+    "evidence_ids": [
+     "T3.r1",
+     "T3.r2",
+     "T3.r3",
+     "T3.r4"
+    ],
+    "scope": "Average test ROC-AUC (×100) over six datasets, mean over 5 seeds",
+    "caveats": "No statistical tests reported; differences are small (0.5–1.4 points)."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Larchmont-GNN has 4.8M parameters and 210 ms inference time per 1,000 molecules, slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far smaller and faster than Avonlea-Chem-XL (310M, 2950 ms); Larchmont-GNN and Quintrell-MP require no pretraining cost, while Avonlea-Chem-XL requires 2400 GPU-hours.",
+    "evidence_ids": [
+     "T4.r1",
+     "T4.r2",
+     "T4.r3"
+    ],
+    "scope": "Model size (M parameters), inference time (ms per 1,000 molecules), pretraining cost (GPU-hours)",
+    "caveats": "Inference time and parameters are single reported values, not averaged over seeds."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5). However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5). Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0. Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5).",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5).",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r3"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0.",
+     "evidence_ids": [
+      "T3.r1",
+      "T3.r2",
+      "T3.r3",
+      "T3.r4"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+     "evidence_ids": [
+      "T4.r1",
+      "T4.r2",
+      "T4.r3"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_scripted",
+   "passage": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5). However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5). Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0. Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5).",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5).",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r3"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0.",
+     "evidence_ids": [
+      "T3.r1",
+      "T3.r2",
+      "T3.r3",
+      "T3.r4"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+     "evidence_ids": [
+      "T4.r1",
+      "T4.r2",
+      "T4.r3"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5).",
+   "actions": [
+    {
+     "call_id": "call_91d6b1d050154c2eab085860",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_a0166172dc95493c9591a65c",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 79.4,
+      "evidence_id": "T2.r1.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_0332d9c7f5cc419b9017bd9d",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_b7db5cb0d85e4b74b58ed57b",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_91d6b1d050154c2eab085860",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Test ROC-AUC (×100) on the six scaffold-split datasets, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.gors",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Gorseway-Perm",
+        "text": "78.6",
+        "value": 78.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.holl",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Hollin-Sol",
+        "text": "84.1",
+        "value": 84.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.ivy",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Ivybridge-Tox",
+        "text": "72.9",
+        "value": 72.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.jess",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Jessamine-Kin",
+        "text": "81.4",
+        "value": 81.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.kels",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Kelso-Brain",
+        "text": "89.7",
+        "value": 89.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.lum",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Lumley-Metab",
+        "text": "69.8",
+        "value": 69.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.avg",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Average",
+        "text": "79.4",
+        "value": 79.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.gors",
+        "row": "Quintrell-MP",
+        "column": "Gorseway-Perm",
+        "text": "77.9",
+        "value": 77.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.holl",
+        "row": "Quintrell-MP",
+        "column": "Hollin-Sol",
+        "text": "82.6",
+        "value": 82.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.ivy",
+        "row": "Quintrell-MP",
+        "column": "Ivybridge-Tox",
+        "text": "72.6",
+        "value": 72.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.jess",
+        "row": "Quintrell-MP",
+        "column": "Jessamine-Kin",
+        "text": "79.8",
+        "value": 79.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.kels",
+        "row": "Quintrell-MP",
+        "column": "Kelso-Brain",
+        "text": "88.1",
+        "value": 88.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.lum",
+        "row": "Quintrell-MP",
+        "column": "Lumley-Metab",
+        "text": "69.5",
+        "value": 69.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.avg",
+        "row": "Quintrell-MP",
+        "column": "Average",
+        "text": "78.4",
+        "value": 78.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.gors",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Gorseway-Perm",
+        "text": "80.2",
+        "value": 80.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.holl",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Hollin-Sol",
+        "text": "83.5",
+        "value": 83.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.ivy",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Ivybridge-Tox",
+        "text": "74.1",
+        "value": 74.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.jess",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Jessamine-Kin",
+        "text": "80.9",
+        "value": 80.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.kels",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Kelso-Brain",
+        "text": "90.3",
+        "value": 90.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.lum",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Lumley-Metab",
+        "text": "71.2",
+        "value": 71.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.avg",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Average",
+        "text": "80.0",
+        "value": 80.0,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.gors",
+      "T2.r1.holl",
+      "T2.r1.ivy",
+      "T2.r1.jess",
+      "T2.r1.kels",
+      "T2.r1.lum",
+      "T2.r1.avg",
+      "T2.r2.gors",
+      "T2.r2.holl",
+      "T2.r2.ivy",
+      "T2.r2.jess",
+      "T2.r2.kels",
+      "T2.r2.lum",
+      "T2.r2.avg",
+      "T2.r3.gors",
+      "T2.r3.holl",
+      "T2.r3.ivy",
+      "T2.r3.jess",
+      "T2.r3.kels",
+      "T2.r3.lum",
+      "T2.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_a0166172dc95493c9591a65c",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 79.4,
+      "actual": 79.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r1.avg",
+       "row": "Larchmont-GNN (ours)",
+       "column": "Average",
+       "text": "79.4",
+       "value": 79.4,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T2.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_0332d9c7f5cc419b9017bd9d",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Larchmont-GNN vs Quintrell-MP, test ROC-AUC per dataset"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_b7db5cb0d85e4b74b58ed57b",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Thibodeaux & Wanjiru (2021)",
+        "source_title": "Quintrell: Directed Message Passing for Molecular Property Prediction",
+        "text": "On the earlier Tamsworth-8 suite with random splits, Quintrell-MP achieved an average ROC-AUC of 84.0 across eight datasets, the best among the non-pretrained models we compared."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5).",
+    "revised_text": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5).",
+    "evidence_ids": [
+     "T2.r1.avg",
+     "T2.r2.avg",
+     "T2.r1.gors",
+     "T2.r2.gors",
+     "T2.r1.holl",
+     "T2.r2.holl",
+     "T2.r1.ivy",
+     "T2.r2.ivy",
+     "T2.r1.jess",
+     "T2.r2.jess",
+     "T2.r1.kels",
+     "T2.r2.kels",
+     "T2.r1.lum",
+     "T2.r2.lum",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Average values match (79.4 vs 78.4). Per-dataset: Larchmont higher on Gorseway (78.6>77.9), Hollin (84.1>82.6), Ivybridge (72.9>72.6), Jessamine (81.4>79.8), Kelso (89.7>88.1) = five datasets; lower on Lumley (69.8 vs 69.5). Lumley margin 0.3 matches. No statistical test reported for exp1/cmp1, but claim uses no significance language.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5).",
+   "actions": [
+    {
+     "call_id": "call_43408755d2c3402ca00fbe8e",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_85adf165b2464967be14db58",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 80.0,
+      "evidence_id": "T2.r3.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_6abe7f04b68248498a0dedde",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_da5aa9016d244969925bcf12",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "Avonlea-Chem-XL"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_43408755d2c3402ca00fbe8e",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Test ROC-AUC (×100) on the six scaffold-split datasets, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.gors",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Gorseway-Perm",
+        "text": "78.6",
+        "value": 78.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.holl",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Hollin-Sol",
+        "text": "84.1",
+        "value": 84.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.ivy",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Ivybridge-Tox",
+        "text": "72.9",
+        "value": 72.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.jess",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Jessamine-Kin",
+        "text": "81.4",
+        "value": 81.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.kels",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Kelso-Brain",
+        "text": "89.7",
+        "value": 89.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.lum",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Lumley-Metab",
+        "text": "69.8",
+        "value": 69.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.avg",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Average",
+        "text": "79.4",
+        "value": 79.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.gors",
+        "row": "Quintrell-MP",
+        "column": "Gorseway-Perm",
+        "text": "77.9",
+        "value": 77.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.holl",
+        "row": "Quintrell-MP",
+        "column": "Hollin-Sol",
+        "text": "82.6",
+        "value": 82.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.ivy",
+        "row": "Quintrell-MP",
+        "column": "Ivybridge-Tox",
+        "text": "72.6",
+        "value": 72.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.jess",
+        "row": "Quintrell-MP",
+        "column": "Jessamine-Kin",
+        "text": "79.8",
+        "value": 79.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.kels",
+        "row": "Quintrell-MP",
+        "column": "Kelso-Brain",
+        "text": "88.1",
+        "value": 88.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.lum",
+        "row": "Quintrell-MP",
+        "column": "Lumley-Metab",
+        "text": "69.5",
+        "value": 69.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.avg",
+        "row": "Quintrell-MP",
+        "column": "Average",
+        "text": "78.4",
+        "value": 78.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.gors",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Gorseway-Perm",
+        "text": "80.2",
+        "value": 80.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.holl",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Hollin-Sol",
+        "text": "83.5",
+        "value": 83.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.ivy",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Ivybridge-Tox",
+        "text": "74.1",
+        "value": 74.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.jess",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Jessamine-Kin",
+        "text": "80.9",
+        "value": 80.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.kels",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Kelso-Brain",
+        "text": "90.3",
+        "value": 90.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.lum",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Lumley-Metab",
+        "text": "71.2",
+        "value": 71.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.avg",
+        "row": "Avonlea-Chem-XL (pretrained, reference)",
+        "column": "Average",
+        "text": "80.0",
+        "value": 80.0,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.gors",
+      "T2.r1.holl",
+      "T2.r1.ivy",
+      "T2.r1.jess",
+      "T2.r1.kels",
+      "T2.r1.lum",
+      "T2.r1.avg",
+      "T2.r2.gors",
+      "T2.r2.holl",
+      "T2.r2.ivy",
+      "T2.r2.jess",
+      "T2.r2.kels",
+      "T2.r2.lum",
+      "T2.r2.avg",
+      "T2.r3.gors",
+      "T2.r3.holl",
+      "T2.r3.ivy",
+      "T2.r3.jess",
+      "T2.r3.kels",
+      "T2.r3.lum",
+      "T2.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_85adf165b2464967be14db58",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 80.0,
+      "actual": 80.0,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r3.avg",
+       "row": "Avonlea-Chem-XL (pretrained, reference)",
+       "column": "Average",
+       "text": "80.0",
+       "value": 80.0,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T2.r3.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_6abe7f04b68248498a0dedde",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Larchmont-GNN vs Avonlea-Chem-XL, test ROC-AUC per dataset"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_da5aa9016d244969925bcf12",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P2",
+        "citation_key": "Halloran-Ide et al. (2023)",
+        "source_title": "Avonlea-Chem: Scaling Molecular Pretraining",
+        "text": "Avonlea-Chem-XL has 310 million parameters and is pretrained on 410 million unlabelled molecules with masked-atom prediction and a contrastive conformer objective."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P2"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5).",
+    "revised_text": "However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5).",
+    "evidence_ids": [
+     "T2.r3.avg",
+     "T2.r1.avg",
+     "T2.r3.gors",
+     "T2.r1.gors",
+     "T2.r3.ivy",
+     "T2.r1.ivy",
+     "T2.r3.jess",
+     "T2.r1.jess",
+     "T2.r3.kels",
+     "T2.r1.kels",
+     "T2.r3.lum",
+     "T2.r1.lum",
+     "T2.r3.holl",
+     "T2.r1.holl",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "Avonlea avg 80.0 > Larchmont 79.4 (T2.r3.avg vs T2.r1.avg). Avonlea higher on gors(80.2>78.6), ivy(74.1>72.9), jess(80.9>81.4? no), kels(90.3>89.7), lum(71.2>69.8); Larchmont higher on holl(84.1>83.5). So Avonlea higher on 5 of 6, except Hollin-Sol. Numbers match. No significance test reported; claim avoids significance language.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0.",
+   "actions": [
+    {
+     "call_id": "call_9dccab498120445ba719cbcb",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_a5ce2ba9b63e4ad09ba0999b",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 78.7,
+      "evidence_id": "T3.r2.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_685cde5941984e9399a74111",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_791653cf1e1a4b7b99889a2b",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "ablation"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_9dccab498120445ba719cbcb",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "Ablation of Larchmont-GNN: average test ROC-AUC (×100) over the six datasets, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T3.r1.avg",
+        "row": "Larchmont-GNN (full)",
+        "column": "Average ROC-AUC",
+        "text": "79.4",
+        "value": 79.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.avg",
+        "row": "without ring-aware pooling",
+        "column": "Average ROC-AUC",
+        "text": "78.7",
+        "value": 78.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r3.avg",
+        "row": "without distance features",
+        "column": "Average ROC-AUC",
+        "text": "78.9",
+        "value": 78.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r4.avg",
+        "row": "without both",
+        "column": "Average ROC-AUC",
+        "text": "78.0",
+        "value": 78.0,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "T3.r3.avg",
+      "T3.r4.avg"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_a5ce2ba9b63e4ad09ba0999b",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 78.7,
+      "actual": 78.7,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T3.r2.avg",
+       "row": "without ring-aware pooling",
+       "column": "Average ROC-AUC",
+       "text": "78.7",
+       "value": 78.7,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T3.r2.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_685cde5941984e9399a74111",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "Full Larchmont-GNN vs variants without ring-aware pooling and/or distance features"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp3"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp3"
+    },
+    {
+     "call_id": "call_791653cf1e1a4b7b99889a2b",
+     "tool": "retrieve_passage",
+     "status": "NOT_FOUND",
+     "data": {},
+     "returned_ids": [
+      "absent:passage"
+     ],
+     "message": "No supplied passage matches this query. Available: P1 (Thibodeaux & Wanjiru (2021)); P2 (Halloran-Ide et al. (2023)); P3 (Petrosyan & Quaye (2020))",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0.",
+    "revised_text": "Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0.",
+    "evidence_ids": [
+     "T3.r1.avg",
+     "T3.r2.avg",
+     "T3.r3.avg",
+     "T3.r4.avg",
+     "absent:test:exp2/cmp3"
+    ],
+    "rationale": "All four ablation values match T3 exactly (79.4, 78.7, 78.9, 78.0). The claim reports the observed reductions without asserting statistical significance, so the absence of a test does not weaken it. Scope is correctly limited to average ROC-AUC over the six datasets.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+   "actions": [
+    {
+     "call_id": "call_794dd49ede204c5da7a2da93",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T4"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_a197696d3b104bd8a827afab",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.8,
+      "evidence_id": "T4.r1.params"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_1e825d74d63a479a867d4833",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp3",
+      "comparison_id": "cmp4"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_c4462b3a86a4482d94db42a3",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P2"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_794dd49ede204c5da7a2da93",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T4",
+      "caption": "Model size and cost.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T4.r1.params",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Parameters (M)",
+        "text": "4.8",
+        "value": 4.8,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T4.r1.infer",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Inference time per 1,000 molecules (ms)",
+        "text": "210",
+        "value": 210.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r1.pre",
+        "row": "Larchmont-GNN (ours)",
+        "column": "Pretraining cost (GPU-hours)",
+        "text": "0",
+        "value": 0.0,
+        "unit": "GPU-hours",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r2.params",
+        "row": "Quintrell-MP",
+        "column": "Parameters (M)",
+        "text": "4.1",
+        "value": 4.1,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T4.r2.infer",
+        "row": "Quintrell-MP",
+        "column": "Inference time per 1,000 molecules (ms)",
+        "text": "180",
+        "value": 180.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r2.pre",
+        "row": "Quintrell-MP",
+        "column": "Pretraining cost (GPU-hours)",
+        "text": "0",
+        "value": 0.0,
+        "unit": "GPU-hours",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r3.params",
+        "row": "Avonlea-Chem-XL",
+        "column": "Parameters (M)",
+        "text": "310",
+        "value": 310.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T4.r3.infer",
+        "row": "Avonlea-Chem-XL",
+        "column": "Inference time per 1,000 molecules (ms)",
+        "text": "2950",
+        "value": 2950.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r3.pre",
+        "row": "Avonlea-Chem-XL",
+        "column": "Pretraining cost (GPU-hours)",
+        "text": "2400",
+        "value": 2400.0,
+        "unit": "GPU-hours",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T4",
+      "T4.r1.params",
+      "T4.r1.infer",
+      "T4.r1.pre",
+      "T4.r2.params",
+      "T4.r2.infer",
+      "T4.r2.pre",
+      "T4.r3.params",
+      "T4.r3.infer",
+      "T4.r3.pre"
+     ],
+     "message": "",
+     "provenance": "table T4"
+    },
+    {
+     "call_id": "call_a197696d3b104bd8a827afab",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 4.8,
+      "actual": 4.8,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T4.r1.params",
+       "row": "Larchmont-GNN (ours)",
+       "column": "Parameters (M)",
+       "text": "4.8",
+       "value": 4.8,
+       "unit": "M",
+       "higher_is_better": null
+      }
+     },
+     "returned_ids": [
+      "T4.r1.params"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_1e825d74d63a479a867d4833",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp4",
+      "description": "Larchmont-GNN vs Quintrell-MP vs Avonlea-Chem-XL, parameters, inference time and pretraining cost"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp4"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp4"
+    },
+    {
+     "call_id": "call_c4462b3a86a4482d94db42a3",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P2",
+        "citation_key": "Halloran-Ide et al. (2023)",
+        "source_title": "Avonlea-Chem: Scaling Molecular Pretraining",
+        "text": "Avonlea-Chem-XL has 310 million parameters and is pretrained on 410 million unlabelled molecules with masked-atom prediction and a contrastive conformer objective."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P2"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+    "revised_text": "Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+    "evidence_ids": [
+     "T4.r1.params",
+     "T4.r1.infer",
+     "T4.r1.pre",
+     "T4.r2.params",
+     "T4.r2.infer",
+     "T4.r3.params",
+     "T4.r3.infer",
+     "T4.r3.pre",
+     "P2"
+    ],
+    "rationale": "All numbers match T4: Larchmont-GNN 4.8M/210ms/0 pre, Quintrell-MP 4.1M/180ms/0 pre, Avonlea-Chem-XL 310M/2950ms/2400 pre. Claim correctly states Larchmont is larger/slower than Quintrell, far more efficient than Avonlea, and requires no pretraining cost. No statistical test needed for descriptive size/cost values.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5). However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5). Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0. Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Across the six scaffold-split datasets, Larchmont-GNN achieved a higher average test ROC-AUC than Quintrell-MP (79.4 vs 78.4) and outperformed it on five of the six datasets, with a small margin on Lumley-Metab (69.8 vs 69.5).",
+   "evidence_ids": [
+    "T2.r1",
+    "T2.r2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "However, Larchmont-GNN did not surpass the much larger pretrained reference model Avonlea-Chem-XL, which achieved a higher average ROC-AUC (80.0 vs 79.4) and was higher on five of six datasets, except Hollin-Sol (84.1 vs 83.5).",
+   "evidence_ids": [
+    "T2.r1",
+    "T2.r3"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Ablation results indicate that both components contribute to Larchmont-GNN's performance: removing ring-aware pooling reduced average ROC-AUC from 79.4 to 78.7, removing distance features to 78.9, and removing both to 78.0.",
+   "evidence_ids": [
+    "T3.r1",
+    "T3.r2",
+    "T3.r3",
+    "T3.r4"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Larchmont-GNN (4.8M parameters, 210 ms per 1,000 molecules) is slightly larger and slower than Quintrell-MP (4.1M, 180 ms) but far more efficient than Avonlea-Chem-XL (310M, 2950 ms), and unlike the pretrained model, it requires no pretraining cost.",
+   "evidence_ids": [
+    "T4.r1",
+    "T4.r2",
+    "T4.r3"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-08:shared_outline:outline:f6509f7392",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635179-P0DbJW2ttBaWHBdZXhLx",
+   "finish_reason": "stop",
+   "prompt_tokens": 1916,
+   "completion_tokens": 668,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00045528,
+   "cost_is_estimate": false,
+   "latency_s": 3.031,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:shared_outline:writer_from_outline:5f56ddedcf",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635182-aErNpxqK355UzHK5wwpW",
+   "finish_reason": "stop",
+   "prompt_tokens": 2645,
+   "completion_tokens": 378,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00047614,
+   "cost_is_estimate": false,
+   "latency_s": 2.067,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:5c477fb938",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635184-IrkMKvC2RMWX1YOi2WPk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3392,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000311168,
+   "cost_is_estimate": false,
+   "latency_s": 1.86,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:2b9a6617f4",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635186-5svy5ZKJIyIVmeqINEy7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5008,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001753744,
+   "cost_is_estimate": false,
+   "latency_s": 1.549,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:81dbc18509",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635188-xK2GIfaw4V2jKJtYPfRp",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5217,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.26352e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.361,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:eb710c6cba",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635189-mS6LKRXWNEVYLZo0cWdw",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5393,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.156e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.277,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:62bd1b03d1",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635191-9KMA3CmUHvzWJFwJlmpE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5568,
+   "completion_tokens": 341,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001219728,
+   "cost_is_estimate": false,
+   "latency_s": 4.758,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:c727d861d2",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635196-rZOLCyvHn3PSV0zgQTD3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3392,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000311168,
+   "cost_is_estimate": false,
+   "latency_s": 1.862,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:ad7dd0d8c7",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635198-7UgnLQPZdC4UHrVzpIIH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5008,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001753744,
+   "cost_is_estimate": false,
+   "latency_s": 2.023,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:43f6ff8b4d",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635200-HgpA4iPkWpUt2gZJ1nkX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5222,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.30752e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.733,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:7314cf2f08",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635204-QqQLdKD92jguioG3cSAg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5401,
+   "completion_tokens": 55,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.3584e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.438,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:16f9daf0d9",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635207-qLzwUZ5xQtqbzEtLowJz",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5574,
+   "completion_tokens": 357,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001267248,
+   "cost_is_estimate": false,
+   "latency_s": 5.726,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:c72d737fc3",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635213-sv6PfXXvtdzfUF8aPge3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3391,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000310816,
+   "cost_is_estimate": false,
+   "latency_s": 2.021,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:e384889022",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635215-zcq7SxJ7ldRfmQrTiJ6m",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3787,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.79264e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.602,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:e2af4361f3",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635217-Pk3UKGUIZxDp3JGe2XQn",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3996,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.42432e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.888,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:22dc5de8d4",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635219-4MYQCHzNvZKOggXbJLet",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4171,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.308e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.243,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:08cd8e9043",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635220-FlLDGssimL0Lsel2vaTa",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4307,
+   "completion_tokens": 200,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.28368e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.97,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:d3c9fe24de",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635223-hrDf0sB8jAqTVq241hj7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3408,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000312576,
+   "cost_is_estimate": false,
+   "latency_s": 2.985,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:edf17812eb",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635226-ZelcKsvFR6pkMpnjqPDC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4146,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.92544e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.37,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:e7223649f1",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635229-4O7mDVybL3wi3o5R1bAN",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4355,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.22128e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.379,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:3bfe73601d",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635230-NT0rAPpJny7pnuuiIchk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4541,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.20176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.31,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-08:C3:verify_scripted:446b12f5ce",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635232-xcBYzKg5IqCdPkLFK5KD",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4709,
+   "completion_tokens": 254,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001106576,
+   "cost_is_estimate": false,
+   "latency_s": 3.757,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 22,
+  "n_model_calls_condition_only": 20,
+  "n_tool_calls": 16,
+  "tool_counts": {
+   "lookup_table": 4,
+   "compare_numbers": 4,
+   "get_test_metadata": 4,
+   "retrieve_passage": 4
+  },
+  "prompt_tokens": 94547,
+  "completion_tokens": 3141,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00357968,
+  "cost_usd_condition_only": 0.00264826,
+  "any_cost_estimated": false,
+  "latency_s": 54.21,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

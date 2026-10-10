@@ -1,0 +1,1554 @@
+{
+ "run_id": "diag_v2:C4:LONG-06",
+ "case_id": "LONG-06",
+ "condition": "C4",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:32:33Z",
+ "finished_at": "2026-10-10T12:33:09Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "e7f47233e783573bb77f0c8b64fd5f93c02e26f168f95e51409d1a6979b0ac88"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Wickersham-MT with pivot-filtered back-translation improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, which is smaller than the 5.8-point average gain previously reported by Rasmussen-Obi & Petrakis (2023) for the technique.",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r3.avg",
+     "P2"
+    ],
+    "scope": "Four English→X pairs (en→ne, en→si, en→km, en→ps), BLEU on Fenmoor-Test, single run per configuration.",
+    "caveats": "No statistical tests reported; single run per configuration; external comparison is to a different system and dataset than the cited work."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Pivot-filtered back-translation outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3) across the four pairs, with gains on every individual pair for both metrics.",
+    "evidence_ids": [
+     "T1.r2.avg",
+     "T1.r3.avg",
+     "T2.r2.avg",
+     "T2.r3.avg",
+     "T1.r2.ne",
+     "T1.r3.ne",
+     "T1.r2.si",
+     "T1.r3.si",
+     "T1.r2.km",
+     "T1.r3.km",
+     "T1.r2.ps",
+     "T1.r3.ps",
+     "T2.r2.ne",
+     "T2.r3.ne",
+     "T2.r2.si",
+     "T2.r3.si",
+     "T2.r2.km",
+     "T2.r3.km",
+     "T2.r2.ps",
+     "T2.r3.ps"
+    ],
+    "scope": "Four English→X pairs, BLEU and chrF on Fenmoor-Test, single run per configuration.",
+    "caveats": "No statistical tests reported; single run per configuration."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested, with 0.2 giving 14.3 and 0.6 giving 14.8; the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M).",
+    "evidence_ids": [
+     "T3.r1.kept",
+     "T3.r1.bleu",
+     "T3.r2.kept",
+     "T3.r2.bleu",
+     "T3.r3.kept",
+     "T3.r3.bleu"
+    ],
+    "scope": "Four English→X pairs, average BLEU on Fenmoor-Test, single run per configuration.",
+    "caveats": "No statistical tests reported; single run per configuration; only three thresholds tested."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+    "evidence_ids": [
+     "T4.r1.avg",
+     "T4.r2.avg",
+     "T4.r1.si",
+     "T4.r2.si"
+    ],
+    "scope": "Four English→X pairs, BLEU on Fenmoor-Test, single run per configuration.",
+    "caveats": "No statistical tests reported; single run per configuration; Pellston-NMT has 1.2B parameters vs Wickersham-MT's 240M; external comparison not directly tied to the research question."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023). Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics. The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M). Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r3.avg",
+      "P2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics.",
+     "evidence_ids": [
+      "T1.r2.avg",
+      "T1.r3.avg",
+      "T2.r2.avg",
+      "T2.r3.avg",
+      "T1.r2.ne",
+      "T1.r3.ne",
+      "T1.r2.si",
+      "T1.r3.si",
+      "T1.r2.km",
+      "T1.r3.km",
+      "T1.r2.ps",
+      "T1.r3.ps",
+      "T2.r2.ne",
+      "T2.r3.ne",
+      "T2.r2.si",
+      "T2.r3.si",
+      "T2.r2.km",
+      "T2.r3.km",
+      "T2.r2.ps",
+      "T2.r3.ps"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M).",
+     "evidence_ids": [
+      "T3.r1.kept",
+      "T3.r1.bleu",
+      "T3.r2.kept",
+      "T3.r2.bleu",
+      "T3.r3.kept",
+      "T3.r3.bleu"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+     "evidence_ids": [
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r1.si",
+      "T4.r2.si"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023). Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics. The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M). Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r3.avg",
+      "P2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics.",
+     "evidence_ids": [
+      "T1.r2.avg",
+      "T1.r3.avg",
+      "T2.r2.avg",
+      "T2.r3.avg",
+      "T1.r2.ne",
+      "T1.r3.ne",
+      "T1.r2.si",
+      "T1.r3.si",
+      "T1.r2.km",
+      "T1.r3.km",
+      "T1.r2.ps",
+      "T1.r3.ps",
+      "T2.r2.ne",
+      "T2.r3.ne",
+      "T2.r2.si",
+      "T2.r3.si",
+      "T2.r2.km",
+      "T2.r3.km",
+      "T2.r2.ps",
+      "T2.r3.ps"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M).",
+     "evidence_ids": [
+      "T3.r1.kept",
+      "T3.r1.bleu",
+      "T3.r2.kept",
+      "T3.r2.bleu",
+      "T3.r3.kept",
+      "T3.r3.bleu"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+     "evidence_ids": [
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r1.si",
+      "T4.r2.si"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023).",
+   "actions": [
+    {
+     "call_id": "call_01c8271e7ba844c6aa9e17bf",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r1",
+      "column": "avg"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_9ea9585e8d1f4b68bb849a90",
+     "tool": "lookup_table",
+     "args": {
+      "column": "avg",
+      "row_id": "r3",
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_245544cd1c5345cea1f1b050",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P2"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_79a6853a051a498c834820b6",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 3.1,
+      "evidence_id": "T1.r3.avg",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.avg"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_01c8271e7ba844c6aa9e17bf",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "BLEU on Fenmoor-Test (English→X), single run per configuration.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.avg",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "Average",
+        "text": "12.0",
+        "value": 12.0,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_9ea9585e8d1f4b68bb849a90",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "BLEU on Fenmoor-Test (English→X), single run per configuration.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r3.avg",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "Average",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_245544cd1c5345cea1f1b050",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P2",
+        "citation_key": "Rasmussen-Obi & Petrakis (2023)",
+        "source_title": "Synthetic Data for Low-Resource Translation: A Controlled Comparison",
+        "text": "Relative to systems trained on genuine parallel data alone, adding pivot-filtered back-translation improved BLEU by 5.8 points on average across our four low-resource pairs, compared with 2.9 points for unfiltered back-translation."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P2"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    },
+    {
+     "call_id": "call_79a6853a051a498c834820b6",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 3.1,
+      "actual": 3.1,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.avg",
+       "row": "+ pivot-filtered back-translation (ours)",
+       "column": "Average",
+       "text": "15.1",
+       "value": 15.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.avg",
+       "row": "Wickersham-MT, genuine parallel data only",
+       "column": "Average",
+       "text": "12.0",
+       "value": 12.0,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.avg"
+     },
+     "returned_ids": [
+      "T1.r3.avg",
+      "T1.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023).",
+    "revised_text": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r3.avg",
+     "P2"
+    ],
+    "rationale": "T1 shows avg BLEU 12.0 (r1) to 15.1 (r3), a 3.1-point gain, matching the claim. P2 states Rasmussen-Obi & Petrakis (2023) reported a 5.8-point average improvement for the technique, so the comparison and attribution are supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics.",
+   "actions": [
+    {
+     "call_id": "call_87f107138c5c4dd2a0dddd75",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_f18fb412490a47feb83cd379",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_06dcaa8d5a44460eaf139fad",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_87f107138c5c4dd2a0dddd75",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "BLEU on Fenmoor-Test (English→X), single run per configuration.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.ne",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→ne",
+        "text": "14.2",
+        "value": 14.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.si",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→si",
+        "text": "11.8",
+        "value": 11.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.km",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→km",
+        "text": "9.6",
+        "value": 9.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.ps",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→ps",
+        "text": "12.4",
+        "value": 12.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.avg",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "Average",
+        "text": "12.0",
+        "value": 12.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.ne",
+        "row": "+ unfiltered back-translation",
+        "column": "en→ne",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.si",
+        "row": "+ unfiltered back-translation",
+        "column": "en→si",
+        "text": "12.9",
+        "value": 12.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.km",
+        "row": "+ unfiltered back-translation",
+        "column": "en→km",
+        "text": "11.5",
+        "value": 11.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.ps",
+        "row": "+ unfiltered back-translation",
+        "column": "en→ps",
+        "text": "13.6",
+        "value": 13.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.avg",
+        "row": "+ unfiltered back-translation",
+        "column": "Average",
+        "text": "13.4",
+        "value": 13.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.ne",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→ne",
+        "text": "17.3",
+        "value": 17.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.si",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→si",
+        "text": "14.2",
+        "value": 14.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.km",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→km",
+        "text": "13.6",
+        "value": 13.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.ps",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→ps",
+        "text": "15.3",
+        "value": 15.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.avg",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "Average",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.ne",
+      "T1.r1.si",
+      "T1.r1.km",
+      "T1.r1.ps",
+      "T1.r1.avg",
+      "T1.r2.ne",
+      "T1.r2.si",
+      "T1.r2.km",
+      "T1.r2.ps",
+      "T1.r2.avg",
+      "T1.r3.ne",
+      "T1.r3.si",
+      "T1.r3.km",
+      "T1.r3.ps",
+      "T1.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_f18fb412490a47feb83cd379",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "chrF on Fenmoor-Test (English→X), single run per configuration.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.ne",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→ne",
+        "text": "41.8",
+        "value": 41.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.si",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→si",
+        "text": "38.9",
+        "value": 38.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.km",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→km",
+        "text": "35.2",
+        "value": 35.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.ps",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "en→ps",
+        "text": "40.1",
+        "value": 40.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.avg",
+        "row": "Wickersham-MT, genuine parallel data only",
+        "column": "Average",
+        "text": "39.0",
+        "value": 39.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.ne",
+        "row": "+ unfiltered back-translation",
+        "column": "en→ne",
+        "text": "43.0",
+        "value": 43.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.si",
+        "row": "+ unfiltered back-translation",
+        "column": "en→si",
+        "text": "39.8",
+        "value": 39.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.km",
+        "row": "+ unfiltered back-translation",
+        "column": "en→km",
+        "text": "37.4",
+        "value": 37.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.ps",
+        "row": "+ unfiltered back-translation",
+        "column": "en→ps",
+        "text": "41.0",
+        "value": 41.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.avg",
+        "row": "+ unfiltered back-translation",
+        "column": "Average",
+        "text": "40.3",
+        "value": 40.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.ne",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→ne",
+        "text": "45.1",
+        "value": 45.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.si",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→si",
+        "text": "41.6",
+        "value": 41.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.km",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→km",
+        "text": "39.5",
+        "value": 39.5,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.ps",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "en→ps",
+        "text": "43.0",
+        "value": 43.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.avg",
+        "row": "+ pivot-filtered back-translation (ours)",
+        "column": "Average",
+        "text": "42.3",
+        "value": 42.3,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.ne",
+      "T2.r1.si",
+      "T2.r1.km",
+      "T2.r1.ps",
+      "T2.r1.avg",
+      "T2.r2.ne",
+      "T2.r2.si",
+      "T2.r2.km",
+      "T2.r2.ps",
+      "T2.r2.avg",
+      "T2.r3.ne",
+      "T2.r3.si",
+      "T2.r3.km",
+      "T2.r3.ps",
+      "T2.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_06dcaa8d5a44460eaf139fad",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Pivot-filtered vs unfiltered back-translation, BLEU and chrF per pair"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics.",
+    "revised_text": "Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics.",
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r2.avg",
+     "T2.r3.avg",
+     "T2.r2.avg",
+     "T1.r3.ne",
+     "T1.r2.ne",
+     "T1.r3.si",
+     "T1.r2.si",
+     "T1.r3.km",
+     "T1.r2.km",
+     "T1.r3.ps",
+     "T1.r2.ps",
+     "T2.r3.ne",
+     "T2.r2.ne",
+     "T2.r3.si",
+     "T2.r2.si",
+     "T2.r3.km",
+     "T2.r2.km",
+     "T2.r3.ps",
+     "T2.r2.ps"
+    ],
+    "rationale": "Average BLEU: pivot-filtered 15.1 vs unfiltered 13.4 (T1.r3.avg, T1.r2.avg). Average chrF: 42.3 vs 40.3 (T2.r3.avg, T2.r2.avg). Per-pair BLEU: 17.3>15.6, 14.2>12.9, 13.6>11.5, 15.3>13.6; chrF: 45.1>43.0, 41.6>39.8, 39.5>37.4, 43.0>41.0. All numbers match; gains on every pair for both metrics hold.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M).",
+   "actions": [
+    {
+     "call_id": "call_92d1ba8e8d284f91ac5664fb",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_f7b3ed6b434e4c2196d97cb5",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_92d1ba8e8d284f91ac5664fb",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "Effect of the pivot round-trip threshold for pivot-filtered back-translation: synthetic sentence pairs kept (total over the four pairs) and average BLEU over the four pairs.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T3.r1.kept",
+        "row": "Threshold 0.2",
+        "column": "Synthetic pairs kept (M)",
+        "text": "3.0",
+        "value": 3.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T3.r1.bleu",
+        "row": "Threshold 0.2",
+        "column": "Average BLEU",
+        "text": "14.3",
+        "value": 14.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.kept",
+        "row": "Threshold 0.4 (default)",
+        "column": "Synthetic pairs kept (M)",
+        "text": "1.8",
+        "value": 1.8,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T3.r2.bleu",
+        "row": "Threshold 0.4 (default)",
+        "column": "Average BLEU",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r3.kept",
+        "row": "Threshold 0.6",
+        "column": "Synthetic pairs kept (M)",
+        "text": "1.1",
+        "value": 1.1,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T3.r3.bleu",
+        "row": "Threshold 0.6",
+        "column": "Average BLEU",
+        "text": "14.8",
+        "value": 14.8,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r1.kept",
+      "T3.r1.bleu",
+      "T3.r2.kept",
+      "T3.r2.bleu",
+      "T3.r3.kept",
+      "T3.r3.bleu"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_f7b3ed6b434e4c2196d97cb5",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "Thresholds 0.2, 0.4 and 0.6: synthetic pairs kept and average BLEU"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp3"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp3"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M).",
+    "revised_text": "The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M).",
+    "evidence_ids": [
+     "T3.r1.kept",
+     "T3.r1.bleu",
+     "T3.r2.kept",
+     "T3.r2.bleu",
+     "T3.r3.kept",
+     "T3.r3.bleu",
+     "absent:test:exp2/cmp3"
+    ],
+    "rationale": "T3 confirms threshold 0.4 gives highest avg BLEU (15.1) vs 0.2 (14.3) and 0.6 (14.8), and kept pairs decrease with threshold (3.0M, 1.8M, 1.1M). No significance claim made; numbers match exactly.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+   "actions": [
+    {
+     "call_id": "call_f194f5f0f11c47d7b10437a7",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T4"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_f78abd2d6247426cbc855ae9",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp3",
+      "comparison_id": "cmp4"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_f194f5f0f11c47d7b10437a7",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T4",
+      "caption": "BLEU on Fenmoor-Test for Wickersham-MT with pivot-filtered back-translation and for the external multilingual system Pellston-NMT (1.2B parameters).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T4.r1.ne",
+        "row": "Wickersham-MT + pivot-filtered back-translation (ours)",
+        "column": "en→ne",
+        "text": "17.3",
+        "value": 17.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r1.si",
+        "row": "Wickersham-MT + pivot-filtered back-translation (ours)",
+        "column": "en→si",
+        "text": "14.2",
+        "value": 14.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r1.km",
+        "row": "Wickersham-MT + pivot-filtered back-translation (ours)",
+        "column": "en→km",
+        "text": "13.6",
+        "value": 13.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r1.ps",
+        "row": "Wickersham-MT + pivot-filtered back-translation (ours)",
+        "column": "en→ps",
+        "text": "15.3",
+        "value": 15.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r1.avg",
+        "row": "Wickersham-MT + pivot-filtered back-translation (ours)",
+        "column": "Average",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.ne",
+        "row": "Pellston-NMT",
+        "column": "en→ne",
+        "text": "16.1",
+        "value": 16.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.si",
+        "row": "Pellston-NMT",
+        "column": "en→si",
+        "text": "15.0",
+        "value": 15.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.km",
+        "row": "Pellston-NMT",
+        "column": "en→km",
+        "text": "12.2",
+        "value": 12.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.ps",
+        "row": "Pellston-NMT",
+        "column": "en→ps",
+        "text": "14.7",
+        "value": 14.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.avg",
+        "row": "Pellston-NMT",
+        "column": "Average",
+        "text": "14.5",
+        "value": 14.5,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T4",
+      "T4.r1.ne",
+      "T4.r1.si",
+      "T4.r1.km",
+      "T4.r1.ps",
+      "T4.r1.avg",
+      "T4.r2.ne",
+      "T4.r2.si",
+      "T4.r2.km",
+      "T4.r2.ps",
+      "T4.r2.avg"
+     ],
+     "message": "",
+     "provenance": "table T4"
+    },
+    {
+     "call_id": "call_f78abd2d6247426cbc855ae9",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp4",
+      "description": "Wickersham-MT with pivot-filtered back-translation vs Pellston-NMT, BLEU per pair"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp4"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp4"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+    "revised_text": "Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+    "evidence_ids": [
+     "T4.r1.avg",
+     "T4.r2.avg",
+     "T4.r1.si",
+     "T4.r2.si",
+     "absent:test:exp3/cmp4"
+    ],
+    "rationale": "T4 confirms avg BLEU 15.1 (ours) vs 14.5 (Pellston), and en→si 14.2 (ours) vs 15.0 (Pellston). All numbers match. The claim uses \"higher\" without significance language, so no test is required. Scope limited to the four pairs evaluated.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023). Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics. The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M). Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Adding pivot-filtered back-translation to Wickersham-MT improved average BLEU by 3.1 points over genuine parallel data alone (from 12.0 to 15.1) across the four low-resource pairs, a smaller gain than the 5.8-point average improvement previously reported for the technique by Rasmussen-Obi & Petrakis (2023).",
+   "evidence_ids": [
+    "T1.r1.avg",
+    "T1.r3.avg",
+    "P2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Pivot-filtered back-translation also outperformed unfiltered back-translation on average BLEU (15.1 vs 13.4) and average chrF (42.3 vs 40.3), with gains on every individual pair for both metrics.",
+   "evidence_ids": [
+    "T1.r2.avg",
+    "T1.r3.avg",
+    "T2.r2.avg",
+    "T2.r3.avg",
+    "T1.r2.ne",
+    "T1.r3.ne",
+    "T1.r2.si",
+    "T1.r3.si",
+    "T1.r2.km",
+    "T1.r3.km",
+    "T1.r2.ps",
+    "T1.r3.ps",
+    "T2.r2.ne",
+    "T2.r3.ne",
+    "T2.r2.si",
+    "T2.r3.si",
+    "T2.r2.km",
+    "T2.r3.km",
+    "T2.r2.ps",
+    "T2.r3.ps"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "The default pivot round-trip threshold of 0.4 yielded the highest average BLEU (15.1) among the three thresholds tested (0.2: 14.3; 0.6: 14.8), while the number of synthetic pairs kept decreased as the threshold increased (3.0M, 1.8M, 1.1M).",
+   "evidence_ids": [
+    "T3.r1.kept",
+    "T3.r1.bleu",
+    "T3.r2.kept",
+    "T3.r2.bleu",
+    "T3.r3.kept",
+    "T3.r3.bleu"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Wickersham-MT with pivot-filtered back-translation achieved a higher average BLEU (15.1) than the external Pellston-NMT system (14.5) across the four pairs, though Pellston-NMT scored higher on en→si (15.0 vs 14.2).",
+   "evidence_ids": [
+    "T4.r1.avg",
+    "T4.r2.avg",
+    "T4.r1.si",
+    "T4.r2.si"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-06:shared_outline:outline:6f180f2edf",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635091-ssosNDFHrNYGet1SnPDd",
+   "finish_reason": "stop",
+   "prompt_tokens": 2105,
+   "completion_tokens": 854,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00053382,
+   "cost_is_estimate": false,
+   "latency_s": 5.683,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:shared_outline:writer_from_outline:e06d9c8b39",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635097-aKe8NzPbZKKlEzL8USll",
+   "finish_reason": "stop",
+   "prompt_tokens": 3041,
+   "completion_tokens": 583,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00058898,
+   "cost_is_estimate": false,
+   "latency_s": 3.41,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:83e5180cc0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635143-lzFzj1ve2ziTFXDL8up6",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3508,
+   "completion_tokens": 184,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002700352,
+   "cost_is_estimate": false,
+   "latency_s": 2.511,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:085f98277d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635145-qxABdIQvhjKcwh5NmxBF",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3923,
+   "completion_tokens": 117,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.25664e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.431,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:b474a0cd5b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635148-hKwY8IZRgBpcGEuXfLIW",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4223,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.7656e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.464,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:7e8d5f7530",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635151-yF19q7D3lkSNP5I58KaJ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4409,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.75248e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.146,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:78a7df9a69",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635153-o2d71PBBDJUcVHSuzWQF",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4744,
+   "completion_tokens": 184,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.52576e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.955,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:29c379ced4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635156-fKiL6fQKX0rgOEaU2Et4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3620,
+   "completion_tokens": 80,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002524352,
+   "cost_is_estimate": false,
+   "latency_s": 1.779,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:ed83b3a988",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635158-vTHqoAa4DdSmzjAId9U1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4853,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001341152,
+   "cost_is_estimate": false,
+   "latency_s": 1.766,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:137b34c7d2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635160-Ux3UYaMYJnf0LZWSHyoe",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 6007,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001539664,
+   "cost_is_estimate": false,
+   "latency_s": 1.532,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:6a015dcbb6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635161-7T03Q58glybJUMSN4ZhL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 6186,
+   "completion_tokens": 407,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001501584,
+   "cost_is_estimate": false,
+   "latency_s": 4.899,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:6e63f866c0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635166-c91tLWiS3W5G2LkaE2uX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3542,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002368592,
+   "cost_is_estimate": false,
+   "latency_s": 1.494,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:93b152f6ef",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635168-fT5qWINZretl6IZzhUwL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4110,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.60864e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.643,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:f135de1c29",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635170-rfzoU3oxJ3RSMOk5Dmeo",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4294,
+   "completion_tokens": 230,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.96128e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.121,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:998c52768a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635173-1xIGVeT48g98uRMTgxKd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3506,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002336912,
+   "cost_is_estimate": false,
+   "latency_s": 1.397,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:7bf1e298c6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635174-gxOkzkRuxeH4aZuToZlO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4350,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001172064,
+   "cost_is_estimate": false,
+   "latency_s": 1.551,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-06:C4:verify_adaptive:94da8812bc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635176-s9pgIvUCHXvhK5K9O1yD",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4532,
+   "completion_tokens": 209,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001050128,
+   "cost_is_estimate": false,
+   "latency_s": 3.144,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 17,
+  "n_model_calls_condition_only": 15,
+  "n_tool_calls": 11,
+  "tool_counts": {
+   "lookup_table": 6,
+   "retrieve_passage": 1,
+   "compare_numbers": 1,
+   "get_test_metadata": 3
+  },
+  "prompt_tokens": 70953,
+  "completion_tokens": 3351,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00327498,
+  "cost_usd_condition_only": 0.00215218,
+  "any_cost_estimated": false,
+  "latency_s": 43.926,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 4,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -71,3 +71,27 @@ def test_runrecord_roundtrip(record, tmp_path):
     assert RunRecord.model_validate_json(rr.model_dump_json()) == rr
     meta = json.loads(next((tmp_path / "synthetic").rglob("run_meta_r.json")).read_text())
     assert meta["is_mock"] is True and "prompt_hashes" in meta
+
+
+def test_new_run_tag_cannot_hijack_family(record, tmp_path):
+    import pytest
+    run_experiment(CFG, [record], ["C1"], family="synthetic", run_tag="tagA", stage="dev",
+                   client=MockClient(mock_responder), out_base=tmp_path)
+    with pytest.raises(ValueError, match="already belongs to run tag"):
+        run_experiment(CFG, [record], ["C1"], family="synthetic", run_tag="tagB", stage="dev",
+                       client=MockClient(mock_responder), out_base=tmp_path)
+
+
+def test_shared_artifact_provenance_mismatch_refused(record, tmp_path):
+    import pytest
+    run_experiment(CFG, [record], ["C1"], family="f", run_tag="t", stage="dev", client=MockClient(mock_responder), out_base=tmp_path)
+    cfg2 = dict(CFG, max_tokens={"writer": 900})
+    from src import writer
+    old = dict(writer.MAX_TOKENS)
+    try:
+        with pytest.raises(RuntimeError, match="different prompts/config"):
+            run_experiment(cfg2, [record], ["C2"], family="f", run_tag="t", stage="dev",
+                           client=MockClient(mock_responder), out_base=tmp_path)
+    finally:
+        writer.MAX_TOKENS.clear()
+        writer.MAX_TOKENS.update(old)

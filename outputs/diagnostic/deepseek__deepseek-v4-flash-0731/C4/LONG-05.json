@@ -1,0 +1,1206 @@
+{
+ "run_id": "diag_v2:C4:LONG-05",
+ "case_id": "LONG-05",
+ "condition": "C4",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:32:20Z",
+ "finished_at": "2026-10-10T12:32:50Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "75e11cafde5e7bb60fbafed66ebb6f48c8d3015a05fc309f62dee74ffd0cb776"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Under matched conditions (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels, 1,000 test scans), Gossamer-Seg has lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D.",
+    "evidence_ids": [
+     "T3.r1.med",
+     "T3.r2.med",
+     "T3.r1.p90",
+     "T3.r2.p90",
+     "T3.r1.thr",
+     "T3.r2.thr",
+     "T3.r1.mem",
+     "T3.r2.mem"
+    ],
+    "scope": "Coldharbour-LiDAR test scans, matched re-timing conditions",
+    "caveats": "No statistical test reported for latency differences; these are point estimates from a single matched run."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Gossamer-Seg achieves slightly higher test mIoU (67.9 ± 0.3%) than Tumbril-3D (67.5 ± 0.5%), but the paired t-test (n=3 seeds) is not statistically significant (p=0.18, 95% CI [-0.46, 1.26] percentage points).",
+    "evidence_ids": [
+     "T1.r1.test",
+     "T1.r2.test",
+     "S1"
+    ],
+    "scope": "Coldharbour-LiDAR test sequences, 19 classes, 3 seeds",
+    "caveats": "Non-significant difference does not establish equivalence; small seed count."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Per-class IoU on selected classes shows mixed results: Gossamer-Seg is higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9).",
+    "evidence_ids": [
+     "T5.r1.car",
+     "T5.r2.car",
+     "T5.r1.ped",
+     "T5.r2.ped",
+     "T5.r1.cyc",
+     "T5.r2.cyc",
+     "T5.r1.pole",
+     "T5.r2.pole",
+     "T5.r1.veg",
+     "T5.r2.veg"
+    ],
+    "scope": "Coldharbour-LiDAR test sequences, selected classes, 3 seeds",
+    "caveats": "No statistical tests reported for per-class differences; differences are small."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Gossamer-Seg has higher compute cost per scan (96.3 GFLOPs vs 81.5 GFLOPs) and more parameters (41.7 M vs 38.2 M) than Tumbril-3D, despite being faster in matched latency.",
+    "evidence_ids": [
+     "T4.r1.gflops",
+     "T4.r2.gflops",
+     "T4.r1.params",
+     "T4.r2.params"
+    ],
+    "scope": "One average Coldharbour-LiDAR test scan, analytical compute proxies",
+    "caveats": "Compute proxies are analytical, not measured; higher compute does not preclude lower latency due to architectural efficiency."
+   },
+   {
+    "finding_id": "F5",
+    "summary": "The originally published latencies (Gossamer-Seg: 61 ms on Halcyon-G4, 32-bit, batch 1; Tumbril-3D: 48 ms on Halcyon-G7, 16-bit, batch 4) are not directly comparable due to differing hardware, precision, and batch size, and Tumbril-3D's reported latency excludes voxelisation.",
+    "evidence_ids": [
+     "T2.r1.lat",
+     "T2.r2.lat",
+     "P1"
+    ],
+    "scope": "Original paper reports, different hardware/settings",
+    "caveats": "These numbers should not be used for head-to-head comparison; matched re-timing (T3) is the valid comparison."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D. Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points). Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9). Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D.",
+     "evidence_ids": [
+      "T3.r1.med",
+      "T3.r2.med",
+      "T3.r1.p90",
+      "T3.r2.p90",
+      "T3.r1.thr",
+      "T3.r2.thr",
+      "T3.r1.mem",
+      "T3.r2.mem"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points).",
+     "evidence_ids": [
+      "T1.r1.test",
+      "T1.r2.test",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9).",
+     "evidence_ids": [
+      "T5.r1.car",
+      "T5.r2.car",
+      "T5.r1.ped",
+      "T5.r2.ped",
+      "T5.r1.cyc",
+      "T5.r2.cyc",
+      "T5.r1.pole",
+      "T5.r2.pole",
+      "T5.r1.veg",
+      "T5.r2.veg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+     "evidence_ids": [
+      "T4.r1.gflops",
+      "T4.r2.gflops",
+      "T4.r1.params",
+      "T4.r2.params",
+      "T2.r1.lat",
+      "T2.r2.lat",
+      "P1"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D. Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points). Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9). Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D.",
+     "evidence_ids": [
+      "T3.r1.med",
+      "T3.r2.med",
+      "T3.r1.p90",
+      "T3.r2.p90",
+      "T3.r1.thr",
+      "T3.r2.thr",
+      "T3.r1.mem",
+      "T3.r2.mem"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points).",
+     "evidence_ids": [
+      "T1.r1.test",
+      "T1.r2.test",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9).",
+     "evidence_ids": [
+      "T5.r1.car",
+      "T5.r2.car",
+      "T5.r1.ped",
+      "T5.r2.ped",
+      "T5.r1.cyc",
+      "T5.r2.cyc",
+      "T5.r1.pole",
+      "T5.r2.pole",
+      "T5.r1.veg",
+      "T5.r2.veg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+     "evidence_ids": [
+      "T4.r1.gflops",
+      "T4.r2.gflops",
+      "T4.r1.params",
+      "T4.r2.params",
+      "T2.r1.lat",
+      "T2.r2.lat",
+      "P1"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D.",
+   "actions": [
+    {
+     "call_id": "call_b8108da173a94ee5b2e6284b",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_6cb27bbb9af84b1d9b83eb88",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp3",
+      "comparison_id": "cmp4"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_b8108da173a94ee5b2e6284b",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "Matched re-timing on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels; 1,000 scans after 100 warm-up scans).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T3.r1.med",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Median latency (ms/scan)",
+        "text": "29.4",
+        "value": 29.4,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r1.p90",
+        "row": "Gossamer-Seg (ours)",
+        "column": "90th-percentile latency (ms/scan)",
+        "text": "33.1",
+        "value": 33.1,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r1.thr",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Throughput (scans/s)",
+        "text": "34.0",
+        "value": 34.0,
+        "unit": "scans/s",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r1.mem",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Peak memory (GB)",
+        "text": "3.1",
+        "value": 3.1,
+        "unit": "GB",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r2.med",
+        "row": "Tumbril-3D",
+        "column": "Median latency (ms/scan)",
+        "text": "47.8",
+        "value": 47.8,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r2.p90",
+        "row": "Tumbril-3D",
+        "column": "90th-percentile latency (ms/scan)",
+        "text": "52.6",
+        "value": 52.6,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r2.thr",
+        "row": "Tumbril-3D",
+        "column": "Throughput (scans/s)",
+        "text": "20.9",
+        "value": 20.9,
+        "unit": "scans/s",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.mem",
+        "row": "Tumbril-3D",
+        "column": "Peak memory (GB)",
+        "text": "4.6",
+        "value": 4.6,
+        "unit": "GB",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r1.med",
+      "T3.r1.p90",
+      "T3.r1.thr",
+      "T3.r1.mem",
+      "T3.r2.med",
+      "T3.r2.p90",
+      "T3.r2.thr",
+      "T3.r2.mem"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_6cb27bbb9af84b1d9b83eb88",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp4",
+      "description": "Gossamer-Seg vs Tumbril-3D, median and 90th-percentile latency and throughput under matched conditions"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp4"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp4"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D.",
+    "revised_text": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D.",
+    "evidence_ids": [
+     "T3.r1.med",
+     "T3.r2.med",
+     "T3.r1.p90",
+     "T3.r2.p90",
+     "T3.r1.thr",
+     "T3.r2.thr",
+     "T3.r1.mem",
+     "T3.r2.mem",
+     "absent:test:exp3/cmp4"
+    ],
+    "rationale": "All four matched-condition metrics match T3 exactly (29.4/47.8 ms median, 33.1/52.6 ms p90, 34.0/20.9 scans/s, 3.1/4.6 GB), with correct directions. The claim makes no significance claim, so the absence of a test does not weaken it.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points).",
+   "actions": [
+    {
+     "call_id": "call_81d1236cd7c446c4be9827cf",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "test"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_c910e5e168464fceb59fc3be",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_81d1236cd7c446c4be9827cf",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "mIoU (%) on Coldharbour-LiDAR: test mean ± SD over 3 seeds; validation mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.test",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Test mIoU (%)",
+        "text": "67.9 ± 0.3",
+        "value": 67.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.test",
+        "row": "Tumbril-3D",
+        "column": "Test mIoU (%)",
+        "text": "67.5 ± 0.5",
+        "value": 67.5,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.test",
+      "T1.r2.test"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_c910e5e168464fceb59fc3be",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Gossamer-Seg vs Tumbril-3D, test mIoU",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp1",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 3,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 2.0,
+        "df": 2.0,
+        "p_value": 0.18,
+        "p_value_text": "p = 0.18",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": -0.46,
+        "ci_high": 1.26,
+        "effect_description": "mean paired difference in test mIoU (Gossamer-Seg − Tumbril-3D), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=3 random seeds; t=2 (df=2); p = 0.18; 95% CI [-0.46, 1.26] for mean paired difference in test mIoU (Gossamer-Seg − Tumbril-3D), percentage points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points).",
+    "revised_text": "Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points).",
+    "evidence_ids": [
+     "T1.r1.test",
+     "T1.r2.test",
+     "S1"
+    ],
+    "rationale": "Test mIoU values match T1 (67.9±0.3 vs 67.5±0.5). Paired t-test reported (S1): n=3, p=0.18, 95% CI [-0.46,1.26], two-sided, alpha=0.05, so \"not statistically significant\" is supported. All numbers and statistical language match.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9).",
+   "actions": [
+    {
+     "call_id": "call_04ec77483de243b1aeb00326",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T5"
+     },
+     "policy": "adaptive",
+     "step": 1
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_04ec77483de243b1aeb00326",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T5",
+      "caption": "Per-class IoU (%) on the Coldharbour-LiDAR test sequences for selected classes, mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T5.r1.car",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Car",
+        "text": "95.1",
+        "value": 95.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r1.ped",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Pedestrian",
+        "text": "71.8",
+        "value": 71.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r1.cyc",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Cyclist",
+        "text": "63.4",
+        "value": 63.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r1.pole",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Pole",
+        "text": "62.0",
+        "value": 62.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r1.veg",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Vegetation",
+        "text": "86.7",
+        "value": 86.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r2.car",
+        "row": "Tumbril-3D",
+        "column": "Car",
+        "text": "94.8",
+        "value": 94.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r2.ped",
+        "row": "Tumbril-3D",
+        "column": "Pedestrian",
+        "text": "73.0",
+        "value": 73.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r2.cyc",
+        "row": "Tumbril-3D",
+        "column": "Cyclist",
+        "text": "61.9",
+        "value": 61.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r2.pole",
+        "row": "Tumbril-3D",
+        "column": "Pole",
+        "text": "61.2",
+        "value": 61.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T5.r2.veg",
+        "row": "Tumbril-3D",
+        "column": "Vegetation",
+        "text": "86.9",
+        "value": 86.9,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T5",
+      "T5.r1.car",
+      "T5.r1.ped",
+      "T5.r1.cyc",
+      "T5.r1.pole",
+      "T5.r1.veg",
+      "T5.r2.car",
+      "T5.r2.ped",
+      "T5.r2.cyc",
+      "T5.r2.pole",
+      "T5.r2.veg"
+     ],
+     "message": "",
+     "provenance": "table T5"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9).",
+    "revised_text": "Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9).",
+    "evidence_ids": [
+     "T5.r1.car",
+     "T5.r2.car",
+     "T5.r1.ped",
+     "T5.r2.ped",
+     "T5.r1.cyc",
+     "T5.r2.cyc",
+     "T5.r1.pole",
+     "T5.r2.pole",
+     "T5.r1.veg",
+     "T5.r2.veg"
+    ],
+    "rationale": "All five per-class values match T5 exactly. Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), pole (62.0 vs 61.2); lower on pedestrian (71.8 vs 73.0), vegetation (86.7 vs 86.9). \"Mixed\" is accurate.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 2,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+   "actions": [
+    {
+     "call_id": "call_20f4092f24234c269c96cb61",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T4"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_ddcf176400c04f93a656478a",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_708e3b0710594b50983bef03",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_20f4092f24234c269c96cb61",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T4",
+      "caption": "Compute proxies for one average Coldharbour-LiDAR test scan.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T4.r1.gflops",
+        "row": "Gossamer-Seg (ours)",
+        "column": "GFLOPs per scan",
+        "text": "96.3",
+        "value": 96.3,
+        "unit": "GFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r1.params",
+        "row": "Gossamer-Seg (ours)",
+        "column": "Parameters (M)",
+        "text": "41.7",
+        "value": 41.7,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T4.r2.gflops",
+        "row": "Tumbril-3D",
+        "column": "GFLOPs per scan",
+        "text": "81.5",
+        "value": 81.5,
+        "unit": "GFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r2.params",
+        "row": "Tumbril-3D",
+        "column": "Parameters (M)",
+        "text": "38.2",
+        "value": 38.2,
+        "unit": "M",
+        "higher_is_better": null
+       }
+      ]
+     },
+     "returned_ids": [
+      "T4",
+      "T4.r1.gflops",
+      "T4.r1.params",
+      "T4.r2.gflops",
+      "T4.r2.params"
+     ],
+     "message": "",
+     "provenance": "table T4"
+    },
+    {
+     "call_id": "call_ddcf176400c04f93a656478a",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Per-scan latency as reported in each method's original paper (hardware, batch size and numeric precision differ; see row labels).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.lat",
+        "row": "Gossamer-Seg (original paper; Halcyon-G4 accelerator, 32-bit)",
+        "column": "Reported latency (ms/scan)",
+        "text": "61",
+        "value": 61.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.bs",
+        "row": "Gossamer-Seg (original paper; Halcyon-G4 accelerator, 32-bit)",
+        "column": "Batch size",
+        "text": "1",
+        "value": 1.0,
+        "unit": null,
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T2.r2.lat",
+        "row": "Tumbril-3D (original paper; Halcyon-G7 accelerator, 16-bit)",
+        "column": "Reported latency (ms/scan)",
+        "text": "48",
+        "value": 48.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.bs",
+        "row": "Tumbril-3D (original paper; Halcyon-G7 accelerator, 16-bit)",
+        "column": "Batch size",
+        "text": "4",
+        "value": 4.0,
+        "unit": null,
+        "higher_is_better": null
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.lat",
+      "T2.r1.bs",
+      "T2.r2.lat",
+      "T2.r2.bs"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_708e3b0710594b50983bef03",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Achterberg-Lowe et al. (2021)",
+        "source_title": "Tumbril-3D: Point-Voxel Fusion for Large-Scale LiDAR Segmentation",
+        "text": "On a Halcyon-G7 accelerator with batch size 4 and half-precision arithmetic, Tumbril-3D processes a 64-beam scan in 48 ms, which we report as amortised per-scan latency excluding voxelisation."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+    "revised_text": "Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+    "evidence_ids": [
+     "T4.r1.gflops",
+     "T4.r2.gflops",
+     "T4.r1.params",
+     "T4.r2.params",
+     "T2.r1.lat",
+     "T2.r2.lat",
+     "P1"
+    ],
+    "rationale": "T4 confirms Gossamer-Seg higher GFLOPs (96.3 vs 81.5) and params (41.7 vs 38.2 M). T2 confirms published latencies 61 ms (G4, 32-bit, bs1) vs 48 ms (G7, 16-bit, bs4), differing hardware/precision/batch size; P1 confirms Tumbril's 48 ms excludes voxelisation. All numbers and the non-comparability claim are supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D. Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points). Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9). Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Under matched conditions on Coldharbour-LiDAR test scans (Halcyon-G7, batch size 1, 16-bit, 0.05 m voxels), Gossamer-Seg achieved lower median latency (29.4 ms vs 47.8 ms), lower 90th-percentile latency (33.1 ms vs 52.6 ms), higher throughput (34.0 vs 20.9 scans/s), and lower peak memory (3.1 vs 4.6 GB) than Tumbril-3D.",
+   "evidence_ids": [
+    "T3.r1.med",
+    "T3.r2.med",
+    "T3.r1.p90",
+    "T3.r2.p90",
+    "T3.r1.thr",
+    "T3.r2.thr",
+    "T3.r1.mem",
+    "T3.r2.mem"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Gossamer-Seg also showed a slightly higher test mIoU (67.9 ± 0.3% vs 67.5 ± 0.5%), but this difference was not statistically significant (paired t-test, n=3 seeds, p=0.18, 95% CI [-0.46, 1.26] percentage points).",
+   "evidence_ids": [
+    "T1.r1.test",
+    "T1.r2.test",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Per-class IoU results were mixed, with Gossamer-Seg higher on car (95.1 vs 94.8), cyclist (63.4 vs 61.9), and pole (62.0 vs 61.2), but lower on pedestrian (71.8 vs 73.0) and vegetation (86.7 vs 86.9).",
+   "evidence_ids": [
+    "T5.r1.car",
+    "T5.r2.car",
+    "T5.r1.ped",
+    "T5.r2.ped",
+    "T5.r1.cyc",
+    "T5.r2.cyc",
+    "T5.r1.pole",
+    "T5.r2.pole",
+    "T5.r1.veg",
+    "T5.r2.veg"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Notably, Gossamer-Seg achieved this speed advantage despite higher analytical compute cost (96.3 vs 81.5 GFLOPs/scan) and more parameters (41.7 M vs 38.2 M), while the originally published latencies (61 ms vs 48 ms) are not directly comparable due to differing hardware, precision, batch size, and voxelisation handling.",
+   "evidence_ids": [
+    "T4.r1.gflops",
+    "T4.r2.gflops",
+    "T4.r1.params",
+    "T4.r2.params",
+    "T2.r1.lat",
+    "T2.r2.lat",
+    "P1"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-05:shared_outline:outline:d202b09196",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635079-c3bM2Ujv2avNWEcDACIY",
+   "finish_reason": "stop",
+   "prompt_tokens": 2190,
+   "completion_tokens": 977,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00058016,
+   "cost_is_estimate": false,
+   "latency_s": 5.247,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:shared_outline:writer_from_outline:0a17652fbb",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635084-93eKsWA9XEYsvH7ZDBM6",
+   "finish_reason": "stop",
+   "prompt_tokens": 3215,
+   "completion_tokens": 607,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00062006,
+   "cost_is_estimate": false,
+   "latency_s": 2.952,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:efbd460cd5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635130-6Cismg0c3gVkSRiJoPCG",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3788,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002585072,
+   "cost_is_estimate": false,
+   "latency_s": 1.366,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:e7b8c11fb4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635132-AtNVRW0uotRDVSaPEmac",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4532,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001114112,
+   "cost_is_estimate": false,
+   "latency_s": 1.715,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:7448762b51",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635134-24FigxkGjrMjwtqJU2HB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4718,
+   "completion_tokens": 243,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001085456,
+   "cost_is_estimate": false,
+   "latency_s": 3.417,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:79d463c0c9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635137-tT2pIrZkrgvv9wTPYUIb",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3704,
+   "completion_tokens": 117,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002695952,
+   "cost_is_estimate": false,
+   "latency_s": 2.409,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:fc7fca619b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635140-22OY9Da3d0vvX2NrqLAx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4095,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.29552e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.547,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:7f1d72903d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635141-tXXOHSHXgnJJOXlT92Xk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4504,
+   "completion_tokens": 194,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001204,
+   "cost_is_estimate": false,
+   "latency_s": 3.165,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:a55516db92",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635144-SXpKHwpsbI0KmMfpEz0i",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3769,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002568352,
+   "cost_is_estimate": false,
+   "latency_s": 1.411,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:5234fe3304",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635146-jvLHfqTGDoubTOjuUxZD",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4577,
+   "completion_tokens": 255,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001647392,
+   "cost_is_estimate": false,
+   "latency_s": 3.436,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:e47679393d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635150-SdkdMxmMKPKkJz3rnHIA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3744,
+   "completion_tokens": 116,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002728512,
+   "cost_is_estimate": false,
+   "latency_s": 2.253,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:dd94df8cc3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635152-udZBhJyD9yKbpKFrRjli",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4310,
+   "completion_tokens": 83,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.58352e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.8,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:2463214258",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635155-DFCtxqro60Vh8ZLbVJn7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4846,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.06688e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.239,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-05:C4:verify_adaptive:9893b8e348",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635156-eEPl4CjYt68F9rFFmu8a",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5039,
+   "completion_tokens": 250,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001168304,
+   "cost_is_estimate": false,
+   "latency_s": 3.608,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 14,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 8,
+  "tool_counts": {
+   "lookup_table": 5,
+   "get_test_metadata": 2,
+   "retrieve_passage": 1
+  },
+  "prompt_tokens": 57031,
+  "completion_tokens": 3122,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00313939,
+  "cost_usd_condition_only": 0.00193917,
+  "any_cost_estimated": false,
+  "latency_s": 36.565,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 4,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

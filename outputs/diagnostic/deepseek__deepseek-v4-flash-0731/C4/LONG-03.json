@@ -1,0 +1,1141 @@
+{
+ "run_id": "diag_v2:C4:LONG-03",
+ "case_id": "LONG-03",
+ "condition": "C4",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:30:43Z",
+ "finished_at": "2026-10-10T12:31:29Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "68f51bd12b6d76cb1f47fce8617af629f5b143f1c1a6635a35c3f150e45f06df"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Brackenridge-Tox outperforms Owlery-Enc on the three training platforms' test splits, with a mean paired difference of 2.1 macro-F1 points (95% CI [1.58, 2.69], p < 0.001, paired t-test, n=5 seeds).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r2.avg",
+     "S1"
+    ],
+    "scope": "Average macro-F1 over Gildcrest Forums, Nettlebank, and Pikestaff Chat test splits, 5 seeds.",
+    "caveats": "Significance is established only for this specific comparison and metric; no test is reported for per-subtype or Cobble-Board differences."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Brackenridge-Tox's advantage over Owlery-Enc does not clearly generalize to the unseen Cobble-Board platform: Brackenridge-Tox achieves 71.8 ± 0.9 macro-F1 vs 68.9 ± 1.1 for Owlery-Enc, but no statistical test is reported for this difference.",
+    "evidence_ids": [
+     "T3.r1.mf1",
+     "T3.r2.mf1"
+    ],
+    "scope": "Macro-F1 on Cobble-Board (4,000 comments), 5 seeds.",
+    "caveats": "Cobble-Board has no separate test partition; the difference is a mean difference only, not established as significant."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Brackenridge-Tox shows higher per-subtype F1 than Owlery-Enc on all four subtypes pooled over the training-platform test splits (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), but no statistical tests are reported for these differences.",
+    "evidence_ids": [
+     "T2.r1.insult",
+     "T2.r1.threat",
+     "T2.r1.ident",
+     "T2.r1.obsc",
+     "T2.r2.insult",
+     "T2.r2.threat",
+     "T2.r2.ident",
+     "T2.r2.obsc"
+    ],
+    "scope": "Per-subtype F1 pooled over the three training-platform test splits, 5 seeds.",
+    "caveats": "No significance tests; differences are descriptive only."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Ablation shows that both contrastive pretraining and subtype heads contribute to Brackenridge-Tox's average macro-F1 on the training platforms: removing contrastive pretraining drops it from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9.",
+    "evidence_ids": [
+     "T4.r1.avg",
+     "T4.r2.avg",
+     "T4.r3.avg",
+     "T4.r4.avg"
+    ],
+    "scope": "Average macro-F1 over the three training-platform test splits, 5 seeds.",
+    "caveats": "No statistical tests reported for ablation differences; these are mean values only."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds). On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there. Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance. Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there.",
+     "evidence_ids": [
+      "T3.r1.mf1",
+      "T3.r2.mf1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance.",
+     "evidence_ids": [
+      "T2.r1.insult",
+      "T2.r1.threat",
+      "T2.r1.ident",
+      "T2.r1.obsc",
+      "T2.r2.insult",
+      "T2.r2.threat",
+      "T2.r2.ident",
+      "T2.r2.obsc"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+     "evidence_ids": [
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r3.avg",
+      "T4.r4.avg"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds). On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there. Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance. Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there.",
+     "evidence_ids": [
+      "T3.r1.mf1",
+      "T3.r2.mf1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance.",
+     "evidence_ids": [
+      "T2.r1.insult",
+      "T2.r1.threat",
+      "T2.r1.ident",
+      "T2.r1.obsc",
+      "T2.r2.insult",
+      "T2.r2.threat",
+      "T2.r2.ident",
+      "T2.r2.obsc"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+     "evidence_ids": [
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r3.avg",
+      "T4.r4.avg"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds).",
+   "actions": [
+    {
+     "call_id": "call_6adba7fd47b04a0f96ca9980",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r1",
+      "column": "avg"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_d776b0ac3d9e4ba887d26162",
+     "tool": "lookup_table",
+     "args": {
+      "column": "avg",
+      "row_id": "r2",
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_a10cfc9fd9ac4fb99ce515eb",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_152f10c51de743f2b34dc86c",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 2.1,
+      "evidence_id": "T1.r1.avg",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.avg"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_6adba7fd47b04a0f96ca9980",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Macro-F1 (%) on the test splits of the three training platforms, mean over 5 seeds (Average column: mean ± SD over seeds; Saltmarsh-LR is deterministic).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.avg",
+        "row": "Brackenridge-Tox (ours)",
+        "column": "Average",
+        "text": "81.9 ± 0.5",
+        "value": 81.9,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_d776b0ac3d9e4ba887d26162",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Macro-F1 (%) on the test splits of the three training platforms, mean over 5 seeds (Average column: mean ± SD over seeds; Saltmarsh-LR is deterministic).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r2.avg",
+        "row": "Owlery-Enc",
+        "column": "Average",
+        "text": "79.8 ± 0.8",
+        "value": 79.8,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r2.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_a10cfc9fd9ac4fb99ce515eb",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Brackenridge-Tox vs Owlery-Enc, average macro-F1 over the three test splits",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp1",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 5,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 10.64,
+        "df": 4.0,
+        "p_value": 0.00044,
+        "p_value_text": "p < 0.001",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 1.58,
+        "ci_high": 2.69,
+        "effect_description": "mean paired difference in average macro-F1 over the three training-platform test splits (Brackenridge-Tox − Owlery-Enc), points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=5 random seeds; t=10.64 (df=4); p < 0.001; 95% CI [1.58, 2.69] for mean paired difference in average macro-F1 over the three training-platform test splits (Brackenridge-Tox − Owlery-Enc), points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_152f10c51de743f2b34dc86c",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 2.1,
+      "actual": 2.1,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.avg",
+       "row": "Brackenridge-Tox (ours)",
+       "column": "Average",
+       "text": "81.9 ± 0.5",
+       "value": 81.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.avg",
+       "row": "Owlery-Enc",
+       "column": "Average",
+       "text": "79.8 ± 0.8",
+       "value": 79.8,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.avg"
+     },
+     "returned_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds).",
+    "revised_text": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r2.avg",
+     "S1"
+    ],
+    "rationale": "Values match: 81.9±0.5 vs 79.8±0.8, difference 2.1 points. Paired t-test reported for exp1/cmp1: n=5 seeds, p<0.001, 95% CI [1.58,2.69]. All numbers and statistical claims verified.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there.",
+   "actions": [
+    {
+     "call_id": "call_90d291a402004b9ca0ec7563",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_fd014f7a702f4d85b074897a",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp4",
+      "experiment_id": "exp3"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_90d291a402004b9ca0ec7563",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "Macro-F1 (%) on Cobble-Board (4,000 comments), mean ± SD over 5 seeds (Saltmarsh-LR is deterministic).",
+      "notes": "Cobble-Board has no separate test partition.",
+      "cells": [
+       {
+        "evidence_id": "T3.r1.mf1",
+        "row": "Brackenridge-Tox (ours)",
+        "column": "Macro-F1 (%)",
+        "text": "71.8 ± 0.9",
+        "value": 71.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.mf1",
+        "row": "Owlery-Enc",
+        "column": "Macro-F1 (%)",
+        "text": "68.9 ± 1.1",
+        "value": 68.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r3.mf1",
+        "row": "Saltmarsh-LR",
+        "column": "Macro-F1 (%)",
+        "text": "63.2",
+        "value": 63.2,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r1.mf1",
+      "T3.r2.mf1",
+      "T3.r3.mf1"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_fd014f7a702f4d85b074897a",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp4",
+      "description": "Brackenridge-Tox vs Owlery-Enc, macro-F1 on Cobble-Board"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp4"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp4"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there.",
+    "revised_text": "On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there.",
+    "evidence_ids": [
+     "T3.r1.mf1",
+     "T3.r2.mf1",
+     "absent:test:exp3/cmp4"
+    ],
+    "rationale": "T3 confirms Brackenridge-Tox 71.8±0.9 vs Owlery-Enc 68.9±1.1 on Cobble-Board. No statistical test reported for exp3/cmp4, so the claim that the advantage is not established as significant is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance.",
+   "actions": [
+    {
+     "call_id": "call_bf882fc6a69a48bb85a93e36",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_dbccac2fde9347cfba2beb52",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_bf882fc6a69a48bb85a93e36",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Per-subtype F1 (%) pooled over the three training-platform test splits, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.insult",
+        "row": "Brackenridge-Tox (ours)",
+        "column": "Insult",
+        "text": "83.0",
+        "value": 83.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.threat",
+        "row": "Brackenridge-Tox (ours)",
+        "column": "Threat",
+        "text": "61.4",
+        "value": 61.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.ident",
+        "row": "Brackenridge-Tox (ours)",
+        "column": "Identity attack",
+        "text": "70.2",
+        "value": 70.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.obsc",
+        "row": "Brackenridge-Tox (ours)",
+        "column": "Obscene",
+        "text": "86.9",
+        "value": 86.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.insult",
+        "row": "Owlery-Enc",
+        "column": "Insult",
+        "text": "81.7",
+        "value": 81.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.threat",
+        "row": "Owlery-Enc",
+        "column": "Threat",
+        "text": "58.9",
+        "value": 58.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.ident",
+        "row": "Owlery-Enc",
+        "column": "Identity attack",
+        "text": "66.5",
+        "value": 66.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.obsc",
+        "row": "Owlery-Enc",
+        "column": "Obscene",
+        "text": "86.1",
+        "value": 86.1,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.insult",
+      "T2.r1.threat",
+      "T2.r1.ident",
+      "T2.r1.obsc",
+      "T2.r2.insult",
+      "T2.r2.threat",
+      "T2.r2.ident",
+      "T2.r2.obsc"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_dbccac2fde9347cfba2beb52",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "Brackenridge-Tox vs Owlery-Enc, per-subtype F1"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp3"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp3"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance.",
+    "revised_text": "Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance.",
+    "evidence_ids": [
+     "T2.r1.insult",
+     "T2.r1.threat",
+     "T2.r1.ident",
+     "T2.r1.obsc",
+     "T2.r2.insult",
+     "T2.r2.threat",
+     "T2.r2.ident",
+     "T2.r2.obsc",
+     "absent:test:exp2/cmp3"
+    ],
+    "rationale": "T2 shows Brackenridge-Tox higher than Owlery-Enc on all four subtypes: insult 83.0>81.7, threat 61.4>58.9, identity 70.2>66.5, obscene 86.9>86.1. No test reported for exp2/cmp3, so the \"not tested for significance\" caveat is accurate.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+   "actions": [
+    {
+     "call_id": "call_1790ed82363d4c3890348330",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T4"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_5060c746680c4725b35ef9a7",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp4",
+      "comparison_id": "cmp5"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_1790ed82363d4c3890348330",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T4",
+      "caption": "Ablation of Brackenridge-Tox: average macro-F1 (%) over the three training-platform test splits, mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T4.r1.avg",
+        "row": "Brackenridge-Tox (full)",
+        "column": "Average macro-F1 (%)",
+        "text": "81.9",
+        "value": 81.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.avg",
+        "row": "without contrastive pretraining",
+        "column": "Average macro-F1 (%)",
+        "text": "80.6",
+        "value": 80.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r3.avg",
+        "row": "without subtype heads",
+        "column": "Average macro-F1 (%)",
+        "text": "81.2",
+        "value": 81.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r4.avg",
+        "row": "without both",
+        "column": "Average macro-F1 (%)",
+        "text": "79.9",
+        "value": 79.9,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T4",
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r3.avg",
+      "T4.r4.avg"
+     ],
+     "message": "",
+     "provenance": "table T4"
+    },
+    {
+     "call_id": "call_5060c746680c4725b35ef9a7",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp4/cmp5",
+      "description": "Full Brackenridge-Tox vs variants without contrastive pretraining and/or subtype heads"
+     },
+     "returned_ids": [
+      "absent:test:exp4/cmp5"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp4/cmp5"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+    "revised_text": "Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+    "evidence_ids": [
+     "T4.r1.avg",
+     "T4.r2.avg",
+     "T4.r3.avg",
+     "T4.r4.avg",
+     "absent:test:exp4/cmp5"
+    ],
+    "rationale": "T4 values match exactly: full 81.9, without contrastive pretraining 80.6, without subtype heads 81.2, without both 79.9. No statistical test reported for exp4/cmp5, so the \"no significance tests\" caveat is accurate.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds). On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there. Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance. Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the three training platforms' test splits, Brackenridge-Tox outperformed Owlery-Enc by a mean of 2.1 macro-F1 points (81.9 ± 0.5 vs 79.8 ± 0.8; paired t-test, p < 0.001, 95% CI [1.58, 2.69], n=5 seeds).",
+   "evidence_ids": [
+    "T1.r1.avg",
+    "T1.r2.avg",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "On the unseen Cobble-Board platform, Brackenridge-Tox achieved 71.8 ± 0.9 macro-F1 versus 68.9 ± 1.1 for Owlery-Enc, but no statistical test was reported for this difference, so the advantage is not established as significant there.",
+   "evidence_ids": [
+    "T3.r1.mf1",
+    "T3.r2.mf1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Per-subtype F1 pooled over the training-platform test splits was higher for Brackenridge-Tox than Owlery-Enc on all four subtypes (e.g., identity attack: 70.2 vs 66.5; threat: 61.4 vs 58.9), though these differences were not tested for significance.",
+   "evidence_ids": [
+    "T2.r1.insult",
+    "T2.r1.threat",
+    "T2.r1.ident",
+    "T2.r1.obsc",
+    "T2.r2.insult",
+    "T2.r2.threat",
+    "T2.r2.ident",
+    "T2.r2.obsc"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Ablation on the training platforms showed that removing contrastive pretraining reduced average macro-F1 from 81.9 to 80.6, removing subtype heads to 81.2, and removing both to 79.9, though no significance tests were reported for these differences.",
+   "evidence_ids": [
+    "T4.r1.avg",
+    "T4.r2.avg",
+    "T4.r3.avg",
+    "T4.r4.avg"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-03:shared_outline:outline:1ad55ffd41",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634983-Vblm9KS0swFHZuchltom",
+   "finish_reason": "stop",
+   "prompt_tokens": 2032,
+   "completion_tokens": 679,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0004746,
+   "cost_is_estimate": false,
+   "latency_s": 4.692,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:shared_outline:writer_from_outline:de8b23e62f",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634988-Nh2UbYNN9XGCCBL3zCMF",
+   "finish_reason": "stop",
+   "prompt_tokens": 2777,
+   "completion_tokens": 452,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00051534,
+   "cost_is_estimate": false,
+   "latency_s": 2.304,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:2c8655d9f1",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635033-YkcB0yJIZ02wDZLjon1R",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3500,
+   "completion_tokens": 202,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002740832,
+   "cost_is_estimate": false,
+   "latency_s": 2.899,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:4c41b02553",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635036-v8j5cfHMauToawIKtD2N",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3957,
+   "completion_tokens": 81,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.60544e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.285,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:f50e900775",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635039-LWnpIchKuoOtjFBSeQ4j",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4198,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.0208e-05,
+   "cost_is_estimate": false,
+   "latency_s": 10.925,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:d26deb1d81",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635050-MgB7JkjQiBlGFu2o1PcK",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4624,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.64448e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.47,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:517d2d6b06",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635054-jtdXorUK07Z9p2iVGeMy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4964,
+   "completion_tokens": 184,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.28064e-05,
+   "cost_is_estimate": false,
+   "latency_s": 5.282,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:d3c99773fd",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635059-4pupoD8y9zgCOHhjtF63",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3478,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002454832,
+   "cost_is_estimate": false,
+   "latency_s": 1.886,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:ffc56ede77",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635061-T5tkrErcV11qPb9bI37O",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3945,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.15664e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.407,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:9c316ab551",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635064-FFUZZoP6QhpXX7cYtACC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4124,
+   "completion_tokens": 186,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.4848e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.761,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:cdbe69a3a2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635067-LYigb2WRRDBIfKtwo7mC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3532,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002359792,
+   "cost_is_estimate": false,
+   "latency_s": 1.481,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:aabea6e5c5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635068-plOz2E7q18iBCjtJNkxh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4199,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001039184,
+   "cost_is_estimate": false,
+   "latency_s": 1.478,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:3f356933af",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635070-DwgxXycGRa4ukDtbD6uv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4375,
+   "completion_tokens": 255,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001033408,
+   "cost_is_estimate": false,
+   "latency_s": 3.268,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:bc0bb87e61",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635073-I0Qls68N5pUk8M6OcEMp",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3487,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002320192,
+   "cost_is_estimate": false,
+   "latency_s": 1.507,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:d5db93c035",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635075-p1FABXZfY4UJHS5m70Jn",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3888,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.65504e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.485,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-03:C4:verify_adaptive:f17db1a806",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635076-N5xu6sdevYa2bxCZ8k6z",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4064,
+   "completion_tokens": 196,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.2208e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.727,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 16,
+  "n_model_calls_condition_only": 14,
+  "n_tool_calls": 10,
+  "tool_counts": {
+   "lookup_table": 5,
+   "get_test_metadata": 4,
+   "compare_numbers": 1
+  },
+  "prompt_tokens": 61144,
+  "completion_tokens": 2810,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00283545,
+  "cost_usd_condition_only": 0.00184551,
+  "any_cost_estimated": false,
+  "latency_s": 51.857,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 3,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -1,0 +1,1850 @@
+{
+ "run_id": "diag_v2:C4:LONG-02",
+ "case_id": "LONG-02",
+ "condition": "C4",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:29:19Z",
+ "finished_at": "2026-10-10T12:29:59Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "73dbfcd340b458fab457fcd11a8cd8ee481baa73036e0c8707abd2073fdbba13"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with accuracy drops of 0.1 to 1.8 points, all within the pre-specified 2.0-point robustness criterion.",
+    "evidence_ids": [
+     "T2.r1.lw_drop",
+     "T2.r2.lw_drop",
+     "T2.r3.lw_drop",
+     "T2.r4.lw_drop",
+     "T2.r5.lw_drop"
+    ],
+    "scope": "Harrowfield-Leaf test split, JPEG quality settings 90–10, top-1 accuracy drop from clean, Loamwise-ViT",
+    "caveats": "Drops are means over 5 seeds; no statistical test reported for these drops."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Loamwise-ViT shows smaller accuracy drops than Ferncastle-CNN under JPEG re-compression at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+    "evidence_ids": [
+     "T2.r1.lw_drop",
+     "T2.r1.fc_drop",
+     "T2.r2.lw_drop",
+     "T2.r2.fc_drop",
+     "T2.r3.lw_drop",
+     "T2.r3.fc_drop",
+     "T2.r4.lw_drop",
+     "T2.r4.fc_drop",
+     "T2.r5.lw_drop",
+     "T2.r5.fc_drop"
+    ],
+    "scope": "Harrowfield-Leaf test split, JPEG quality settings 90–10, top-1 accuracy drop from clean, Loamwise-ViT vs Ferncastle-CNN",
+    "caveats": "No statistical test reported for these comparisons; drops are means over 5 seeds."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Loamwise-ViT also shows smaller accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but Loamwise-ViT exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+    "evidence_ids": [
+     "T3.r1.lw_drop",
+     "T3.r1.fc_drop",
+     "T3.r2.lw_drop",
+     "T3.r2.fc_drop",
+     "T3.r3.lw_drop",
+     "T3.r3.fc_drop",
+     "T4.r1.lw_drop",
+     "T4.r1.fc_drop",
+     "T4.r2.lw_drop",
+     "T4.r2.fc_drop",
+     "T4.r3.lw_drop",
+     "T4.r3.fc_drop"
+    ],
+    "scope": "Harrowfield-Leaf test split, motion blur kernel lengths 3–11 px and brightness scales 0.8–0.4, top-1 accuracy drop from clean, Loamwise-ViT vs Ferncastle-CNN",
+    "caveats": "No statistical test reported for these comparisons; drops are means over 5 seeds."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+    "evidence_ids": [
+     "T1.r1.acc",
+     "T1.r2.acc",
+     "S1"
+    ],
+    "scope": "Harrowfield-Leaf clean test split, top-1 accuracy, Loamwise-ViT vs Ferncastle-CNN, 5 seeds",
+    "caveats": "Significance test applies only to this clean comparison, not to perturbation drops."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion. Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10). Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4). On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+     "evidence_ids": [
+      "T2.r1.lw_drop",
+      "T2.r2.lw_drop",
+      "T2.r3.lw_drop",
+      "T2.r4.lw_drop",
+      "T2.r5.lw_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+     "evidence_ids": [
+      "T2.r1.lw_drop",
+      "T2.r1.fc_drop",
+      "T2.r2.lw_drop",
+      "T2.r2.fc_drop",
+      "T2.r3.lw_drop",
+      "T2.r3.fc_drop",
+      "T2.r4.lw_drop",
+      "T2.r4.fc_drop",
+      "T2.r5.lw_drop",
+      "T2.r5.fc_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+     "evidence_ids": [
+      "T3.r1.lw_drop",
+      "T3.r1.fc_drop",
+      "T3.r2.lw_drop",
+      "T3.r2.fc_drop",
+      "T3.r3.lw_drop",
+      "T3.r3.fc_drop",
+      "T4.r1.lw_drop",
+      "T4.r1.fc_drop",
+      "T4.r2.lw_drop",
+      "T4.r2.fc_drop",
+      "T4.r3.lw_drop",
+      "T4.r3.fc_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+     "evidence_ids": [
+      "T1.r1.acc",
+      "T1.r2.acc",
+      "S1"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion. Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10). Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4). On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+     "evidence_ids": [
+      "T2.r1.lw_drop",
+      "T2.r2.lw_drop",
+      "T2.r3.lw_drop",
+      "T2.r4.lw_drop",
+      "T2.r5.lw_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+     "evidence_ids": [
+      "T2.r1.lw_drop",
+      "T2.r1.fc_drop",
+      "T2.r2.lw_drop",
+      "T2.r2.fc_drop",
+      "T2.r3.lw_drop",
+      "T2.r3.fc_drop",
+      "T2.r4.lw_drop",
+      "T2.r4.fc_drop",
+      "T2.r5.lw_drop",
+      "T2.r5.fc_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+     "evidence_ids": [
+      "T3.r1.lw_drop",
+      "T3.r1.fc_drop",
+      "T3.r2.lw_drop",
+      "T3.r2.fc_drop",
+      "T3.r3.lw_drop",
+      "T3.r3.fc_drop",
+      "T4.r1.lw_drop",
+      "T4.r1.fc_drop",
+      "T4.r2.lw_drop",
+      "T4.r2.fc_drop",
+      "T4.r3.lw_drop",
+      "T4.r3.fc_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+     "evidence_ids": [
+      "T1.r1.acc",
+      "T1.r2.acc",
+      "S1"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+   "actions": [
+    {
+     "call_id": "call_6f4d55cc396f4a3d8052abf3",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2",
+      "column": "lw_drop"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_35298d8ad8fd4f61b20939a1",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.1,
+      "evidence_id": "T2.r1.lw_drop"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_8d1772c9312343ca9249d9fa",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 1.8,
+      "evidence_id": "T2.r5.lw_drop"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_6f4d55cc396f4a3d8052abf3",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Top-1 accuracy (%) under JPEG re-compression of test images, mean over 5 seeds; drop = clean accuracy minus accuracy at that setting (points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r0.lw_drop",
+        "row": "Clean (no re-compression)",
+        "column": "Loamwise-ViT drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.lw_drop",
+        "row": "JPEG quality 90",
+        "column": "Loamwise-ViT drop",
+        "text": "0.1",
+        "value": 0.1,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.lw_drop",
+        "row": "JPEG quality 70",
+        "column": "Loamwise-ViT drop",
+        "text": "0.4",
+        "value": 0.4,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.lw_drop",
+        "row": "JPEG quality 50",
+        "column": "Loamwise-ViT drop",
+        "text": "0.9",
+        "value": 0.9,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r4.lw_drop",
+        "row": "JPEG quality 30",
+        "column": "Loamwise-ViT drop",
+        "text": "1.4",
+        "value": 1.4,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r5.lw_drop",
+        "row": "JPEG quality 10",
+        "column": "Loamwise-ViT drop",
+        "text": "1.8",
+        "value": 1.8,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r0.lw_drop",
+      "T2.r1.lw_drop",
+      "T2.r2.lw_drop",
+      "T2.r3.lw_drop",
+      "T2.r4.lw_drop",
+      "T2.r5.lw_drop"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_35298d8ad8fd4f61b20939a1",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.1,
+      "actual": 0.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r1.lw_drop",
+       "row": "JPEG quality 90",
+       "column": "Loamwise-ViT drop",
+       "text": "0.1",
+       "value": 0.1,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T2.r1.lw_drop"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_8d1772c9312343ca9249d9fa",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 1.8,
+      "actual": 1.8,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r5.lw_drop",
+       "row": "JPEG quality 10",
+       "column": "Loamwise-ViT drop",
+       "text": "1.8",
+       "value": 1.8,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T2.r5.lw_drop"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+    "revised_text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+    "evidence_ids": [
+     "T2.r1.lw_drop",
+     "T2.r2.lw_drop",
+     "T2.r3.lw_drop",
+     "T2.r4.lw_drop",
+     "T2.r5.lw_drop"
+    ],
+    "rationale": "All five JPEG drops (0.1, 0.4, 0.9, 1.4, 1.8 points at qualities 90, 70, 50, 30, 10) match the claim and are all within the 2.0-point criterion. The claim is accurate and correctly scoped to the evaluated settings.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+   "actions": [
+    {
+     "call_id": "call_53dff99a8e2940059c0bcddc",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_9dcf8a9e365d45faa6263859",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_53dff99a8e2940059c0bcddc",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Top-1 accuracy (%) under JPEG re-compression of test images, mean over 5 seeds; drop = clean accuracy minus accuracy at that setting (points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r0.lw_acc",
+        "row": "Clean (no re-compression)",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "91.4",
+        "value": 91.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r0.lw_drop",
+        "row": "Clean (no re-compression)",
+        "column": "Loamwise-ViT drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r0.fc_acc",
+        "row": "Clean (no re-compression)",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "89.7",
+        "value": 89.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r0.fc_drop",
+        "row": "Clean (no re-compression)",
+        "column": "Ferncastle-CNN drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.lw_acc",
+        "row": "JPEG quality 90",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "91.3",
+        "value": 91.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.lw_drop",
+        "row": "JPEG quality 90",
+        "column": "Loamwise-ViT drop",
+        "text": "0.1",
+        "value": 0.1,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.fc_acc",
+        "row": "JPEG quality 90",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "89.4",
+        "value": 89.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.fc_drop",
+        "row": "JPEG quality 90",
+        "column": "Ferncastle-CNN drop",
+        "text": "0.3",
+        "value": 0.3,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.lw_acc",
+        "row": "JPEG quality 70",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "91.0",
+        "value": 91.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.lw_drop",
+        "row": "JPEG quality 70",
+        "column": "Loamwise-ViT drop",
+        "text": "0.4",
+        "value": 0.4,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.fc_acc",
+        "row": "JPEG quality 70",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "88.5",
+        "value": 88.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.fc_drop",
+        "row": "JPEG quality 70",
+        "column": "Ferncastle-CNN drop",
+        "text": "1.2",
+        "value": 1.2,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.lw_acc",
+        "row": "JPEG quality 50",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "90.5",
+        "value": 90.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.lw_drop",
+        "row": "JPEG quality 50",
+        "column": "Loamwise-ViT drop",
+        "text": "0.9",
+        "value": 0.9,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.fc_acc",
+        "row": "JPEG quality 50",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "87.1",
+        "value": 87.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.fc_drop",
+        "row": "JPEG quality 50",
+        "column": "Ferncastle-CNN drop",
+        "text": "2.6",
+        "value": 2.6,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r4.lw_acc",
+        "row": "JPEG quality 30",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "90.0",
+        "value": 90.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r4.lw_drop",
+        "row": "JPEG quality 30",
+        "column": "Loamwise-ViT drop",
+        "text": "1.4",
+        "value": 1.4,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r4.fc_acc",
+        "row": "JPEG quality 30",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "84.8",
+        "value": 84.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r4.fc_drop",
+        "row": "JPEG quality 30",
+        "column": "Ferncastle-CNN drop",
+        "text": "4.9",
+        "value": 4.9,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r5.lw_acc",
+        "row": "JPEG quality 10",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "89.6",
+        "value": 89.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r5.lw_drop",
+        "row": "JPEG quality 10",
+        "column": "Loamwise-ViT drop",
+        "text": "1.8",
+        "value": 1.8,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r5.fc_acc",
+        "row": "JPEG quality 10",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "79.9",
+        "value": 79.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r5.fc_drop",
+        "row": "JPEG quality 10",
+        "column": "Ferncastle-CNN drop",
+        "text": "9.8",
+        "value": 9.8,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r0.lw_acc",
+      "T2.r0.lw_drop",
+      "T2.r0.fc_acc",
+      "T2.r0.fc_drop",
+      "T2.r1.lw_acc",
+      "T2.r1.lw_drop",
+      "T2.r1.fc_acc",
+      "T2.r1.fc_drop",
+      "T2.r2.lw_acc",
+      "T2.r2.lw_drop",
+      "T2.r2.fc_acc",
+      "T2.r2.fc_drop",
+      "T2.r3.lw_acc",
+      "T2.r3.lw_drop",
+      "T2.r3.fc_acc",
+      "T2.r3.fc_drop",
+      "T2.r4.lw_acc",
+      "T2.r4.lw_drop",
+      "T2.r4.fc_acc",
+      "T2.r4.fc_drop",
+      "T2.r5.lw_acc",
+      "T2.r5.lw_drop",
+      "T2.r5.fc_acc",
+      "T2.r5.fc_drop"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_9dcf8a9e365d45faa6263859",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "Accuracy drop from clean at each JPEG quality setting, Loamwise-ViT and Ferncastle-CNN"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp3"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp3"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+    "revised_text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+    "evidence_ids": [
+     "T2.r1.lw_drop",
+     "T2.r1.fc_drop",
+     "T2.r2.lw_drop",
+     "T2.r2.fc_drop",
+     "T2.r3.lw_drop",
+     "T2.r3.fc_drop",
+     "T2.r4.lw_drop",
+     "T2.r4.fc_drop",
+     "T2.r5.lw_drop",
+     "T2.r5.fc_drop"
+    ],
+    "rationale": "Table T2 confirms Loamwise-ViT drops (0.1, 0.4, 0.9, 1.4, 1.8) are smaller than Ferncastle-CNN drops (0.3, 1.2, 2.6, 4.9, 9.8) at every quality setting, and the gap widens at lower quality (1.8 vs 9.8 at q10). The claim uses \"mean\" and does not assert significance, so no test is required.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+   "actions": [
+    {
+     "call_id": "call_5a9b343a58334de9af709429",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_154e74f8a9c2460296618d9c",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T4"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_f2aee434f1e249f4b2e9c5a9",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp3",
+      "comparison_id": "cmp4"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_19dbb1fb0e954bc39ca4d637",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp5",
+      "experiment_id": "exp4"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_5a9b343a58334de9af709429",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "Top-1 accuracy (%) under motion blur of test images, mean over 5 seeds; drop = clean accuracy minus accuracy at that setting (points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T3.r0.lw_acc",
+        "row": "Clean (no blur)",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "91.4",
+        "value": 91.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r0.lw_drop",
+        "row": "Clean (no blur)",
+        "column": "Loamwise-ViT drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r0.fc_acc",
+        "row": "Clean (no blur)",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "89.7",
+        "value": 89.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r0.fc_drop",
+        "row": "Clean (no blur)",
+        "column": "Ferncastle-CNN drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r1.lw_acc",
+        "row": "Kernel length 3 px",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "90.6",
+        "value": 90.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r1.lw_drop",
+        "row": "Kernel length 3 px",
+        "column": "Loamwise-ViT drop",
+        "text": "0.8",
+        "value": 0.8,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r1.fc_acc",
+        "row": "Kernel length 3 px",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "88.6",
+        "value": 88.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r1.fc_drop",
+        "row": "Kernel length 3 px",
+        "column": "Ferncastle-CNN drop",
+        "text": "1.1",
+        "value": 1.1,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r2.lw_acc",
+        "row": "Kernel length 7 px",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "88.5",
+        "value": 88.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.lw_drop",
+        "row": "Kernel length 7 px",
+        "column": "Loamwise-ViT drop",
+        "text": "2.9",
+        "value": 2.9,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r2.fc_acc",
+        "row": "Kernel length 7 px",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "85.9",
+        "value": 85.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.fc_drop",
+        "row": "Kernel length 7 px",
+        "column": "Ferncastle-CNN drop",
+        "text": "3.8",
+        "value": 3.8,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r3.lw_acc",
+        "row": "Kernel length 11 px",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "85.3",
+        "value": 85.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r3.lw_drop",
+        "row": "Kernel length 11 px",
+        "column": "Loamwise-ViT drop",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T3.r3.fc_acc",
+        "row": "Kernel length 11 px",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "81.0",
+        "value": 81.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r3.fc_drop",
+        "row": "Kernel length 11 px",
+        "column": "Ferncastle-CNN drop",
+        "text": "8.7",
+        "value": 8.7,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r0.lw_acc",
+      "T3.r0.lw_drop",
+      "T3.r0.fc_acc",
+      "T3.r0.fc_drop",
+      "T3.r1.lw_acc",
+      "T3.r1.lw_drop",
+      "T3.r1.fc_acc",
+      "T3.r1.fc_drop",
+      "T3.r2.lw_acc",
+      "T3.r2.lw_drop",
+      "T3.r2.fc_acc",
+      "T3.r2.fc_drop",
+      "T3.r3.lw_acc",
+      "T3.r3.lw_drop",
+      "T3.r3.fc_acc",
+      "T3.r3.fc_drop"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_154e74f8a9c2460296618d9c",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T4",
+      "caption": "Top-1 accuracy (%) under illumination change (brightness scaling) of test images, mean over 5 seeds; drop = clean accuracy minus accuracy at that setting (points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T4.r0.lw_acc",
+        "row": "Original brightness",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "91.4",
+        "value": 91.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r0.lw_drop",
+        "row": "Original brightness",
+        "column": "Loamwise-ViT drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r0.fc_acc",
+        "row": "Original brightness",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "89.7",
+        "value": 89.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r0.fc_drop",
+        "row": "Original brightness",
+        "column": "Ferncastle-CNN drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r1.lw_acc",
+        "row": "Brightness ×0.8",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "90.9",
+        "value": 90.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r1.lw_drop",
+        "row": "Brightness ×0.8",
+        "column": "Loamwise-ViT drop",
+        "text": "0.5",
+        "value": 0.5,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r1.fc_acc",
+        "row": "Brightness ×0.8",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "89.0",
+        "value": 89.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r1.fc_drop",
+        "row": "Brightness ×0.8",
+        "column": "Ferncastle-CNN drop",
+        "text": "0.7",
+        "value": 0.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r2.lw_acc",
+        "row": "Brightness ×0.6",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "89.7",
+        "value": 89.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.lw_drop",
+        "row": "Brightness ×0.6",
+        "column": "Loamwise-ViT drop",
+        "text": "1.7",
+        "value": 1.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r2.fc_acc",
+        "row": "Brightness ×0.6",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "87.4",
+        "value": 87.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.fc_drop",
+        "row": "Brightness ×0.6",
+        "column": "Ferncastle-CNN drop",
+        "text": "2.3",
+        "value": 2.3,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r3.lw_acc",
+        "row": "Brightness ×0.4",
+        "column": "Loamwise-ViT accuracy (%)",
+        "text": "88.0",
+        "value": 88.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r3.lw_drop",
+        "row": "Brightness ×0.4",
+        "column": "Loamwise-ViT drop",
+        "text": "3.4",
+        "value": 3.4,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T4.r3.fc_acc",
+        "row": "Brightness ×0.4",
+        "column": "Ferncastle-CNN accuracy (%)",
+        "text": "84.9",
+        "value": 84.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r3.fc_drop",
+        "row": "Brightness ×0.4",
+        "column": "Ferncastle-CNN drop",
+        "text": "4.8",
+        "value": 4.8,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T4",
+      "T4.r0.lw_acc",
+      "T4.r0.lw_drop",
+      "T4.r0.fc_acc",
+      "T4.r0.fc_drop",
+      "T4.r1.lw_acc",
+      "T4.r1.lw_drop",
+      "T4.r1.fc_acc",
+      "T4.r1.fc_drop",
+      "T4.r2.lw_acc",
+      "T4.r2.lw_drop",
+      "T4.r2.fc_acc",
+      "T4.r2.fc_drop",
+      "T4.r3.lw_acc",
+      "T4.r3.lw_drop",
+      "T4.r3.fc_acc",
+      "T4.r3.fc_drop"
+     ],
+     "message": "",
+     "provenance": "table T4"
+    },
+    {
+     "call_id": "call_f2aee434f1e249f4b2e9c5a9",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp4",
+      "description": "Accuracy drop from clean at each blur kernel length, Loamwise-ViT and Ferncastle-CNN"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp4"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp4"
+    },
+    {
+     "call_id": "call_19dbb1fb0e954bc39ca4d637",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp4/cmp5",
+      "description": "Accuracy drop from clean at each brightness scale, Loamwise-ViT and Ferncastle-CNN"
+     },
+     "returned_ids": [
+      "absent:test:exp4/cmp5"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp4/cmp5"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+    "revised_text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+    "evidence_ids": [
+     "T3.r1.lw_drop",
+     "T3.r1.fc_drop",
+     "T3.r2.lw_drop",
+     "T3.r2.fc_drop",
+     "T3.r3.lw_drop",
+     "T3.r3.fc_drop",
+     "T4.r1.lw_drop",
+     "T4.r1.fc_drop",
+     "T4.r2.lw_drop",
+     "T4.r2.fc_drop",
+     "T4.r3.lw_drop",
+     "T4.r3.fc_drop",
+     "absent:test:exp3/cmp4",
+     "absent:test:exp4/cmp5"
+    ],
+    "rationale": "All drop values match: blur lw 0.8/2.9/6.1 vs fc 1.1/3.8/8.7 (lw smaller at each); illum lw 0.5/1.7/3.4 vs fc 0.7/2.3/4.8 (lw smaller at each). 6.1>2.0 and 3.4>2.0, so criterion exceeded at strongest settings. Claim uses \"shows smaller mean drops\" (no significance claim), which is supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+   "actions": [
+    {
+     "call_id": "call_cb2bbed57f6f4dc78f14070c",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_73958c214a374e78b340f667",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_bf8cf41b99534a63b4b3389f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 1.7,
+      "evidence_id": "T1.r1.acc",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.acc"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_cb2bbed57f6f4dc78f14070c",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Top-1 accuracy (%) on the clean Harrowfield-Leaf test split, mean ± SD over 5 seeds, with model size and inference throughput.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.acc",
+        "row": "Loamwise-ViT (ours)",
+        "column": "Top-1 accuracy (%)",
+        "text": "91.4 ± 0.4",
+        "value": 91.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.params",
+        "row": "Loamwise-ViT (ours)",
+        "column": "Parameters (M)",
+        "text": "22.1",
+        "value": 22.1,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.thr",
+        "row": "Loamwise-ViT (ours)",
+        "column": "Throughput (images/s)",
+        "text": "640",
+        "value": 640.0,
+        "unit": "images/s",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.acc",
+        "row": "Ferncastle-CNN",
+        "column": "Top-1 accuracy (%)",
+        "text": "89.7 ± 0.4",
+        "value": 89.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.params",
+        "row": "Ferncastle-CNN",
+        "column": "Parameters (M)",
+        "text": "25.6",
+        "value": 25.6,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.thr",
+        "row": "Ferncastle-CNN",
+        "column": "Throughput (images/s)",
+        "text": "910",
+        "value": 910.0,
+        "unit": "images/s",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.acc",
+        "row": "Quillon-Mix",
+        "column": "Top-1 accuracy (%)",
+        "text": "90.2 ± 0.6",
+        "value": 90.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.params",
+        "row": "Quillon-Mix",
+        "column": "Parameters (M)",
+        "text": "24.3",
+        "value": 24.3,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.thr",
+        "row": "Quillon-Mix",
+        "column": "Throughput (images/s)",
+        "text": "720",
+        "value": 720.0,
+        "unit": "images/s",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.acc",
+      "T1.r1.params",
+      "T1.r1.thr",
+      "T1.r2.acc",
+      "T1.r2.params",
+      "T1.r2.thr",
+      "T1.r3.acc",
+      "T1.r3.params",
+      "T1.r3.thr"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_73958c214a374e78b340f667",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Loamwise-ViT vs Ferncastle-CNN, top-1 accuracy, clean test split",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp1",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 5,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 8.44,
+        "df": 4.0,
+        "p_value": 0.0011,
+        "p_value_text": "p = 0.0011",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 1.14,
+        "ci_high": 2.26,
+        "effect_description": "mean paired difference in clean top-1 accuracy (Loamwise-ViT − Ferncastle-CNN), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=5 random seeds; t=8.44 (df=4); p = 0.0011; 95% CI [1.14, 2.26] for mean paired difference in clean top-1 accuracy (Loamwise-ViT − Ferncastle-CNN), percentage points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_bf8cf41b99534a63b4b3389f",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 1.7,
+      "actual": 1.7,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.acc",
+       "row": "Loamwise-ViT (ours)",
+       "column": "Top-1 accuracy (%)",
+       "text": "91.4 ± 0.4",
+       "value": 91.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.acc",
+       "row": "Ferncastle-CNN",
+       "column": "Top-1 accuracy (%)",
+       "text": "89.7 ± 0.4",
+       "value": 89.7,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.acc"
+     },
+     "returned_ids": [
+      "T1.r1.acc",
+      "T1.r2.acc"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+    "revised_text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+    "evidence_ids": [
+     "T1.r1.acc",
+     "T1.r2.acc",
+     "S1"
+    ],
+    "rationale": "T1 confirms Loamwise-ViT 91.4±0.4% vs Ferncastle-CNN 89.7±0.4%, difference 1.7 points. S1 reports paired t-test (n=5 seeds, t=8.44, p=0.0011, 95% CI [1.14,2.26]) for exactly this comparison. All numbers and statistical claims match.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion. Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10). Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4). On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+   "evidence_ids": [
+    "T2.r1.lw_drop",
+    "T2.r2.lw_drop",
+    "T2.r3.lw_drop",
+    "T2.r4.lw_drop",
+    "T2.r5.lw_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+   "evidence_ids": [
+    "T2.r1.lw_drop",
+    "T2.r1.fc_drop",
+    "T2.r2.lw_drop",
+    "T2.r2.fc_drop",
+    "T2.r3.lw_drop",
+    "T2.r3.fc_drop",
+    "T2.r4.lw_drop",
+    "T2.r4.fc_drop",
+    "T2.r5.lw_drop",
+    "T2.r5.fc_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+   "evidence_ids": [
+    "T3.r1.lw_drop",
+    "T3.r1.fc_drop",
+    "T3.r2.lw_drop",
+    "T3.r2.fc_drop",
+    "T3.r3.lw_drop",
+    "T3.r3.fc_drop",
+    "T4.r1.lw_drop",
+    "T4.r1.fc_drop",
+    "T4.r2.lw_drop",
+    "T4.r2.fc_drop",
+    "T4.r3.lw_drop",
+    "T4.r3.fc_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+   "evidence_ids": [
+    "T1.r1.acc",
+    "T1.r2.acc",
+    "S1"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-02:shared_outline:outline:64f0e8e71d",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634894-lKc2m02qLctKd4R2PmfV",
+   "finish_reason": "stop",
+   "prompt_tokens": 2412,
+   "completion_tokens": 908,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00059192,
+   "cost_is_estimate": false,
+   "latency_s": 5.224,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:shared_outline:writer_from_outline:a6d0743686",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634899-sBfhAVoH1703s3FvqNsA",
+   "finish_reason": "stop",
+   "prompt_tokens": 3399,
+   "completion_tokens": 627,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00065142,
+   "cost_is_estimate": false,
+   "latency_s": 4.808,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:c7338d62b4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634949-u5Zi1wzd2tDZdfw1cwQr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3733,
+   "completion_tokens": 66,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002586832,
+   "cost_is_estimate": false,
+   "latency_s": 1.662,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:980ef7b20b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634951-8XKlfjJzES5suQn4EZg9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4340,
+   "completion_tokens": 126,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001098272,
+   "cost_is_estimate": false,
+   "latency_s": 2.145,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:c61663d342",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634953-Z5G2IqjgDapH8xgCHLUP",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4662,
+   "completion_tokens": 70,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.97568e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.701,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:548c31b66b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634955-jNzqrM7W3beqkOsLNv5U",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4882,
+   "completion_tokens": 217,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.43024e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.712,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:2361a00ed2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634957-WVHZuHMN4LhBlgzkuYJv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3769,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002568352,
+   "cost_is_estimate": false,
+   "latency_s": 1.506,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:95986593ce",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634959-NwoDkTRyCT6dZGEda42l",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5680,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002124352,
+   "cost_is_estimate": false,
+   "latency_s": 1.587,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:4cf21f5c40",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634961-QXhgTotxBO8NNPaEmObX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5860,
+   "completion_tokens": 306,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001166176,
+   "cost_is_estimate": false,
+   "latency_s": 5.698,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:87c44c2213",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634967-TTckFQEDJlqAW1RNDCt9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3830,
+   "completion_tokens": 80,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002709152,
+   "cost_is_estimate": false,
+   "latency_s": 1.751,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:5f64ad2c5a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634968-DVjvYIG5B07tYo6CWYOw",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5230,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001672912,
+   "cost_is_estimate": false,
+   "latency_s": 1.456,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:2df6d882be",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634970-pocDAcGEmXSDhbyDbiGH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 6548,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000172208,
+   "cost_is_estimate": false,
+   "latency_s": 1.865,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:e6cd0b89ab",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634972-3xei6bSRMFd0UkuFsq7w",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 6828,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.3536e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.441,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:05942bf87c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634973-rJgnrsB4gbpIRD5uxNrT",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 7007,
+   "completion_tokens": 355,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001432448,
+   "cost_is_estimate": false,
+   "latency_s": 4.352,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:7cb5df67de",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634978-wdu4S9Wh12fgHsjT8cZ0",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3713,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002661632,
+   "cost_is_estimate": false,
+   "latency_s": 2.028,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:85e49d116e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634980-F1VFW0OsfwZ0l1FbTm44",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4572,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001149312,
+   "cost_is_estimate": false,
+   "latency_s": 2.235,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:ea3cae3712",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634982-0EH311XSyAMJJn0GCFNh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4989,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.67536e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.954,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:C4:verify_adaptive:4005afde51",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634984-juUM4cM0XUcrM6RPaYms",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5336,
+   "completion_tokens": 202,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001084832,
+   "cost_is_estimate": false,
+   "latency_s": 4.183,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 18,
+  "n_model_calls_condition_only": 16,
+  "n_tool_calls": 12,
+  "tool_counts": {
+   "lookup_table": 5,
+   "compare_numbers": 3,
+   "get_test_metadata": 4
+  },
+  "prompt_tokens": 86790,
+  "completion_tokens": 3586,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00378532,
+  "cost_usd_condition_only": 0.00254198,
+  "any_cost_estimated": false,
+  "latency_s": 48.308,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 4,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

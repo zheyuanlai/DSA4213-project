@@ -31,6 +31,27 @@ claims an experiment that was not run.
 - `dev_pilot1` (4 DEV cases × 7 conditions, $0.029): found many parallel tool calls, so only the first call per turn is now executed.
 - `dev_pilot2` (16 DEV × 7 = 112 jobs, $0.155): 112/112 completed with no API errors. Verifiers mostly ACCEPT (~93% of claims), make correct numeric fixes, and made no STRENGTHEN decisions.
   One parsing bug (`evidence_ids` as a JSON string) was found and fixed. One rationale/decision inconsistency (CIT-p1a) led to a shared verifier check-list.
-- `dev_pilot3` (verifier conditions only, re-run on identical cached drafts, 64 jobs, ~$0.05): no invalid decisions and similar edit rates.
+- `dev_pilot3` (verifier conditions only, re-run on identical cached drafts, 64 jobs, $0.109): no invalid decisions and similar edit rates.
   C6 now removes an unsupported citation attribution. One imperfect correction was seen (C5: a wrong range changed to a less-wrong range).
 - Backbone pinned: DeepSeek V4 Flash 0731 (`docs/MODEL_SELECTION.md`). Freeze: `docs/PROTOCOL_FREEZE.md`, `benchmarks/freeze_manifest.json`.
+
+## Phase 3: Primary experiment
+- `primary_v1` (frozen, 32 TEST × 7 = 224 jobs, 11:29–12:07 UTC): **224/224 completed**, no failures or protocol errors, $0.233.
+
+## Phase 4: Real papers and exploratory diagnostic
+- `real_v1` (frozen limits): 35/48 completed. The outline was truncated on 6 papers (C3/C4 failed) and the reviser on 1 (C2). Kept and reported.
+- `real_v2` (`configs/amended_secondary.yaml`, all papers and conditions re-run): 46/48. RP-02 C3/C4 failed again at 1500 tokens. The packet uses `real_v2`.
+- `diag_v2` (8 long-package cases × C7/C3/C4, design frozen and amended before any call): 24/24.
+
+## Phase 5: Automatic evaluation
+- `docs/AUTOMATIC_RESULTS.md` and `results/automatic/{synthetic_test,real_papers_v2,diagnostic_long}/` (TABLES.md, figures).
+- Adaptive vs scripted tool calls per case: −3.66 (TEST), −3.27 (real, n=11), −6.63 (diagnostic). STRENGTHEN never occurred.
+
+## Phase 6: Blind handoff
+- Independent read-only audit: 4 MAJOR + 5 MINOR findings, all fixed or documented (`docs/FINAL_AUDIT.md`).
+- Synthetic packet: 122 distinct texts, two passes (pass 1 without gold-worded checklists), opaque case aliases. Real packet: 39 outputs / 151 sentences.
+  Integrity checks pass. Mappings are private.
+
+## Phase 7: Audit and push
+- Fresh-clone tests pass; README mock command verified; secret scan of tree and history: 0 findings; private GitHub repo pushed.
+- Spend: $0.6978, reconciled with `GET /api/v1/key` to $0.000002.

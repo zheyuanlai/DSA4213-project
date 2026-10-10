@@ -4,8 +4,10 @@
 DSA4213 *Natural Language Processing for Data Science* (NUS, Sem 1 AY2026/27), Group 5. This is a private repository.
 
 > **Status: technical work complete through automatic evaluation; AWAITING BLIND HUMAN ANNOTATION
-> by group members.** Human-scored calibration results (H1–H3) do not exist yet. Everything labelled
-> PROXY in this repository is an unvalidated automatic heuristic, not a calibration result.
+> by group members.** 224/224 primary outputs, 46/48 real-paper outputs and 24/24 diagnostic outputs exist, and the blind packets are built.
+> Total OpenRouter spend is $0.70, reconciled. Human-scored calibration results (H1–H3) do not exist yet. Everything labelled
+> PROXY in this repository is an unvalidated automatic heuristic, not a calibration result. Start with
+> [`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md), [`docs/AUTOMATIC_RESULTS.md`](docs/AUTOMATIC_RESULTS.md) and [`docs/FINAL_AUDIT.md`](docs/FINAL_AUDIT.md).
 
 ## What this is
 
@@ -65,6 +67,9 @@ python scripts/auto_evaluate.py --runs outputs/synthetic/deepseek__deepseek-v4-f
   --cases data/synthetic/test.jsonl --out results/automatic/synthetic_test
 ```
 
+The real-paper study (`scripts/run_real_papers.py`) and the diagnostic were run with `configs/amended_secondary.yaml`.
+This config is identical to the frozen one except for higher generation token limits; see `docs/DEVIATIONS_FROM_PROPOSAL.md`.
+
 Every call goes through `src/cost_guard.py`: a hard cap of $12, per-stage caps, an append-only ledger at `outputs/cost_ledger.jsonl`, and at most 2 requests in flight.
 
 ## Repository map
@@ -76,9 +81,10 @@ Every call goes through `src/cost_guard.py`: a hard cap of $12, per-stage caps, 
 | `benchmarks/` | gold/authoring schema, validator, build script, freeze manifest |
 | `data/synthetic/` | public packages (`dev.jsonl`, `test.jsonl`), annotator rubrics, DEV gold |
 | `data/real_papers/` | 12 CC BY / CC BY-SA arXiv-derived packages (method names aliased) + manifest + licences |
-| `outputs/` | real API outputs, traces, job manifests, cost ledger (no secrets) |
+| `data/diagnostic/` | 8 exploratory long-package cases (gold private) |
+| `outputs/` | DEV-pilot and diagnostic run records, job manifests, cost ledger + reconciliation (no secrets). TEST and real-paper raw records are withheld until annotation ends (sha256 in `outputs/WITHHELD_UNTIL_ANNOTATION.json`) |
 | `evaluation/` | automatic metrics, paired bootstrap, blinding, merge/κ, human scoring |
-| `annotation/` | guide, instructions, blinded packets, empty A/B templates, DEV-only training example |
+| `annotation/` | guide, instructions, DEV-only training example; `pass1/`, `pass2/` (synthetic, two passes), `real/` (real papers): blinded packets, empty A/B sheets, viewers |
 | `results/automatic/` | automatic and PROXY results (aggregate only) |
 | `docs/` | plan, progress, protocol freeze, model selection, deviations, automatic results, handoff, audit |
 

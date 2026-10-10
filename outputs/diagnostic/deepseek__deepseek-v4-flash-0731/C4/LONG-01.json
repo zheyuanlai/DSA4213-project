@@ -1,0 +1,1394 @@
+{
+ "run_id": "diag_v2:C4:LONG-01",
+ "case_id": "LONG-01",
+ "condition": "C4",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:29:17Z",
+ "finished_at": "2026-10-10T12:29:53Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "af21495f35233e5de8c91b2651c08202f56d2159f6b6b16cbb1ab5748988d879"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Corvane-DST achieves higher mean JGA than Halloway-DST on the Merriwold-Dialog 2.0 test set (56.8% vs 56.1%), but no statistical test is reported for this comparison, so the difference is not established as significant.",
+    "evidence_ids": [
+     "T1.r1.jga",
+     "T1.r2.jga"
+    ],
+    "scope": "Merriwold-Dialog 2.0 test set, JGA, 5 seeds",
+    "caveats": "No significance test reported for this specific comparison."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Corvane-DST significantly outperforms Pipkin-Span on the Merriwold-Dialog 2.0 test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001).",
+    "evidence_ids": [
+     "T1.r1.jga",
+     "T1.r3.jga",
+     "S1"
+    ],
+    "scope": "Merriwold-Dialog 2.0 test set, JGA, 5 seeds",
+    "caveats": ""
+   },
+   {
+    "finding_id": "F3",
+    "summary": "On the Tarnby-Schema test set (unseen services), Corvane-DST significantly outperforms Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046).",
+    "evidence_ids": [
+     "T2.r1.jga",
+     "T2.r2.jga",
+     "S2"
+    ],
+    "scope": "Tarnby-Schema test set, JGA, 5 seeds",
+    "caveats": "Services unseen in training; secondary evaluation."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Per-domain JGA on single-domain Merriwold-Dialog 2.0 test dialogues shows mixed results: Corvane-DST is higher in train, restaurant, and attraction, but lower in hotel and taxi compared to Halloway-DST.",
+    "evidence_ids": [
+     "T3.r1.hotel",
+     "T3.r1.train",
+     "T3.r1.rest",
+     "T3.r1.taxi",
+     "T3.r1.attr",
+     "T3.r2.hotel",
+     "T3.r2.train",
+     "T3.r2.rest",
+     "T3.r2.taxi",
+     "T3.r2.attr"
+    ],
+    "scope": "Single-domain Merriwold-Dialog 2.0 test dialogues, JGA per domain, 5 seeds",
+    "caveats": "No significance tests reported; small taxi domain (61 dialogues)."
+   },
+   {
+    "finding_id": "F5",
+    "summary": "Ablation shows both components contribute to Corvane-DST's JGA: removing slot descriptions reduces JGA from 56.8% to 54.9%, removing history compression reduces it to 55.7%, and removing both reduces it to 53.6%.",
+    "evidence_ids": [
+     "T4.r1.jga",
+     "T4.r2.jga",
+     "T4.r3.jga",
+     "T4.r4.jga"
+    ],
+    "scope": "Merriwold-Dialog 2.0 test set, JGA, 5 seeds",
+    "caveats": "No significance tests reported for ablation differences."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison. Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001). On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046). Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison.",
+     "evidence_ids": [
+      "T1.r1.jga",
+      "T1.r2.jga"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001).",
+     "evidence_ids": [
+      "T1.r1.jga",
+      "T1.r3.jga",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046).",
+     "evidence_ids": [
+      "T2.r1.jga",
+      "T2.r2.jga",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+     "evidence_ids": [
+      "T3.r1.hotel",
+      "T3.r1.train",
+      "T3.r1.rest",
+      "T3.r1.taxi",
+      "T3.r1.attr",
+      "T3.r2.hotel",
+      "T3.r2.train",
+      "T3.r2.rest",
+      "T3.r2.taxi",
+      "T3.r2.attr",
+      "T4.r1.jga",
+      "T4.r2.jga",
+      "T4.r3.jga",
+      "T4.r4.jga"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison. Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001). On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046). Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison.",
+     "evidence_ids": [
+      "T1.r1.jga",
+      "T1.r2.jga"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001).",
+     "evidence_ids": [
+      "T1.r1.jga",
+      "T1.r3.jga",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046).",
+     "evidence_ids": [
+      "T2.r1.jga",
+      "T2.r2.jga",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+     "evidence_ids": [
+      "T3.r1.hotel",
+      "T3.r1.train",
+      "T3.r1.rest",
+      "T3.r1.taxi",
+      "T3.r1.attr",
+      "T3.r2.hotel",
+      "T3.r2.train",
+      "T3.r2.rest",
+      "T3.r2.taxi",
+      "T3.r2.attr",
+      "T4.r1.jga",
+      "T4.r2.jga",
+      "T4.r3.jga",
+      "T4.r4.jga"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison.",
+   "actions": [
+    {
+     "call_id": "call_79d2b0dc013a4c6c8a5ac46f",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "jga"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_a690ce4aa7af48c3bccec6d6",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_79d2b0dc013a4c6c8a5ac46f",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Main results on the Merriwold-Dialog 2.0 test set: JGA mean ± SD over 5 seeds; slot accuracy mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.jga",
+        "row": "Corvane-DST (ours)",
+        "column": "JGA (%)",
+        "text": "56.8 ± 0.6",
+        "value": 56.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.jga",
+        "row": "Halloway-DST",
+        "column": "JGA (%)",
+        "text": "56.1 ± 1.3",
+        "value": 56.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.jga",
+        "row": "Pipkin-Span",
+        "column": "JGA (%)",
+        "text": "52.3 ± 1.2",
+        "value": 52.3,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.jga",
+      "T1.r2.jga",
+      "T1.r3.jga"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_a690ce4aa7af48c3bccec6d6",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Corvane-DST vs Halloway-DST, JGA, Merriwold-Dialog 2.0 test set"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison.",
+    "revised_text": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison.",
+    "evidence_ids": [
+     "T1.r1.jga",
+     "T1.r2.jga",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "T1 shows Corvane-DST JGA 56.8% vs Halloway-DST 56.1%, so the higher mean and both numbers match. No statistical test is reported for exp1/cmp1, matching the claim's caveat. Claim is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001).",
+   "actions": [
+    {
+     "call_id": "call_8b064ca1000d427a820c9699",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_e489ca8f6b32469389997301",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_33c4f418e2194352a84ad33d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.5,
+      "evidence_id": "T1.r1.jga",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r3.jga"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_8b064ca1000d427a820c9699",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Main results on the Merriwold-Dialog 2.0 test set: JGA mean ± SD over 5 seeds; slot accuracy mean over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.jga",
+        "row": "Corvane-DST (ours)",
+        "column": "JGA (%)",
+        "text": "56.8 ± 0.6",
+        "value": 56.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.slot",
+        "row": "Corvane-DST (ours)",
+        "column": "Slot accuracy (%)",
+        "text": "97.4",
+        "value": 97.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.jga",
+        "row": "Halloway-DST",
+        "column": "JGA (%)",
+        "text": "56.1 ± 1.3",
+        "value": 56.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.slot",
+        "row": "Halloway-DST",
+        "column": "Slot accuracy (%)",
+        "text": "97.3",
+        "value": 97.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.jga",
+        "row": "Pipkin-Span",
+        "column": "JGA (%)",
+        "text": "52.3 ± 1.2",
+        "value": 52.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.slot",
+        "row": "Pipkin-Span",
+        "column": "Slot accuracy (%)",
+        "text": "96.6",
+        "value": 96.6,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.jga",
+      "T1.r1.slot",
+      "T1.r2.jga",
+      "T1.r2.slot",
+      "T1.r3.jga",
+      "T1.r3.slot"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_e489ca8f6b32469389997301",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Corvane-DST vs Pipkin-Span, JGA, Merriwold-Dialog 2.0 test set",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp2",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 5,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 12.58,
+        "df": 4.0,
+        "p_value": 0.00023,
+        "p_value_text": "p < 0.001",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 3.51,
+        "ci_high": 5.5,
+        "effect_description": "mean paired difference in JGA on the Merriwold-Dialog 2.0 test set (Corvane-DST − Pipkin-Span), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=5 random seeds; t=12.58 (df=4); p < 0.001; 95% CI [3.51, 5.5] for mean paired difference in JGA on the Merriwold-Dialog 2.0 test set (Corvane-DST − Pipkin-Span), percentage points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_33c4f418e2194352a84ad33d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 4.5,
+      "actual": 4.5,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.jga",
+       "row": "Corvane-DST (ours)",
+       "column": "JGA (%)",
+       "text": "56.8 ± 0.6",
+       "value": 56.8,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r3.jga",
+       "row": "Pipkin-Span",
+       "column": "JGA (%)",
+       "text": "52.3 ± 1.2",
+       "value": 52.3,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r1.jga"
+     },
+     "returned_ids": [
+      "T1.r1.jga",
+      "T1.r3.jga"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001).",
+    "revised_text": "Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001).",
+    "evidence_ids": [
+     "T1.r1.jga",
+     "T1.r3.jga",
+     "S1"
+    ],
+    "rationale": "Mean difference 56.8−52.3=4.5 pp matches. Paired t-test (S1) reported for exp1/cmp2: t=12.58, df=4, p<0.001, 95% CI [3.51,5.5]. All numbers and significance language supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046).",
+   "actions": [
+    {
+     "call_id": "call_6785f893a4f2461d85bc473e",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_aba284386c1e41e69718f9cb",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_7730479a85a24ecebfed23cc",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 2.3,
+      "evidence_id": "T2.r1.jga",
+      "mode": "difference",
+      "reference_evidence_id": "T2.r2.jga"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_6785f893a4f2461d85bc473e",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "Corvane-DST vs Halloway-DST, JGA, Tarnby-Schema test set",
+      "tests": [
+       {
+        "test_id": "S2",
+        "experiment_id": "exp2",
+        "comparison_id": "cmp3",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 5,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 5.71,
+        "df": 4.0,
+        "p_value": 0.0046,
+        "p_value_text": "p = 0.0046",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 1.18,
+        "ci_high": 3.42,
+        "effect_description": "mean paired difference in JGA on the Tarnby-Schema test set (Corvane-DST − Halloway-DST), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=5 random seeds; t=5.71 (df=4); p = 0.0046; 95% CI [1.18, 3.42] for mean paired difference in JGA on the Tarnby-Schema test set (Corvane-DST − Halloway-DST), percentage points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S2"
+     ],
+     "message": "",
+     "provenance": "comparison exp2/cmp3"
+    },
+    {
+     "call_id": "call_aba284386c1e41e69718f9cb",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "JGA (%) on the Tarnby-Schema test set (services unseen in training), mean ± SD over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.jga",
+        "row": "Corvane-DST (ours)",
+        "column": "JGA (%)",
+        "text": "41.9 ± 0.8",
+        "value": 41.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.jga",
+        "row": "Halloway-DST",
+        "column": "JGA (%)",
+        "text": "39.6 ± 0.9",
+        "value": 39.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r3.jga",
+        "row": "Pipkin-Span",
+        "column": "JGA (%)",
+        "text": "35.2 ± 0.8",
+        "value": 35.2,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.jga",
+      "T2.r2.jga",
+      "T2.r3.jga"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_7730479a85a24ecebfed23cc",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 2.3,
+      "actual": 2.3,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r1.jga",
+       "row": "Corvane-DST (ours)",
+       "column": "JGA (%)",
+       "text": "41.9 ± 0.8",
+       "value": 41.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T2.r2.jga",
+       "row": "Halloway-DST",
+       "column": "JGA (%)",
+       "text": "39.6 ± 0.9",
+       "value": 39.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      "better_entry": "T2.r1.jga"
+     },
+     "returned_ids": [
+      "T2.r1.jga",
+      "T2.r2.jga"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046).",
+    "revised_text": "On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046).",
+    "evidence_ids": [
+     "S2",
+     "T2.r1.jga",
+     "T2.r2.jga"
+    ],
+    "rationale": "Paired t-test (S2) reports mean paired difference 2.3 pp, 95% CI [1.18, 3.42], p=0.0046 for Corvane-DST vs Halloway-DST on Tarnby-Schema JGA. Table T2 confirms 41.9 vs 39.6 = 2.3 pp difference. All numbers and significance match.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+   "actions": [
+    {
+     "call_id": "call_a57635dedbf44018a37f1616",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_c5eadd6e6ae74e24a94a5c05",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T4"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_072aeece08f0411093ae4de6",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp3",
+      "comparison_id": "cmp5"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_8eec93ec67434164b177516f",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp6",
+      "experiment_id": "exp4"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a57635dedbf44018a37f1616",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "JGA (%) on single-domain dialogues of the Merriwold-Dialog 2.0 test set, by domain, mean over 5 seeds.",
+      "notes": "Single-domain test dialogues: 214 hotel, 195 train, 187 restaurant, 61 taxi, 102 attraction.",
+      "cells": [
+       {
+        "evidence_id": "T3.r1.hotel",
+        "row": "Corvane-DST (ours)",
+        "column": "Hotel",
+        "text": "52.4",
+        "value": 52.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r1.train",
+        "row": "Corvane-DST (ours)",
+        "column": "Train",
+        "text": "71.6",
+        "value": 71.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r1.rest",
+        "row": "Corvane-DST (ours)",
+        "column": "Restaurant",
+        "text": "66.9",
+        "value": 66.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r1.taxi",
+        "row": "Corvane-DST (ours)",
+        "column": "Taxi",
+        "text": "48.3",
+        "value": 48.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r1.attr",
+        "row": "Corvane-DST (ours)",
+        "column": "Attraction",
+        "text": "69.5",
+        "value": 69.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.hotel",
+        "row": "Halloway-DST",
+        "column": "Hotel",
+        "text": "53.1",
+        "value": 53.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.train",
+        "row": "Halloway-DST",
+        "column": "Train",
+        "text": "70.2",
+        "value": 70.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.rest",
+        "row": "Halloway-DST",
+        "column": "Restaurant",
+        "text": "65.8",
+        "value": 65.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.taxi",
+        "row": "Halloway-DST",
+        "column": "Taxi",
+        "text": "49.0",
+        "value": 49.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.attr",
+        "row": "Halloway-DST",
+        "column": "Attraction",
+        "text": "68.7",
+        "value": 68.7,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r1.hotel",
+      "T3.r1.train",
+      "T3.r1.rest",
+      "T3.r1.taxi",
+      "T3.r1.attr",
+      "T3.r2.hotel",
+      "T3.r2.train",
+      "T3.r2.rest",
+      "T3.r2.taxi",
+      "T3.r2.attr"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_c5eadd6e6ae74e24a94a5c05",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T4",
+      "caption": "Ablation of Corvane-DST on the Merriwold-Dialog 2.0 test set, JGA (%), mean ± SD over 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T4.r1.jga",
+        "row": "Corvane-DST (full)",
+        "column": "JGA (%)",
+        "text": "56.8 ± 0.6",
+        "value": 56.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.jga",
+        "row": "without slot descriptions",
+        "column": "JGA (%)",
+        "text": "54.9 ± 0.8",
+        "value": 54.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r3.jga",
+        "row": "without history compression (full history)",
+        "column": "JGA (%)",
+        "text": "55.7 ± 0.7",
+        "value": 55.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r4.jga",
+        "row": "without both",
+        "column": "JGA (%)",
+        "text": "53.6 ± 0.9",
+        "value": 53.6,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T4",
+      "T4.r1.jga",
+      "T4.r2.jga",
+      "T4.r3.jga",
+      "T4.r4.jga"
+     ],
+     "message": "",
+     "provenance": "table T4"
+    },
+    {
+     "call_id": "call_072aeece08f0411093ae4de6",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp5",
+      "description": "Corvane-DST vs Halloway-DST, JGA per domain"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp5"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp5"
+    },
+    {
+     "call_id": "call_8eec93ec67434164b177516f",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp4/cmp6",
+      "description": "Full Corvane-DST vs variants without slot descriptions and/or history compression"
+     },
+     "returned_ids": [
+      "absent:test:exp4/cmp6"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp4/cmp6"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+    "revised_text": "Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+    "evidence_ids": [
+     "T3.r1.hotel",
+     "T3.r1.train",
+     "T3.r1.rest",
+     "T3.r1.taxi",
+     "T3.r1.attr",
+     "T3.r2.hotel",
+     "T3.r2.train",
+     "T3.r2.rest",
+     "T3.r2.taxi",
+     "T3.r2.attr",
+     "T4.r1.jga",
+     "T4.r2.jga",
+     "T4.r3.jga",
+     "T4.r4.jga",
+     "absent:test:exp3/cmp5",
+     "absent:test:exp4/cmp6"
+    ],
+    "rationale": "Per-domain values match: Corvane higher in train (71.6>70.2), restaurant (66.9>65.8), attraction (69.5>68.7); lower in hotel (52.4<53.1), taxi (48.3<49.0). Ablation values match (56.8, 54.9, 55.7, 53.6). Claim uses \"mixed\"/\"contribute\" without significance claims; no test reported, and claim does not assert significance.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison. Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001). On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046). Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Merriwold-Dialog 2.0 test set, Corvane-DST achieved a higher mean joint goal accuracy (JGA) than Halloway-DST (56.8% vs 56.1%), although no statistical test was reported for this comparison.",
+   "evidence_ids": [
+    "T1.r1.jga",
+    "T1.r2.jga"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Corvane-DST significantly outperformed the Pipkin-Span baseline on the same test set (mean difference 4.5 percentage points, 95% CI [3.51, 5.5], p < 0.001).",
+   "evidence_ids": [
+    "T1.r1.jga",
+    "T1.r3.jga",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "On the Tarnby-Schema test set with services unseen in training, Corvane-DST also significantly exceeded Halloway-DST in JGA (mean difference 2.3 percentage points, 95% CI [1.18, 3.42], p = 0.0046).",
+   "evidence_ids": [
+    "T2.r1.jga",
+    "T2.r2.jga",
+    "S2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Per-domain results on single-domain Merriwold-Dialog 2.0 test dialogues were mixed, with Corvane-DST higher in train, restaurant, and attraction but lower in hotel and taxi than Halloway-DST, and an ablation indicated that both slot descriptions and history compression contribute to Corvane-DST's JGA (56.8% full vs 54.9% without descriptions, 55.7% without compression, and 53.6% without both).",
+   "evidence_ids": [
+    "T3.r1.hotel",
+    "T3.r1.train",
+    "T3.r1.rest",
+    "T3.r1.taxi",
+    "T3.r1.attr",
+    "T3.r2.hotel",
+    "T3.r2.train",
+    "T3.r2.rest",
+    "T3.r2.taxi",
+    "T3.r2.attr",
+    "T4.r1.jga",
+    "T4.r2.jga",
+    "T4.r3.jga",
+    "T4.r4.jga"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-01:shared_outline:outline:5a8ad177e5",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634893-rQCxCjuLYA6d23HpVBcy",
+   "finish_reason": "stop",
+   "prompt_tokens": 2283,
+   "completion_tokens": 730,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00052402,
+   "cost_is_estimate": false,
+   "latency_s": 4.423,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:shared_outline:writer_from_outline:0b65f8b47b",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634898-YJGOUQrg2XIJPIgVYAzi",
+   "finish_reason": "stop",
+   "prompt_tokens": 3096,
+   "completion_tokens": 479,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00056756,
+   "cost_is_estimate": false,
+   "latency_s": 3.695,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:d94cdb78f9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634946-XZyO41eF1tcixgVFq6lu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3592,
+   "completion_tokens": 118,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002600032,
+   "cost_is_estimate": false,
+   "latency_s": 2.041,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:65c5dc4835",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634949-fVYvPsiivP65O3EAuudM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4060,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.98752e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.284,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:baeb3e5dde",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634950-KYBgj30sDDWV8VYD6NKZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4245,
+   "completion_tokens": 181,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.4176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.666,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:4291b7fdaa",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634953-axGxt1yKwCREZdctzO68",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3590,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002553392,
+   "cost_is_estimate": false,
+   "latency_s": 1.89,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:994eb192ff",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634955-JKo29SivRQdXfret27Yh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4244,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.60672e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.462,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:48e9958c17",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634956-2xxWTd6rGlxZKJoOyqL7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4685,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.18128e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.7,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:34eec6c01c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634958-VXJtGGtDVV6eu0RrQWvI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5028,
+   "completion_tokens": 182,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.79104e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.841,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:66e9b05f85",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634961-PU8jvEAyY99Obm6Wbsx4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3602,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002563952,
+   "cost_is_estimate": false,
+   "latency_s": 4.08,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:d2e385c6eb",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634965-xe3bRb4ANA7xFBgS4Y9z",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4109,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.86432e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.368,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:3959b51de7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634967-6nNk4fKfkKSD7wWSqdzJ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4451,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.12208e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.738,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:bfd87ef607",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634969-wbwKKJDFzNINRqBc1iGd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4794,
+   "completion_tokens": 198,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001033536,
+   "cost_is_estimate": false,
+   "latency_s": 2.598,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:4ef77186cb",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634972-FtLYJmFZIVhzb3GTAjAL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3729,
+   "completion_tokens": 80,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002620272,
+   "cost_is_estimate": false,
+   "latency_s": 1.723,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:e0e764fff5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634974-ftaxKm13Hh5AXYjHplNB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4619,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001135232,
+   "cost_is_estimate": false,
+   "latency_s": 1.329,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:e22d4dd06e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634975-hhRuooqEc7JdPY7dHf17",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5039,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.30384e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.925,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:6eaae2e9fe",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634977-wpuiGOLeySKN91X2yVfL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5313,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.10832e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.33,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-01:C4:verify_adaptive:f12822b71b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791634979-kYJJl2xI1V3JpB9NurHx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5487,
+   "completion_tokens": 333,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000134544,
+   "cost_is_estimate": false,
+   "latency_s": 4.169,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 18,
+  "n_model_calls_condition_only": 16,
+  "n_tool_calls": 12,
+  "tool_counts": {
+   "lookup_table": 5,
+   "get_test_metadata": 5,
+   "compare_numbers": 2
+  },
+  "prompt_tokens": 75966,
+  "completion_tokens": 3139,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00321059,
+  "cost_usd_condition_only": 0.00211901,
+  "any_cost_estimated": false,
+  "latency_s": 43.262,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 5,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

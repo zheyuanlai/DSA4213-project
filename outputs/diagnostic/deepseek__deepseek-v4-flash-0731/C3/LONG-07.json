@@ -1,0 +1,1542 @@
+{
+ "run_id": "diag_v2:C3:LONG-07",
+ "case_id": "LONG-07",
+ "condition": "C3",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:33:01Z",
+ "finished_at": "2026-10-10T12:33:49Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "8612b7b61ab7efa25fe139019c28921dfa1b56d0e6fca2b61549177eae7dee4f"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%), a statistically significant difference (paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r2.avg",
+     "S2"
+    ],
+    "scope": "Thistlewood-Manip (shaped rewards), average success rate, 8 seeds",
+    "caveats": "Only this suite and reward setting; not generalizable beyond."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%); the paired t-test was non-significant (t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points).",
+    "evidence_ids": [
+     "T3.r1.avg",
+     "T3.r2.avg",
+     "S1"
+    ],
+    "scope": "Thistlewood-Manip-Sparse, average success rate, 8 seeds",
+    "caveats": "Non-significance does not imply equivalence; only this sparse-reward setting."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Per-task results on Thistlewood-Manip (shaped rewards) show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6).",
+    "evidence_ids": [
+     "T2.r1.drawer",
+     "T2.r2.drawer",
+     "T2.r1.peg",
+     "T2.r2.peg",
+     "T2.r1.block",
+     "T2.r2.block",
+     "T2.r1.door",
+     "T2.r2.door",
+     "T2.r1.cable",
+     "T2.r2.cable",
+     "T2.r1.lid",
+     "T2.r2.lid"
+    ],
+    "scope": "Thistlewood-Manip (shaped rewards), per-task success rate, 8 seeds",
+    "caveats": "No statistical tests reported for per-task comparisons; differences are descriptive."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "Heronsgate's performance on Thistlewood-Manip (shaped rewards) is sensitive to the conservatism weight α: average success rate peaks at α=1.0 (64.3%) and declines at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+    "evidence_ids": [
+     "T4.r1.avg",
+     "T4.r2.avg",
+     "T4.r3.avg",
+     "T4.r4.avg"
+    ],
+    "scope": "Thistlewood-Manip (shaped rewards), average success rate, 8 seeds, α values 0.5–5.0",
+    "caveats": "No statistical tests reported for these comparisons; only mean values."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points). Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6). On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points). Heronsgate's performance on Thistlewood-Manip (shaped rewards) was sensitive to the conservatism weight α, with average success rate peaking at α=1.0 (64.3%) and declining at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6).",
+     "evidence_ids": [
+      "T2.r1.drawer",
+      "T2.r2.drawer",
+      "T2.r1.peg",
+      "T2.r2.peg",
+      "T2.r1.block",
+      "T2.r2.block",
+      "T2.r1.door",
+      "T2.r2.door",
+      "T2.r1.cable",
+      "T2.r2.cable",
+      "T2.r1.lid",
+      "T2.r2.lid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points).",
+     "evidence_ids": [
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Heronsgate's performance on Thistlewood-Manip (shaped rewards) was sensitive to the conservatism weight α, with average success rate peaking at α=1.0 (64.3%) and declining at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+     "evidence_ids": [
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r3.avg",
+      "T4.r4.avg"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_scripted",
+   "passage": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points). Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6). On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points). Heronsgate's average success rate on Thistlewood-Manip (shaped rewards) peaked at α=1.0 (64.3%) and was lower at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points).",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6).",
+     "evidence_ids": [
+      "T2.r1.drawer",
+      "T2.r2.drawer",
+      "T2.r1.peg",
+      "T2.r2.peg",
+      "T2.r1.block",
+      "T2.r2.block",
+      "T2.r1.door",
+      "T2.r2.door",
+      "T2.r1.cable",
+      "T2.r2.cable",
+      "T2.r1.lid",
+      "T2.r2.lid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points).",
+     "evidence_ids": [
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "Heronsgate's average success rate on Thistlewood-Manip (shaped rewards) peaked at α=1.0 (64.3%) and was lower at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+     "evidence_ids": [
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r3.avg",
+      "T4.r4.avg",
+      "absent:test:exp3/cmp4"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points).",
+   "actions": [
+    {
+     "call_id": "call_bce11680fb7e4f0980bbaa78",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_d871c8da0c5e4cb4be9207f7",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 64.3,
+      "evidence_id": "T1.r1.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_4b9c828f218b46eab365ceba",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_ec6e6e64ef934cbcbe2ae364",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P2"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_bce11680fb7e4f0980bbaa78",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Average success rate (%) on Thistlewood-Manip (shaped rewards), mean ± SD over 8 seeds, and training cost.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.avg",
+        "row": "Heronsgate (ours)",
+        "column": "Average success (%)",
+        "text": "64.3 ± 1.9",
+        "value": 64.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.gpuh",
+        "row": "Heronsgate (ours)",
+        "column": "Training cost (GPU-hours)",
+        "text": "9.5",
+        "value": 9.5,
+        "unit": "GPU-hours",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.avg",
+        "row": "Pallister",
+        "column": "Average success (%)",
+        "text": "61.8 ± 2.6",
+        "value": 61.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.gpuh",
+        "row": "Pallister",
+        "column": "Training cost (GPU-hours)",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": "GPU-hours",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.avg",
+        "row": "Crumley-BC",
+        "column": "Average success (%)",
+        "text": "48.6 ± 2.5",
+        "value": 48.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.gpuh",
+        "row": "Crumley-BC",
+        "column": "Training cost (GPU-hours)",
+        "text": "2.1",
+        "value": 2.1,
+        "unit": "GPU-hours",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.avg",
+      "T1.r1.gpuh",
+      "T1.r2.avg",
+      "T1.r2.gpuh",
+      "T1.r3.avg",
+      "T1.r3.gpuh"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_d871c8da0c5e4cb4be9207f7",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 64.3,
+      "actual": 64.3,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.avg",
+       "row": "Heronsgate (ours)",
+       "column": "Average success (%)",
+       "text": "64.3 ± 1.9",
+       "value": 64.3,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_4b9c828f218b46eab365ceba",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Heronsgate vs Pallister, average success rate",
+      "tests": [
+       {
+        "test_id": "S2",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp1",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 8,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 5.06,
+        "df": 7.0,
+        "p_value": 0.0015,
+        "p_value_text": "p = 0.0015",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 1.33,
+        "ci_high": 3.67,
+        "effect_description": "mean paired difference in average success rate on Thistlewood-Manip (Heronsgate − Pallister), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=8 random seeds; t=5.06 (df=7); p = 0.0015; 95% CI [1.33, 3.67] for mean paired difference in average success rate on Thistlewood-Manip (Heronsgate − Pallister), percentage points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S2"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_ec6e6e64ef934cbcbe2ae364",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P2",
+        "citation_key": "Sorensen-Iqbal & Moreau (2023)",
+        "source_title": "Pallister: Advantage-Weighted Policy Extraction for Offline RL",
+        "text": "On the Ormsby-Locomotion benchmark, Pallister reached a normalised return of 71.4, ahead of all value-based baselines we compared."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P2"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points).",
+    "revised_text": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points).",
+    "evidence_ids": [
+     "T1.r1.avg",
+     "T1.r2.avg",
+     "S2"
+    ],
+    "rationale": "Table T1 confirms Heronsgate 64.3±1.9% vs Pallister 61.8±2.6%. Test S2 reports paired t-test t=5.06, df=7, p=0.0015, 95% CI [1.33,3.67], all matching the claim. \"Significantly higher\" is supported by the significant paired test.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6).",
+   "actions": [
+    {
+     "call_id": "call_2f241cc85186478bba7c2b4e",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_638ed31a236947f48577f01a",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 82.1,
+      "evidence_id": "T2.r1.drawer"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_010ed22f949c4172a49e355b",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_52c1a6b529544ba49d46ba4d",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P2"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_2f241cc85186478bba7c2b4e",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "Per-task success rate (%) on Thistlewood-Manip (shaped rewards), mean over 8 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r1.drawer",
+        "row": "Heronsgate (ours)",
+        "column": "drawer-open",
+        "text": "82.1",
+        "value": 82.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.peg",
+        "row": "Heronsgate (ours)",
+        "column": "peg-insert",
+        "text": "58.4",
+        "value": 58.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.block",
+        "row": "Heronsgate (ours)",
+        "column": "block-stack",
+        "text": "47.9",
+        "value": 47.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.door",
+        "row": "Heronsgate (ours)",
+        "column": "door-unlock",
+        "text": "71.3",
+        "value": 71.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.cable",
+        "row": "Heronsgate (ours)",
+        "column": "cable-route",
+        "text": "55.6",
+        "value": 55.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r1.lid",
+        "row": "Heronsgate (ours)",
+        "column": "lid-twist",
+        "text": "70.5",
+        "value": 70.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.drawer",
+        "row": "Pallister",
+        "column": "drawer-open",
+        "text": "79.8",
+        "value": 79.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.peg",
+        "row": "Pallister",
+        "column": "peg-insert",
+        "text": "60.2",
+        "value": 60.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.block",
+        "row": "Pallister",
+        "column": "block-stack",
+        "text": "43.5",
+        "value": 43.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.door",
+        "row": "Pallister",
+        "column": "door-unlock",
+        "text": "66.9",
+        "value": 66.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.cable",
+        "row": "Pallister",
+        "column": "cable-route",
+        "text": "56.4",
+        "value": 56.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T2.r2.lid",
+        "row": "Pallister",
+        "column": "lid-twist",
+        "text": "64.0",
+        "value": 64.0,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r1.drawer",
+      "T2.r1.peg",
+      "T2.r1.block",
+      "T2.r1.door",
+      "T2.r1.cable",
+      "T2.r1.lid",
+      "T2.r2.drawer",
+      "T2.r2.peg",
+      "T2.r2.block",
+      "T2.r2.door",
+      "T2.r2.cable",
+      "T2.r2.lid"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_638ed31a236947f48577f01a",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 82.1,
+      "actual": 82.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r1.drawer",
+       "row": "Heronsgate (ours)",
+       "column": "drawer-open",
+       "text": "82.1",
+       "value": 82.1,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T2.r1.drawer"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_010ed22f949c4172a49e355b",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Heronsgate vs Pallister, per-task success rate"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_52c1a6b529544ba49d46ba4d",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P2",
+        "citation_key": "Sorensen-Iqbal & Moreau (2023)",
+        "source_title": "Pallister: Advantage-Weighted Policy Extraction for Offline RL",
+        "text": "On the Ormsby-Locomotion benchmark, Pallister reached a normalised return of 71.4, ahead of all value-based baselines we compared."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P2"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6).",
+    "revised_text": "Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6).",
+    "evidence_ids": [
+     "T2.r1.drawer",
+     "T2.r2.drawer",
+     "T2.r1.peg",
+     "T2.r2.peg",
+     "T2.r1.block",
+     "T2.r2.block",
+     "T2.r1.door",
+     "T2.r2.door",
+     "T2.r1.cable",
+     "T2.r2.cable",
+     "T2.r1.lid",
+     "T2.r2.lid",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "All per-task numbers match T2 exactly. Heronsgate higher on drawer (82.1>79.8), block (47.9>43.5), door (71.3>66.9), lid (70.5>64.0); Pallister higher on peg (60.2>58.4) and cable (56.4>55.6). Claim states \"outperformed\" descriptively without significance language, so no test needed. Scope correctly limited to this suite.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points).",
+   "actions": [
+    {
+     "call_id": "call_bd602b3f84e6498c8e885f70",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T3"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_9b13058894154c6fb46441af",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 38.2,
+      "evidence_id": "T3.r1.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_6f1b7ce28e824fa9a71e054d",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_d2587198481c4a13957a7e12",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "S1"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_bd602b3f84e6498c8e885f70",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T3",
+      "caption": "Average success rate (%) on Thistlewood-Manip-Sparse (binary success reward), mean ± SD over 8 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T3.r1.avg",
+        "row": "Heronsgate (ours)",
+        "column": "Average success (%)",
+        "text": "38.2 ± 3.3",
+        "value": 38.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r2.avg",
+        "row": "Pallister",
+        "column": "Average success (%)",
+        "text": "37.5 ± 4.0",
+        "value": 37.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T3.r3.avg",
+        "row": "Crumley-BC",
+        "column": "Average success (%)",
+        "text": "22.7 ± 2.9",
+        "value": 22.7,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T3",
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "T3.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T3"
+    },
+    {
+     "call_id": "call_9b13058894154c6fb46441af",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 38.2,
+      "actual": 38.2,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T3.r1.avg",
+       "row": "Heronsgate (ours)",
+       "column": "Average success (%)",
+       "text": "38.2 ± 3.3",
+       "value": 38.2,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T3.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_6f1b7ce28e824fa9a71e054d",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "Heronsgate vs Pallister, average success rate",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp2",
+        "comparison_id": "cmp3",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 8,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 0.76,
+        "df": 7.0,
+        "p_value": 0.47,
+        "p_value_text": "p = 0.47",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": -1.47,
+        "ci_high": 2.87,
+        "effect_description": "mean paired difference in average success rate on Thistlewood-Manip-Sparse (Heronsgate − Pallister), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": null,
+        "summary": "paired t-test; two-sided; paired; n=8 random seeds; t=0.76 (df=7); p = 0.47; 95% CI [-1.47, 2.87] for mean paired difference in average success rate on Thistlewood-Manip-Sparse (Heronsgate − Pallister), percentage points; alpha=0.05"
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp2/cmp3"
+    },
+    {
+     "call_id": "call_d2587198481c4a13957a7e12",
+     "tool": "retrieve_passage",
+     "status": "NOT_FOUND",
+     "data": {},
+     "returned_ids": [
+      "absent:passage"
+     ],
+     "message": "No supplied passage matches this query. Available: P1 (Ngata-Feldman et al. (2022)); P2 (Sorensen-Iqbal & Moreau (2023))",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points).",
+    "revised_text": "On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points).",
+    "evidence_ids": [
+     "T3.r1.avg",
+     "T3.r2.avg",
+     "S1"
+    ],
+    "rationale": "T3 confirms Heronsgate 38.2±3.3% vs Pallister 37.5±4.0%. Test S1 reports paired t-test t=0.76, df=7, p=0.47, 95% CI [-1.47,2.87], non-significant. All numbers, test details, and the \"not significantly different\" claim match the evidence exactly.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "Heronsgate's performance on Thistlewood-Manip (shaped rewards) was sensitive to the conservatism weight α, with average success rate peaking at α=1.0 (64.3%) and declining at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+   "actions": [
+    {
+     "call_id": "call_9ed63bc45fde46b095a27ce8",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T4"
+     },
+     "policy": "scripted",
+     "step": 1
+    },
+    {
+     "call_id": "call_67d42ada8eee45da8a9eceb2",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 61.0,
+      "evidence_id": "T4.r1.avg"
+     },
+     "policy": "scripted",
+     "step": 2
+    },
+    {
+     "call_id": "call_9fe5c6a7f8504f269e74a738",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp3",
+      "comparison_id": "cmp4"
+     },
+     "policy": "scripted",
+     "step": 3
+    },
+    {
+     "call_id": "call_73d38c6c34eb4d958e2637a5",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "sensitivity conservatism weight alpha"
+     },
+     "policy": "scripted",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_9ed63bc45fde46b095a27ce8",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T4",
+      "caption": "Sensitivity of Heronsgate to the conservatism weight α: average success rate (%) on Thistlewood-Manip (shaped rewards), mean over 8 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T4.r1.avg",
+        "row": "α = 0.5",
+        "column": "Average success (%)",
+        "text": "61.0",
+        "value": 61.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r2.avg",
+        "row": "α = 1.0 (default)",
+        "column": "Average success (%)",
+        "text": "64.3",
+        "value": 64.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r3.avg",
+        "row": "α = 2.0",
+        "column": "Average success (%)",
+        "text": "63.7",
+        "value": 63.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T4.r4.avg",
+        "row": "α = 5.0",
+        "column": "Average success (%)",
+        "text": "57.9",
+        "value": 57.9,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T4",
+      "T4.r1.avg",
+      "T4.r2.avg",
+      "T4.r3.avg",
+      "T4.r4.avg"
+     ],
+     "message": "",
+     "provenance": "table T4"
+    },
+    {
+     "call_id": "call_67d42ada8eee45da8a9eceb2",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 61.0,
+      "actual": 61.0,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T4.r1.avg",
+       "row": "α = 0.5",
+       "column": "Average success (%)",
+       "text": "61.0",
+       "value": 61.0,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T4.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_9fe5c6a7f8504f269e74a738",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp3/cmp4",
+      "description": "Heronsgate with α = 0.5, 1.0, 2.0 and 5.0, average success rate on Thistlewood-Manip"
+     },
+     "returned_ids": [
+      "absent:test:exp3/cmp4"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp3/cmp4"
+    },
+    {
+     "call_id": "call_73d38c6c34eb4d958e2637a5",
+     "tool": "retrieve_passage",
+     "status": "NOT_FOUND",
+     "data": {},
+     "returned_ids": [
+      "absent:passage"
+     ],
+     "message": "No supplied passage matches this query. Available: P1 (Ngata-Feldman et al. (2022)); P2 (Sorensen-Iqbal & Moreau (2023))",
+     "provenance": ""
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "WEAKEN",
+    "original_text": "Heronsgate's performance on Thistlewood-Manip (shaped rewards) was sensitive to the conservatism weight α, with average success rate peaking at α=1.0 (64.3%) and declining at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+    "revised_text": "Heronsgate's average success rate on Thistlewood-Manip (shaped rewards) peaked at α=1.0 (64.3%) and was lower at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+    "evidence_ids": [
+     "T4.r1.avg",
+     "T4.r2.avg",
+     "T4.r3.avg",
+     "T4.r4.avg",
+     "absent:test:exp3/cmp4"
+    ],
+    "rationale": "Numbers match T4 (61.0, 64.3, 63.7, 57.9) and α=1.0 is indeed the peak. However, no statistical test is reported for exp3/cmp4, so \"sensitive\" (implying a significant effect) is unsupported. The claim should be narrowed to a descriptive statement of the observed values.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points). Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6). On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points). Heronsgate's average success rate on Thistlewood-Manip (shaped rewards) peaked at α=1.0 (64.3%) and was lower at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Thistlewood-Manip suite with shaped rewards, Heronsgate achieved a significantly higher average success rate (64.3% ± 1.9%) than Pallister (61.8% ± 2.6%; paired t-test, t=5.06, df=7, p=0.0015, 95% CI [1.33, 3.67] percentage points).",
+   "evidence_ids": [
+    "T1.r1.avg",
+    "T1.r2.avg",
+    "S2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Per-task results on the same suite show Heronsgate outperformed Pallister on four of six tasks (drawer-open: 82.1 vs 79.8; block-stack: 47.9 vs 43.5; door-unlock: 71.3 vs 66.9; lid-twist: 70.5 vs 64.0), while Pallister was higher on peg-insert (60.2 vs 58.4) and cable-route (56.4 vs 55.6).",
+   "evidence_ids": [
+    "T2.r1.drawer",
+    "T2.r2.drawer",
+    "T2.r1.peg",
+    "T2.r2.peg",
+    "T2.r1.block",
+    "T2.r2.block",
+    "T2.r1.door",
+    "T2.r2.door",
+    "T2.r1.cable",
+    "T2.r2.cable",
+    "T2.r1.lid",
+    "T2.r2.lid"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "On Thistlewood-Manip-Sparse (binary success reward), Heronsgate's average success rate (38.2% ± 3.3%) was not significantly different from Pallister's (37.5% ± 4.0%; paired t-test, t=0.76, df=7, p=0.47, 95% CI [-1.47, 2.87] percentage points).",
+   "evidence_ids": [
+    "T3.r1.avg",
+    "T3.r2.avg",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "Heronsgate's average success rate on Thistlewood-Manip (shaped rewards) peaked at α=1.0 (64.3%) and was lower at α=0.5 (61.0%), α=2.0 (63.7%), and α=5.0 (57.9%).",
+   "evidence_ids": [
+    "T4.r1.avg",
+    "T4.r2.avg",
+    "T4.r3.avg",
+    "T4.r4.avg",
+    "absent:test:exp3/cmp4"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-07:shared_outline:outline:501bfda6fc",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635160-Q2vsyS50oACLOabBKWJQ",
+   "finish_reason": "stop",
+   "prompt_tokens": 1953,
+   "completion_tokens": 791,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0004949,
+   "cost_is_estimate": false,
+   "latency_s": 8.136,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:shared_outline:writer_from_outline:328d815fbd",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791635168-457teQcnzlrZtUAWYZsx",
+   "finish_reason": "stop",
+   "prompt_tokens": 2815,
+   "completion_tokens": 571,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00055398,
+   "cost_is_estimate": false,
+   "latency_s": 3.211,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:4b996914b1",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635171-14ZsOWkQO9i227j7RAzM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3465,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000317592,
+   "cost_is_estimate": false,
+   "latency_s": 1.623,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:14e5ce83d8",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635173-3Tsf2yZsl2x1heDvbpph",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4021,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.85184e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.654,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:f09c8740cb",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635175-yyoDCvixAz8wYMs5sazE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4235,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.3464e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.38,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:9ddd227df2",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635176-Yq5kZ6ShIIBW2F0mS8JZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4640,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.25408e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.277,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:1f89dd56ac",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635178-frWrUTln6XNWJU08wV49",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4811,
+   "completion_tokens": 196,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.25104e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.829,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:5782fa4d68",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635181-NXDj7e1hyZ1ovcPqp2aX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3564,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00032604,
+   "cost_is_estimate": false,
+   "latency_s": 1.74,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:7d0b9ca1a0",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635182-djYr3vRuZzkaqdclS03l",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4474,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001283824,
+   "cost_is_estimate": false,
+   "latency_s": 1.618,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:a74a53083f",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635184-dRFyiHdWN25MIoyQKpiJ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4683,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.92656e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.409,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:8c2d83ca88",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635187-DdIjcL9iBIsh4Rjoq10Z",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4853,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.76624e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.149,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:3e1b6d3fb4",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635189-7Whw2ANeBtx3bzwVxpLH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5024,
+   "completion_tokens": 302,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001292384,
+   "cost_is_estimate": false,
+   "latency_s": 4.016,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:45f32c8494",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635193-I2BrqYf1WnSZKkKsVzjT",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3467,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000317768,
+   "cost_is_estimate": false,
+   "latency_s": 1.875,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:36fa46a7cf",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635195-yvHGCf8njnueTxJG6DKU",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3804,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.94224e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.674,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:0e936c47a8",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635197-1Q25EDpXJLTH7sSrbcVX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4018,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.61792e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.477,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:cf30898f65",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635198-n7jK0Hofff8xkjzHIBf6",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4424,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.5344e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.707,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:d8c550686a",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635202-93BT7jglNKKav9HiBaeG",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4550,
+   "completion_tokens": 199,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.21456e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.004,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:a2d3b3c01e",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635205-gio55CKh04gvJURtSjzg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3469,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000317944,
+   "cost_is_estimate": false,
+   "latency_s": 1.995,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:8b97c24c26",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635207-t0SlHdAIIjTpeWtw5wVX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3875,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.56704e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.807,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:fc5c60707d",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635209-XmpfaNkb02cDYO47sqZm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4085,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.0264e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.353,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:c6de34debf",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635211-QYvMVCnEUfO5ZQ3hSWXz",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4279,
+   "completion_tokens": 54,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.364e-05,
+   "cost_is_estimate": false,
+   "latency_s": 4.673,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-07:C3:verify_scripted:251d417bf6",
+   "role": "verify_scripted",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791635215-5u8TYSqweDfDdnWjCys5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4409,
+   "completion_tokens": 282,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001134608,
+   "cost_is_estimate": false,
+   "latency_s": 3.895,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 22,
+  "n_model_calls_condition_only": 20,
+  "n_tool_calls": 16,
+  "tool_counts": {
+   "lookup_table": 4,
+   "compare_numbers": 4,
+   "get_test_metadata": 4,
+   "retrieve_passage": 4
+  },
+  "prompt_tokens": 88918,
+  "completion_tokens": 3284,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00359593,
+  "cost_usd_condition_only": 0.00254705,
+  "any_cost_estimated": false,
+  "latency_s": 57.502,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 3,
+   "WEAKEN": 1
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

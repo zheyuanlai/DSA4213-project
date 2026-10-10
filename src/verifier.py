@@ -188,6 +188,10 @@ def verify_claim(client: BaseClient, store: EvidenceStore, system: str, context:
             if not dec.valid and repairs < cfg.max_decision_repairs:
                 repairs += 1
                 trace.protocol_errors.append("invalid decision: " + "; ".join(dec.validation_notes))
+                for tc in res.tool_calls:  # every tool_call id must receive a tool message before the next turn
+                    if tc is not submit:
+                        messages.append({"role": "tool", "tool_call_id": tc.id, "content": json.dumps(
+                            {"status": "NOT_EXECUTED", "message": "Ignored: issued in the same turn as submit_decision."})})
                 messages.append({"role": "tool", "tool_call_id": submit.id,
                                  "content": json.dumps({"status": "INVALID_DECISION", "problems": dec.validation_notes,
                                                         "citable_ids_observed": sorted(observed),
