@@ -15,7 +15,12 @@ several experiments, and 2–4 cited passages that are mostly realistic but irre
   The cases were written by a subagent to the same rules as `docs/BENCHMARK_SPEC.md` and validated with the same consistency checks.
 * **Conditions:** C7 (shared outline draft, no verification), C3 (scripted fixed-order verifier) and C4 (adaptive verifier).
   All three share the identical outline draft per case.
-* **Configuration:** `configs/frozen_primary.yaml`, unchanged. Cost stage `buffer`. Run tag `diag_v1`. Output family `diagnostic`.
+* **Configuration:** `configs/amended_secondary.yaml`, cost stage `buffer`, run tag `diag_v2`, output family `diagnostic`.
+  **Amendment (2026-10-10 ~12:12 UTC, before any diagnostic call):** the originally frozen choice was `configs/frozen_primary.yaml`
+  with run tag `diag_v1`. During the real-paper run, the frozen 700-token outline limit truncated outlines on several long real-paper
+  packages. All three diagnostic conditions depend on the outline, and these packages are even longer, so the diagnostic uses the amended config.
+  It is identical except for the generation `max_tokens` limits (writer 1200, outline 1500, reviser 1200, instead of 700 each). No diagnostic output was produced under the original choice: the input file was
+  temporarily withheld so that the queued `diag_v1` command failed before making any call.
 * **Outcomes (automatic):** evidence-tool calls per claim, model calls, tokens, latency, billed cost, decision distribution,
   share of passages changed from the draft, numeric grounding, and the C4 tool trajectories (first tool, sequences, early stopping).
   Expected direction (not a pre-registered hypothesis): C4 uses fewer tool calls than C3 at similar outcomes.

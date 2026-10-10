@@ -144,6 +144,14 @@ def run_experiment(cfg: dict[str, Any], cases: list[CaseRecord], conditions: lis
                                                               "case_ids": [c.case_id for c in cases],
                                                               "is_mock": client.is_mock, "started_at": now_iso()})
     vcfg = cfg.get("verifier", {})
+    if cfg.get("max_tokens"):  # optional per-stage override (absent in the frozen primary config)
+        from src import writer as _writer
+
+        unknown = set(cfg["max_tokens"]) - set(_writer.MAX_TOKENS)
+        if unknown:
+            raise ValueError(f"unknown max_tokens stages {unknown}")
+        _writer.MAX_TOKENS.update({k: int(v) for k, v in cfg["max_tokens"].items()})
+        run_meta["max_tokens_override"] = dict(cfg["max_tokens"])
 
     def skip(cond: str, case_id: str) -> bool:
         st = manifest.status(case_id, cond)

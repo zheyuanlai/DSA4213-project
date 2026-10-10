@@ -1,0 +1,19 @@
+# AMENDED secondary configuration (real-paper study v2 + long-package diagnostic). Identical to
+# configs/frozen_primary.yaml EXCEPT per-stage max_tokens overrides (writer 700->1200, outline 700->1500, reviser 700->1200),
+# added after the frozen-protocol real-paper run (real_v1) truncated the outline on 6/12 papers and the reviser on 1/12.
+# See docs/DEVIATIONS_FROM_PROPOSAL.md.
+model:
+  id: deepseek/deepseek-v4-flash-0731
+  # fp8 endpoints that support tools + named tool_choice + json_schema; DeepInfra (cheapest) was rate-limited.
+  provider_routing: {order: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], only: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], allow_fallbacks: true, require_parameters: true}
+  decoding: {temperature: 0, reasoning: {enabled: false}}
+  pricing: {prompt_per_mtok: 0.14, completion_per_mtok: 0.28}   # upper bound over allowed endpoints (for pre-call cost reservation only)
+  timeout_s: 120
+  max_retries: 3
+max_tokens: {writer: 1200, outline: 1500, reviser: 1200}
+verifier: {max_tool_calls: 4, max_claims: 6}   # per-claim evidence-tool budget; 1 post-draft verification pass
+budget:
+  hard_cap_usd: 12.0
+  stage_caps: {preflight: 0.50, dev: 1.50, main: 6.00, real: 2.50, buffer: 1.50}
+  max_inflight: 2
+paths: {ledger: outputs/cost_ledger.jsonl}
