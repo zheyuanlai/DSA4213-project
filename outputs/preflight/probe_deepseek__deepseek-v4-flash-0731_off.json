@@ -1,0 +1,100 @@
+{
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "reasoning": "off",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "probes": {
+  "health": {
+   "ok": true,
+   "note": "OK",
+   "provider": "StreamLake",
+   "finish_reason": "stop",
+   "prompt_tokens": 11,
+   "completion_tokens": 2,
+   "reasoning_tokens": 0,
+   "cost_usd": 1.496e-06,
+   "cost_source": "provider_reported",
+   "latency_s": 3.168
+  },
+  "json_schema": {
+   "ok": true,
+   "note": "{\"sentences\":[{\"text\":\"TALON achieves an exact match score of 83.2, outperforming the baseline's 82.6 by 0.6 points.\",\"evidence_ids\":[\"T1.r1.em\",\"T1.r2.em\"]},{\"text\":\"This improvement indicates TALON'",
+   "provider": "Parasail",
+   "finish_reason": "stop",
+   "prompt_tokens": 63,
+   "completion_tokens": 96,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.57e-05,
+   "cost_source": "provider_reported",
+   "latency_s": 1.062
+  },
+  "tool_forced_named": {
+   "ok": true,
+   "note": "[[\"lookup_table\", \"{\\\"table_id\\\": \\\"T1\\\"}\"]]",
+   "provider": "StreamLake",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 1142,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000113168,
+   "cost_source": "provider_reported",
+   "latency_s": 3.566
+  },
+  "tool_required_multiturn": {
+   "ok": true,
+   "note": "[[\"get_test_metadata\", \"{\\\"experiment_id\\\": \\\"exp1\\\", \\\"comparison_id\\\": \\\"cmp1\\\"}\"]]",
+   "provider": "StreamLake",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 1276,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.29952e-05,
+   "cost_source": "provider_reported",
+   "latency_s": 1.542
+  },
+  "submit_forced": {
+   "ok": true,
+   "note": "[[\"submit_decision\", \"{\\\"decision\\\": \\\"ACCEPT\\\", \\\"rationale\\\": \\\"Table T1 shows TALON em=83.2 and GridLM em=82.6, matching the claim's numbers exactly. No statistical test is reported, but the numeric values support the claim.\\\", \\\"revised_text\\\": \\\"\\\", \\\"evidence_ids\\\": [\\\"T1.r1.em\\\", \\\"T1.r2.em\\\"]}\"]]",
+   "provider": "StreamLake",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 1392,
+   "completion_tokens": 149,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.45872e-05,
+   "cost_source": "provider_reported",
+   "latency_s": 3.236
+  }
+ },
+ "ledger_after": {
+  "n_entries": 23,
+  "total_usd": 0.000298,
+  "by_stage": {
+   "preflight": 0.000298
+  },
+  "by_cost_source": {
+   "provider_reported": 0.00029,
+   "error_no_charge_assumed": 0.0,
+   "provider_reported_manual_backfill": 8e-06
+  },
+  "hard_cap_usd": 12.0,
+  "stage_caps": {
+   "preflight": 0.5,
+   "dev": 1.5,
+   "main": 6.0,
+   "real": 2.5,
+   "buffer": 1.5
+  }
+ }
+}

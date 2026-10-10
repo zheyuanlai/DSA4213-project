@@ -1,0 +1,61 @@
+{
+  "case_id": "SIG-p9a",
+  "category": "statistical_significance",
+  "split": "dev",
+  "pair_id": "SIG-p9",
+  "package": {
+    "question": "How does TALON compare with the strongest baseline, GridLM, on the Fenwick-QA benchmark?",
+    "methods_summary": "TALON is a retrieval-augmented reader that re-ranks passages with a learned span scorer. GridLM is the strongest published baseline on Fenwick-QA.",
+    "experimental_setup": "Both systems were trained with 10 random seeds (seeds 0-9) using identical data and tuning budgets. Exact-match accuracy (%) is measured on the Fenwick-QA test split (n = 4,210 questions). Seed-level results are paired because both systems share the same seed-controlled data order.",
+    "experiments": [
+      {"experiment_id": "exp1", "description": "Main comparison on Fenwick-QA test split", "comparisons": [
+        {"comparison_id": "cmp1", "description": "TALON vs GridLM, exact-match accuracy, Fenwick-QA test"},
+        {"comparison_id": "cmp2", "description": "TALON vs BM25-Reader, exact-match accuracy, Fenwick-QA test"}
+      ]}
+    ],
+    "results_tables": [
+      {"table_id": "T1", "caption": "Exact-match accuracy (%) on Fenwick-QA test, mean ± SD over 10 seeds.",
+       "columns": [{"column_id": "em", "header": "Exact match (%)", "unit": "%", "higher_is_better": true}],
+       "rows": [
+         {"row_id": "r1", "label": "TALON (ours)", "cells": {"em": {"text": "83.2 ± 1.0", "value": 83.2, "spread": 1.0}}},
+         {"row_id": "r2", "label": "GridLM", "cells": {"em": {"text": "82.6 ± 0.9", "value": 82.6, "spread": 0.9}}},
+         {"row_id": "r3", "label": "BM25-Reader", "cells": {"em": {"text": "77.4 ± 1.1", "value": 77.4, "spread": 1.1}}}
+       ], "notes": null}
+    ],
+    "statistical_tests": [
+      {"test_id": "S1", "experiment_id": "exp1", "comparison_id": "cmp1", "test_name": "paired t-test", "sidedness": "two-sided",
+       "paired": true, "n": 10, "n_unit": "random seeds", "statistic_name": "t", "statistic": 3.63, "df": 9,
+       "p_value": 0.0055, "p_value_text": "p = 0.0055", "alpha": 0.05, "ci_level": 0.95, "ci_low": 0.21, "ci_high": 0.91,
+       "effect_description": "mean paired difference in exact match (TALON − GridLM), percentage points",
+       "multiple_comparison_adjustment": null, "notes": null}
+    ],
+    "source_passages": [],
+    "task_instruction": "Write a short Results/Discussion passage (2–4 sentences) that answers the research question using only the evidence in this package."
+  },
+  "source_manifest": {"origin": "synthetic_original", "notes": "Original synthetic case authored for DSA4213 Group 5; all names fictional."},
+  "gold": {
+    "case_id": "SIG-p9a",
+    "category": "statistical_significance",
+    "scoring_protocol": "ordinal",
+    "focal_proposition": "TALON outperforms GridLM in exact-match accuracy on the Fenwick-QA test split.",
+    "level_descriptors": {
+      "2": "Asserts that TALON's advantage over GridLM is statistically significant or reliable (e.g., 'significantly outperforms', 'statistically significant improvement').",
+      "1": "Asserts TALON scores higher than GridLM descriptively (e.g., '83.2 vs 82.6') without significance language and without saying the difference is non-significant.",
+      "0": "Does not assert TALON is better than GridLM (e.g., says the difference is not significant or inconclusive), or makes no TALON-vs-GridLM comparison."
+    },
+    "gold_level": 2,
+    "gold_decision": "State that TALON significantly outperforms GridLM on Fenwick-QA (paired t-test over 10 seeds, p = 0.0055; mean difference 0.6 points, 95% CI [0.21, 0.91]), scoped to this benchmark.",
+    "justification": "An appropriate paired, two-sided t-test over the 10 shared seeds is reported for exactly this comparison; p < 0.05 and the 95% CI excludes 0. The effect is small (0.6 points), so practical importance is not established.",
+    "evidence_ids": ["T1.r1.em", "T1.r2.em", "S1"],
+    "required_findings": [
+      {"finding_id": "f1", "description": "Reports TALON's and GridLM's exact-match accuracy on Fenwick-QA (83.2 vs 82.6) or their difference.", "evidence_ids": ["T1.r1.em", "T1.r2.em"], "polarity": "positive"},
+      {"finding_id": "f2", "description": "Reports the result of the TALON-vs-GridLM statistical test.", "evidence_ids": ["S1"], "polarity": "positive"}
+    ],
+    "forbidden_claims": [
+      {"claim_id": "x1", "description": "Claims the improvement is large or practically important.", "claim_type": "practical_importance_overclaim"},
+      {"claim_id": "x2", "description": "Claims significance on other benchmarks or for the BM25-Reader comparison (no test reported).", "claim_type": "unsupported_significance"}
+    ],
+    "numeric_facts": [],
+    "pair_contrast": "Paired t-test for TALON vs GridLM reported (this case) vs absent (partner)."
+  }
+}

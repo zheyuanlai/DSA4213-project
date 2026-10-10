@@ -1,0 +1,16 @@
+# Candidate backbones (Chinese-origin, low-cost) probed on DEV only. Prices are per 1M tokens for the
+# pinned provider endpoint, snapshot from GET /api/v1/models/<id>/endpoints on 2026-10-10.
+# The selected backbone and its exact settings are frozen in configs/frozen_primary.yaml.
+candidates:
+  deepseek/deepseek-v4-flash-0731:
+    # DeepInfra (cheapest) was persistently rate-limited (429) on 2026-10-10, so routing is restricted to
+    # fp8 endpoints that support tools+tool_choice+response_format; provider is logged per call.
+    provider_routing: {order: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], only: ["streamlake/fp8", "parasail/fp8", "deepinfra/fp8"], allow_fallbacks: true, require_parameters: true}
+    pricing: {prompt_per_mtok: 0.14, completion_per_mtok: 0.28}   # upper bound over the allowed endpoints
+  qwen/qwen3.5-flash-02-23:
+    provider_routing: {order: ["alibaba"], allow_fallbacks: false, require_parameters: true}
+    pricing: {prompt_per_mtok: 0.065, completion_per_mtok: 0.26}
+  deepseek/deepseek-v3.2:
+    note: optional DEV-only backup; not probed unless both above fail
+  z-ai/glm-4.7:
+    note: higher-cost fallback; not used unless cheaper models cannot do the task
