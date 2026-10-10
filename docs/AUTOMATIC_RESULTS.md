@@ -41,6 +41,7 @@ In all 103 scripted claims, the provider enforced the fixed four-tool order, wit
 * C4 vs C5 (H2; identical drafts, STRENGTHEN allowed vs not): since STRENGTHEN never fired, the two differ only by sampling in the
   verification calls (passages changed: 25.0% vs 21.9%). **H2 cannot be tested as intended on this backbone and benchmark**, because there was no strengthening behaviour to compare.
   This is a substantive (negative) automatic finding. Human labels will still show whether the C5/C4 edits introduced understatement.
+  A supplementary **exploratory** DEV diagnostic with 12 injected counterfactual drafts (`docs/H2_DIAGNOSTIC.md`) found 0/6 strengthening of deliberately understated drafts and 0/6 false strengthening of matched controls. C4 and C5 outputs were identical (12/12). Failure points: decisive evidence was never retrieved in 5/12 understated runs, and in 4 of the 7 runs that did retrieve it, the verifier wrote the stronger fact into its rationale and still ACCEPTed.
 * C4 vs C2 (H1): C4 costs +$0.0014/case and is slower. C2 changes every passage, while C4 changes 25%. Calibration effects are PENDING.
 * The adaptive verifier often tried to issue several tool calls per turn (164–168 extra calls per condition, answered `NOT_EXECUTED`; `docs/DEVIATIONS_FROM_PROPOSAL.md` #9).
 

@@ -1,0 +1,353 @@
+{
+ "run_id": "h2diag_v1:C5:H2-CIT-U",
+ "draft_id": "H2-CIT-U",
+ "case_id": "CIT-p1b",
+ "condition": "C5",
+ "can_strengthen": false,
+ "verify_mode": "adaptive",
+ "started_at": "2026-10-10T14:16:33Z",
+ "finished_at": "2026-10-10T14:16:53Z",
+ "injected_draft": {
+  "sentences": [
+   {
+    "claim_id": "s1",
+    "text": "On the Tamsin-News test split, our re-implementation of salience pre-filtering (Varga & Sandoval, 2021) reduced Corran-Sum's hallucination rate from 15.1% to 11.0%, and Verisum reduced it further to 8.7%.",
+    "evidence_ids": [
+     "T1.r1.hall",
+     "T1.r2.hall",
+     "T1.r3.hall"
+    ],
+    "scope": null
+   }
+  ]
+ },
+ "final_passage": "On the Tamsin-News test split, our re-implementation of salience pre-filtering (Varga & Sandoval, 2021) reduced Corran-Sum's hallucination rate from 15.1% to 11.0%, and Verisum reduced it further to 8.7%.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Tamsin-News test split, our re-implementation of salience pre-filtering (Varga & Sandoval, 2021) reduced Corran-Sum's hallucination rate from 15.1% to 11.0%, and Verisum reduced it further to 8.7%.",
+   "evidence_ids": [
+    "T1.r1.hall",
+    "T1.r2.hall",
+    "T1.r3.hall"
+   ],
+   "scope": null
+  }
+ ],
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Tamsin-News test split, our re-implementation of salience pre-filtering (Varga & Sandoval, 2021) reduced Corran-Sum's hallucination rate from 15.1% to 11.0%, and Verisum reduced it further to 8.7%.",
+   "actions": [
+    {
+     "call_id": "call_65b5fecd29b345f6be9963c1",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_4ac7d00f6545487b9c79705a",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 15.1,
+      "evidence_id": "T1.r1.hall"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_7296f9c679714d90b3836282",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 11.0,
+      "evidence_id": "T1.r2.hall"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_b13aa6711ec04d76ba654e1d",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 8.7,
+      "evidence_id": "T1.r3.hall"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_65b5fecd29b345f6be9963c1",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Hallucination rate and ROUGE-L on the Tamsin-News test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hall",
+        "row": "Corran-Sum",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "15.1",
+        "value": 15.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.rougeL",
+        "row": "Corran-Sum",
+        "column": "ROUGE-L",
+        "text": "38.2",
+        "value": 38.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hall",
+        "row": "Corran-Sum + salience filter",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "11.0",
+        "value": 11.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.rougeL",
+        "row": "Corran-Sum + salience filter",
+        "column": "ROUGE-L",
+        "text": "38.0",
+        "value": 38.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hall",
+        "row": "Verisum (ours)",
+        "column": "Summaries with unsupported entity (%)",
+        "text": "8.7",
+        "value": 8.7,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.rougeL",
+        "row": "Verisum (ours)",
+        "column": "ROUGE-L",
+        "text": "38.9",
+        "value": 38.9,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hall",
+      "T1.r1.rougeL",
+      "T1.r2.hall",
+      "T1.r2.rougeL",
+      "T1.r3.hall",
+      "T1.r3.rougeL"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_4ac7d00f6545487b9c79705a",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 15.1,
+      "actual": 15.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.hall",
+       "row": "Corran-Sum",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "15.1",
+       "value": 15.1,
+       "unit": "%",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.hall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_7296f9c679714d90b3836282",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 11.0,
+      "actual": 11.0,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.hall",
+       "row": "Corran-Sum + salience filter",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "11.0",
+       "value": 11.0,
+       "unit": "%",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r2.hall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_b13aa6711ec04d76ba654e1d",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 8.7,
+      "actual": 8.7,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.hall",
+       "row": "Verisum (ours)",
+       "column": "Summaries with unsupported entity (%)",
+       "text": "8.7",
+       "value": 8.7,
+       "unit": "%",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r3.hall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Tamsin-News test split, our re-implementation of salience pre-filtering (Varga & Sandoval, 2021) reduced Corran-Sum's hallucination rate from 15.1% to 11.0%, and Verisum reduced it further to 8.7%.",
+    "revised_text": "On the Tamsin-News test split, our re-implementation of salience pre-filtering (Varga & Sandoval, 2021) reduced Corran-Sum's hallucination rate from 15.1% to 11.0%, and Verisum reduced it further to 8.7%.",
+    "evidence_ids": [
+     "T1.r1.hall",
+     "T1.r2.hall",
+     "T1.r3.hall"
+    ],
+    "rationale": "All three hallucination-rate values match the table exactly (15.1%, 11.0%, 8.7%) for the correct rows on the Tamsin-News test split. The claim states reductions without significance language, which is appropriate. Attribution to Varga & Sandoval for salience pre-filtering is consistent with the package.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "H2-CIT-U:C5:verify_adaptive:da1d1427cd",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641383-38fkRdLPtBnZtKYwwnEC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2658,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000246312,
+   "cost_is_estimate": false,
+   "latency_s": 12.173,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-CIT-U:C5:verify_adaptive:290793610b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641395-HBY9Mk4MPeUhat2CbzYA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3208,
+   "completion_tokens": 176,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000110656,
+   "cost_is_estimate": false,
+   "latency_s": 1.964,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-CIT-U:C5:verify_adaptive:89c30334f0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641397-ehpOazcMkSjAGcIHVP3O",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3620,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.47776e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.302,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-CIT-U:C5:verify_adaptive:d007cd41a1",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641399-cAumdcDb7z8F5Ti8tqgs",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3836,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.01632e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.289,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-CIT-U:C5:verify_adaptive:fb22af5fdc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641400-0oRZu5KkJ9M6DmHqWhjY",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4049,
+   "completion_tokens": 187,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001003232,
+   "cost_is_estimate": false,
+   "latency_s": 2.581,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00058223,
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "code_hash": "4a88195f6a8c50bc",
+ "is_mock": false
+}

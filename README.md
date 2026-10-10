@@ -5,7 +5,7 @@ DSA4213 *Natural Language Processing for Data Science* (NUS, Sem 1 AY2026/27), G
 
 > **Status: technical work complete through automatic evaluation; AWAITING BLIND HUMAN ANNOTATION
 > by group members.** 224/224 primary outputs, 46/48 real-paper outputs and 24/24 diagnostic outputs exist, and the blind packets are built.
-> Total OpenRouter spend is $0.70, reconciled. Human-scored calibration results (H1–H3) do not exist yet. Everything labelled
+> Total OpenRouter spend is $0.71, reconciled. An exploratory H2 failure diagnostic is in [`docs/H2_DIAGNOSTIC.md`](docs/H2_DIAGNOSTIC.md). Human-scored calibration results (H1–H3) do not exist yet. Everything labelled
 > PROXY in this repository is an unvalidated automatic heuristic, not a calibration result. Start with
 > [`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md), [`docs/AUTOMATIC_RESULTS.md`](docs/AUTOMATIC_RESULTS.md) and [`docs/FINAL_AUDIT.md`](docs/FINAL_AUDIT.md).
 

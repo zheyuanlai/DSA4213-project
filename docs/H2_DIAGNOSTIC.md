@@ -46,4 +46,75 @@ and understated on the gold-2 case, where the correct action is STRENGTHEN.
 No prompt, model, tool or budget will be changed in response to the results, and the diagnostic will not be re-run.
 
 ## Results
-RESULTS_PLACEHOLDER
+Run tag `h2diag_v1`, run once on 2026-10-10. **24/24 verifications completed**, with 0 invalid decisions.
+Cost: C4 $0.0060 + C5 $0.0053 = **$0.0113** (stage `buffer`).
+Per-run table: `results/h2_diagnostic/TABLES.md` and `per_run.csv`. Traces: `outputs/h2_diagnostic/`.
+
+### Pre-registered measures
+
+| Measure | C4 (STRENGTHEN allowed) | C5 (STRENGTHEN disabled) |
+|---|---|---|
+| 1. Correct strengthening recovery (STRENGTHEN on 6 understated drafts) | **0 / 6** | 0 / 6 (not allowed) |
+| 2. False strengthening (STRENGTHEN on 6 matched controls) | **0 / 6** | 0 / 6 |
+| 3. Decisive evidence retrieved (understated drafts) | 3 / 6 | 4 / 6 |
+| 4. ACCEPT on understated drafts / ACCEPT with a pre-registered recognition phrase | 6 / 6 / **1** | 6 / 6 / **0** |
+| 5. Final texts identical between C4 and C5 | **12 / 12** (every draft left unchanged in both) | |
+| PROXY final strength differs C4 vs C5 (UNVALIDATED) | 0 drafts | |
+
+Every one of the 24 decisions was ACCEPT, and no text was edited. **C4 and C5 did not differ at all in final expressed claim strength.**
+
+### Where it failed (trace analysis)
+
+**Stage 1: the decisive evidence was often never looked at.** The verifier checks the evidence a sentence *refers to*, not evidence that would support a stronger answer to the question.
+* ROB (both conditions): only `T1` (the seed table the sentence cites) was looked up. The label-noise table `T2` was never requested.
+* CIT (both): the verifier checked the three numbers and never called `retrieve_passage`, so it never saw that P1 states the 31% reduction.
+* GEN (C4 only): `lookup_table` was called only on rows r1 and r2 (the rows the sentence cites), so the held-out-domain rows r3–r5 were never returned.
+  C5 happened to request the whole table and did receive them.
+
+**Stage 2: even when the decisive evidence was retrieved, the verifier accepted the weaker claim.** Of the 7 understated runs with decisive evidence
+retrieved, the rationale *explicitly stated the stronger fact* in 4 (post-hoc reading by the coordinating AI agent; the pre-registered phrase
+list caught only 1, because it missed phrasings such as "indeed all six"):
+* SIG, C4: "…a significant paired t-test (p=0.017) is also reported but the claim does not overstate." → ACCEPT
+* SIG, C5: "A paired t-test (S2) reports p=0.017, significant at alpha=0.05, supporting the higher-mean claim." → ACCEPT
+* CON, C4: "Ferrule exceeds Arbor-GBT on all six datasets … 'Most of the six' is supported." → ACCEPT
+* CON, C5: "'Most of the six' is supported (indeed all six)." → ACCEPT
+In the other 3 (EFF in both conditions: the same-hardware latency cells were returned; GEN in C5: the held-out rows were returned), the rationale did not mention the decisive evidence.
+
+**Interpretation (exploratory; n = 6 per role, DEV only, one model):** the primary-run absence of STRENGTHEN is not explained only by drafts lacking understatement.
+With deliberately understated drafts and STRENGTHEN available, the frozen verifier still never strengthened. It (i) anchors retrieval on the claim's
+own references, and (ii) uses an acceptance criterion of "supported and not overstated". It treats understatement as acceptable even when it
+writes down the stronger evidence, despite the verifier prompt's instruction to STRENGTHEN when the rationale identifies an understated part.
+The verifier is conservative rather than miscalibrated upward (0/6 false strengthening). With identical outputs in C4 and C5, H2's
+STRENGTHEN-vs-no-STRENGTHEN contrast is empty for this backbone and verifier design. Two structural caveats: three drafts (ROB, GEN, CIT)
+report a *different* accurate fact rather than a weak version of the focal claim, so recovering them needs the verifier to add the focal
+finding. That is closer to an "add" action than to rewording one sentence. The SIG, CON and EFF drafts do state the focal comparison at weaker strength.
+
+### All 24 decisions
+| draft | condition | decision | final text |
+|---|---|---|---|
+| H2-SIG-U | C4 | ACCEPT | unchanged |
+| H2-SIG-C | C4 | ACCEPT | unchanged |
+| H2-CON-U | C4 | ACCEPT | unchanged |
+| H2-CON-C | C4 | ACCEPT | unchanged |
+| H2-EFF-U | C4 | ACCEPT | unchanged |
+| H2-EFF-C | C4 | ACCEPT | unchanged |
+| H2-ROB-U | C4 | ACCEPT | unchanged |
+| H2-ROB-C | C4 | ACCEPT | unchanged |
+| H2-GEN-U | C4 | ACCEPT | unchanged |
+| H2-GEN-C | C4 | ACCEPT | unchanged |
+| H2-CIT-U | C4 | ACCEPT | unchanged |
+| H2-CIT-C | C4 | ACCEPT | unchanged |
+| H2-SIG-U | C5 | ACCEPT | unchanged |
+| H2-SIG-C | C5 | ACCEPT | unchanged |
+| H2-CON-U | C5 | ACCEPT | unchanged |
+| H2-CON-C | C5 | ACCEPT | unchanged |
+| H2-EFF-U | C5 | ACCEPT | unchanged |
+| H2-EFF-C | C5 | ACCEPT | unchanged |
+| H2-ROB-U | C5 | ACCEPT | unchanged |
+| H2-ROB-C | C5 | ACCEPT | unchanged |
+| H2-GEN-U | C5 | ACCEPT | unchanged |
+| H2-GEN-C | C5 | ACCEPT | unchanged |
+| H2-CIT-U | C5 | ACCEPT | unchanged |
+| H2-CIT-C | C5 | ACCEPT | unchanged |
+
+As pre-registered, the diagnostic was not re-run and no prompt, model, tool or budget was changed in response to these results.

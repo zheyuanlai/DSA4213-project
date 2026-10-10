@@ -55,3 +55,7 @@ claims an experiment that was not run.
 ## Phase 7: Audit and push
 - Fresh-clone tests pass; README mock command verified; secret scan of tree and history: 0 findings; private GitHub repo pushed.
 - Spend: $0.6978, reconciled with `GET /api/v1/key` to $0.000002.
+
+## Supplementary: exploratory H2 failure diagnostic (after handoff)
+- Design and 12 counterfactual DEV drafts committed first (`docs/H2_DIAGNOSTIC.md`); run once as `h2diag_v1` (C4 vs C5, frozen model/tools/budget), $0.011.
+- Result: 0/6 correct strengthening, 0/6 false strengthening, C4 = C5 on all 12 drafts. The decisive evidence was missed in 5/12 understated runs; 4 of the 7 runs that retrieved it acknowledged the stronger fact and still ACCEPTed.

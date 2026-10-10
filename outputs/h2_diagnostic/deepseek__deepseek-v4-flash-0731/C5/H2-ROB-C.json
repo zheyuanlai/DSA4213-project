@@ -1,0 +1,353 @@
+{
+ "run_id": "h2diag_v1:C5:H2-ROB-C",
+ "draft_id": "H2-ROB-C",
+ "case_id": "ROB-p1b",
+ "condition": "C5",
+ "can_strengthen": false,
+ "verify_mode": "adaptive",
+ "started_at": "2026-10-10T14:15:46Z",
+ "finished_at": "2026-10-10T14:15:57Z",
+ "injected_draft": {
+  "sentences": [
+   {
+    "claim_id": "s1",
+    "text": "With the original training labels, Thornbill-NER's test F1 varied within a 0.9-point range across 5 seeds (91.4 ± 0.4), slightly narrower than Lindgren-Tagger's 1.2-point range.",
+    "evidence_ids": [
+     "T1.r1.f1",
+     "T1.r1.range",
+     "T1.r2.range"
+    ],
+    "scope": null
+   }
+  ]
+ },
+ "final_passage": "With the original training labels, Thornbill-NER's test F1 varied within a 0.9-point range across 5 seeds (91.4 ± 0.4), slightly narrower than Lindgren-Tagger's 1.2-point range.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "With the original training labels, Thornbill-NER's test F1 varied within a 0.9-point range across 5 seeds (91.4 ± 0.4), slightly narrower than Lindgren-Tagger's 1.2-point range.",
+   "evidence_ids": [
+    "T1.r1.f1",
+    "T1.r1.range",
+    "T1.r2.range"
+   ],
+   "scope": null
+  }
+ ],
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "With the original training labels, Thornbill-NER's test F1 varied within a 0.9-point range across 5 seeds (91.4 ± 0.4), slightly narrower than Lindgren-Tagger's 1.2-point range.",
+   "actions": [
+    {
+     "call_id": "call_bba2479c1f0149e78ac2384e",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_accdec79b9d14fecbd01307a",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.9,
+      "evidence_id": "T1.r1.range"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_8582a22227444f3781cfa96f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 1.2,
+      "evidence_id": "T1.r2.range"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_d0b7794e4eea400f8605e7de",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 91.4,
+      "evidence_id": "T1.r1.f1"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_bba2479c1f0149e78ac2384e",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Entity-level F1 (%) on the Corvane-News NER test set, original training labels, 5 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.f1",
+        "row": "Thornbill-NER",
+        "column": "F1 (mean ± SD)",
+        "text": "91.4 ± 0.4",
+        "value": 91.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.worst",
+        "row": "Thornbill-NER",
+        "column": "Worst-seed F1",
+        "text": "90.9",
+        "value": 90.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.range",
+        "row": "Thornbill-NER",
+        "column": "Seed range (max − min)",
+        "text": "0.9",
+        "value": 0.9,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.f1",
+        "row": "Lindgren-Tagger",
+        "column": "F1 (mean ± SD)",
+        "text": "90.8 ± 0.5",
+        "value": 90.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.worst",
+        "row": "Lindgren-Tagger",
+        "column": "Worst-seed F1",
+        "text": "90.1",
+        "value": 90.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.range",
+        "row": "Lindgren-Tagger",
+        "column": "Seed range (max − min)",
+        "text": "1.2",
+        "value": 1.2,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.f1",
+      "T1.r1.worst",
+      "T1.r1.range",
+      "T1.r2.f1",
+      "T1.r2.worst",
+      "T1.r2.range"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_accdec79b9d14fecbd01307a",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.9,
+      "actual": 0.9,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.range",
+       "row": "Thornbill-NER",
+       "column": "Seed range (max − min)",
+       "text": "0.9",
+       "value": 0.9,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.range"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_8582a22227444f3781cfa96f",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 1.2,
+      "actual": 1.2,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.range",
+       "row": "Lindgren-Tagger",
+       "column": "Seed range (max − min)",
+       "text": "1.2",
+       "value": 1.2,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r2.range"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_d0b7794e4eea400f8605e7de",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 91.4,
+      "actual": 91.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.f1",
+       "row": "Thornbill-NER",
+       "column": "F1 (mean ± SD)",
+       "text": "91.4 ± 0.4",
+       "value": 91.4,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.f1"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "With the original training labels, Thornbill-NER's test F1 varied within a 0.9-point range across 5 seeds (91.4 ± 0.4), slightly narrower than Lindgren-Tagger's 1.2-point range.",
+    "revised_text": "With the original training labels, Thornbill-NER's test F1 varied within a 0.9-point range across 5 seeds (91.4 ± 0.4), slightly narrower than Lindgren-Tagger's 1.2-point range.",
+    "evidence_ids": [
+     "T1.r1.range",
+     "T1.r2.range",
+     "T1.r1.f1"
+    ],
+    "rationale": "All numbers match the table: Thornbill-NER range 0.9 points, mean 91.4 ± 0.4; Lindgren-Tagger range 1.2 points. The claim accurately reports the values and the comparison (\"slightly narrower\") without statistical significance language.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "H2-ROB-C:C5:verify_adaptive:8f830bccf5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641336-K8dOGd07LEFBHxYdaULs",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2576,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000239096,
+   "cost_is_estimate": false,
+   "latency_s": 1.386,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-ROB-C:C5:verify_adaptive:befc8107f5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641338-i1TocCSJI1RGqKttsryr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3128,
+   "completion_tokens": 176,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000103616,
+   "cost_is_estimate": false,
+   "latency_s": 1.965,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-ROB-C:C5:verify_adaptive:70edab2ffc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641340-yqTbz6nZChqjdOHFnOub",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3541,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.20816e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.471,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-ROB-C:C5:verify_adaptive:c44b276670",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641342-omni4tx8oggAulGvRJQi",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3853,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.34704e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.341,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "H2-ROB-C:C5:verify_adaptive:20c222ae8b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791641344-KZDkMvY58D9pm89QqQvp",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4070,
+   "completion_tokens": 175,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.7192e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.534,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00057546,
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "code_hash": "4a88195f6a8c50bc",
+ "is_mock": false
+}
