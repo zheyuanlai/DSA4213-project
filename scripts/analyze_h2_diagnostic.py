@@ -18,17 +18,29 @@ from evaluation.auto_metrics import focal_terms_from_gold, method_terms, proxy_l
 from src.runner import load_cases  # noqa: E402
 
 OUT_ROOT = ROOT / "outputs" / "h2_diagnostic" / "deepseek__deepseek-v4-flash-0731"
+# POST-HOC (added after the run, at a reviewer's suggestion): probe type. In SIG/CON/EFF the draft states the focal comparison at a
+# weaker strength (pure claim strengthening). In ROB/GEN/CIT the draft reports a different accurate fact and omits the focal finding
+# (omitted-finding recovery).
+PROBE_TYPE = {"SIG": "claim_strengthening", "CON": "claim_strengthening", "EFF": "claim_strengthening",
+              "ROB": "omitted_finding_recovery", "GEN": "omitted_finding_recovery", "CIT": "omitted_finding_recovery"}
 # Pre-registered: rationale phrases indicating the verifier noticed the claim is weaker than the evidence allows.
 RECOGNITION = re.compile(r"understat|could be stronger|stronger (?:claim|statement|conclusion)|could (?:also )?(?:be )?"
                          r"(?:strengthen|mention|note|add|report|state)|does not (?:mention|report|state|include|note)|"
                          r"\bomit|not mentioned|more informative|weaker than|incomplete|but (?:the claim )?(?:only|does not)", re.I)
 
 
+def _has(returned: set[str], d: str) -> bool:
+    return d in returned or any(r.startswith(d + ".") for r in returned)
+
+
 def decisive_hit(returned: set[str], decisive: list[str]) -> bool:
-    for d in decisive:
-        if d in returned or any(r.startswith(d + ".") for r in returned):
-            return True
-    return False
+    """Pre-registered measure: at least one listed decisive evidence ID was returned."""
+    return any(_has(returned, d) for d in decisive)
+
+
+def decisive_all(returned: set[str], decisive: list[str]) -> bool:
+    """POST-HOC stricter measure: every listed decisive evidence ID was returned."""
+    return bool(decisive) and all(_has(returned, d) for d in decisive)
 
 
 def main() -> int:
@@ -52,7 +64,9 @@ def main() -> int:
                 "condition": cond, "decision": dec["decision"], "valid": dec["valid"],
                 "tools": " > ".join(a["tool"] for a in t["actions"]), "n_tools": len(t["actions"]),
                 "ignored_parallel": t.get("ignored_parallel_calls", 0),
+                "probe_type": PROBE_TYPE[d["pair"]],
                 "decisive_retrieved": decisive_hit(returned, d["decisive_evidence_ids"]) if d["role"] == "understated" else "",
+                "decisive_all_retrieved_POSTHOC": decisive_all(returned, d["decisive_evidence_ids"]) if d["role"] == "understated" else "",
                 "recognized_understatement_regex": bool(RECOGNITION.search(dec["rationale"] or "")),
                 "text_changed": r["final_passage"].strip() != d["draft_text"].strip(),
                 "proxy_draft_UNVALIDATED": p_draft, "proxy_final_UNVALIDATED": p_final,
@@ -80,6 +94,13 @@ def main() -> int:
             "mean_tools_per_claim": sum(by[(d, cond)]["n_tools"] for d in drafts) / len(drafts),
             "cost_usd": round(sum(by[(d, cond)]["cost_usd"] for d in drafts), 6),
         }
+    for cond in ("C4", "C5"):
+        for ptype in ("claim_strengthening", "omitted_finding_recovery"):
+            ds = [d for d in und if PROBE_TYPE[drafts[d]["pair"]] == ptype]
+            summ[cond][f"POSTHOC_{ptype}"] = {
+                "n": len(ds), "strengthen": sum(by[(d, cond)]["decision"] == "STRENGTHEN" for d in ds),
+                "any_decisive_retrieved": sum(bool(by[(d, cond)]["decisive_retrieved"]) for d in ds),
+                "all_decisive_retrieved": sum(bool(by[(d, cond)]["decisive_all_retrieved_POSTHOC"]) for d in ds)}
     summ["C4_vs_C5_identical_final_text"] = sum(by[(d, "C4")]["final_text"].strip() == by[(d, "C5")]["final_text"].strip() for d in drafts)
     summ["C4_vs_C5_proxy_final_differs_UNVALIDATED"] = sum(
         by[(d, "C4")]["proxy_final_UNVALIDATED"] != by[(d, "C5")]["proxy_final_UNVALIDATED"] for d in drafts

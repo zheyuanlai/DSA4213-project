@@ -50,7 +50,14 @@ trajectories, numeric grounding, and NUM value recall.
 ### 5.3 Proxy diagnostics [PROXY]
 See `docs/AUTOMATIC_RESULTS.md` §PROXY. These are lexical heuristics only. Their agreement with the human labels will be reported once those exist.
 
-### 5.4 Real-paper study: **PENDING human annotation** (claim support and readability)
+### 5.4 H2 as a negative finding [AUTO + exploratory diagnostic]
+In the primary experiments, enabling strengthening did not lead to any STRENGTHEN actions (0 of 406 verified TEST claims across C3–C6).
+A supplementary DEV-only diagnostic with deliberately weaker drafts showed the same pattern: the full verifier accepted all six probes without
+revision (`docs/H2_DIAGNOSTIC.md`). Trace analysis identified two failure modes: incomplete retrieval of evidence supporting stronger conclusions,
+and acceptance of supported but unnecessarily weak claims. These findings suggest that allowing strengthening as an action is insufficient to
+induce bidirectional claim calibration. (One backbone, a handful of DEV cases; human labels will show whether C5/C4 edits added understatement.)
+
+### 5.5 Real-paper study: **PENDING human annotation** (claim support and readability)
 
 ## 6. Failure analysis
 Examples with source IDs from the traces are in `docs/AUTOMATIC_RESULTS.md`, including numeric corrections, a misattribution miss on DEV, and parallel-call behaviour.
