@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "outputs" / "WITHHELD_UNTIL_ANNOTATION.json"
-DIRS = ["outputs/synthetic", "outputs/real_papers"]
+DIRS = ["outputs/synthetic", "outputs/real_papers", "outputs/real_papers_v2"]
 
 
 def scan() -> dict:

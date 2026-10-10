@@ -1,0 +1,297 @@
+{
+ "run_id": "diag_v2:C7:LONG-02",
+ "case_id": "LONG-02",
+ "condition": "C7",
+ "split": "diagnostic",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "e56d6d65d7735660",
+ "config_hash": "6402db6f2631ff69",
+ "started_at": "2026-10-10T12:28:24Z",
+ "finished_at": "2026-10-10T12:28:34Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "73dbfcd340b458fab457fcd11a8cd8ee481baa73036e0c8707abd2073fdbba13"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with accuracy drops of 0.1 to 1.8 points, all within the pre-specified 2.0-point robustness criterion.",
+    "evidence_ids": [
+     "T2.r1.lw_drop",
+     "T2.r2.lw_drop",
+     "T2.r3.lw_drop",
+     "T2.r4.lw_drop",
+     "T2.r5.lw_drop"
+    ],
+    "scope": "Harrowfield-Leaf test split, JPEG quality settings 90–10, top-1 accuracy drop from clean, Loamwise-ViT",
+    "caveats": "Drops are means over 5 seeds; no statistical test reported for these drops."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Loamwise-ViT shows smaller accuracy drops than Ferncastle-CNN under JPEG re-compression at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+    "evidence_ids": [
+     "T2.r1.lw_drop",
+     "T2.r1.fc_drop",
+     "T2.r2.lw_drop",
+     "T2.r2.fc_drop",
+     "T2.r3.lw_drop",
+     "T2.r3.fc_drop",
+     "T2.r4.lw_drop",
+     "T2.r4.fc_drop",
+     "T2.r5.lw_drop",
+     "T2.r5.fc_drop"
+    ],
+    "scope": "Harrowfield-Leaf test split, JPEG quality settings 90–10, top-1 accuracy drop from clean, Loamwise-ViT vs Ferncastle-CNN",
+    "caveats": "No statistical test reported for these comparisons; drops are means over 5 seeds."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Loamwise-ViT also shows smaller accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but Loamwise-ViT exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+    "evidence_ids": [
+     "T3.r1.lw_drop",
+     "T3.r1.fc_drop",
+     "T3.r2.lw_drop",
+     "T3.r2.fc_drop",
+     "T3.r3.lw_drop",
+     "T3.r3.fc_drop",
+     "T4.r1.lw_drop",
+     "T4.r1.fc_drop",
+     "T4.r2.lw_drop",
+     "T4.r2.fc_drop",
+     "T4.r3.lw_drop",
+     "T4.r3.fc_drop"
+    ],
+    "scope": "Harrowfield-Leaf test split, motion blur kernel lengths 3–11 px and brightness scales 0.8–0.4, top-1 accuracy drop from clean, Loamwise-ViT vs Ferncastle-CNN",
+    "caveats": "No statistical test reported for these comparisons; drops are means over 5 seeds."
+   },
+   {
+    "finding_id": "F4",
+    "summary": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+    "evidence_ids": [
+     "T1.r1.acc",
+     "T1.r2.acc",
+     "S1"
+    ],
+    "scope": "Harrowfield-Leaf clean test split, top-1 accuracy, Loamwise-ViT vs Ferncastle-CNN, 5 seeds",
+    "caveats": "Significance test applies only to this clean comparison, not to perturbation drops."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion. Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10). Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4). On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+     "evidence_ids": [
+      "T2.r1.lw_drop",
+      "T2.r2.lw_drop",
+      "T2.r3.lw_drop",
+      "T2.r4.lw_drop",
+      "T2.r5.lw_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+     "evidence_ids": [
+      "T2.r1.lw_drop",
+      "T2.r1.fc_drop",
+      "T2.r2.lw_drop",
+      "T2.r2.fc_drop",
+      "T2.r3.lw_drop",
+      "T2.r3.fc_drop",
+      "T2.r4.lw_drop",
+      "T2.r4.fc_drop",
+      "T2.r5.lw_drop",
+      "T2.r5.fc_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+     "evidence_ids": [
+      "T3.r1.lw_drop",
+      "T3.r1.fc_drop",
+      "T3.r2.lw_drop",
+      "T3.r2.fc_drop",
+      "T3.r3.lw_drop",
+      "T3.r3.fc_drop",
+      "T4.r1.lw_drop",
+      "T4.r1.fc_drop",
+      "T4.r2.lw_drop",
+      "T4.r2.fc_drop",
+      "T4.r3.lw_drop",
+      "T4.r3.fc_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+     "evidence_ids": [
+      "T1.r1.acc",
+      "T1.r2.acc",
+      "S1"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [],
+ "final_passage": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion. Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10). Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4). On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Loamwise-ViT is robust to JPEG re-compression of test images at all evaluated quality settings (90, 70, 50, 30, 10), with mean accuracy drops of 0.1 to 1.8 points from clean, all within the pre-specified 2.0-point robustness criterion.",
+   "evidence_ids": [
+    "T2.r1.lw_drop",
+    "T2.r2.lw_drop",
+    "T2.r3.lw_drop",
+    "T2.r4.lw_drop",
+    "T2.r5.lw_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Under JPEG re-compression, Loamwise-ViT shows smaller mean accuracy drops than Ferncastle-CNN at every quality setting, with the gap widening at lower quality (e.g., 1.8 vs 9.8 points at quality 10).",
+   "evidence_ids": [
+    "T2.r1.lw_drop",
+    "T2.r1.fc_drop",
+    "T2.r2.lw_drop",
+    "T2.r2.fc_drop",
+    "T2.r3.lw_drop",
+    "T2.r3.fc_drop",
+    "T2.r4.lw_drop",
+    "T2.r4.fc_drop",
+    "T2.r5.lw_drop",
+    "T2.r5.fc_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Loamwise-ViT also shows smaller mean accuracy drops than Ferncastle-CNN under motion blur (kernel lengths 3, 7, 11 px) and illumination change (brightness ×0.8, ×0.6, ×0.4), but it exceeds the 2.0-point robustness criterion at the strongest blur (6.1 points at 11 px) and strongest illumination change (3.4 points at ×0.4).",
+   "evidence_ids": [
+    "T3.r1.lw_drop",
+    "T3.r1.fc_drop",
+    "T3.r2.lw_drop",
+    "T3.r2.fc_drop",
+    "T3.r3.lw_drop",
+    "T3.r3.fc_drop",
+    "T4.r1.lw_drop",
+    "T4.r1.fc_drop",
+    "T4.r2.lw_drop",
+    "T4.r2.fc_drop",
+    "T4.r3.lw_drop",
+    "T4.r3.fc_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "On clean test images, Loamwise-ViT achieves higher top-1 accuracy (91.4 ± 0.4%) than Ferncastle-CNN (89.7 ± 0.4%), a statistically significant mean paired difference of 1.7 points (95% CI [1.14, 2.26], p = 0.0011).",
+   "evidence_ids": [
+    "T1.r1.acc",
+    "T1.r2.acc",
+    "S1"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "LONG-02:shared_outline:outline:64f0e8e71d",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634894-lKc2m02qLctKd4R2PmfV",
+   "finish_reason": "stop",
+   "prompt_tokens": 2412,
+   "completion_tokens": 908,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00059192,
+   "cost_is_estimate": false,
+   "latency_s": 5.224,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "LONG-02:shared_outline:writer_from_outline:a6d0743686",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791634899-sBfhAVoH1703s3FvqNsA",
+   "finish_reason": "stop",
+   "prompt_tokens": 3399,
+   "completion_tokens": 627,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00065142,
+   "cost_is_estimate": false,
+   "latency_s": 4.808,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 2,
+  "n_model_calls_condition_only": 0,
+  "n_tool_calls": 0,
+  "tool_counts": {},
+  "prompt_tokens": 5811,
+  "completion_tokens": 1535,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00124334,
+  "cost_usd_condition_only": 0,
+  "any_cost_estimated": false,
+  "latency_s": 10.032,
+  "n_claims": 0,
+  "decision_counts": {},
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 0,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}
