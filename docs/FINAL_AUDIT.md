@@ -34,7 +34,7 @@ human-scored result or inter-annotator κ has been computed. H1–H3 calibration
 
 Post-freeze changes are listed with timestamps in `docs/DEVIATIONS_FROM_PROPOSAL.md`. None of them changed a model call in the primary run.
 `scripts/freeze_protocol.py --check` lists exactly these changed files: `annotation/ANNOTATION_GUIDE.md` (two-pass), `docs/BENCHMARK_SPEC.md` (wording correction), `evaluation/auto_metrics.py` (NUM tolerance), `evaluation/score_human.py` (strictness), `src/security_scan.py`, `src/runner.py` (max_tokens override, added before `real_v2`/`diag_v2`, plus later guards), and `src/agent.py` / `src/verifier.py` (hardening after all paid runs). **No prompt, `configs/frozen_primary.yaml`, `src/tools.py`, `src/writer.py`, `src/openrouter_client.py` or `src/evidence_store.py` changed.**
-The primary run itself was produced at frozen commit `04bc5e5`; its code hash is stored in every run record.
+The primary run itself was produced at frozen commit `04bc5e5` (now `a32d2b5` after the message rewrite; identical tree, see `docs/COMMIT_SHA_MAPPING.md`). Its code hash is stored in every run record.
 
 ## 3. Security and privacy
 * The OpenRouter key was read only from the environment. It was kept in a mode-600 file in the session scratchpad, outside the repository, and was never
