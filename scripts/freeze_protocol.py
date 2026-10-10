@@ -67,7 +67,7 @@ def main() -> int:
     ap.add_argument("--config", default=str(ROOT / "configs/frozen_primary.yaml"))
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args()
-    cfg = Path(a.config)
+    cfg = Path(a.config) if Path(a.config).is_absolute() else (ROOT / a.config).resolve()
     if a.check:
         m = json.loads(MANIFEST.read_text())
         now = tracked_hashes(cfg)
