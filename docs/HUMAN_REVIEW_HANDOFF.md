@@ -3,6 +3,11 @@
 **Status: AWAITING BLIND HUMAN ANNOTATION BY GROUP MEMBERS.** No human labels exist yet. No human agreement
 (κ) has been computed. No calibration result in this repository is human-validated.
 
+> **Amendment (2026-10-15):** annotation is now done by four students in two independent pairs, each pair covering
+> half of the data. See `docs/AMENDMENT_FOUR_PERSON_ANNOTATION.md` and the coordinator guide
+> `annotation/four_person/README_COORDINATOR.md`. The two-person instructions below remain valid for the original
+> workflow, and the scoring steps in §4 are unchanged.
+
 ## 1. What was completed automatically
 | Item | Planned | Completed |
 |---|---|---|

@@ -1,5 +1,8 @@
 # Instructions for the Two Blind Annotators
 
+> **Four-person workflow (2026-10-15):** if you received a personal package (`README_<ID>_<Name>.md`), follow that
+> file instead of this one. Coordinator: `annotation/four_person/README_COORDINATOR.md`.
+
 Two group members annotate **independently**. The coordinator, who holds the private
 system mapping, should **not** be one of the two annotators if that can be avoided.
 

@@ -91,7 +91,10 @@ Every call goes through `src/cost_guard.py`: a hard cap of $12, per-stage caps, 
 ## Human annotation (next step, by group members)
 
 See [`annotation/README_HUMAN_REVIEW.md`](annotation/README_HUMAN_REVIEW.md) and
-[`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md). The map from output IDs to conditions
+[`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md). Annotation is done by four students in two independent
+pairs, each covering half of the data: see [`docs/AMENDMENT_FOUR_PERSON_ANNOTATION.md`](docs/AMENDMENT_FOUR_PERSON_ANNOTATION.md)
+and [`annotation/four_person/README_COORDINATOR.md`](annotation/four_person/README_COORDINATOR.md)
+(`python -m evaluation.four_person --help`). The map from output IDs to conditions
 (`private/condition_mapping.csv`) is **not** in this repository. Only the coordinator holds it.
 
 ## Credits and AI use
