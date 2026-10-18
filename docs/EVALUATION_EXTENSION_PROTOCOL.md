@@ -338,3 +338,17 @@ The focal-label metric has a ceiling effect, which is why these metrics were add
 chosen after seeing the first results. Samples are small (32/24/16/4/4 synthetic cases, 11–12 papers, 8 long
 cases). One backbone. Judge B is not deterministic. Extraction is single-source (Judge A), so its granularity
 affects claim counts; result-claim and passage-level metrics are reported to limit that effect.
+
+## 11. Amendments made before any annotation call
+
+1. **Numeric tolerance (§5.C).** Package values are treated as exact as displayed, because they are the evidence
+   the writer saw; a derived value is checked against the arithmetic on displayed values. The tolerance is half a
+   unit in the last digit of the *asserted* number, plus 5% relative when the text marks the number as approximate.
+   The earlier wording also added the package values' rounding, which would accept arithmetic slips (for example
+   "4.8" for 40.7 − 36.0 = 4.7). Synthetic gold facts keep their own stated tolerances for recall matching.
+2. **Comparator (§5.C).** Whether a number is a bound ("p < 0.05", "more than 20%") is recorded once at
+   extraction, as a property of the text, instead of separately in each judge's mapping.
+3. **Error subtype of agreed numeric errors.** When both judges' mappings give an error, the claim is a numeric
+   error either way; the error *type* reported is the one from Judge A's mapping.
+4. **Synthetic case IDs in prompts.** Synthetic packets use the existing `K` aliases; diagnostic packets use `L`
+   aliases from a seeded shuffle. Real papers keep `RP-xx`.
