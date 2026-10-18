@@ -74,3 +74,22 @@ def test_contrast_sensitivity_flags_sign_and_zero_exclusion_changes():
     rows = S.contrast_sensitivity(prim, rep)
     assert len(rows) == len(keys)
     assert all(r["same_sign"] is False and r["primary_excludes_zero"] and not r["replicate_excludes_zero"] for r in rows)
+
+
+def test_markdown_report_lists_changes_and_skips_degenerate_rows():
+    blk = lambda n, agree, ch: {"n": n, "agree": agree, "pct_agree": agree / n, "cohen_kappa": 0.5, "changes": ch}  # noqa: E731
+    empty = {"n": 0, "agree": 0, "pct_agree": None, "cohen_kappa": None, "changes": {}}
+    tr = {"label": blk(10, 8, {"SUPPORTED->OVERSTATED": 2}), "entailment": empty, "extraction_valid": empty,
+          "number_mapping_choice": blk(5, 5, {}), "coverage_status": empty, "alignment_relation": empty}
+    deg = {"diff": 0.0, "ci_low": 0.0, "ci_high": 0.0, "n": 8, "degenerate": True}
+    live = {"diff": 0.02, "ci_low": -0.01, "ci_high": 0.05, "n": 8, "degenerate": False}
+    report = {"replicate": "r1", "provenance": "AI-AI test-retest.", "families": {"synthetic": {
+        "test_retest": tr, "consensus_changes": {"claims": 10, "final_label_changed": 2, "factual_error_changed": 2,
+                                                 "number_verdicts_changed": 0},
+        "contrasts": [{"contrast": "C4_vs_C5", "metric": "support_rate", "primary": deg, "replicate": deg, "same_sign": True,
+                       "primary_excludes_zero": False, "replicate_excludes_zero": False, "shift": 0.0},
+                      {"contrast": "C4_vs_C2", "metric": "support_rate", "primary": live, "replicate": live, "same_sign": True,
+                       "primary_excludes_zero": False, "replicate_excludes_zero": False, "shift": 0.0}],
+        "contrast_summary": {"n": 2, "sign_changes": 0, "zero_exclusion_changes": 0, "max_abs_shift": 0.0}}}}
+    md = S.render_markdown(report)
+    assert "SUPPORTED->OVERSTATED ×2" in md and "C4 − C2" in md and "C4 − C5" not in md

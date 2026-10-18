@@ -109,6 +109,9 @@ verification; proxy metrics mistaken for calibration; benchmark traps being lear
 * **Ceiling effect.** The pre-registered focal-label metric is saturated on the synthetic TEST set.
 * **Post-freeze metrics.** The evidence-level metrics in §5.2 were designed after the frozen evaluation and the first AI
   results; they are exploratory, and several checker and scoring refinements are documented in the protocol's amendment log.
+* **Adjudicator instability.** Re-asking the AI adjudicator the identical prompts changed 19% of synthetic and 10% of
+  real-paper disputed label decisions and 31% of real-paper coverage decisions; no planned contrast changed sign, but
+  per-system repair rates and real-paper finding recall moved (`docs/EVALUATION_EXTENSION_RESULTS.md` §10).
 * **Small samples.** 32 TEST cases (24 ordinal, 4 NUM, 4 NEG), 11–12 real papers, 8 long cases; most intervals include zero.
 * **No STRENGTHEN actions**, so H2 could not be tested as designed.
 * **Mixed and negative findings.** The full agent does not outperform the writer–reviewer baseline; verification gains are

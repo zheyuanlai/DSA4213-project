@@ -73,10 +73,10 @@ not exist (e.g. `T1.r1.avg` where the column is `mae`); the checker marks them u
 adjudicator chose the valid mapping. Real-paper coverage is the weakest judgment: Judge A treats compound checklist
 findings as all-or-nothing, Judge B credits partial statements. **The adjudicator shares Judge A's model family.**
 It sided with Judge A vs Judge B in 18 vs 24 synthetic label disputes, 25 vs 15 real label disputes and 56 vs 21 real
-coverage disputes. Adjudication of borderline label disputes is also unstable: when four real-paper cases had to be
-re-adjudicated after the checker fixes (protocol §11.10), the adjudicator reproduced only 4 of 9 earlier label
-decisions (mostly magnitude words such as "much smaller" or "strongly") but 24 of 27 number-mapping choices. Because
-of both points, every headline contrast is also recomputed from each judge alone (§6).
+coverage disputes. Its decisions on borderline disputes are also not fully repeatable: a full test–retest replicate
+(§10) reproduced 81% of synthetic and 90% of real-paper label decisions but only 69% of real-paper coverage decisions.
+Because of both points, every headline contrast is also recomputed from each judge alone (§6) and from the replicate
+adjudication (§10).
 
 **Spend.** Metered (Claude CLI, list price): **$5.22** in total, of which $0.69 was pilot calls superseded before the
 main run; cap $6.50; task limit $7.00. Codex CLI (ChatGPT subscription): no per-call USD charge; 5.5 M input and
@@ -320,13 +320,16 @@ should be read as no evidence either way; the small real-paper gain of C4 over i
 * All labels are AI-generated. The two judges come from different families, but they, the extractor and the
   adjudicator may share errors; the adjudicator shares Judge A's family and leaned towards Judge A on real-paper
   coverage. There is **no independent human validation**.
+* The adjudicator is not fully repeatable on borderline disputes (§10): re-asking identical prompts changed 19% of
+  synthetic and 10% of real-paper label decisions and 31% of real-paper coverage decisions. No planned contrast changed
+  sign, but edit-level rates rest on few errors and moved noticeably.
 * Judge B used two models (Haiku 5.5 on synthetic verification and all alignment, Sonnet 5.5 elsewhere) because of
   the metered budget; Haiku produced many unusable numeric mappings.
 * Extraction is single-source (GPT-5.6); claim granularity affects claim counts. Passage-level and result-claim
   metrics are reported to limit this.
 * The metrics are post-freeze and were designed after seeing the first AI results. Checker defects found while
   inspecting disputes were fixed before freezing (protocol §11.7). Two scoring rules were refined after the first
-  scoring and applied identically to all conditions (§11.9): aggregate numeric facts are credited when the passage
+  scoring and applied identically to all conditions (protocol §11.9): aggregate numeric facts are credited when the passage
   states the attaining cell, and each lost required finding is attributed to at most one deleted claim.
 * Samples are small: 32 synthetic cases (24 ordinal, 16 with numeric facts, 4 NUM, 4 NEG), 11–12 papers, 8 long
   cases. Many contrasts rest on a handful of discordant cases.
@@ -348,7 +351,47 @@ errors (and almost none on real or long packages), and shows that the real-paper
 synthetic claim error rate. It does not turn the project into a positive result for the full agent: C4 does not beat the
 writer–reviewer baseline, strengthening never occurs, and the evidence is AI-judged on small samples.
 
-## 10. Reproduction and files
+## 10. Adjudicator test–retest
+
+Pre-specified in protocol §11, amendment 11, before it was run. Every claim, coverage and alignment adjudication
+prompt was re-asked once, **verbatim**, to the same adjudicator (GPT-5.6 via Codex CLI, reasoning effort high); only
+the cache key carried a salt, so no answer was reused. 91 calls, no failures (one attempt that tried a shell command
+was discarded and re-run), no metered spend. The replicate lives in `annotation/ai_extended/replicates/r1/`; the
+primary adjudication, consensus and results above are unchanged. Full tables: `results/ai_extended/tables/
+adjudicator_stability.md`; data: `results/ai_extended/adjudicator_stability.json`. This is AI–AI test–retest of one
+model, not human reliability.
+
+| Same disputed items, adjudicated twice | Synthetic | Real | Long |
+|---|---|---|---|
+| Claim label | 34/42 (0.81, κ 0.651) | 36/40 (0.90, κ 0.863) | 4/4 |
+| Entailment | 34/42 (0.81, κ 0.619) | 30/34 (0.88, κ 0.820) | 4/4 |
+| Number-mapping choice | 230/231 (κ 0.955) | 39/39 | 1/1 |
+| Finding coverage | — | **53/77 (0.69, κ 0.519)** | 4/5 (κ 0.688) |
+| Alignment relation | 35/43 (0.81, κ 0.667) | 40/41 (κ 0.957) | — |
+
+* The label changes are mostly in one direction: 7 of the 8 synthetic changes were OVERSTATED → SUPPORTED, i.e.
+  magnitude or intensifier disputes resolved leniently the second time. Real-paper coverage changes run both ways
+  (10 CORRECT → ABSENT; 11 ABSENT → INCORRECT): whether a partly stated compound finding counts is the least
+  repeatable judgement in the evaluation.
+* Using the replicate consensus instead changes 8 of 844 synthetic and 5 of 612 real-paper final labels, 24 of 291
+  real-paper coverage decisions, and 1 of 84 long-package coverage decisions.
+* **No planned contrast changes sign** (0 of 126 across the three sets; largest shift 0.056). Two intervals move
+  across zero, both towards C4: synthetic C4 − C2 fully supported passages, from +0.219 [0.000, +0.438] to +0.250
+  [+0.062, +0.438], and real C4 − C1 finding recall, from +0.103 [−0.013, +0.231] to +0.128 [+0.013, +0.250]. Real
+  C4 − C2 finding recall moves from +0.077 [−0.045, +0.200] to +0.103 [0.000, +0.208]; the single-judge analysis (§6)
+  already showed that this contrast depends on how coverage is judged.
+* Edit-level rates are the most sensitive because they rest on few errors: with the replicate, the shared outline
+  draft has 11 instead of 14 errors and repair recall becomes 0.36 for C4 and C5 (from 0.43) and 0.18 for C3 (from
+  0.29); real-paper repair recall stays at 0.07–0.10. The qualitative conclusions (verifiers repair a minority of
+  errors, introduce none, and C4 repairs at least as many as C3) are unchanged.
+* The earlier observation that only 4 of 9 real-paper label decisions were reproduced (protocol amendment 10) came from
+  re-adjudication with *changed* prompts, after the checker fixes changed the program results shown to the
+  adjudicator; on identical prompts real-paper label decisions repeat 90% of the time.
+
+The primary results remain those reported in §4–§7. Conclusions that depend on single borderline decisions, in
+particular real-paper finding recall and per-system repair rates, should be read with this instability in mind.
+
+## 11. Reproduction and files
 
 ```bash
 python scripts/run_extended_evaluation.py packets      # blinded packets
@@ -357,6 +400,9 @@ python scripts/run_extended_evaluation.py adjudicate
 python scripts/run_extended_evaluation.py consensus
 python scripts/run_extended_evaluation.py score        # unblinds (needs private/)
 python scripts/run_extended_evaluation.py report       # tables, figures, agreement, provenance
+python scripts/run_extended_evaluation.py adjudicate --replicate r1   # §10 test-retest (new calls)
+python scripts/run_extended_evaluation.py consensus --replicate r1
+python scripts/run_extended_evaluation.py stability --replicate r1
 ```
 
 Judge calls are cached by input hash, so re-running reproduces the frozen labels without new calls. Code:

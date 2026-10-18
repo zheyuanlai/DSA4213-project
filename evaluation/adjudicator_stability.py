@@ -157,4 +157,54 @@ def run(replicate: str) -> dict[str, Any]:
                                  "max_abs_shift": max((abs(r["shift"]) for r in rows if r["shift"] is not None), default=None)}}
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "adjudicator_stability.json").write_text(json.dumps(report, indent=1, default=str), encoding="utf-8")
+    (OUT / "tables").mkdir(parents=True, exist_ok=True)
+    (OUT / "tables" / "adjudicator_stability.md").write_text(render_markdown(report), encoding="utf-8")
     return report
+
+
+def _f(x: Optional[float], nd: int = 3) -> str:
+    return "—" if x is None else f"{x:.{nd}f}"
+
+
+def _ci_s(d: dict[str, Any]) -> str:
+    if d.get("diff") is None:
+        return "undefined"
+    return f"{d['diff']:+.3f} [{d['ci_low']:+.3f}, {d['ci_high']:+.3f}]"
+
+
+def render_markdown(report: dict[str, Any]) -> str:
+    L = [f"# Adjudicator test–retest (replicate {report['replicate']})", "",
+         report["provenance"], "", "## Agreement between the two adjudications of the same disputed items", "",
+         "| Set | Field | Items | Same decision | Raw agreement | Cohen's κ | Changed decisions |", "|---|---|---|---|---|---|---|"]
+    names = {"label": "claim label", "entailment": "entailment", "extraction_valid": "extraction validity",
+             "number_mapping_choice": "number mapping (judge A / B / own)", "coverage_status": "finding coverage",
+             "alignment_relation": "alignment relation"}
+    for fam, r in report["families"].items():
+        for k, nm in names.items():
+            b = r["test_retest"][k]
+            if not b["n"]:
+                continue
+            ch = ", ".join(f"{a} ×{n}" for a, n in sorted(b["changes"].items(), key=lambda x: -x[1])) or "—"
+            L.append(f"| {fam} | {nm} | {b['n']} | {b['agree']} | {_f(b['pct_agree'])} | {_f(b['cohen_kappa'])} | {ch} |")
+    L += ["", "## Effect on the final consensus", "",
+          "| Set | Claims | Final labels changed | Factual-error flags changed | Numeric verdicts changed | Coverage items changed |",
+          "|---|---|---|---|---|---|"]
+    for fam, r in report["families"].items():
+        c = r["consensus_changes"]
+        cov = f"{c['coverage_changed']} of {c['coverage_items']}" if "coverage_items" in c else "—"
+        L.append(f"| {fam} | {c['claims']} | {c['final_label_changed']} | {c['factual_error_changed']} | "
+                 f"{c['number_verdicts_changed']} | {cov} |")
+    L += ["", "## Planned contrasts re-scored from the replicate consensus", "",
+          "| Set | Contrast | Metric | Primary | Replicate | Sign kept | Zero-exclusion kept |", "|---|---|---|---|---|---|---|"]
+    for fam, r in report["families"].items():
+        for row in r["contrasts"]:
+            if row["primary"].get("degenerate") and row["replicate"].get("degenerate"):
+                continue
+            L.append(f"| {fam} | {row['contrast'].replace('_vs_', ' − ')} | {row['metric']} | {_ci_s(row['primary'])} | "
+                     f"{_ci_s(row['replicate'])} | {'yes' if row['same_sign'] else 'no'} | "
+                     f"{'yes' if row['primary_excludes_zero'] == row['replicate_excludes_zero'] else 'no'} |")
+        s = r["contrast_summary"]
+        L.append(f"| {fam} | **all {s['n']} contrasts** | | | | sign changes: {s['sign_changes']} | "
+                 f"zero-exclusion changes: {s['zero_exclusion_changes']}; max shift {_f(s['max_abs_shift'])} |")
+    L += ["", "Rows where both versions are degenerate (identical labels in every paired unit) are omitted.", ""]
+    return "\n".join(L)
