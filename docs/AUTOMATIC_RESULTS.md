@@ -1,5 +1,10 @@
 # Automatic Results (pre-human; NOT calibration results)
 
+> **Status note (2026-10-18, final).** The planned human annotation was not carried out. The outcomes marked
+> PENDING below were scored by AI judges instead ([`AI_ANNOTATION_RESULTS.md`](AI_ANNOTATION_RESULTS.md),
+> [`EVALUATION_EXTENSION_RESULTS.md`](EVALUATION_EXTENSION_RESULTS.md)); see the final report [`report/final_report.md`](../report/final_report.md).
+> The automatic and PROXY measurements below are unchanged and still valid as written on 2026-10-10.
+
 > **Read this first.** Everything here is either **rule-verified** (deterministic and checkable against the package or the
 > billing records) or a **PROXY** (a lexical heuristic, explicitly labelled UNVALIDATED). The pre-registered primary outcomes are calibration
 > accuracy, overstatement and understatement for H1–H3. They require the **two blind human annotators** and are **PENDING**.

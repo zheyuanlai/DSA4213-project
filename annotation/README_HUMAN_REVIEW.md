@@ -1,5 +1,8 @@
 # Instructions for the Two Blind Annotators
 
+> **Status note (2026-10-18, final).** Human annotation was not carried out and no human labels exist. These
+> instructions remain valid for a later human audit of the AI labels; see [`report/final_report.md`](../report/final_report.md).
+
 > **Four-person workflow (2026-10-15):** if you received a personal package (`README_<ID>_<Name>.md`), follow that
 > file instead of this one. Coordinator: `annotation/four_person/README_COORDINATOR.md`.
 

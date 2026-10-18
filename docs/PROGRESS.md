@@ -1,5 +1,9 @@
 # Progress Log
 
+> **Status note (2026-10-18, final).** This log covers the engineering phase of 2026-10-10. Later work (four-person
+> annotation amendment, AI annotation, evidence-level evaluation, judge robustness analyses, final report) is
+> recorded in the git history and in [`docs/README.md`](README.md).
+
 Times are UTC+8 local session times on 2026-10-10. Each entry is factual. Nothing here
 claims an experiment that was not run.
 

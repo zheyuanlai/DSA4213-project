@@ -1,5 +1,10 @@
 # Human Blind-Review Handoff
 
+> **Status note (2026-10-18, final).** The group did not carry out this human annotation, and no human labels exist.
+> All reported quality labels are AI judgements ([`AI_ANNOTATION_RESULTS.md`](AI_ANNOTATION_RESULTS.md),
+> [`EVALUATION_EXTENSION_RESULTS.md`](EVALUATION_EXTENSION_RESULTS.md); final report [`report/final_report.md`](../report/final_report.md)).
+> The packets and instructions below remain valid for a later human audit of the AI labels.
+
 **Status: AWAITING BLIND HUMAN ANNOTATION BY GROUP MEMBERS.** No human labels exist yet. No human agreement
 (κ) has been computed. No calibration result in this repository is human-validated.
 

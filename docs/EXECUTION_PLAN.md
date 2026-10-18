@@ -1,5 +1,9 @@
 # Execution Plan (autonomous engineering run, 2026-10-10)
 
+> **Status note (2026-10-18, final).** This plan covers the engineering run of 2026-10-10. The human annotation it
+> anticipates was not carried out; AI-judged evaluations replaced it. See [`docs/README.md`](README.md) and the final report
+> [`report/final_report.md`](../report/final_report.md).
+
 This plan records how the technical work for the DSA4213 Group 5 project was organized. The
 project title is *Saying What the Evidence Shows: Overstatement and Understatement in
 Agent-Written Results Sections*. The engineering run stops **before** human blind annotation,

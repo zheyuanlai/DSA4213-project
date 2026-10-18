@@ -1,5 +1,8 @@
 # Amendment: four annotators in two independent pairs
 
+> **Status note (2026-10-18, final).** This workflow was prepared but not carried out: no packet was annotated by
+> a student. The reported labels are AI judgements; see the final report [`report/final_report.md`](../report/final_report.md).
+
 **Status (2026-10-15):** implemented; **no human labels exist yet**. This amendment changes *who annotates which
 items*. It changes nothing in the experiment, the outputs, the gold labels, the annotation guide, the metrics or the
 hypotheses. It was made after the protocol freeze and before any annotation packet was released to any student.

@@ -1,5 +1,10 @@
 # Final Audit (engineering handoff, 2026-10-10)
 
+> **Status note (2026-10-18, final).** This audit records the engineering handoff of 2026-10-10. Blind human
+> annotation was not carried out; AI-judged evaluations followed ([`AI_ANNOTATION_RESULTS.md`](AI_ANNOTATION_RESULTS.md),
+> [`EVALUATION_EXTENSION_RESULTS.md`](EVALUATION_EXTENSION_RESULTS.md)). The current integrity checks are
+> `python scripts/verify_artifacts.py` and the CI workflow; see [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md).
+
 **Overall status: synthetic study and real-paper study are READY FOR BLIND HUMAN ANNOTATION.** No human labels exist, so no
 human-scored result or inter-annotator κ has been computed. H1–H3 calibration outcomes are pending.
 
