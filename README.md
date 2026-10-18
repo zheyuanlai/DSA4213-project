@@ -6,7 +6,10 @@ DSA4213 *Natural Language Processing for Data Science* (NUS, Sem 1 AY2026/27), G
 > **Status: technical work and exploratory AI evaluation complete; no human annotation has been performed.**
 > 224/224 primary outputs, 46/48 real-paper outputs and 24/24 diagnostic outputs exist, and the optional human-validation packets are built.
 > Total OpenRouter spend is $0.71, reconciled. An exploratory H2 failure diagnostic is in [`docs/H2_DIAGNOSTIC.md`](docs/H2_DIAGNOSTIC.md). Human-scored calibration results (H1–H3) do not exist. A separate
-> [`multi-agent AI annotation`](docs/AI_ANNOTATION_RESULTS.md) is complete and must not be reported as human evaluation. Everything labelled PROXY is an unvalidated automatic heuristic. Start with
+> [`multi-agent AI annotation`](docs/AI_ANNOTATION_RESULTS.md) is complete and must not be reported as human evaluation. A post-freeze,
+> exploratory [evidence-level evaluation](docs/EVALUATION_EXTENSION_RESULTS.md) (atomic claims, deterministic numeric checks, finding
+> completeness, verifier edits; two AI judge families with AI adjudication; protocol in [`docs/EVALUATION_EXTENSION_PROTOCOL.md`](docs/EVALUATION_EXTENSION_PROTOCOL.md))
+> is also complete and is equally AI-judged. Everything labelled PROXY is an unvalidated automatic heuristic. Start with
 > [`docs/AI_ANNOTATION_RESULTS.md`](docs/AI_ANNOTATION_RESULTS.md), [`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md), [`docs/AUTOMATIC_RESULTS.md`](docs/AUTOMATIC_RESULTS.md) and [`docs/FINAL_AUDIT.md`](docs/FINAL_AUDIT.md).
 
 ## What this is
@@ -85,7 +88,7 @@ Every call goes through `src/cost_guard.py`: a hard cap of $12, per-stage caps, 
 | `outputs/` | DEV-pilot and diagnostic run records, job manifests, cost ledger + reconciliation (no secrets). TEST and real-paper raw records are withheld until annotation ends (sha256 in `outputs/WITHHELD_UNTIL_ANNOTATION.json`) |
 | `evaluation/` | automatic metrics, paired bootstrap, blinding, merge/κ, human scoring |
 | `annotation/` | guide and blinded human-review packets; separate AI-only labels and consensus under `annotation/ai/` |
-| `results/` | automatic/PROXY results plus explicitly AI-scored exploratory results under `results/ai_*` |
+| `results/` | automatic/PROXY results plus explicitly AI-scored exploratory results under `results/ai_*` (evidence-level extension in `results/ai_extended/`) |
 | `docs/` | plan, progress, protocol freeze, model selection, deviations, automatic results, handoff, audit |
 
 ## Optional human validation (by group members)
