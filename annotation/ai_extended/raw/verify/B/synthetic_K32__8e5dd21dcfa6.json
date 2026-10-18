@@ -1,0 +1,546 @@
+{
+ "status": "ok",
+ "stage": "verify",
+ "item_key": "synthetic_K32",
+ "judge": "B",
+ "backend": "claude",
+ "model_requested": "claude-haiku-5-5",
+ "settings": {},
+ "prompt_name": "verify",
+ "prompt_template_sha256": "3026925c674e91a9b072596136da2a8052797e9cb6d4bcf36fe28952df482d85",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "78646a9d40e8235eac860a47e907e2c09cf18f20a36a15ae5e2da315eba9c547",
+ "cache_key": "8e5dd21dcfa6442d5b270bf1737851cb44bec6160101337a96f167a1ce6c4d97",
+ "started_at": "2026-10-18T10:37:54Z",
+ "finished_at": "2026-10-18T10:38:35Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"claims\":[{\"claim_id\":\"c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3\",\"T1.r1\"],\"justification\":\"Table T1 gives int4 chrF 55.2 vs Selk-MT 58.4, a larger drop than int8's 0.5. Descriptive and in the same direction.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c1.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.chrf\",\"quote\":null,\"scale\":1},{\"number_id\":\"c1.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.chrf\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3\",\"T1.r1\"],\"justification\":\"Table T1 shows int4 p50 of 71 ms vs Selk-MT 186 ms on the replayed trace, so lower latency is supported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c2.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.p50\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c3\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3\",\"T1.r1\"],\"justification\":\"Table T1 shows int4 p99 of 460 ms vs Selk-MT 1,240 ms, so lower p99 latency is supported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c3.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.p99\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c4\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 gives int8 chrF 57.9 vs Selk-MT 58.4, a decrease of 0.5 points. No significance is claimed.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c4.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.chrf\",\"quote\":null,\"scale\":1},{\"number_id\":\"c4.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.chrf\",\"quote\":null,\"scale\":1},{\"number_id\":\"c4.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r1.chrf - T1.r2.chrf\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c5\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\",\"exp1/cmp1\"],\"justification\":\"Table T1 shows int8 chrF 57.9 below Selk-MT 58.4 on Ombria-News. No significance is claimed, so 'slightly lower' is descriptive.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c5.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.chrf\",\"quote\":null,\"scale\":1},{\"number_id\":\"c5.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.chrf\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c6\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\"],\"justification\":\"The package states no statistical tests were reported, so the caveat is accurate.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c7\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 gives int8 chrF 57.9 vs Selk-MT 58.4 on Ombria-News, a 0.5-point difference. No significance is claimed.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c7.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.chrf\",\"quote\":null,\"scale\":1},{\"number_id\":\"c7.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.chrf\",\"quote\":null,\"scale\":1},{\"number_id\":\"c7.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r1.chrf - T1.r2.chrf\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c8\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Only the Ombria-News test set is evaluated for quality in Table T1, so the scope caveat matches the package.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c9\",\"label\":\"UNSUPPORTED\",\"entailment\":\"NOT_ENTAILED\",\"error_subtype\":\"misattributed_setting\",\"evidence_ids\":[\"exp1\"],\"justification\":\"The package describes a production trace replayed on a Pellmar P2 card. It does not describe a 'Pellmar P2 trace'; the Pellmar P2 is the hardware.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c10\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The package reports only one test set and one trace, with no held-out or cross-domain evaluation, so generalizability is untested.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c11\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\",\"exp1/cmp2\"],\"justification\":\"The statistical tests section states that no statistical tests were reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c12\",\"label\":\"UNSUPPORTED\",\"entailment\":\"NOT_ENTAILED\",\"error_subtype\":\"unsupported_significance\",\"evidence_ids\":[\"exp1/cmp1\"],\"justification\":\"Absence of a reported test does not establish that the differences are indistinguishable from chance. The package reports no variance estimates.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c13\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 shows int8 p50 97 vs 186 ms and p99 610 vs 1,240 ms, roughly halving latency. 'Substantially lower' fits these magnitudes.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c14\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 shows int8 chrF 57.9 vs Selk-MT 58.4, a 0.5-point gap that is small in absolute terms.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c15\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\"],\"justification\":\"The package reports no statistical tests for either the quality or the latency comparison.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c16\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r2\"],\"justification\":\"Table T1 gives int8 p50 97 ms vs Selk-MT 186 ms on the replayed trace, a reduction.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c16.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.p50\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.p50\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c17\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r2\"],\"justification\":\"Table T1 gives int8 p99 610 ms vs Selk-MT 1,240 ms on the replayed trace, a reduction.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c17.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.p99\",\"quote\":null,\"scale\":1},{\"number_id\":\"c17.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.p99\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c18\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 gives int8 p50 97 ms vs Selk-MT 186 ms, so int8 has lower p50 latency.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c18.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.p50\",\"quote\":null,\"scale\":1},{\"number_id\":\"c18.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.p50\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c19\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 gives int8 p99 610 ms vs Selk-MT 1,240 ms, so int8 has lower p99 latency.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c19.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.p99\",\"quote\":null,\"scale\":1},{\"number_id\":\"c19.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.p99\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c20\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\"],\"justification\":\"The package reports no statistical tests, including for the latency comparison.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c21\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 gives int8 p50 97 ms vs Selk-MT 186 ms, roughly half. 'Substantially lower' fits this magnitude.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c21.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.p50\",\"quote\":null,\"scale\":1},{\"number_id\":\"c21.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.p50\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c22\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2\",\"T1.r1\"],\"justification\":\"Table T1 gives int8 p99 610 ms vs Selk-MT 1,240 ms, roughly half. 'Substantially lower' fits this magnitude.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c22.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.p99\",\"quote\":null,\"scale\":1},{\"number_id\":\"c22.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.p99\",\"quote\":null,\"scale\":1}]}]}",
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 8947,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 10521,
+  "output_tokens_details": {
+   "thinking_tokens": 6324
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 8947,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 10521,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 8947,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 8947
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.0070501,
+ "latency_s": 41.0,
+ "model_reported": "claude-haiku-5-5",
+ "model_report_source": "modelUsage",
+ "tool_use_detected": [],
+ "cli_version": "2.1.296 (Claude Code)",
+ "num_turns": 1,
+ "parsed": {
+  "claims": [
+   {
+    "claim_id": "c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r1"
+    ],
+    "justification": "Table T1 gives int4 chrF 55.2 vs Selk-MT 58.4, a larger drop than int8's 0.5. Descriptive and in the same direction.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c1.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.chrf",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c1.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.chrf",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r1"
+    ],
+    "justification": "Table T1 shows int4 p50 of 71 ms vs Selk-MT 186 ms on the replayed trace, so lower latency is supported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c2.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.p50",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c3",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r1"
+    ],
+    "justification": "Table T1 shows int4 p99 of 460 ms vs Selk-MT 1,240 ms, so lower p99 latency is supported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c3.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.p99",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c4",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 gives int8 chrF 57.9 vs Selk-MT 58.4, a decrease of 0.5 points. No significance is claimed.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c4.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.chrf",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c4.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.chrf",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c4.n3",
+      "source_type": "cell",
+      "expression": "T1.r1.chrf - T1.r2.chrf",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c5",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1",
+     "exp1/cmp1"
+    ],
+    "justification": "Table T1 shows int8 chrF 57.9 below Selk-MT 58.4 on Ombria-News. No significance is claimed, so 'slightly lower' is descriptive.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c5.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.chrf",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c5.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.chrf",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c6",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1"
+    ],
+    "justification": "The package states no statistical tests were reported, so the caveat is accurate.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c7",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 gives int8 chrF 57.9 vs Selk-MT 58.4 on Ombria-News, a 0.5-point difference. No significance is claimed.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c7.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.chrf",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c7.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.chrf",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c7.n3",
+      "source_type": "cell",
+      "expression": "T1.r1.chrf - T1.r2.chrf",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c8",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Only the Ombria-News test set is evaluated for quality in Table T1, so the scope caveat matches the package.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c9",
+    "label": "UNSUPPORTED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "misattributed_setting",
+    "evidence_ids": [
+     "exp1"
+    ],
+    "justification": "The package describes a production trace replayed on a Pellmar P2 card. It does not describe a 'Pellmar P2 trace'; the Pellmar P2 is the hardware.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c10",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The package reports only one test set and one trace, with no held-out or cross-domain evaluation, so generalizability is untested.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c11",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1",
+     "exp1/cmp2"
+    ],
+    "justification": "The statistical tests section states that no statistical tests were reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c12",
+    "label": "UNSUPPORTED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_significance",
+    "evidence_ids": [
+     "exp1/cmp1"
+    ],
+    "justification": "Absence of a reported test does not establish that the differences are indistinguishable from chance. The package reports no variance estimates.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c13",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 shows int8 p50 97 vs 186 ms and p99 610 vs 1,240 ms, roughly halving latency. 'Substantially lower' fits these magnitudes.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c14",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 shows int8 chrF 57.9 vs Selk-MT 58.4, a 0.5-point gap that is small in absolute terms.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c15",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1"
+    ],
+    "justification": "The package reports no statistical tests for either the quality or the latency comparison.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c16",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2"
+    ],
+    "justification": "Table T1 gives int8 p50 97 ms vs Selk-MT 186 ms on the replayed trace, a reduction.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c16.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.p50",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.p50",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c17",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2"
+    ],
+    "justification": "Table T1 gives int8 p99 610 ms vs Selk-MT 1,240 ms on the replayed trace, a reduction.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c17.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.p99",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c17.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.p99",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c18",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 gives int8 p50 97 ms vs Selk-MT 186 ms, so int8 has lower p50 latency.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c18.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.p50",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c18.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.p50",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c19",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 gives int8 p99 610 ms vs Selk-MT 1,240 ms, so int8 has lower p99 latency.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c19.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.p99",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c19.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.p99",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c20",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1"
+    ],
+    "justification": "The package reports no statistical tests, including for the latency comparison.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c21",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 gives int8 p50 97 ms vs Selk-MT 186 ms, roughly half. 'Substantially lower' fits this magnitude.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c21.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.p50",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c21.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.p50",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c22",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r1"
+    ],
+    "justification": "Table T1 gives int8 p99 610 ms vs Selk-MT 1,240 ms, roughly half. 'Substantially lower' fits this magnitude.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c22.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.p99",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c22.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.p99",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   }
+  ]
+ }
+}

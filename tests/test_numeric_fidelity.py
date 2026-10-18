@@ -130,3 +130,25 @@ def test_gold_fact_written_with_numbers_resolves_operands(ev):
     f = gold_fact({"fact_id": "n9", "evidence_id": "derived", "derivation": "(241 − 112) / 241 × 100",
                    "value": 53.5, "tolerance": 0.6}, ev)
     assert f.operands == frozenset({"T1.r1.lat", "T1.r2.lat"})
+
+
+def test_number_words_in_quoted_prose(ev):
+    assert chk(ev, "five", 5, Mapping("text", quote="Two datasets, 5 seeds."), role="setup") == "CORRECT"
+    assert chk(ev, "two", 2, Mapping("text", quote="Two datasets, 5 seeds."), role="setup") == "CORRECT"
+    assert chk(ev, "three", 3, Mapping("text", quote="Two datasets, 5 seeds."), role="setup") == "VALUE_MISMATCH"
+    # prose without any number cannot verify an implicit count
+    assert chk(ev, "single", 1, Mapping("text", quote="The prior method reduced latency"), role="setup") == "INVALID_MAPPING"
+
+
+def test_implicit_word_counts_are_not_checkable_but_digit_values_are(ev):
+    q = "The prior method reduced latency by 31% on news."
+    assert chk(ev, "single", 1, Mapping("text", quote=q), role="setup") == "INVALID_MAPPING"
+    assert chk(ev, "30%", 30, Mapping("text", quote=q), role="cited") == "VALUE_MISMATCH"
+
+
+def test_quotes_ignore_markdown_and_text_spreads_resolve(ev):
+    # the rendered column legend shows `d1` = Data-1 with backticks; a judge may copy it without them
+    assert chk(ev, "112", 112, Mapping("cell", "T1.r1.lat")) == "CORRECT"
+    assert chk(ev, "0.004", 0.004, Mapping("cell", "T1.r1.d1.spread"), role="statistical") == "CORRECT"
+    q = "d1 = Data-1 (higher is better)"
+    assert check_assertion(Assertion("1", 1, role="setup"), Mapping("text", quote=q), ev).status in ("CORRECT", "VALUE_MISMATCH")

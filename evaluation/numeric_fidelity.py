@@ -35,8 +35,22 @@ INVALID = "INVALID_MAPPING"
 PRIMARY_ROLES = ("result", "derived", "statistical", "cited", "count_outcome")
 
 
+WORD_NUMBERS = {"zero": 0, "one": 1, "single": 1, "once": 1, "two": 2, "twice": 2, "both": 2, "three": 3, "thrice": 3,
+                "four": 4, "five": 5, "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10, "eleven": 11,
+                "twelve": 12, "half": 0.5, "halved": 0.5, "double": 2, "doubled": 2, "triple": 3, "tripled": 3}
+WORD_RE = re.compile(r"\b(" + "|".join(WORD_NUMBERS) + r")\b", re.I)
+
+
+def numbers_in(text: str) -> list[tuple[str, float]]:
+    """Digit numbers and number words in package prose, as (token, value)."""
+    t = normalize_text(text)
+    out = [(tok, parse_number(tok)) for tok in NUM_RE.findall(t)]
+    out += [(m.group(1), float(WORD_NUMBERS[m.group(1).lower()])) for m in WORD_RE.finditer(t)]
+    return [(tok, v) for tok, v in out if v is not None]
+
+
 def normalize_text(s: str) -> str:
-    s = (s or "").replace("−", "-").replace("–", "-").replace("×", "x").replace(" ", " ")
+    s = (s or "").replace("`", "").replace("**", "").replace("−", "-").replace("–", "-").replace("×", "x").replace(" ", " ")
     return re.sub(r"\s+", " ", s).strip()
 
 
@@ -86,6 +100,10 @@ class EvidenceValues:
                                     and math.isclose(abs(parse_number(n)), abs(cell.spread), rel_tol=1e-9)),
                                    repr(cell.spread))
                         ev.values[key + ".spread"] = Quantity(cell.spread, 0.5 * 10 ** -decimals_of(tok), "spread")
+                    else:  # a "± x" shown in the cell text without a structured spread field
+                        m = re.search(r"±\s*([0-9]+(?:\.[0-9]+)?)", cell.text)
+                        if m:
+                            ev.values[key + ".spread"] = Quantity(float(m.group(1)), 0.5 * 10 ** -decimals_of(m.group(1)), "spread")
         for s in pkg.statistical_tests:
             for f in TEST_FIELDS:
                 v = getattr(s, f)
@@ -396,14 +414,19 @@ def check_assertion(a: Assertion, m: Mapping, ev: EvidenceValues) -> Verdict:
         q = normalize_text(m.quote or "")
         if not q or q not in ev.rendered:
             return Verdict(INVALID, note="quote not found verbatim in the package")
-        nums = [parse_number(t) for t in NUM_RE.findall(q)]
-        for n, tok in zip(nums, NUM_RE.findall(q)):
-            if n is None:
-                continue
+        found = numbers_in(q)
+        if not found:  # e.g. "a single dataset" mapped to prose that names one dataset: not checkable
+            return Verdict(INVALID, note="quote contains no number to check against")
+        for tok, n in found:
             exp = n * scale
             tol = asserted_tolerance(a, exp)
             if _compare(a.value, comparator, exp, tol, False):
                 return Verdict(CORRECT, exp, tol, (), "matched quoted prose")
+        states_a_count = any(v == int(v) and 0 <= v <= 20 for _, v in found)
+        if not re.search(r"\d", a.as_written) and not states_a_count:
+            # a count written as a word ("a single dataset") whose quote never states that number: an implicit
+            # count cannot be checked deterministically (the judges' qualitative label still covers the claim)
+            return Verdict(INVALID, note="implicit count: quoted prose does not state the number")
         return Verdict("VALUE_MISMATCH", note="no number in the quote matches")
     if st not in ("cell", "test"):
         return Verdict(INVALID, note=f"unknown source_type {m.source_type!r}")

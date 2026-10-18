@@ -1,0 +1,724 @@
+{
+ "status": "ok",
+ "stage": "verify",
+ "item_key": "synthetic_K22",
+ "judge": "B",
+ "backend": "claude",
+ "model_requested": "claude-haiku-5-5",
+ "settings": {},
+ "prompt_name": "verify",
+ "prompt_template_sha256": "3026925c674e91a9b072596136da2a8052797e9cb6d4bcf36fe28952df482d85",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "1871350b0cda9d180e5ff2a699e62a02d054e58302208a07f8b9c44381522149",
+ "cache_key": "0570106219c3d613e85d44c5c1abedc16c868357be901cfe011293922c63fe16",
+ "started_at": "2026-10-18T10:35:08Z",
+ "finished_at": "2026-10-18T10:36:21Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"claims\":[{\"claim_id\":\"c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"P1\",\"T1.r1.tail\",\"T1.r2.tail\"],\"justification\":\"P1 reports no long-tail Recall@20 results, so the 18.1% tail gain (T1 r1 to r2) cannot be directly compared with it.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c1.n1\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"P1\"],\"justification\":\"P1 states debiased sampling reduced per-epoch training time by 21% relative to uniform sampling.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c2.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"reduced training time per epoch by 21% relative to uniform negative sampling\",\"scale\":1}]},{\"claim_id\":\"c3\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"P1\"],\"justification\":\"P1 states overall Recall@20 changed by less than 1% on both datasets.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c3.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"Overall Recall@20 changed by less than 1% on both datasets.\",\"scale\":1}]},{\"claim_id\":\"c4\",\"label\":\"OVERSTATED\",\"entailment\":\"NOT_ENTAILED\",\"error_subtype\":\"overgeneralized_scope\",\"evidence_ids\":[\"P1\"],\"justification\":\"P1 excerpt shows no long-tail results, but this cannot establish the paper reports none; methods credit prior work with long-tail gains.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c5\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.tail\",\"T1.r2.tail\",\"T1.r1.tail\"],\"justification\":\"T1 tail column: Thimble 0.091, debiased sampling 0.085, uniform 0.072.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c5.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c5.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c5.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r1.tail\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c6\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.tail\",\"T1.r1.tail\"],\"justification\":\"Thimble tail 0.091 versus uniform 0.072 gives a relative gain of about 26.4%.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c6.n1\",\"source_type\":\"cell\",\"expression\":\"(T1.r3.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c7\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2.tail\",\"T1.r1.tail\"],\"justification\":\"Debiased sampling tail 0.085 versus uniform 0.072 gives a relative gain of about 18.1%.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c7.n1\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c8\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2.tail\",\"T1.r1.tail\"],\"justification\":\"Methods state prior work is widely credited with roughly 20% long-tail gains; the 18.1% gain is close to that.\",\"confidence\":\"low\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c8.n1\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"widely credited with roughly 20% relative gains in long-tail Recall@20\",\"scale\":1}]},{\"claim_id\":\"c9\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The package states that no statistical tests were reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c10\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.overall\",\"T1.r1.overall\",\"T1.r2.overall\"],\"justification\":\"T1 overall column: Thimble 0.219, uniform 0.214, debiased sampling 0.212.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c10.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.overall\",\"quote\":null,\"scale\":1},{\"number_id\":\"c10.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.overall\",\"quote\":null,\"scale\":1},{\"number_id\":\"c10.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r2.overall\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c11\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The statistical tests section reports no tests.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c12\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Hedged 'may not be significant' is appropriate because no tests were reported for these overall differences.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c13\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.tail\",\"T1.r2.tail\"],\"justification\":\"Tail Recall@20 rises from 0.072 to 0.085 in T1, about 18% relative; a descriptive mean difference.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c13.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n3\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c14\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.tail\",\"T1.r2.tail\"],\"justification\":\"Tail Recall@20 rises from 0.072 to 0.085 in T1, about 18% relative; a descriptive mean difference.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c14.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n3\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c15\",\"label\":\"UNSUPPORTED\",\"entailment\":\"NOT_ENTAILED\",\"error_subtype\":\"misattributed_citation\",\"evidence_ids\":[\"P1\"],\"justification\":\"P1 reports training time and overall Recall only; it does not report the roughly 20% long-tail gains attributed to it.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c15.n1\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"widely credited with roughly 20% relative gains in long-tail Recall@20\",\"scale\":1}]},{\"claim_id\":\"c16\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.tail\",\"T1.r2.tail\"],\"justification\":\"T1 tail column shows Thimble 0.091 and debiased sampling 0.085.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c16.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.tail\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c17\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.tail\",\"T1.r2.tail\"],\"justification\":\"Thimble differs from the baseline mainly by the session-aware encoder; the hedged 'suggests' stays within the design.\",\"confidence\":\"low\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c18\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.tail\",\"T1.r2.tail\"],\"justification\":\"A 0.006 absolute tail difference (0.091 vs 0.085) is fairly described as modest.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c19\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"No statistical tests are reported for the Thimble versus debiased-sampling difference.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c20\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2.tail\",\"T1.r1.tail\"],\"justification\":\"Debiased sampling tail 0.085 versus uniform 0.072 gives a relative gain of about 18.1%.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c20.n1\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c21\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.tail\",\"T1.r2.tail\"],\"justification\":\"Tail Recall@20 rises from 0.072 to 0.085 on the test split, about 18% relative; no test reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c21.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c21.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c21.n3\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c22\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The package reports no statistical test for this improvement.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c23\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.tail\",\"T1.r2.tail\",\"T1.r1.tail\"],\"justification\":\"T1 tail column gives Thimble 0.091, debiased sampling 0.085, uniform 0.072 on the test split.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c23.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.tail\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r1.tail\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c24\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.tail\",\"T1.r2.tail\"],\"justification\":\"Mean of 3 runs: Thimble 0.091 exceeds debiased sampling 0.085 on long-tail Recall@20.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c25\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"No statistical tests reported, so the mean long-tail difference is unverified.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c26\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1\"],\"justification\":\"Experiments and comparisons use only the Garnet-Retail test split.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c26.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"Garnet-Retail (Imre & Castellanos, 2020) test split\",\"scale\":1}]},{\"claim_id\":\"c27\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2.tail\",\"T1.r1.tail\"],\"justification\":\"Debiased sampling tail 0.085 versus uniform 0.072 gives an 18.1% relative improvement.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c27.n1\",\"source_type\":\"cell\",\"expression\":\"(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c28\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"No statistical test is reported for the debiased-sampling improvement.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c29\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"P1\"],\"justification\":\"The supplied P1 passage reports only training time and overall Recall changes, not long-tail gains of roughly 20%.\",\"confidence\":\"low\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c29.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"widely credited with roughly 20% relative gains in long-tail Recall@20\",\"scale\":1}]},{\"claim_id\":\"c30\",\"label\":\"NOT_VERIFIABLE\",\"entailment\":\"NA\",\"error_subtype\":null,\"evidence_ids\":[\"P1\",\"T1\"],\"justification\":\"Judgement about what the evidence supports; restates the comparability conclusion rather than stating a package fact.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]}]}",
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 12179,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 19057,
+  "output_tokens_details": {
+   "thinking_tokens": 13343
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 12179,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 19057,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 12179,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 12179
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.011964500000000001,
+ "latency_s": 72.7,
+ "model_reported": "claude-haiku-5-5",
+ "model_report_source": "modelUsage",
+ "tool_use_detected": [],
+ "cli_version": "2.1.296 (Claude Code)",
+ "num_turns": 1,
+ "parsed": {
+  "claims": [
+   {
+    "claim_id": "c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "P1",
+     "T1.r1.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "P1 reports no long-tail Recall@20 results, so the 18.1% tail gain (T1 r1 to r2) cannot be directly compared with it.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c1.n1",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "P1"
+    ],
+    "justification": "P1 states debiased sampling reduced per-epoch training time by 21% relative to uniform sampling.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c2.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "reduced training time per epoch by 21% relative to uniform negative sampling",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c3",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "P1"
+    ],
+    "justification": "P1 states overall Recall@20 changed by less than 1% on both datasets.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c3.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "Overall Recall@20 changed by less than 1% on both datasets.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c4",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "overgeneralized_scope",
+    "evidence_ids": [
+     "P1"
+    ],
+    "justification": "P1 excerpt shows no long-tail results, but this cannot establish the paper reports none; methods credit prior work with long-tail gains.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c5",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.tail",
+     "T1.r2.tail",
+     "T1.r1.tail"
+    ],
+    "justification": "T1 tail column: Thimble 0.091, debiased sampling 0.085, uniform 0.072.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c5.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c5.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c5.n3",
+      "source_type": "cell",
+      "expression": "T1.r1.tail",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c6",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.tail",
+     "T1.r1.tail"
+    ],
+    "justification": "Thimble tail 0.091 versus uniform 0.072 gives a relative gain of about 26.4%.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c6.n1",
+      "source_type": "cell",
+      "expression": "(T1.r3.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c7",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2.tail",
+     "T1.r1.tail"
+    ],
+    "justification": "Debiased sampling tail 0.085 versus uniform 0.072 gives a relative gain of about 18.1%.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c7.n1",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c8",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2.tail",
+     "T1.r1.tail"
+    ],
+    "justification": "Methods state prior work is widely credited with roughly 20% long-tail gains; the 18.1% gain is close to that.",
+    "confidence": "low",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c8.n1",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "widely credited with roughly 20% relative gains in long-tail Recall@20",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c9",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The package states that no statistical tests were reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c10",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.overall",
+     "T1.r1.overall",
+     "T1.r2.overall"
+    ],
+    "justification": "T1 overall column: Thimble 0.219, uniform 0.214, debiased sampling 0.212.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c10.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.overall",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c10.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.overall",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c10.n3",
+      "source_type": "cell",
+      "expression": "T1.r2.overall",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c11",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The statistical tests section reports no tests.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c12",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Hedged 'may not be significant' is appropriate because no tests were reported for these overall differences.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c13",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "Tail Recall@20 rises from 0.072 to 0.085 in T1, about 18% relative; a descriptive mean difference.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c13.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n3",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c14",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "Tail Recall@20 rises from 0.072 to 0.085 in T1, about 18% relative; a descriptive mean difference.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c14.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n3",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c15",
+    "label": "UNSUPPORTED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "misattributed_citation",
+    "evidence_ids": [
+     "P1"
+    ],
+    "justification": "P1 reports training time and overall Recall only; it does not report the roughly 20% long-tail gains attributed to it.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c15.n1",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "widely credited with roughly 20% relative gains in long-tail Recall@20",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c16",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "T1 tail column shows Thimble 0.091 and debiased sampling 0.085.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c16.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.tail",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c17",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "Thimble differs from the baseline mainly by the session-aware encoder; the hedged 'suggests' stays within the design.",
+    "confidence": "low",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c18",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "A 0.006 absolute tail difference (0.091 vs 0.085) is fairly described as modest.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c19",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "No statistical tests are reported for the Thimble versus debiased-sampling difference.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c20",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2.tail",
+     "T1.r1.tail"
+    ],
+    "justification": "Debiased sampling tail 0.085 versus uniform 0.072 gives a relative gain of about 18.1%.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c20.n1",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c21",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "Tail Recall@20 rises from 0.072 to 0.085 on the test split, about 18% relative; no test reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c21.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c21.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c21.n3",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c22",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The package reports no statistical test for this improvement.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c23",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.tail",
+     "T1.r2.tail",
+     "T1.r1.tail"
+    ],
+    "justification": "T1 tail column gives Thimble 0.091, debiased sampling 0.085, uniform 0.072 on the test split.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c23.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.tail",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n3",
+      "source_type": "cell",
+      "expression": "T1.r1.tail",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c24",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.tail",
+     "T1.r2.tail"
+    ],
+    "justification": "Mean of 3 runs: Thimble 0.091 exceeds debiased sampling 0.085 on long-tail Recall@20.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c25",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "No statistical tests reported, so the mean long-tail difference is unverified.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c26",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1"
+    ],
+    "justification": "Experiments and comparisons use only the Garnet-Retail test split.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c26.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "Garnet-Retail (Imre & Castellanos, 2020) test split",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c27",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2.tail",
+     "T1.r1.tail"
+    ],
+    "justification": "Debiased sampling tail 0.085 versus uniform 0.072 gives an 18.1% relative improvement.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c27.n1",
+      "source_type": "cell",
+      "expression": "(T1.r2.tail - T1.r1.tail) / T1.r1.tail * 100",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c28",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "No statistical test is reported for the debiased-sampling improvement.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c29",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "P1"
+    ],
+    "justification": "The supplied P1 passage reports only training time and overall Recall changes, not long-tail gains of roughly 20%.",
+    "confidence": "low",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c29.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "widely credited with roughly 20% relative gains in long-tail Recall@20",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c30",
+    "label": "NOT_VERIFIABLE",
+    "entailment": "NA",
+    "error_subtype": null,
+    "evidence_ids": [
+     "P1",
+     "T1"
+    ],
+    "justification": "Judgement about what the evidence supports; restates the comparability conclusion rather than stating a package fact.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   }
+  ]
+ }
+}

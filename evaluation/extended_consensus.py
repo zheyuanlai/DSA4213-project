@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import random
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -47,6 +48,8 @@ def claim_dispute_table(data: FamilyData) -> tuple[list[dict[str, Any]], dict, d
     for c in claims:
         if c["claim_id"] not in ra or c["claim_id"] not in rb:
             raise ValueError(f"{c['claim_id']}: missing reading")
+        if ra[c["claim_id"]].get("copied_from"):  # verified once as its representative; adjudicated there
+            continue
         d = ac.claim_disputes(c, ra[c["claim_id"]], rb[c["claim_id"]], evs[c["alias"]])
         fields = list(d.fields)
         # label/entailment cannot change any metric when agreed numeric verdicts already make it a NUMERIC_ERROR
@@ -140,7 +143,7 @@ def run_claim_adjudication(data: FamilyData, packets: dict[str, Any], workers: i
 # ----------------------------------------------------------------------------- coverage
 def run_coverage_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> list[dict[str, Any]]:
     fam = data.family.name
-    if fam == "synthetic":
+    if fam not in ("real", "diagnostic"):
         return []
     A = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "A")}
     B = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "B")}
@@ -259,7 +262,14 @@ def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0)
     for cid, c in claims.items():
         ev = evs.setdefault(c["alias"], _ev(data, c["alias"]))
         a, b = ra[cid], rb[cid]
-        d = adj.get(cid)
+        rep = a.get("copied_from") or cid
+        d = adj.get(rep)
+        if d is not None and rep != cid:  # propagate the representative's decision; numbers map by position
+            pos = {n["number_id"]: i for i, n in enumerate(claims[rep]["numbers"])}
+            mine = [n["number_id"] for n in c["numbers"]]
+            d = {**d, "numbers": [{**n, "number_id": mine[pos[n["number_id"]]]} for n in d["numbers"]]}
+        if skipped.get(rep) and rep != cid:
+            skipped[cid] = skipped[rep]
         if skipped.get(cid):  # disputed label/entailment that cannot change a NUMERIC_ERROR claim: keep A's value, mark it
             d = dict(d or {"numbers": [], "extraction_valid": True, "evidence_ids": [], "_reading_map": {"1": "A", "2": "B"}})
             for f in skipped[cid]:
@@ -268,14 +278,15 @@ def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0)
         rec["label_from_numeric_error_rule"] = skipped.get(cid, [])
         rec["readings"] = {"A": {k: a[k] for k in ("label", "entailment", "extraction_flag", "confidence")},
                            "B": {k: b[k] for k in ("label", "entailment", "extraction_flag", "confidence")}}
-        if d and cid in adj:
+        rec["copied_from"] = a.get("copied_from")
+        if d and rep in adj:
             rec["adjudication"] = {"rationale": d.get("rationale"), "reading_map": d.get("_reading_map"),
                                    "label": d.get("label"), "entailment": d.get("entailment"),
                                    "extraction_valid": d.get("extraction_valid")}
         final.append(rec)
     out = {"claims": EXT / "consensus" / f"{fam}_claims.jsonl"}
     _dump_jsonl(out["claims"], final)
-    if fam != "synthetic":
+    if fam in ("real", "diagnostic"):  # finding coverage is judged only for these families
         A = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "A")}
         B = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "B")}
         cadj = {(d["text_id"], d["item_id"]): d for d in load_jsonl(EXT / "adjudication" / f"{fam}_coverage.jsonl")} \
@@ -324,3 +335,131 @@ def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0)
           f"{sum(r['final_label'] == 'UNRESOLVED' for r in final)} unresolved, "
           f"{sum(r['final_label'] == 'EXCLUDED' for r in final)} excluded")
     return out
+
+
+# ----------------------------------------------------------------------------- agreement and provenance (§7)
+def agreement_stats(data: FamilyData) -> dict[str, Any]:
+    """AI–AI agreement before adjudication, and how adjudications sided. Not human reliability."""
+    from evaluation.merge_annotations import cohen_kappa
+    fam = data.family.name
+    claims = {c["claim_id"]: c for c in load_jsonl(EXT / "claims" / f"{fam}.jsonl")}
+    ra = {r["claim_id"]: r for r in _readings(fam, "verify", "A")}
+    rb = {r["claim_id"]: r for r in _readings(fam, "verify", "B")}
+    evs = {a: _ev(data, a) for a in {c["alias"] for c in claims.values()}}
+    ids = sorted(claims)
+    # copied readings duplicate their representative; agreement is computed on representative claims only
+    reps = [i for i in ids if not ra[i].get("copied_from")]
+
+    def block(xs, ys, labels=None):
+        n = len(xs)
+        return {"n": n, "pct_agree": (sum(x == y for x, y in zip(xs, ys)) / n) if n else None,
+                "cohen_kappa": cohen_kappa(xs, ys, labels) if n else None,
+                "confusion": dict(Counter(f"{x}|{y}" for x, y in zip(xs, ys)))}
+
+    out: dict[str, Any] = {"family": fam, "provenance": "AI judge A vs AI judge B before adjudication; not human agreement",
+                           "label": block([ra[i]["label"] for i in reps], [rb[i]["label"] for i in reps]),
+                           "entailment": block([ra[i]["entailment"] for i in reps], [rb[i]["entailment"] for i in reps]),
+                           "inconsistent_label_entailment": {"A": sum(not ra[i]["consistent"] for i in reps),
+                                                             "B": sum(not rb[i]["consistent"] for i in reps)},
+                           "extraction_flags": {"A": dict(Counter(ra[i]["extraction_flag"] for i in reps)),
+                                                "B": dict(Counter(rb[i]["extraction_flag"] for i in reps))}}
+    na, nb = [], []
+    for i in reps:
+        c = claims[i]
+        for n in c["numbers"]:
+            va = ac.check_number(n, ra[i]["numbers"].get(n["number_id"]), evs[c["alias"]])
+            vb = ac.check_number(n, rb[i]["numbers"].get(n["number_id"]), evs[c["alias"]])
+            na.append("INVALID" if va.status == "INVALID_MAPPING" else ("CORRECT" if va.correct else "ERROR"))
+            nb.append("INVALID" if vb.status == "INVALID_MAPPING" else ("CORRECT" if vb.correct else "ERROR"))
+    out["numeric_verdict"] = block(na, nb)
+    if fam in ("real", "diagnostic"):
+        A = {(r["text_id"], r["item_id"]): r["status"] for r in _readings(fam, "coverage", "A")}
+        B = {(r["text_id"], r["item_id"]): r["status"] for r in _readings(fam, "coverage", "B")}
+        ks = sorted(A)
+        out["coverage"] = block([A[k] for k in ks], [B[k] for k in ks])
+    A = {r["pair_id"]: r for r in _readings(fam, "align", "A")}
+    B = {r["pair_id"]: r for r in _readings(fam, "align", "B")}
+    xa, xb = [], []
+    for pid, pa in A.items():
+        if pa["judge"] == "deterministic":
+            continue
+        bx = {x["claim_id"]: x for x in B[pid]["x_claims"]}
+        for x in pa["x_claims"]:
+            xa.append(x["relation"])
+            xb.append(bx[x["claim_id"]]["relation"])
+    out["alignment_relation"] = block(xa, xb)
+    # side-taking of the adjudicator (shares Judge A's model family)
+    side = Counter()
+    for kind, field in (("claims", "label"), ("claims", "entailment"), ("coverage", "status"), ("align", "relation")):
+        p = EXT / "adjudication" / f"{fam}_{kind}.jsonl"
+        if not p.exists():
+            continue
+        for d in load_jsonl(p):
+            if kind == "claims" and field not in d.get("disputed_fields", []):
+                continue
+            if kind == "claims":
+                a_val, b_val = ra[d["item_id"]][field], rb[d["item_id"]][field]
+            elif kind == "coverage":
+                a_val, b_val = A_cov(fam)[(d["text_id"], d["item_id"])], B_cov(fam)[(d["text_id"], d["item_id"])]
+            else:
+                pa = {x["claim_id"]: x for x in A[d["pair_id"]]["x_claims"]}[d["claim_id"]]
+                pb = {x["claim_id"]: x for x in B[d["pair_id"]]["x_claims"]}[d["claim_id"]]
+                a_val, b_val = pa["relation"], pb["relation"]
+            val = d[field]
+            key = "unresolved" if val == "UNRESOLVED" else ("both" if a_val == b_val == val else
+                                                           "judge_A" if val == a_val else "judge_B" if val == b_val else "neither")
+            side[f"{kind}.{field}.{key}"] += 1
+    out["adjudication_sides"] = dict(side)
+    nums = load_jsonl(EXT / "adjudication" / f"{fam}_claims.jsonl") if (EXT / "adjudication" / f"{fam}_claims.jsonl").exists() else []
+    nside = Counter()
+    for d in nums:
+        for n in d["numbers"]:
+            nside[{"own": "own_mapping"}.get(n["choice"], "judge_" + d["_reading_map"][n["choice"]])] += 1
+    out["adjudication_number_choices"] = dict(nside)
+    return out
+
+
+def A_cov(fam: str) -> dict:
+    return {(r["text_id"], r["item_id"]): r["status"] for r in _readings(fam, "coverage", "A")}
+
+
+def B_cov(fam: str) -> dict:
+    return {(r["text_id"], r["item_id"]): r["status"] for r in _readings(fam, "coverage", "B")}
+
+
+def provenance(raw_dir: Path | None = None) -> dict[str, Any]:
+    """Per stage and judge: calls, models, settings, tokens, metered cost, latency, discarded tool use, failures."""
+    from evaluation.judges import RAW_DIR
+    raw_dir = raw_dir or RAW_DIR
+    used = set()
+    for f in (raw_dir / "used").glob("*.txt"):
+        used |= set(f.read_text().split())
+    rows: dict[str, Any] = {}
+    total_cost = 0.0
+    for p in sorted(raw_dir.rglob("*.json")):
+        rel = str(p.relative_to(raw_dir))
+        try:
+            r = json.loads(p.read_text())
+        except json.JSONDecodeError:
+            continue
+        cost = float(r.get("cost_usd") or 0) + sum(float(a.get("cost_usd") or 0) for a in r.get("failed_attempts", []))
+        total_cost += cost
+        key = f"{'superseded/' if rel.startswith('_superseded') else ''}{r.get('stage')}/{r.get('judge')}"
+        s = rows.setdefault(key, Counter())
+        s["calls_ok" if r.get("status") == "ok" else "calls_failed_records"] += 1
+        s["discarded_attempts"] += len(r.get("failed_attempts", []))
+        s["used_in_results"] += rel in used
+        s["cost_usd"] += cost
+        u = r.get("usage") or {}
+        s["input_tokens"] += int(u.get("input_tokens") or 0) + int(u.get("cache_creation_input_tokens") or 0) + \
+            int(u.get("cache_read_input_tokens") or 0)
+        s["output_tokens"] += int(u.get("output_tokens") or 0)
+        s["latency_s"] += float(r.get("latency_s") or 0)
+        s["tool_use_discarded"] += sum(1 for a in r.get("failed_attempts", []) if "tool use" in str(a.get("error", "")))
+        models = rows.setdefault(key + "#models", set())
+        if r.get("model_reported"):
+            models.add(f"{r.get('model_reported')} [{r.get('backend')}; settings {r.get('settings', {})}]")
+    out = {k: (sorted(v) if isinstance(v, set) else dict(v)) for k, v in rows.items()}
+    return {"by_stage_judge": out, "total_metered_cost_usd": round(total_cost, 4),
+            "note": "Judge B (Claude CLI) cost is list price reported by the CLI; Judge A/adjudicator (Codex CLI, "
+                    "ChatGPT subscription) has no per-call USD charge. No OpenRouter call was made."}

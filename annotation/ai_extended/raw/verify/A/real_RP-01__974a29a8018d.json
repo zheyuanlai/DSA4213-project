@@ -1,0 +1,1008 @@
+{
+ "status": "ok",
+ "stage": "verify",
+ "item_key": "real_RP-01",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "verify",
+ "prompt_template_sha256": "3026925c674e91a9b072596136da2a8052797e9cb6d4bcf36fe28952df482d85",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "7fa1f51051da57dcaf0f038de8bfd911270361f6919333e187444e6451b61353",
+ "cache_key": "974a29a8018dad57429e24c180f65d83ead756b73ee36a8f8d660820562b8264",
+ "started_at": "2026-10-18T10:35:17Z",
+ "finished_at": "2026-10-18T10:36:25Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"claims\":[{\"claim_id\":\"c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1\",\"exp2\",\"T1\",\"T2\"],\"justification\":\"All reported experiments use Pythia-1B; no other evaluated model is reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c1.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"Pythia-1B was continually pretrained on 6.7B tokens of OpenWebText mixed with the public versions; each benchmark appears exactly once and makes up less than 0.001% of the corpus.\",\"scale\":1}]},{\"claim_id\":\"c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The setup explicitly says no repeated training runs were reported for these results.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c2.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The tables report one p-value per cell; no repeated training runs are reported for these results.\",\"scale\":1}]},{\"claim_id\":\"c3\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The setup reports 1,000 examples for each of the four benchmarks.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c3.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"Watermarked public and private rephrases of TriviaQA, ARC-C, MMLU and GSM8K (1,000 examples each) were generated with Llama3-70B-Instruct.\",\"scale\":1}]},{\"claim_id\":\"c4\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\",\"T1\"],\"justification\":\"No statistical comparison test supporting significance or reliability between methods is reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c5\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2\"],\"justification\":\"T2 reports held-out p-values above the detection threshold; the exact asserted range is assessed separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c5.n1\",\"source_type\":\"cell\",\"expression\":\"min(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r5.cont_heldout, T2.r6.cont_heldout)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c5.n2\",\"source_type\":\"cell\",\"expression\":\"max(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r5.cont_heldout, T2.r6.cont_heldout)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c6\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2\"],\"justification\":\"T2 reports uncontaminated-model p-values from 0.21 through 0.55, all above 0.05.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c6.n1\",\"source_type\":\"cell\",\"expression\":\"min(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c6.n2\",\"source_type\":\"cell\",\"expression\":\"max(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c7\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2\",\"exp2/cmp1\"],\"justification\":\"All T2 p-values exceed 0.05, supporting the scoped suggestion that no unseen data were flagged in these checks.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c8\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"exp1/cmp1\"],\"justification\":\"T1 shows Method M below PaCoST and both LLM DI variants for every benchmark.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c8.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r6.triviaqa < min(T1.r1.triviaqa, T1.r2.triviaqa, T1.r3.triviaqa), T1.r6.arcc < min(T1.r1.arcc, T1.r2.arcc, T1.r3.arcc), T1.r6.mmlu < min(T1.r1.mmlu, T1.r2.mmlu, T1.r3.mmlu), T1.r6.gsm8k < min(T1.r1.gsm8k, T1.r2.gsm8k, T1.r3.gsm8k))\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r6.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r1.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r2.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r3.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n6\",\"source_type\":\"cell\",\"expression\":\"T1.r6.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n7\",\"source_type\":\"cell\",\"expression\":\"T1.r1.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n8\",\"source_type\":\"cell\",\"expression\":\"T1.r2.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n9\",\"source_type\":\"cell\",\"expression\":\"T1.r3.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n10\",\"source_type\":\"cell\",\"expression\":\"T1.r6.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n11\",\"source_type\":\"cell\",\"expression\":\"T1.r1.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n12\",\"source_type\":\"cell\",\"expression\":\"T1.r2.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n13\",\"source_type\":\"cell\",\"expression\":\"T1.r3.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n14\",\"source_type\":\"cell\",\"expression\":\"T1.r6.gsm8k\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n15\",\"source_type\":\"cell\",\"expression\":\"T1.r1.gsm8k\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n16\",\"source_type\":\"cell\",\"expression\":\"T1.r2.gsm8k\",\"quote\":null,\"scale\":1},{\"number_id\":\"c8.n17\",\"source_type\":\"cell\",\"expression\":\"T1.r3.gsm8k\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c9\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\",\"T1\"],\"justification\":\"The package reports cellwise p-values but no statistical test comparing Method M with the baselines.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c10\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\",\"T1\"],\"justification\":\"Without comparison tests or repeated runs, the reliability of between-method differences is not formally established.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c11\",\"label\":\"OVERSTATED\",\"entailment\":\"NOT_ENTAILED\",\"error_subtype\":\"overgeneralized_scope\",\"evidence_ids\":[\"T2\",\"exp2/cmp1\"],\"justification\":\"T2 supports no false flags only for the reported uncontaminated and held-out checks, not unseen data generally.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c12\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2\"],\"justification\":\"Every uncontaminated and held-out p-value in T2 exceeds 0.05; their combined extrema are 0.07 and 0.73.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c12.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1},{\"number_id\":\"c12.n2\",\"source_type\":\"cell\",\"expression\":\"min(T2.r1.uncont, T2.r1.cont_heldout, T2.r2.uncont, T2.r2.cont_heldout, T2.r3.uncont, T2.r3.cont_heldout, T2.r4.uncont, T2.r4.cont_heldout, T2.r5.uncont, T2.r5.cont_heldout, T2.r6.uncont, T2.r6.cont_heldout)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c12.n3\",\"source_type\":\"cell\",\"expression\":\"max(T2.r1.uncont, T2.r1.cont_heldout, T2.r2.uncont, T2.r2.cont_heldout, T2.r3.uncont, T2.r3.cont_heldout, T2.r4.uncont, T2.r4.cont_heldout, T2.r5.uncont, T2.r5.cont_heldout, T2.r6.uncont, T2.r6.cont_heldout)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c13\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"exp1/cmp2\"],\"justification\":\"Method M has lower p-values than both ablations in every T1 benchmark, including the stated TriviaQA comparison.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c13.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r6.triviaqa < min(T1.r4.triviaqa, T1.r5.triviaqa), T1.r6.arcc < min(T1.r4.arcc, T1.r5.arcc), T1.r6.mmlu < min(T1.r4.mmlu, T1.r5.mmlu), T1.r6.gsm8k < min(T1.r4.gsm8k, T1.r5.gsm8k))\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r6.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r4.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r5.triviaqa\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c14\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"exp1/cmp2\"],\"justification\":\"Removing pairing raises p-values on every benchmark; the hedged statement that pairing contributes is consistent with this ablation.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c15\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"exp1/cmp2\"],\"justification\":\"Removing watermarking raises p-values on every benchmark; the hedged statement that watermarking contributes is consistent with this ablation.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c16\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r6\"],\"justification\":\"All four Method M cells in T1 are below the asserted threshold; exact values are checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c16.n1\",\"source_type\":\"none\",\"expression\":null,\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n2\",\"source_type\":\"cell\",\"expression\":\"count(T1.r6.triviaqa < 0.001, T1.r6.arcc < 0.001, T1.r6.mmlu < 0.001, T1.r6.gsm8k < 0.001)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r6.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r6.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n6\",\"source_type\":\"cell\",\"expression\":\"T1.r6.gsm8k\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c17\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r2\"],\"justification\":\"PaCoST exceeds 0.05 on three benchmarks and LLM DI (same) does so on all four.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c17.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}]},{\"claim_id\":\"c18\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.triviaqa\",\"T1.r3.mmlu\"],\"justification\":\"T1 reports LLM DI (different) below 0.05 for TriviaQA and MMLU at the stated values.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c18.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c18.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r3.mmlu\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c19\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1\",\"exp2\",\"T1\",\"T2\"],\"justification\":\"The reported evaluations concern Pythia-1B; the package reports no evaluation on another model.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c20\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The intentional-contamination evaluation covers TriviaQA, ARC-C, MMLU, and GSM8K.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c20.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r6.triviaqa >= 0, T1.r6.arcc >= 0, T1.r6.mmlu >= 0, T1.r6.gsm8k >= 0)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c21\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1\"],\"justification\":\"The package reports one intentional-contamination training configuration and no alternative contamination setup.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c21.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"Pythia-1B was continually pretrained on 6.7B tokens of OpenWebText mixed with the public versions; each benchmark appears exactly once and makes up less than 0.001% of the corpus.\",\"scale\":1}]},{\"claim_id\":\"c22\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\",\"T1\"],\"justification\":\"The statistical-tests section reports none; no formal test of the observed method differences is supplied.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c23\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The experimental setup explicitly states that no repeated training runs are reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c24\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\",\"T1\"],\"justification\":\"No between-method test or repeated runs establish the reliability of the observed differences.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c25\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r6\"],\"justification\":\"Every Method M p-value in T1 is below the asserted threshold; exact numbers are assessed separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c25.n1\",\"source_type\":\"none\",\"expression\":null,\"quote\":null,\"scale\":1},{\"number_id\":\"c25.n2\",\"source_type\":\"cell\",\"expression\":\"count(T1.r6.triviaqa < 0.001, T1.r6.arcc < 0.001, T1.r6.mmlu < 0.001, T1.r6.gsm8k < 0.001)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c25.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r6.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c25.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c25.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r6.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c25.n6\",\"source_type\":\"cell\",\"expression\":\"T1.r6.gsm8k\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c26\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\"],\"justification\":\"Most reported PaCoST and LLM DI p-values exceed 0.05, although the LLM DI variants differ.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c26.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}]},{\"claim_id\":\"c27\",\"label\":\"OVERSTATED\",\"entailment\":\"NOT_ENTAILED\",\"error_subtype\":\"unsupported_reliability\",\"evidence_ids\":[\"T1\",\"exp1/cmp1\"],\"justification\":\"Lower p-values favor Method M, but no comparison test or repeated runs formally establish greater reliability.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c28\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2\"],\"justification\":\"All uncontaminated-model p-values in T2 exceed 0.05 and span 0.21 to 0.55.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c28.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1},{\"number_id\":\"c28.n2\",\"source_type\":\"cell\",\"expression\":\"min(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c28.n3\",\"source_type\":\"cell\",\"expression\":\"max(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c29\",\"label\":\"UNDERSTATED\",\"entailment\":\"ENTAILED\",\"error_subtype\":\"understated_scope\",\"evidence_ids\":[\"T2\"],\"justification\":\"All six held-out p-values exceed 0.05, so saying only most do understates T2.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c29.n1\",\"source_type\":\"cell\",\"expression\":\"min(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r6.cont_heldout)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c29.n2\",\"source_type\":\"cell\",\"expression\":\"max(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r6.cont_heldout)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c30\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"wrong_direction\",\"evidence_ids\":[\"T2.r5.cont_heldout\"],\"justification\":\"T2 reports Abstracts at 0.07, which is above—not below—the 0.05 threshold.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c30.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r5.cont_heldout\",\"quote\":null,\"scale\":1},{\"number_id\":\"c30.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}]},{\"claim_id\":\"c31\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"exp1/cmp1\"],\"justification\":\"Method M is lower than PaCoST and both LLM DI variants for each of the four benchmarks.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c31.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r6.triviaqa < min(T1.r1.triviaqa, T1.r2.triviaqa, T1.r3.triviaqa), T1.r6.arcc < min(T1.r1.arcc, T1.r2.arcc, T1.r3.arcc), T1.r6.mmlu < min(T1.r1.mmlu, T1.r2.mmlu, T1.r3.mmlu), T1.r6.gsm8k < min(T1.r1.gsm8k, T1.r2.gsm8k, T1.r3.gsm8k))\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r6.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r1.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r2.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r3.triviaqa\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n6\",\"source_type\":\"cell\",\"expression\":\"T1.r6.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n7\",\"source_type\":\"cell\",\"expression\":\"T1.r1.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n8\",\"source_type\":\"cell\",\"expression\":\"T1.r2.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n9\",\"source_type\":\"cell\",\"expression\":\"T1.r3.arcc\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n10\",\"source_type\":\"cell\",\"expression\":\"T1.r6.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n11\",\"source_type\":\"cell\",\"expression\":\"T1.r1.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n12\",\"source_type\":\"cell\",\"expression\":\"T1.r2.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n13\",\"source_type\":\"cell\",\"expression\":\"T1.r3.mmlu\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n14\",\"source_type\":\"cell\",\"expression\":\"T1.r6.gsm8k\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n15\",\"source_type\":\"cell\",\"expression\":\"T1.r1.gsm8k\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n16\",\"source_type\":\"cell\",\"expression\":\"T1.r2.gsm8k\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n17\",\"source_type\":\"cell\",\"expression\":\"T1.r3.gsm8k\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c32\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"exp1/cmp1\"],\"justification\":\"T1 defines lower p-values as stronger membership evidence, and Method M is lower than every baseline across all benchmarks.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]}]}",
+ "usage": {
+  "input_tokens": 25181,
+  "cached_input_tokens": 14976,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 10335,
+  "reasoning_output_tokens": 4593
+ },
+ "cost_usd": null,
+ "latency_s": 68.5,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "claims": [
+   {
+    "claim_id": "c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1",
+     "exp2",
+     "T1",
+     "T2"
+    ],
+    "justification": "All reported experiments use Pythia-1B; no other evaluated model is reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c1.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "Pythia-1B was continually pretrained on 6.7B tokens of OpenWebText mixed with the public versions; each benchmark appears exactly once and makes up less than 0.001% of the corpus.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The setup explicitly says no repeated training runs were reported for these results.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c2.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The tables report one p-value per cell; no repeated training runs are reported for these results.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c3",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The setup reports 1,000 examples for each of the four benchmarks.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c3.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "Watermarked public and private rephrases of TriviaQA, ARC-C, MMLU and GSM8K (1,000 examples each) were generated with Llama3-70B-Instruct.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c4",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1",
+     "T1"
+    ],
+    "justification": "No statistical comparison test supporting significance or reliability between methods is reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c5",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2"
+    ],
+    "justification": "T2 reports held-out p-values above the detection threshold; the exact asserted range is assessed separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c5.n1",
+      "source_type": "cell",
+      "expression": "min(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r5.cont_heldout, T2.r6.cont_heldout)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c5.n2",
+      "source_type": "cell",
+      "expression": "max(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r5.cont_heldout, T2.r6.cont_heldout)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c6",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2"
+    ],
+    "justification": "T2 reports uncontaminated-model p-values from 0.21 through 0.55, all above 0.05.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c6.n1",
+      "source_type": "cell",
+      "expression": "min(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c6.n2",
+      "source_type": "cell",
+      "expression": "max(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c7",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2",
+     "exp2/cmp1"
+    ],
+    "justification": "All T2 p-values exceed 0.05, supporting the scoped suggestion that no unseen data were flagged in these checks.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c8",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp1"
+    ],
+    "justification": "T1 shows Method M below PaCoST and both LLM DI variants for every benchmark.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c8.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r6.triviaqa < min(T1.r1.triviaqa, T1.r2.triviaqa, T1.r3.triviaqa), T1.r6.arcc < min(T1.r1.arcc, T1.r2.arcc, T1.r3.arcc), T1.r6.mmlu < min(T1.r1.mmlu, T1.r2.mmlu, T1.r3.mmlu), T1.r6.gsm8k < min(T1.r1.gsm8k, T1.r2.gsm8k, T1.r3.gsm8k))",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n2",
+      "source_type": "cell",
+      "expression": "T1.r6.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n3",
+      "source_type": "cell",
+      "expression": "T1.r1.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n4",
+      "source_type": "cell",
+      "expression": "T1.r2.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n5",
+      "source_type": "cell",
+      "expression": "T1.r3.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n6",
+      "source_type": "cell",
+      "expression": "T1.r6.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n7",
+      "source_type": "cell",
+      "expression": "T1.r1.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n8",
+      "source_type": "cell",
+      "expression": "T1.r2.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n9",
+      "source_type": "cell",
+      "expression": "T1.r3.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n10",
+      "source_type": "cell",
+      "expression": "T1.r6.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n11",
+      "source_type": "cell",
+      "expression": "T1.r1.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n12",
+      "source_type": "cell",
+      "expression": "T1.r2.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n13",
+      "source_type": "cell",
+      "expression": "T1.r3.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n14",
+      "source_type": "cell",
+      "expression": "T1.r6.gsm8k",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n15",
+      "source_type": "cell",
+      "expression": "T1.r1.gsm8k",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n16",
+      "source_type": "cell",
+      "expression": "T1.r2.gsm8k",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n17",
+      "source_type": "cell",
+      "expression": "T1.r3.gsm8k",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c9",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1",
+     "T1"
+    ],
+    "justification": "The package reports cellwise p-values but no statistical test comparing Method M with the baselines.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c10",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1",
+     "T1"
+    ],
+    "justification": "Without comparison tests or repeated runs, the reliability of between-method differences is not formally established.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c11",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "overgeneralized_scope",
+    "evidence_ids": [
+     "T2",
+     "exp2/cmp1"
+    ],
+    "justification": "T2 supports no false flags only for the reported uncontaminated and held-out checks, not unseen data generally.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c12",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2"
+    ],
+    "justification": "Every uncontaminated and held-out p-value in T2 exceeds 0.05; their combined extrema are 0.07 and 0.73.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c12.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     },
+     {
+      "number_id": "c12.n2",
+      "source_type": "cell",
+      "expression": "min(T2.r1.uncont, T2.r1.cont_heldout, T2.r2.uncont, T2.r2.cont_heldout, T2.r3.uncont, T2.r3.cont_heldout, T2.r4.uncont, T2.r4.cont_heldout, T2.r5.uncont, T2.r5.cont_heldout, T2.r6.uncont, T2.r6.cont_heldout)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c12.n3",
+      "source_type": "cell",
+      "expression": "max(T2.r1.uncont, T2.r1.cont_heldout, T2.r2.uncont, T2.r2.cont_heldout, T2.r3.uncont, T2.r3.cont_heldout, T2.r4.uncont, T2.r4.cont_heldout, T2.r5.uncont, T2.r5.cont_heldout, T2.r6.uncont, T2.r6.cont_heldout)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c13",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp2"
+    ],
+    "justification": "Method M has lower p-values than both ablations in every T1 benchmark, including the stated TriviaQA comparison.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c13.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r6.triviaqa < min(T1.r4.triviaqa, T1.r5.triviaqa), T1.r6.arcc < min(T1.r4.arcc, T1.r5.arcc), T1.r6.mmlu < min(T1.r4.mmlu, T1.r5.mmlu), T1.r6.gsm8k < min(T1.r4.gsm8k, T1.r5.gsm8k))",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n2",
+      "source_type": "cell",
+      "expression": "T1.r6.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n3",
+      "source_type": "cell",
+      "expression": "T1.r4.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n4",
+      "source_type": "cell",
+      "expression": "T1.r5.triviaqa",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c14",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp2"
+    ],
+    "justification": "Removing pairing raises p-values on every benchmark; the hedged statement that pairing contributes is consistent with this ablation.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c15",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp2"
+    ],
+    "justification": "Removing watermarking raises p-values on every benchmark; the hedged statement that watermarking contributes is consistent with this ablation.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c16",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r6"
+    ],
+    "justification": "All four Method M cells in T1 are below the asserted threshold; exact values are checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c16.n1",
+      "source_type": "none",
+      "expression": null,
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n2",
+      "source_type": "cell",
+      "expression": "count(T1.r6.triviaqa < 0.001, T1.r6.arcc < 0.001, T1.r6.mmlu < 0.001, T1.r6.gsm8k < 0.001)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n3",
+      "source_type": "cell",
+      "expression": "T1.r6.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n5",
+      "source_type": "cell",
+      "expression": "T1.r6.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n6",
+      "source_type": "cell",
+      "expression": "T1.r6.gsm8k",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c17",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2"
+    ],
+    "justification": "PaCoST exceeds 0.05 on three benchmarks and LLM DI (same) does so on all four.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c17.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c18",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.triviaqa",
+     "T1.r3.mmlu"
+    ],
+    "justification": "T1 reports LLM DI (different) below 0.05 for TriviaQA and MMLU at the stated values.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c18.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c18.n2",
+      "source_type": "cell",
+      "expression": "T1.r3.mmlu",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c19",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1",
+     "exp2",
+     "T1",
+     "T2"
+    ],
+    "justification": "The reported evaluations concern Pythia-1B; the package reports no evaluation on another model.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c20",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The intentional-contamination evaluation covers TriviaQA, ARC-C, MMLU, and GSM8K.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c20.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r6.triviaqa >= 0, T1.r6.arcc >= 0, T1.r6.mmlu >= 0, T1.r6.gsm8k >= 0)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c21",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1"
+    ],
+    "justification": "The package reports one intentional-contamination training configuration and no alternative contamination setup.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c21.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "Pythia-1B was continually pretrained on 6.7B tokens of OpenWebText mixed with the public versions; each benchmark appears exactly once and makes up less than 0.001% of the corpus.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c22",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1",
+     "T1"
+    ],
+    "justification": "The statistical-tests section reports none; no formal test of the observed method differences is supplied.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c23",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The experimental setup explicitly states that no repeated training runs are reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c24",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1",
+     "T1"
+    ],
+    "justification": "No between-method test or repeated runs establish the reliability of the observed differences.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c25",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r6"
+    ],
+    "justification": "Every Method M p-value in T1 is below the asserted threshold; exact numbers are assessed separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c25.n1",
+      "source_type": "none",
+      "expression": null,
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c25.n2",
+      "source_type": "cell",
+      "expression": "count(T1.r6.triviaqa < 0.001, T1.r6.arcc < 0.001, T1.r6.mmlu < 0.001, T1.r6.gsm8k < 0.001)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c25.n3",
+      "source_type": "cell",
+      "expression": "T1.r6.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c25.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c25.n5",
+      "source_type": "cell",
+      "expression": "T1.r6.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c25.n6",
+      "source_type": "cell",
+      "expression": "T1.r6.gsm8k",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c26",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3"
+    ],
+    "justification": "Most reported PaCoST and LLM DI p-values exceed 0.05, although the LLM DI variants differ.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c26.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c27",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_reliability",
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp1"
+    ],
+    "justification": "Lower p-values favor Method M, but no comparison test or repeated runs formally establish greater reliability.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c28",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2"
+    ],
+    "justification": "All uncontaminated-model p-values in T2 exceed 0.05 and span 0.21 to 0.55.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c28.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     },
+     {
+      "number_id": "c28.n2",
+      "source_type": "cell",
+      "expression": "min(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c28.n3",
+      "source_type": "cell",
+      "expression": "max(T2.r1.uncont, T2.r2.uncont, T2.r3.uncont, T2.r4.uncont, T2.r5.uncont, T2.r6.uncont)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c29",
+    "label": "UNDERSTATED",
+    "entailment": "ENTAILED",
+    "error_subtype": "understated_scope",
+    "evidence_ids": [
+     "T2"
+    ],
+    "justification": "All six held-out p-values exceed 0.05, so saying only most do understates T2.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c29.n1",
+      "source_type": "cell",
+      "expression": "min(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r6.cont_heldout)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c29.n2",
+      "source_type": "cell",
+      "expression": "max(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r6.cont_heldout)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c30",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "wrong_direction",
+    "evidence_ids": [
+     "T2.r5.cont_heldout"
+    ],
+    "justification": "T2 reports Abstracts at 0.07, which is above—not below—the 0.05 threshold.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c30.n1",
+      "source_type": "cell",
+      "expression": "T2.r5.cont_heldout",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c30.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c31",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp1"
+    ],
+    "justification": "Method M is lower than PaCoST and both LLM DI variants for each of the four benchmarks.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c31.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r6.triviaqa < min(T1.r1.triviaqa, T1.r2.triviaqa, T1.r3.triviaqa), T1.r6.arcc < min(T1.r1.arcc, T1.r2.arcc, T1.r3.arcc), T1.r6.mmlu < min(T1.r1.mmlu, T1.r2.mmlu, T1.r3.mmlu), T1.r6.gsm8k < min(T1.r1.gsm8k, T1.r2.gsm8k, T1.r3.gsm8k))",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n2",
+      "source_type": "cell",
+      "expression": "T1.r6.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n3",
+      "source_type": "cell",
+      "expression": "T1.r1.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n4",
+      "source_type": "cell",
+      "expression": "T1.r2.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n5",
+      "source_type": "cell",
+      "expression": "T1.r3.triviaqa",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n6",
+      "source_type": "cell",
+      "expression": "T1.r6.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n7",
+      "source_type": "cell",
+      "expression": "T1.r1.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n8",
+      "source_type": "cell",
+      "expression": "T1.r2.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n9",
+      "source_type": "cell",
+      "expression": "T1.r3.arcc",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n10",
+      "source_type": "cell",
+      "expression": "T1.r6.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n11",
+      "source_type": "cell",
+      "expression": "T1.r1.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n12",
+      "source_type": "cell",
+      "expression": "T1.r2.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n13",
+      "source_type": "cell",
+      "expression": "T1.r3.mmlu",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n14",
+      "source_type": "cell",
+      "expression": "T1.r6.gsm8k",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n15",
+      "source_type": "cell",
+      "expression": "T1.r1.gsm8k",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n16",
+      "source_type": "cell",
+      "expression": "T1.r2.gsm8k",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n17",
+      "source_type": "cell",
+      "expression": "T1.r3.gsm8k",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c32",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp1"
+    ],
+    "justification": "T1 defines lower p-values as stronger membership evidence, and Method M is lower than every baseline across all benchmarks.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   }
+  ]
+ }
+}

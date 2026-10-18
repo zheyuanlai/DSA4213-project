@@ -32,7 +32,13 @@ ROOT = Path(__file__).resolve().parent.parent
 PROMPT_DIR = ROOT / "annotation" / "ai_extended" / "prompts"
 RAW_DIR = ROOT / "annotation" / "ai_extended" / "raw"
 CLAUDE_BUDGET_USD = 6.50
-CLAUDE_PER_CALL_CAP_USD = 0.75
+CLAUDE_PER_CALL_CAP_USD = 0.75  # verification calls (largest outputs)
+CLAUDE_STAGE_CAP_USD = {"verify": 0.75}  # other stages (coverage, alignment, checklist review) are small
+CLAUDE_DEFAULT_STAGE_CAP_USD = 0.25
+
+
+def claude_call_cap(stage: str) -> float:
+    return CLAUDE_STAGE_CAP_USD.get(stage, CLAUDE_DEFAULT_STAGE_CAP_USD)
 
 
 # ----------------------------------------------------------------------------- judges
@@ -221,14 +227,15 @@ def _codex_call(spec: JudgeSpec, prompt: str, schema: dict[str, Any], system: st
         shutil.rmtree(work, ignore_errors=True)
 
 
-def _claude_call(spec: JudgeSpec, prompt: str, schema: dict[str, Any], system: str) -> dict[str, Any]:
+def _claude_call(spec: JudgeSpec, prompt: str, schema: dict[str, Any], system: str,
+                 cap: float = CLAUDE_PER_CALL_CAP_USD) -> dict[str, Any]:
     work = Path(tempfile.mkdtemp(prefix="judge_b_"))
     try:
         # Plain JSON text validated locally against the same schema: the CLI's --json-schema mode makes the
         # model emit the object twice (text + structured-output tool), doubling metered output tokens.
         cmd = ["claude", "-p", "--model", spec.model, "--tools", "", "--output-format", "json",
                "--no-session-persistence", "--setting-sources", "", "--strict-mcp-config",
-               "--system-prompt", system, "--max-budget-usd", str(CLAUDE_PER_CALL_CAP_USD)]
+               "--system-prompt", system, "--max-budget-usd", str(cap)]
         full = (prompt + "\n\n## Output format\nReturn exactly one JSON object, with no text before or after it, "
                 "that validates against this JSON Schema:\n" + json.dumps(schema, separators=(",", ":")))
         t0 = time.time()
@@ -355,12 +362,13 @@ def call_judge(spec: JudgeSpec, stage: str, item_key: str, prompt_name: str, pro
             if spec.backend == "claude":
                 with _LOCK:
                     spent = claude_spent(raw_dir) + _RESERVED[0]
-                    if spent + CLAUDE_PER_CALL_CAP_USD > CLAUDE_BUDGET_USD:
+                    cap = claude_call_cap(stage)
+                    if spent + cap > CLAUDE_BUDGET_USD:
                         raise JudgeError(f"Judge B budget exhausted: ${spent:.2f} spent or reserved of ${CLAUDE_BUDGET_USD}")
-                    reservation = CLAUDE_PER_CALL_CAP_USD
+                    reservation = cap
                     _RESERVED[0] += reservation
                 try:
-                    meta = _claude_call(spec, prompt, schema, system)
+                    meta = _claude_call(spec, prompt, schema, system, cap)
                 finally:
                     with _LOCK:
                         _RESERVED[0] -= reservation

@@ -1,0 +1,835 @@
+{
+ "status": "ok",
+ "stage": "verify",
+ "item_key": "real_RP-09",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "verify",
+ "prompt_template_sha256": "3026925c674e91a9b072596136da2a8052797e9cb6d4bcf36fe28952df482d85",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "4ac795705add2ba6c0008e481a7f9a0611fb89b9ca246ea8403ec6ab1e3dc20e",
+ "cache_key": "787083d60e2d02fee33193992e6811038e271e4cac94afb3ce281a4937ab56a6",
+ "started_at": "2026-10-18T10:36:49Z",
+ "finished_at": "2026-10-18T10:38:12Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"claims\":[{\"claim_id\":\"c1\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"wrong_component_attribution\",\"evidence_ids\":[\"T2.r3\",\"T2.r4\",\"T2.r5\",\"exp2/cmp1\"],\"justification\":\"T2 shows the opposite pattern: the variant retaining temperature performs well, while the variant retaining the ratio performs poorly.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c2\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"wrong_variant_attribution\",\"evidence_ids\":[\"T2.r1\",\"T2.r4\"],\"justification\":\"The without-ratio variant is T2.r4 and exceeds plain KLD on every dataset, rather than being at or below it.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c3\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r1.dolly\",\"T2.r4.dolly\"],\"justification\":\"Apart from the separately checked values, T2 contains the stated DollyEval comparison between the without-ratio variant and plain KLD.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c3.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r4.dolly\",\"quote\":null,\"scale\":1},{\"number_id\":\"c3.n2\",\"source_type\":\"cell\",\"expression\":\"T2.r1.dolly\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c4\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r1.selfinst\",\"T2.r4.selfinst\"],\"justification\":\"Apart from the separately checked values, T2 contains the stated SelfInst comparison between the without-ratio variant and plain KLD.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c4.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r4.selfinst\",\"quote\":null,\"scale\":1},{\"number_id\":\"c4.n2\",\"source_type\":\"cell\",\"expression\":\"T2.r1.selfinst\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c5\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"wrong_direction\",\"evidence_ids\":[\"T2.r1\",\"T2.r3\",\"T2.r5\"],\"justification\":\"The without-temperature variant is below plain KLD on four datasets and does not retain most of the full method's gain.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c6\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r3.dolly\"],\"justification\":\"T2 reports a DollyEval score for the without-temperature variant; the exact value is evaluated separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c6.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r3.dolly\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c7\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r3.unni\"],\"justification\":\"T2 reports an UnNI score for the without-temperature variant; the exact value is evaluated separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c7.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r3.unni\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c8\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"T2\",\"exp1\",\"exp2\"],\"justification\":\"The reported tables and comparisons analyzed here use GPT-2 teachers and students; the unreported analogous OPT table supplies no usable outcomes.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c9\",\"label\":\"UNDERSTATED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"understated_scope\",\"evidence_ids\":[\"T1\",\"exp1/cmp1\"],\"justification\":\"T1 notes four additional KD losses with Method M comparisons, so the available findings are not confined to the three displayed losses.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c9.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c10\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"T2\"],\"justification\":\"Both tables evaluate DollyEval, SelfInst, VicunaEval, S-NI, and UnNI, and no other evaluation sets are reported here.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c10.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)\",\"scale\":1}]},{\"claim_id\":\"c11\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The package explicitly reports no statistical tests, and T1 specifically notes that no significance tests are reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c12\",\"label\":\"UNDERSTATED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"unwarranted_caveat\",\"evidence_ids\":[\"T1\",\"exp1/cmp1\"],\"justification\":\"T1 descriptively establishes consistency across the displayed losses and datasets; absent tests prevent inferential reliability claims, not the observed pattern.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c13\",\"label\":\"UNDERSTATED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"unwarranted_caveat\",\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"],\"justification\":\"T1 provides point estimates and average gains, establishing observed improvement sizes even though their uncertainty and significance are unavailable.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c14\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.avg\",\"T1.r4.avg\",\"exp1/cmp1\"],\"justification\":\"GKD with Method M has a higher five-dataset average than GKD without it; exact counts and gains are checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c14.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)\",\"scale\":1},{\"number_id\":\"c14.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r4.avg - T1.r3.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.avg - T1.r5.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg - T1.r7.avg\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c15\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r5.avg\",\"T1.r6.avg\",\"exp1/cmp1\"],\"justification\":\"KLD with Method M has a higher five-dataset average than KLD without it; exact counts and gains are checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c15.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)\",\"scale\":1},{\"number_id\":\"c15.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r4.avg - T1.r3.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.avg - T1.r5.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg - T1.r7.avg\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c16\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r7.avg\",\"T1.r8.avg\",\"exp1/cmp1\"],\"justification\":\"SRKL with Method M has a higher five-dataset average than SRKL without it; exact counts and gains are checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c16.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)\",\"scale\":1},{\"number_id\":\"c16.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r4.avg - T1.r3.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.avg - T1.r5.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg - T1.r7.avg\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c17\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\",\"exp1/cmp1\"],\"justification\":\"Every displayed per-dataset comparison favors Method M for GKD, KLD, and SRKL.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c18\",\"label\":\"UNDERSTATED\",\"entailment\":\"ENTAILED\",\"error_subtype\":\"understated_scope\",\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"],\"justification\":\"Method M improves all 15 displayed per-dataset comparisons, so saying only most understates the reported pattern.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c19\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The package's statistical-tests section reports none, and T1 also states that no significance tests are reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c20\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"T1 explicitly states that no standard deviations are reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c21\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"With no significance tests or reported variability, the statistical significance of the gains is not established.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c22\",\"label\":\"UNDERSTATED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"unwarranted_caveat\",\"evidence_ids\":[\"T1\",\"exp1/cmp1\"],\"justification\":\"T1 establishes observed consistency across all displayed loss-dataset comparisons; absent tests only limit claims about statistical reliability.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c23\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"T2\",\"exp1\",\"exp2\"],\"justification\":\"The findings actually reported in the supplied tables concern GPT-2 models; outcomes from the mentioned analogous OPT table are unavailable.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c24\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"T2\"],\"justification\":\"The supplied findings cover only the five named instruction-following evaluation sets.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c24.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)\",\"scale\":1}]},{\"claim_id\":\"c25\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\",\"exp2/cmp1\"],\"justification\":\"T2.r5 exceeds every other ablation row on each dataset.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c25.n1\",\"source_type\":\"cell\",\"expression\":\"count(T2.r5.dolly > max(T2.r1.dolly, T2.r2.dolly, T2.r3.dolly, T2.r4.dolly), T2.r5.selfinst > max(T2.r1.selfinst, T2.r2.selfinst, T2.r3.selfinst, T2.r4.selfinst), T2.r5.vicuna > max(T2.r1.vicuna, T2.r2.vicuna, T2.r3.vicuna, T2.r4.vicuna), T2.r5.sni > max(T2.r1.sni, T2.r2.sni, T2.r3.sni, T2.r4.sni), T2.r5.unni > max(T2.r1.unni, T2.r2.unni, T2.r3.unni, T2.r4.unni))\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c26\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r4\",\"T2.r5\",\"exp2/cmp1\"],\"justification\":\"The without-ratio variant scores below full Method M on every dataset; the exact count is checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c26.n1\",\"source_type\":\"cell\",\"expression\":\"count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c27\",\"label\":\"UNSUPPORTED\",\"entailment\":\"NOT_ENTAILED\",\"error_subtype\":\"unsupported_equivalence\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"exp2/cmp1\"],\"justification\":\"T2 gives differing scores but supplies no average-equivalence criterion or test supporting the qualitative claim that performance is comparable.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c28\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r4\",\"T2.r5\",\"exp2/cmp1\"],\"justification\":\"The without-ratio variant is lower than full Method M across the reported datasets; the asserted count is evaluated separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c28.n1\",\"source_type\":\"cell\",\"expression\":\"count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c28.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)\",\"scale\":1}]},{\"claim_id\":\"c29\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"T2\"],\"justification\":\"The reported numerical results used here concern a GPT-2 1.5B teacher and approximately 0.1B GPT-2 students.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c30\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r8\",\"exp1/cmp2\"],\"justification\":\"Among the displayed Method M students, SRKL has the highest average and exceeds the teacher on the claimed subset of datasets.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c30.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r8.dolly > T1.r1.dolly, T1.r8.selfinst > T1.r1.selfinst, T1.r8.vicuna > T1.r1.vicuna, T1.r8.sni > T1.r1.sni, T1.r8.unni > T1.r1.unni)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c30.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)\",\"scale\":1}]},{\"claim_id\":\"c31\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r8.vicuna\",\"T1.r1.vicuna\"],\"justification\":\"T1 shows SRKL plus Method M above the teacher on VicunaEval; exact scores are checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c31.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r8.vicuna\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.vicuna\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c32\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r8.sni\",\"T1.r1.sni\"],\"justification\":\"T1 shows SRKL plus Method M above the teacher on S-NI; exact scores are checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c32.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r8.sni\",\"quote\":null,\"scale\":1},{\"number_id\":\"c32.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.sni\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c33\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r8\"],\"justification\":\"The teacher exceeds SRKL plus Method M on DollyEval, SelfInst, and UnNI; the exact count is checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c33.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r1.dolly > T1.r8.dolly, T1.r1.selfinst > T1.r8.selfinst, T1.r1.vicuna > T1.r8.vicuna, T1.r1.sni > T1.r8.sni, T1.r1.unni > T1.r8.unni)\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c34\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r8.avg\",\"T1.r1.avg\"],\"justification\":\"T1 shows SRKL plus Method M below the teacher on the five-dataset average; exact scores are checked separately.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c34.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c34.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.avg\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c35\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\",\"exp1/cmp1\"],\"justification\":\"Every displayed dataset score increases when Method M is added to GKD, KLD, or SRKL.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]}]}",
+ "usage": {
+  "input_tokens": 23247,
+  "cached_input_tokens": 14976,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 11396,
+  "reasoning_output_tokens": 6602
+ },
+ "cost_usd": null,
+ "latency_s": 82.7,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "claims": [
+   {
+    "claim_id": "c1",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "wrong_component_attribution",
+    "evidence_ids": [
+     "T2.r3",
+     "T2.r4",
+     "T2.r5",
+     "exp2/cmp1"
+    ],
+    "justification": "T2 shows the opposite pattern: the variant retaining temperature performs well, while the variant retaining the ratio performs poorly.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c2",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "wrong_variant_attribution",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r4"
+    ],
+    "justification": "The without-ratio variant is T2.r4 and exceeds plain KLD on every dataset, rather than being at or below it.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c3",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r1.dolly",
+     "T2.r4.dolly"
+    ],
+    "justification": "Apart from the separately checked values, T2 contains the stated DollyEval comparison between the without-ratio variant and plain KLD.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c3.n1",
+      "source_type": "cell",
+      "expression": "T2.r4.dolly",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c3.n2",
+      "source_type": "cell",
+      "expression": "T2.r1.dolly",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c4",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r1.selfinst",
+     "T2.r4.selfinst"
+    ],
+    "justification": "Apart from the separately checked values, T2 contains the stated SelfInst comparison between the without-ratio variant and plain KLD.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c4.n1",
+      "source_type": "cell",
+      "expression": "T2.r4.selfinst",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c4.n2",
+      "source_type": "cell",
+      "expression": "T2.r1.selfinst",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c5",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "wrong_direction",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r3",
+     "T2.r5"
+    ],
+    "justification": "The without-temperature variant is below plain KLD on four datasets and does not retain most of the full method's gain.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c6",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r3.dolly"
+    ],
+    "justification": "T2 reports a DollyEval score for the without-temperature variant; the exact value is evaluated separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c6.n1",
+      "source_type": "cell",
+      "expression": "T2.r3.dolly",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c7",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r3.unni"
+    ],
+    "justification": "T2 reports an UnNI score for the without-temperature variant; the exact value is evaluated separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c7.n1",
+      "source_type": "cell",
+      "expression": "T2.r3.unni",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c8",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "T2",
+     "exp1",
+     "exp2"
+    ],
+    "justification": "The reported tables and comparisons analyzed here use GPT-2 teachers and students; the unreported analogous OPT table supplies no usable outcomes.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c9",
+    "label": "UNDERSTATED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "understated_scope",
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp1"
+    ],
+    "justification": "T1 notes four additional KD losses with Method M comparisons, so the available findings are not confined to the three displayed losses.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c9.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c10",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ],
+    "justification": "Both tables evaluate DollyEval, SelfInst, VicunaEval, S-NI, and UnNI, and no other evaluation sets are reported here.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c10.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c11",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The package explicitly reports no statistical tests, and T1 specifically notes that no significance tests are reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c12",
+    "label": "UNDERSTATED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "unwarranted_caveat",
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp1"
+    ],
+    "justification": "T1 descriptively establishes consistency across the displayed losses and datasets; absent tests prevent inferential reliability claims, not the observed pattern.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c13",
+    "label": "UNDERSTATED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "unwarranted_caveat",
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ],
+    "justification": "T1 provides point estimates and average gains, establishing observed improvement sizes even though their uncertainty and significance are unavailable.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c14",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r4.avg",
+     "exp1/cmp1"
+    ],
+    "justification": "GKD with Method M has a higher five-dataset average than GKD without it; exact counts and gains are checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c14.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)",
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n3",
+      "source_type": "cell",
+      "expression": "T1.r4.avg - T1.r3.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.avg - T1.r5.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n5",
+      "source_type": "cell",
+      "expression": "T1.r8.avg - T1.r7.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c15",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r5.avg",
+     "T1.r6.avg",
+     "exp1/cmp1"
+    ],
+    "justification": "KLD with Method M has a higher five-dataset average than KLD without it; exact counts and gains are checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c15.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)",
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n3",
+      "source_type": "cell",
+      "expression": "T1.r4.avg - T1.r3.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.avg - T1.r5.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n5",
+      "source_type": "cell",
+      "expression": "T1.r8.avg - T1.r7.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c16",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r7.avg",
+     "T1.r8.avg",
+     "exp1/cmp1"
+    ],
+    "justification": "SRKL with Method M has a higher five-dataset average than SRKL without it; exact counts and gains are checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c16.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)",
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n3",
+      "source_type": "cell",
+      "expression": "T1.r4.avg - T1.r3.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.avg - T1.r5.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n5",
+      "source_type": "cell",
+      "expression": "T1.r8.avg - T1.r7.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c17",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8",
+     "exp1/cmp1"
+    ],
+    "justification": "Every displayed per-dataset comparison favors Method M for GKD, KLD, and SRKL.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c18",
+    "label": "UNDERSTATED",
+    "entailment": "ENTAILED",
+    "error_subtype": "understated_scope",
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ],
+    "justification": "Method M improves all 15 displayed per-dataset comparisons, so saying only most understates the reported pattern.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c19",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The package's statistical-tests section reports none, and T1 also states that no significance tests are reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c20",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "T1 explicitly states that no standard deviations are reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c21",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "With no significance tests or reported variability, the statistical significance of the gains is not established.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c22",
+    "label": "UNDERSTATED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "unwarranted_caveat",
+    "evidence_ids": [
+     "T1",
+     "exp1/cmp1"
+    ],
+    "justification": "T1 establishes observed consistency across all displayed loss-dataset comparisons; absent tests only limit claims about statistical reliability.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c23",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "T2",
+     "exp1",
+     "exp2"
+    ],
+    "justification": "The findings actually reported in the supplied tables concern GPT-2 models; outcomes from the mentioned analogous OPT table are unavailable.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c24",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ],
+    "justification": "The supplied findings cover only the five named instruction-following evaluation sets.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c24.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c25",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5",
+     "exp2/cmp1"
+    ],
+    "justification": "T2.r5 exceeds every other ablation row on each dataset.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c25.n1",
+      "source_type": "cell",
+      "expression": "count(T2.r5.dolly > max(T2.r1.dolly, T2.r2.dolly, T2.r3.dolly, T2.r4.dolly), T2.r5.selfinst > max(T2.r1.selfinst, T2.r2.selfinst, T2.r3.selfinst, T2.r4.selfinst), T2.r5.vicuna > max(T2.r1.vicuna, T2.r2.vicuna, T2.r3.vicuna, T2.r4.vicuna), T2.r5.sni > max(T2.r1.sni, T2.r2.sni, T2.r3.sni, T2.r4.sni), T2.r5.unni > max(T2.r1.unni, T2.r2.unni, T2.r3.unni, T2.r4.unni))",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c26",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r4",
+     "T2.r5",
+     "exp2/cmp1"
+    ],
+    "justification": "The without-ratio variant scores below full Method M on every dataset; the exact count is checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c26.n1",
+      "source_type": "cell",
+      "expression": "count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c27",
+    "label": "UNSUPPORTED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_equivalence",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "exp2/cmp1"
+    ],
+    "justification": "T2 gives differing scores but supplies no average-equivalence criterion or test supporting the qualitative claim that performance is comparable.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c28",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r4",
+     "T2.r5",
+     "exp2/cmp1"
+    ],
+    "justification": "The without-ratio variant is lower than full Method M across the reported datasets; the asserted count is evaluated separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c28.n1",
+      "source_type": "cell",
+      "expression": "count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c28.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c29",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ],
+    "justification": "The reported numerical results used here concern a GPT-2 1.5B teacher and approximately 0.1B GPT-2 students.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c30",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r8",
+     "exp1/cmp2"
+    ],
+    "justification": "Among the displayed Method M students, SRKL has the highest average and exceeds the teacher on the claimed subset of datasets.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c30.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r8.dolly > T1.r1.dolly, T1.r8.selfinst > T1.r1.selfinst, T1.r8.vicuna > T1.r1.vicuna, T1.r8.sni > T1.r1.sni, T1.r8.unni > T1.r1.unni)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c30.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets (DollyEval, SelfInst, VicunaEval, S-NI, UnNI)",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c31",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r8.vicuna",
+     "T1.r1.vicuna"
+    ],
+    "justification": "T1 shows SRKL plus Method M above the teacher on VicunaEval; exact scores are checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c31.n1",
+      "source_type": "cell",
+      "expression": "T1.r8.vicuna",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.vicuna",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c32",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r8.sni",
+     "T1.r1.sni"
+    ],
+    "justification": "T1 shows SRKL plus Method M above the teacher on S-NI; exact scores are checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c32.n1",
+      "source_type": "cell",
+      "expression": "T1.r8.sni",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c32.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.sni",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c33",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r8"
+    ],
+    "justification": "The teacher exceeds SRKL plus Method M on DollyEval, SelfInst, and UnNI; the exact count is checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c33.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r1.dolly > T1.r8.dolly, T1.r1.selfinst > T1.r8.selfinst, T1.r1.vicuna > T1.r8.vicuna, T1.r1.sni > T1.r8.sni, T1.r1.unni > T1.r8.unni)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c34",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r8.avg",
+     "T1.r1.avg"
+    ],
+    "justification": "T1 shows SRKL plus Method M below the teacher on the five-dataset average; exact scores are checked separately.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c34.n1",
+      "source_type": "cell",
+      "expression": "T1.r8.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c34.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c35",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8",
+     "exp1/cmp1"
+    ],
+    "justification": "Every displayed dataset score increases when Method M is added to GKD, KLD, or SRKL.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   }
+  ]
+ }
+}

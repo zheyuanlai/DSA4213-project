@@ -48,7 +48,7 @@ def _claims(fam: str, only: list[str] | None):
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("stage", choices=("packets", "checklists", "extract", "verify", "coverage", "align", "adjudicate",
-                                      "consensus", "score"))
+                                      "consensus", "score", "report"))
     ap.add_argument("--families", default=",".join(FAMS))
     ap.add_argument("--judge", choices=("A", "B"), default="A")
     ap.add_argument("--only", default="")
@@ -56,6 +56,18 @@ def main(argv: list[str] | None = None) -> int:
     a = ap.parse_args(argv)
     fams = [f for f in a.families.split(",") if f]
     only = [x for x in a.only.split(",") if x] or None
+    if a.stage == "report":
+        import json
+        from evaluation import extended_consensus as C
+        from evaluation import extended_report as R
+        out = ROOT / "results" / "ai_extended"
+        for fam in fams:
+            (out / fam).mkdir(parents=True, exist_ok=True)
+            (out / fam / "agreement.json").write_text(json.dumps(C.agreement_stats(load_family(fam)), indent=1))
+        (out / "provenance.json").write_text(json.dumps(C.provenance(), indent=1))
+        R.main()
+        print(f"report written to {out.relative_to(ROOT)}; Judge B spend ${claude_spent():.4f}")
+        return 0
     for fam in fams:
         judge = JUDGE_A if a.judge == "A" else judge_b_for(fam, a.stage)
         print(f"== {a.stage} [{fam}] judge {judge.name} ({judge.model})" if a.stage in ("verify", "coverage", "align")

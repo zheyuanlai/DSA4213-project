@@ -252,8 +252,12 @@ def compare_texts(recs: dict[str, dict[str, dict[str, Any]]], pairs: list[tuple[
 
 
 # ----------------------------------------------------------------------------- completeness (real, diagnostic)
-def completeness(fam: str, data: FamilyData, checklists: dict[str, Any], recs: dict[str, dict[str, dict[str, Any]]]) -> dict[str, Any]:
-    cov = {(r["text_id"], r["item_id"]): r["status"] for r in load_jsonl(EXT / "consensus" / f"{fam}_coverage.jsonl")}
+def completeness(fam: str, data: FamilyData, checklists: dict[str, Any], recs: dict[str, dict[str, dict[str, Any]]],
+                 coverage_source: str = "consensus") -> dict[str, Any]:
+    """Finding completeness. ``coverage_source`` = consensus (primary) or A / B (single-judge sensitivity)."""
+    path = EXT / "consensus" / f"{fam}_coverage.jsonl" if coverage_source == "consensus" else \
+        EXT / "readings" / f"{fam}_coverage_{coverage_source}.jsonl"
+    cov = {(r["text_id"], r["item_id"]): r["status"] for r in load_jsonl(path)}
     from evaluation.extended_pipeline import coverage_items
     per: dict[str, dict[str, dict[str, Any]]] = {}
     failed: dict[str, set[str]] = {}
@@ -295,9 +299,8 @@ def completeness(fam: str, data: FamilyData, checklists: dict[str, Any], recs: d
                        "denominator": sum(r[den] for r in d.values())}
             # failure-inclusive: a failed run reports nothing
             if failed.get(cond):
-                tot_items = {c: next(iter(per.values())).get(c, {}).get(den, 0) for c in failed[cond]}
                 nn = {**{k: r[num] for k, r in d.items()}, **{c: 0 for c in failed[cond]}}
-                dd = {**{k: r[den] for k, r in d.items()}, **{c: max(tot_items.get(c, 0), _items_den(items_by_case[c], den)) for c in failed[cond]}}
+                dd = {**{k: r[den] for k, r in d.items()}, **{c: _items_den(items_by_case[c], den) for c in failed[cond]}}
                 v2, lo2, hi2 = rate_ci(nn, dd)
                 s[name + "_ITT"] = {"value": v2, "ci": [lo2, hi2]}
         s["paragraph_completeness_core"] = _mean([r["complete_core"] for r in d.values()])
@@ -418,6 +421,47 @@ def efficiency(data: FamilyData, quality: dict[str, dict[str, Optional[float]]],
     return out
 
 
+# ----------------------------------------------------------------------------- single-judge sensitivity
+def single_judge_claims(fam: str, data: FamilyData, judge: str) -> list[dict[str, Any]]:
+    """Claim records built from ONE judge's readings (no adjudication); numbers still checked by code.
+
+    Unusable mappings are ignored (not counted as errors). Used only as a robustness check of conclusions
+    against the choice of judge and against an adjudicator that shares Judge A's model family."""
+    raw = load_jsonl(EXT / "claims" / f"{fam}.jsonl")
+    rd = {r["claim_id"]: r for r in load_jsonl(EXT / "readings" / f"{fam}_verify_{judge}.jsonl")}
+    evs: dict[str, EvidenceValues] = {}
+    out = []
+    for c in raw:
+        ev = evs.setdefault(c["alias"], EvidenceValues.from_package(data.cases[{v: k for k, v in data.aliases.items()}[c["alias"]]].package))
+        r = rd[c["claim_id"]]
+        nums = []
+        for n in c["numbers"]:
+            v = ac.check_number(n, r["numbers"].get(n["number_id"]), ev)
+            nums.append({**n, "mapping": r["numbers"].get(n["number_id"]), "verdict": v.status, "expected": v.expected,
+                         "tolerance": v.tolerance, "operands": list(v.operands), "alt_correct_mappings": []})
+        num_err = any(x["verdict"] not in ("CORRECT", "INVALID_MAPPING") for x in nums)
+        label = "NUMERIC_ERROR" if num_err else r["label"]
+        fe = None if label == "NOT_VERIFIABLE" else bool(num_err or r["entailment"] in ("NOT_ENTAILED", "CONTRADICTED"))
+        out.append({"claim_id": c["claim_id"], "unit_id": c["unit_id"], "alias": c["alias"], "claim_type": c["claim_type"],
+                    "result_claim": c["claim_type"] not in ac.NON_RESULT_TYPES, "final_label": label, "factual_error": fe,
+                    "numbers": nums})
+    return out
+
+
+def single_judge_sensitivity(fam: str, data: FamilyData, checklists, clusters) -> dict[str, Any]:
+    out = {}
+    keep = ("support_rate", "factual_error_rate", "overstated_rate", "understated_rate", "numeric_precision",
+            "fully_supported")
+    for j in ("A", "B"):
+        recs = text_records(fam, data, single_judge_claims(fam, data, j), checklists)
+        summ = summarize_texts(recs)
+        comps = compare_texts(recs, COMPARISONS[fam], clusters)
+        out[j] = {"summary": {c: {k: (v[k]["value"] if isinstance(v[k], dict) else v[k]) for k in keep} for c, v in summ.items()},
+                  "comparisons": {n: {k: {kk: comp[k].get(kk) for kk in ("diff", "ci_low", "ci_high", "n", "degenerate")}
+                                      for k in keep} for n, comp in comps.items()}}
+    return out
+
+
 # ----------------------------------------------------------------------------- family scoring
 def score_family(fam: str) -> dict[str, Any]:
     data = load_family(fam)
@@ -447,6 +491,14 @@ def score_family(fam: str) -> dict[str, Any]:
         res["metric_a"] = metric_a(atomic_clean)
     else:
         res["completeness"] = completeness(fam, data, checklists, {k: v for k, v in recs.items()})
+        res["completeness_single_judge"] = {}
+        for j in ("A", "B"):
+            cj = completeness(fam, data, checklists, recs, coverage_source=j)
+            res["completeness_single_judge"][j] = {
+                "summary": {c: {k: v[k]["value"] for k in v if isinstance(v[k], dict) and "value" in v[k]}
+                            for c, v in cj["summary"].items()},
+                "comparisons": {n: {k: {kk: x.get(kk) for kk in ("diff", "ci_low", "ci_high", "n")}
+                                    for k, x in comp.items() if isinstance(x, dict)} for n, comp in cj["comparisons"].items()}}
         for r in load_jsonl(EXT / "consensus" / f"{fam}_coverage.jsonl"):
             if r["status"] == "CORRECT" and not r["item_id"].startswith("G"):
                 coverage_sets.setdefault(r["text_id"], set()).add(r["item_id"])
@@ -469,6 +521,7 @@ def score_family(fam: str) -> dict[str, Any]:
             res["completeness"]["spearman_recall_readability"] = _spearman([p["recall"] for p in pts], [p["readability"] for p in pts])
             sp = [p for p in pts if p["support_rate"] is not None]
             res["completeness"]["spearman_recall_support"] = _spearman([p["recall"] for p in sp], [p["support_rate"] for p in sp])
+    res["single_judge_sensitivity"] = single_judge_sensitivity(fam, data, checklists, clusters)
     res["edits"] = edits(fam, data, claims, recs, coverage_sets)
     res["retrieval"] = retrieval(fam, data, claims)
     quality = {}

@@ -1,0 +1,836 @@
+{
+ "status": "ok",
+ "stage": "verify",
+ "item_key": "real_RP-09",
+ "judge": "B",
+ "backend": "claude",
+ "model_requested": "claude-sonnet-5-5",
+ "settings": {},
+ "prompt_name": "verify",
+ "prompt_template_sha256": "3026925c674e91a9b072596136da2a8052797e9cb6d4bcf36fe28952df482d85",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "4ac795705add2ba6c0008e481a7f9a0611fb89b9ca246ea8403ec6ab1e3dc20e",
+ "cache_key": "59d75889599c90c105960e824307225da252e1d22448e5c6e7265eee8f3f66b6",
+ "started_at": "2026-10-18T10:40:44Z",
+ "finished_at": "2026-10-18T10:41:35Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"claims\":[\n{\"claim_id\":\"c1\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"wrong_direction\",\"evidence_ids\":[\"T2.r3\",\"T2.r4\",\"T2.r5\"],\"justification\":\"Removing the temperature schedule hurts most (T2.r3 below KLD); removing the ratio schedule keeps most of the gain (T2.r4). Temperature appears the main driver.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c2\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"wrong_direction\",\"evidence_ids\":[\"T2.r4\",\"T2.r1\"],\"justification\":\"The temperature-only variant (w/o ratio, T2.r4) scores well above KLD on all five datasets, not close to or below it.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c3\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"misattributed_variant\",\"evidence_ids\":[\"T2.r3.dolly\",\"T2.r4.dolly\",\"T2.r1.dolly\"],\"justification\":\"22.04 belongs to the w/o temp. variant (T2.r3); the w/o ratio variant scores 24.33 on DollyEval.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c3.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r3.dolly\",\"quote\":null,\"scale\":1},{\"number_id\":\"c3.n2\",\"source_type\":\"cell\",\"expression\":\"T2.r1.dolly\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c4\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"misattributed_variant\",\"evidence_ids\":[\"T2.r3.selfinst\",\"T2.r4.selfinst\",\"T2.r1.selfinst\"],\"justification\":\"8.70 belongs to the w/o temp. variant (T2.r3); the w/o ratio variant scores 11.47 on SelfInst.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c4.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r3.selfinst\",\"quote\":null,\"scale\":1},{\"number_id\":\"c4.n2\",\"source_type\":\"cell\",\"expression\":\"T2.r1.selfinst\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c5\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"wrong_direction\",\"evidence_ids\":[\"T2.r3\",\"T2.r1\"],\"justification\":\"The w/o temp. variant (ratio kept, T2.r3) falls near or below plain KLD, so it does not retain most of the gain.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c6\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"misattributed_variant\",\"evidence_ids\":[\"T2.r3.dolly\",\"T2.r4.dolly\"],\"justification\":\"24.33 is the w/o ratio variant (T2.r4); the w/o temp. variant scores 22.04.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c6.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r4.dolly\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c7\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"error_subtype\":\"misattributed_variant\",\"evidence_ids\":[\"T2.r3.unni\",\"T2.r4.unni\"],\"justification\":\"23.87 is the w/o ratio variant (T2.r4); the w/o temp. variant scores 21.77 on UnNI.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c7.n1\",\"source_type\":\"cell\",\"expression\":\"T2.r4.unni\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c8\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Only GPT-2 results are included; the OPT table exists in the source but is not in the package.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c9\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Three KD losses (GKD, KLD, SRKL) are evaluated with and without Method M in T1.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c9.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c10\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Evaluation uses five instruction-following sets.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c10.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets\",\"scale\":1}]},\n{\"claim_id\":\"c11\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"The package reports no statistical tests.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c12\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"No tests or standard deviations are reported, so consistency cannot be formally established.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c13\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"No variance or tests are reported, so the size of the improvements cannot be formally established.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c14\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3.avg\",\"T1.r4.avg\"],\"justification\":\"GKD average rises from 20.17 to 22.51.\",\"confidence\":\"high\",\"extraction_flag\":\"NOT_ATOMIC\",\"numbers\":[{\"number_id\":\"c14.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets\",\"scale\":1},{\"number_id\":\"c14.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r4.avg - T1.r3.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.avg - T1.r5.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c14.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg - T1.r7.avg\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c15\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r5.avg\",\"T1.r6.avg\"],\"justification\":\"KLD average rises from 18.10 to 19.70.\",\"confidence\":\"high\",\"extraction_flag\":\"NOT_ATOMIC\",\"numbers\":[{\"number_id\":\"c15.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets\",\"scale\":1},{\"number_id\":\"c15.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r4.avg - T1.r3.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.avg - T1.r5.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg - T1.r7.avg\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c16\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r7.avg\",\"T1.r8.avg\"],\"justification\":\"SRKL average rises from 21.44 to 22.94.\",\"confidence\":\"high\",\"extraction_flag\":\"NOT_ATOMIC\",\"numbers\":[{\"number_id\":\"c16.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets\",\"scale\":1},{\"number_id\":\"c16.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r4.avg - T1.r3.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r6.avg - T1.r5.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n5\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg - T1.r7.avg\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c17\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"],\"justification\":\"Method M scores are higher on all five datasets for GKD, KLD and SRKL, as seed means; no tests.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c18\",\"label\":\"UNDERSTATED\",\"entailment\":\"ENTAILED\",\"error_subtype\":\"understated_scope\",\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"],\"justification\":\"Improvement occurs on all individual datasets for each loss, not just most.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c19\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"T1 note: no significance tests reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c20\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"T1 note: no standard deviations reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c21\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Without tests, significance cannot be established.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c22\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Without variance across runs, consistency cannot be established.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c23\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Package evidence covers only GPT-2 students.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c24\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Five evaluation sets are used.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c24.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets\",\"scale\":1}]},\n{\"claim_id\":\"c25\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r5\",\"T2.r1\",\"T2.r2\",\"T2.r3\",\"T2.r4\"],\"justification\":\"Full Method M has the highest value on all five datasets in T2.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c25.n1\",\"source_type\":\"cell\",\"expression\":\"count(T2.r5.dolly > T2.r4.dolly, T2.r5.selfinst > T2.r4.selfinst, T2.r5.vicuna > T2.r4.vicuna, T2.r5.sni > T2.r4.sni, T2.r5.unni > T2.r4.unni)\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c26\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r4\",\"T2.r5\"],\"justification\":\"The w/o ratio variant is below full Method M on all five datasets.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c26.n1\",\"source_type\":\"cell\",\"expression\":\"count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c27\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T2.r1\",\"T2.r2\"],\"justification\":\"Curriculum-only variant averages about 17.85 vs 18.10 for KLD; close, slightly lower.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c28\",\"label\":\"UNDERSTATED\",\"entailment\":\"ENTAILED\",\"error_subtype\":\"understated_count\",\"evidence_ids\":[\"T2.r4\",\"T2.r5\"],\"justification\":\"The temperature-only variant is below full on all five datasets, not four.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c28.n1\",\"source_type\":\"cell\",\"expression\":\"count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c28.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets\",\"scale\":1}]},\n{\"claim_id\":\"c29\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\"],\"justification\":\"Teacher GPT-2 1.5B and GPT-2 120M student; only this setting is in the package.\",\"confidence\":\"medium\",\"extraction_flag\":\"OK\",\"numbers\":[]},\n{\"claim_id\":\"c30\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r8\"],\"justification\":\"SRKL+M beats the teacher on VicunaEval and S-NI only.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c30.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r8.dolly > T1.r1.dolly, T1.r8.selfinst > T1.r1.selfinst, T1.r8.vicuna > T1.r1.vicuna, T1.r8.sni > T1.r1.sni, T1.r8.unni > T1.r1.unni)\",\"quote\":null,\"scale\":1},{\"number_id\":\"c30.n2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"five instruction-following sets\",\"scale\":1}]},\n{\"claim_id\":\"c31\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r8.vicuna\",\"T1.r1.vicuna\"],\"justification\":\"16.66 vs teacher 16.47 on VicunaEval.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c31.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r8.vicuna\",\"quote\":null,\"scale\":1},{\"number_id\":\"c31.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.vicuna\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c32\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r8.sni\",\"T1.r1.sni\"],\"justification\":\"28.49 vs teacher 27.66 on S-NI.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c32.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r8.sni\",\"quote\":null,\"scale\":1},{\"number_id\":\"c32.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.sni\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c33\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1\",\"T1.r8\"],\"justification\":\"SRKL+M is below the teacher on DollyEval, SelfInst and UnNI.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c33.n1\",\"source_type\":\"cell\",\"expression\":\"count(T1.r8.dolly < T1.r1.dolly, T1.r8.selfinst < T1.r1.selfinst, T1.r8.unni < T1.r1.unni)\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c34\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r8.avg\",\"T1.r1.avg\"],\"justification\":\"Average 22.94 vs teacher 23.44.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c34.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r8.avg\",\"quote\":null,\"scale\":1},{\"number_id\":\"c34.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.avg\",\"quote\":null,\"scale\":1}]},\n{\"claim_id\":\"c35\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"],\"justification\":\"Method M scores exceed the baseline on every dataset for all three losses.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]}\n]}",
+ "usage": {
+  "input_tokens": 2,
+  "cache_creation_input_tokens": 12086,
+  "cache_read_input_tokens": 0,
+  "output_tokens": 9027,
+  "output_tokens_details": {
+   "thinking_tokens": 2169
+  },
+  "server_tool_use": {
+   "web_search_requests": 0,
+   "web_fetch_requests": 0
+  },
+  "service_tier": "standard",
+  "cache_creation": {
+   "ephemeral_1h_input_tokens": 12086,
+   "ephemeral_5m_input_tokens": 0
+  },
+  "inference_geo": "global",
+  "iterations": [
+   {
+    "input_tokens": 2,
+    "output_tokens": 9027,
+    "cache_read_input_tokens": 0,
+    "cache_creation_input_tokens": 12086,
+    "cache_creation": {
+     "ephemeral_5m_input_tokens": 0,
+     "ephemeral_1h_input_tokens": 12086
+    },
+    "type": "message"
+   }
+  ],
+  "speed": "standard",
+  "fallback_credit": null
+ },
+ "cost_usd": 0.13861800000000002,
+ "latency_s": 50.7,
+ "model_reported": "claude-sonnet-5-5",
+ "model_report_source": "modelUsage",
+ "tool_use_detected": [],
+ "cli_version": "2.1.296 (Claude Code)",
+ "num_turns": 1,
+ "parsed": {
+  "claims": [
+   {
+    "claim_id": "c1",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "wrong_direction",
+    "evidence_ids": [
+     "T2.r3",
+     "T2.r4",
+     "T2.r5"
+    ],
+    "justification": "Removing the temperature schedule hurts most (T2.r3 below KLD); removing the ratio schedule keeps most of the gain (T2.r4). Temperature appears the main driver.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c2",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "wrong_direction",
+    "evidence_ids": [
+     "T2.r4",
+     "T2.r1"
+    ],
+    "justification": "The temperature-only variant (w/o ratio, T2.r4) scores well above KLD on all five datasets, not close to or below it.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c3",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "misattributed_variant",
+    "evidence_ids": [
+     "T2.r3.dolly",
+     "T2.r4.dolly",
+     "T2.r1.dolly"
+    ],
+    "justification": "22.04 belongs to the w/o temp. variant (T2.r3); the w/o ratio variant scores 24.33 on DollyEval.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c3.n1",
+      "source_type": "cell",
+      "expression": "T2.r3.dolly",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c3.n2",
+      "source_type": "cell",
+      "expression": "T2.r1.dolly",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c4",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "misattributed_variant",
+    "evidence_ids": [
+     "T2.r3.selfinst",
+     "T2.r4.selfinst",
+     "T2.r1.selfinst"
+    ],
+    "justification": "8.70 belongs to the w/o temp. variant (T2.r3); the w/o ratio variant scores 11.47 on SelfInst.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c4.n1",
+      "source_type": "cell",
+      "expression": "T2.r3.selfinst",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c4.n2",
+      "source_type": "cell",
+      "expression": "T2.r1.selfinst",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c5",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "wrong_direction",
+    "evidence_ids": [
+     "T2.r3",
+     "T2.r1"
+    ],
+    "justification": "The w/o temp. variant (ratio kept, T2.r3) falls near or below plain KLD, so it does not retain most of the gain.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c6",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "misattributed_variant",
+    "evidence_ids": [
+     "T2.r3.dolly",
+     "T2.r4.dolly"
+    ],
+    "justification": "24.33 is the w/o ratio variant (T2.r4); the w/o temp. variant scores 22.04.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c6.n1",
+      "source_type": "cell",
+      "expression": "T2.r4.dolly",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c7",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "error_subtype": "misattributed_variant",
+    "evidence_ids": [
+     "T2.r3.unni",
+     "T2.r4.unni"
+    ],
+    "justification": "23.87 is the w/o ratio variant (T2.r4); the w/o temp. variant scores 21.77 on UnNI.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c7.n1",
+      "source_type": "cell",
+      "expression": "T2.r4.unni",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c8",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Only GPT-2 results are included; the OPT table exists in the source but is not in the package.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c9",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Three KD losses (GKD, KLD, SRKL) are evaluated with and without Method M in T1.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c9.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c10",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Evaluation uses five instruction-following sets.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c10.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c11",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "The package reports no statistical tests.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c12",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "No tests or standard deviations are reported, so consistency cannot be formally established.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c13",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "No variance or tests are reported, so the size of the improvements cannot be formally established.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c14",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r4.avg"
+    ],
+    "justification": "GKD average rises from 20.17 to 22.51.",
+    "confidence": "high",
+    "extraction_flag": "NOT_ATOMIC",
+    "numbers": [
+     {
+      "number_id": "c14.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets",
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n3",
+      "source_type": "cell",
+      "expression": "T1.r4.avg - T1.r3.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.avg - T1.r5.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n5",
+      "source_type": "cell",
+      "expression": "T1.r8.avg - T1.r7.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c15",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r5.avg",
+     "T1.r6.avg"
+    ],
+    "justification": "KLD average rises from 18.10 to 19.70.",
+    "confidence": "high",
+    "extraction_flag": "NOT_ATOMIC",
+    "numbers": [
+     {
+      "number_id": "c15.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets",
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n3",
+      "source_type": "cell",
+      "expression": "T1.r4.avg - T1.r3.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.avg - T1.r5.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n5",
+      "source_type": "cell",
+      "expression": "T1.r8.avg - T1.r7.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c16",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r7.avg",
+     "T1.r8.avg"
+    ],
+    "justification": "SRKL average rises from 21.44 to 22.94.",
+    "confidence": "high",
+    "extraction_flag": "NOT_ATOMIC",
+    "numbers": [
+     {
+      "number_id": "c16.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r4.avg > T1.r3.avg, T1.r6.avg > T1.r5.avg, T1.r8.avg > T1.r7.avg)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets",
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n3",
+      "source_type": "cell",
+      "expression": "T1.r4.avg - T1.r3.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n4",
+      "source_type": "cell",
+      "expression": "T1.r6.avg - T1.r5.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n5",
+      "source_type": "cell",
+      "expression": "T1.r8.avg - T1.r7.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c17",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ],
+    "justification": "Method M scores are higher on all five datasets for GKD, KLD and SRKL, as seed means; no tests.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c18",
+    "label": "UNDERSTATED",
+    "entailment": "ENTAILED",
+    "error_subtype": "understated_scope",
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ],
+    "justification": "Improvement occurs on all individual datasets for each loss, not just most.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c19",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "T1 note: no significance tests reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c20",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "T1 note: no standard deviations reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c21",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Without tests, significance cannot be established.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c22",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Without variance across runs, consistency cannot be established.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c23",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Package evidence covers only GPT-2 students.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c24",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Five evaluation sets are used.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c24.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c25",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r5",
+     "T2.r1",
+     "T2.r2",
+     "T2.r3",
+     "T2.r4"
+    ],
+    "justification": "Full Method M has the highest value on all five datasets in T2.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c25.n1",
+      "source_type": "cell",
+      "expression": "count(T2.r5.dolly > T2.r4.dolly, T2.r5.selfinst > T2.r4.selfinst, T2.r5.vicuna > T2.r4.vicuna, T2.r5.sni > T2.r4.sni, T2.r5.unni > T2.r4.unni)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c26",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r4",
+     "T2.r5"
+    ],
+    "justification": "The w/o ratio variant is below full Method M on all five datasets.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c26.n1",
+      "source_type": "cell",
+      "expression": "count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c27",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2"
+    ],
+    "justification": "Curriculum-only variant averages about 17.85 vs 18.10 for KLD; close, slightly lower.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c28",
+    "label": "UNDERSTATED",
+    "entailment": "ENTAILED",
+    "error_subtype": "understated_count",
+    "evidence_ids": [
+     "T2.r4",
+     "T2.r5"
+    ],
+    "justification": "The temperature-only variant is below full on all five datasets, not four.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c28.n1",
+      "source_type": "cell",
+      "expression": "count(T2.r4.dolly < T2.r5.dolly, T2.r4.selfinst < T2.r5.selfinst, T2.r4.vicuna < T2.r5.vicuna, T2.r4.sni < T2.r5.sni, T2.r4.unni < T2.r5.unni)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c28.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c29",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1"
+    ],
+    "justification": "Teacher GPT-2 1.5B and GPT-2 120M student; only this setting is in the package.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c30",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r8"
+    ],
+    "justification": "SRKL+M beats the teacher on VicunaEval and S-NI only.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c30.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r8.dolly > T1.r1.dolly, T1.r8.selfinst > T1.r1.selfinst, T1.r8.vicuna > T1.r1.vicuna, T1.r8.sni > T1.r1.sni, T1.r8.unni > T1.r1.unni)",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c30.n2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "five instruction-following sets",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c31",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r8.vicuna",
+     "T1.r1.vicuna"
+    ],
+    "justification": "16.66 vs teacher 16.47 on VicunaEval.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c31.n1",
+      "source_type": "cell",
+      "expression": "T1.r8.vicuna",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c31.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.vicuna",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c32",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r8.sni",
+     "T1.r1.sni"
+    ],
+    "justification": "28.49 vs teacher 27.66 on S-NI.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c32.n1",
+      "source_type": "cell",
+      "expression": "T1.r8.sni",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c32.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.sni",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c33",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r8"
+    ],
+    "justification": "SRKL+M is below the teacher on DollyEval, SelfInst and UnNI.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c33.n1",
+      "source_type": "cell",
+      "expression": "count(T1.r8.dolly < T1.r1.dolly, T1.r8.selfinst < T1.r1.selfinst, T1.r8.unni < T1.r1.unni)",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c34",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r8.avg",
+     "T1.r1.avg"
+    ],
+    "justification": "Average 22.94 vs teacher 23.44.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c34.n1",
+      "source_type": "cell",
+      "expression": "T1.r8.avg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c34.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.avg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c35",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ],
+    "justification": "Method M scores exceed the baseline on every dataset for all three losses.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   }
+  ]
+ }
+}

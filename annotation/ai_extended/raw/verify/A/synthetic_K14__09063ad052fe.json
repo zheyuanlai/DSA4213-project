@@ -1,0 +1,918 @@
+{
+ "status": "ok",
+ "stage": "verify",
+ "item_key": "synthetic_K14",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "verify",
+ "prompt_template_sha256": "3026925c674e91a9b072596136da2a8052797e9cb6d4bcf36fe28952df482d85",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "d580bd3d1c27ff70b1384f2f665b0bfc275fb48c02e8b4028ffa2d18d6244c10",
+ "cache_key": "09063ad052fe276f4cf958b3fe61e74ca8e8b101b3f2d6e9182ff0ddf9f6ed42",
+ "started_at": "2026-10-18T10:31:31Z",
+ "finished_at": "2026-10-18T10:32:08Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"claims\":[{\"claim_id\":\"c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.pass1\",\"T1.r2.pass1\",\"T1.r3.pass1\"],\"justification\":\"Both fine-tuned recipes’ pass@1 means exceed the base model’s value in T1.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c1.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c1.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r3.compile\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.compile\",\"T1.r2.compile\",\"T1.r3.compile\"],\"justification\":\"Both fine-tuned recipes’ compile-rate means exceed the base model’s value in T1.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c2.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c2.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r3.compile\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c3\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1/cmp1\",\"exp1/cmp2\",\"T1.r3\"],\"justification\":\"The two pre-specified endpoints compare Ridgeline-FT with Plainweave-FT; neither comparison involves Fernleaf-1.3B.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c4\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S1\",\"S2\",\"T1.r3\"],\"justification\":\"S1 and S2 test only Ridgeline-FT against Plainweave-FT; no test against Fernleaf-1.3B is reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c5\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.pass1\",\"T1.r2.pass1\",\"S1\"],\"justification\":\"T1 and S1 establish a positive paired pass@1 advantage for Ridgeline-FT on Quillbench.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c5.n1\",\"source_type\":\"test\",\"expression\":\"(S1.ci_low + S1.ci_high) / 2\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c6\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S1\"],\"justification\":\"S1 reports the paired test, positive confidence interval, and Holm-adjusted p-value below the stated alpha.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c6.n1\",\"source_type\":\"test\",\"expression\":\"(S1.ci_low + S1.ci_high) / 2\",\"quote\":null,\"scale\":1},{\"number_id\":\"c6.n2\",\"source_type\":\"test\",\"expression\":\"(1 - S1.alpha) * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c6.n3\",\"source_type\":\"test\",\"expression\":\"S1.ci_low\",\"quote\":null,\"scale\":1},{\"number_id\":\"c6.n4\",\"source_type\":\"test\",\"expression\":\"S1.ci_high\",\"quote\":null,\"scale\":1},{\"number_id\":\"c6.n5\",\"source_type\":\"test\",\"expression\":\"S1.p_value\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c7\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1\",\"T1\",\"S1\",\"S2\"],\"justification\":\"The reported experiment, table, and tests all concern Quillbench; no other benchmark is evaluated.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c8\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1\"],\"justification\":\"The experimental setup states that evaluation used all 420 Quillbench problems, which were Python problems.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c8.n1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"Evaluation uses greedy decoding on all 420 Quillbench problems (Python, hidden unit tests).\",\"scale\":1}]},{\"claim_id\":\"c9\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"exp1\"],\"justification\":\"The experimental setup explicitly specifies greedy decoding for the Quillbench evaluation.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c10\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"exp1\"],\"justification\":\"Both fine-tuning recipes start from Fernleaf-1.3B, and T1 identifies it as the base model.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c11\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.pass1\",\"T1.r2.pass1\",\"S1\"],\"justification\":\"T1 reports the means and SDs over eight seeds, while S1 establishes the positive paired pass@1 difference.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c11.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c11.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.pass1.spread\",\"quote\":null,\"scale\":1},{\"number_id\":\"c11.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r2.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c11.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r2.pass1.spread\",\"quote\":null,\"scale\":1},{\"number_id\":\"c11.n5\",\"source_type\":\"test\",\"expression\":\"S1.n\",\"quote\":null,\"scale\":1},{\"number_id\":\"c11.n6\",\"source_type\":\"test\",\"expression\":\"(S1.ci_low + S1.ci_high) / 2\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c12\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S1\"],\"justification\":\"S1 reports this paired t-test and a Holm-adjusted p-value below alpha; its confidence interval is wholly positive.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c12.n1\",\"source_type\":\"test\",\"expression\":\"S1.statistic\",\"quote\":null,\"scale\":1},{\"number_id\":\"c12.n2\",\"source_type\":\"test\",\"expression\":\"S1.df\",\"quote\":null,\"scale\":1},{\"number_id\":\"c12.n3\",\"source_type\":\"test\",\"expression\":\"S1.p_value\",\"quote\":null,\"scale\":1},{\"number_id\":\"c12.n4\",\"source_type\":\"test\",\"expression\":\"(1 - S1.alpha) * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c12.n5\",\"source_type\":\"test\",\"expression\":\"S1.ci_low\",\"quote\":null,\"scale\":1},{\"number_id\":\"c12.n6\",\"source_type\":\"test\",\"expression\":\"S1.ci_high\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c13\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S1\"],\"justification\":\"S1 explicitly identifies the interval as unadjusted and reports the paired test and Holm-adjusted significance result.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c13.n1\",\"source_type\":\"test\",\"expression\":\"S1.statistic\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n2\",\"source_type\":\"test\",\"expression\":\"S1.df\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n3\",\"source_type\":\"test\",\"expression\":\"S1.p_value\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n4\",\"source_type\":\"test\",\"expression\":\"(1 - S1.alpha) * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n5\",\"source_type\":\"test\",\"expression\":\"S1.ci_low\",\"quote\":null,\"scale\":1},{\"number_id\":\"c13.n6\",\"source_type\":\"test\",\"expression\":\"S1.ci_high\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c14\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.compile\",\"T1.r2.compile\",\"S2\"],\"justification\":\"T1 and S2 establish a positive paired compile-rate advantage for Ridgeline-FT.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c14.n1\",\"source_type\":\"test\",\"expression\":\"(S2.ci_low + S2.ci_high) / 2\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c15\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S2\"],\"justification\":\"S2 reports a wholly positive confidence interval and a Holm-adjusted p-value below alpha for the paired compile-rate comparison.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c15.n1\",\"source_type\":\"test\",\"expression\":\"(S2.ci_low + S2.ci_high) / 2\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n2\",\"source_type\":\"test\",\"expression\":\"(1 - S2.alpha) * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n3\",\"source_type\":\"test\",\"expression\":\"S2.ci_low\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n4\",\"source_type\":\"test\",\"expression\":\"S2.ci_high\",\"quote\":null,\"scale\":1},{\"number_id\":\"c15.n5\",\"source_type\":\"test\",\"expression\":\"S2.p_value\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c16\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.pass1\",\"T1.r3.pass1\"],\"justification\":\"T1 reports a higher pass@1 value for Ridgeline-FT than for Fernleaf-1.3B.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c16.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c16.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r3.pass1\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c17\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2.pass1\",\"T1.r3.pass1\"],\"justification\":\"T1 reports a higher pass@1 value for Plainweave-FT than for Fernleaf-1.3B.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c17.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r2.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c17.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r3.pass1\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c18\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.compile\",\"T1.r3.compile\"],\"justification\":\"T1 reports a higher compile rate for Ridgeline-FT than for Fernleaf-1.3B.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c18.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.compile\",\"quote\":null,\"scale\":1},{\"number_id\":\"c18.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.compile\",\"quote\":null,\"scale\":1},{\"number_id\":\"c18.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r3.compile\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c19\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r2.compile\",\"T1.r3.compile\"],\"justification\":\"T1 reports a higher compile rate for Plainweave-FT than for Fernleaf-1.3B.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c19.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.compile\",\"quote\":null,\"scale\":1},{\"number_id\":\"c19.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r2.compile\",\"quote\":null,\"scale\":1},{\"number_id\":\"c19.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r3.compile\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c20\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"S1\",\"S2\"],\"justification\":\"T1 supplies raw results, while the only reported tests, S1 and S2, exclude comparisons with Fernleaf-1.3B.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c21\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S1\",\"S2\",\"T1.r3\"],\"justification\":\"S1 and S2 test only the fine-tuned recipes against each other; no base-model comparison test is reported.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c22\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.compile\",\"T1.r2.compile\",\"S2\"],\"justification\":\"T1 reports the compile-rate means and SDs, and S2 establishes a positive paired difference.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c22.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r1.compile\",\"quote\":null,\"scale\":1},{\"number_id\":\"c22.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r1.compile.spread\",\"quote\":null,\"scale\":1},{\"number_id\":\"c22.n3\",\"source_type\":\"cell\",\"expression\":\"T1.r2.compile\",\"quote\":null,\"scale\":1},{\"number_id\":\"c22.n4\",\"source_type\":\"cell\",\"expression\":\"T1.r2.compile.spread\",\"quote\":null,\"scale\":1},{\"number_id\":\"c22.n5\",\"source_type\":\"test\",\"expression\":\"(S2.ci_low + S2.ci_high) / 2\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c23\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S2\"],\"justification\":\"S2 reports the paired test, positive confidence interval, and Holm-adjusted p-value below the stated alpha.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c23.n1\",\"source_type\":\"test\",\"expression\":\"(S2.ci_low + S2.ci_high) / 2\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n2\",\"source_type\":\"test\",\"expression\":\"S2.statistic\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n3\",\"source_type\":\"test\",\"expression\":\"S2.df\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n4\",\"source_type\":\"test\",\"expression\":\"S2.p_value\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n5\",\"source_type\":\"test\",\"expression\":\"(1 - S2.alpha) * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n6\",\"source_type\":\"test\",\"expression\":\"S2.ci_low\",\"quote\":null,\"scale\":1},{\"number_id\":\"c23.n7\",\"source_type\":\"test\",\"expression\":\"S2.ci_high\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c24\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.pass1\",\"T1.r2.pass1\",\"T1.r3.pass1\"],\"justification\":\"Both fine-tuned recipes have higher raw pass@1 means than Fernleaf-1.3B in T1.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c24.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c24.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r3.compile\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c25\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1.r1.compile\",\"T1.r2.compile\",\"T1.r3.compile\"],\"justification\":\"Both fine-tuned recipes have higher raw compile-rate means than Fernleaf-1.3B in T1.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c25.n1\",\"source_type\":\"cell\",\"expression\":\"T1.r3.pass1\",\"quote\":null,\"scale\":1},{\"number_id\":\"c25.n2\",\"source_type\":\"cell\",\"expression\":\"T1.r3.compile\",\"quote\":null,\"scale\":1}]},{\"claim_id\":\"c26\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"T1\",\"S1\",\"S2\"],\"justification\":\"Only raw base-model results appear in T1; S1 and S2 test Ridgeline-FT against Plainweave-FT, not either recipe against the base.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[]},{\"claim_id\":\"c27\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"error_subtype\":null,\"evidence_ids\":[\"S2\"],\"justification\":\"S2 explicitly identifies the interval as unadjusted and reports the paired test and Holm-adjusted significance result.\",\"confidence\":\"high\",\"extraction_flag\":\"OK\",\"numbers\":[{\"number_id\":\"c27.n1\",\"source_type\":\"test\",\"expression\":\"(S2.ci_low + S2.ci_high) / 2\",\"quote\":null,\"scale\":1},{\"number_id\":\"c27.n2\",\"source_type\":\"test\",\"expression\":\"S2.statistic\",\"quote\":null,\"scale\":1},{\"number_id\":\"c27.n3\",\"source_type\":\"test\",\"expression\":\"S2.df\",\"quote\":null,\"scale\":1},{\"number_id\":\"c27.n4\",\"source_type\":\"test\",\"expression\":\"S2.p_value\",\"quote\":null,\"scale\":1},{\"number_id\":\"c27.n5\",\"source_type\":\"test\",\"expression\":\"(1 - S2.alpha) * 100\",\"quote\":null,\"scale\":1},{\"number_id\":\"c27.n6\",\"source_type\":\"test\",\"expression\":\"S2.ci_low\",\"quote\":null,\"scale\":1},{\"number_id\":\"c27.n7\",\"source_type\":\"test\",\"expression\":\"S2.ci_high\",\"quote\":null,\"scale\":1}]}]}",
+ "usage": {
+  "input_tokens": 23944,
+  "cached_input_tokens": 14976,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 5916,
+  "reasoning_output_tokens": 1661
+ },
+ "cost_usd": null,
+ "latency_s": 36.8,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "claims": [
+   {
+    "claim_id": "c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r2.pass1",
+     "T1.r3.pass1"
+    ],
+    "justification": "Both fine-tuned recipes’ pass@1 means exceed the base model’s value in T1.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c1.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c1.n2",
+      "source_type": "cell",
+      "expression": "T1.r3.compile",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.compile",
+     "T1.r2.compile",
+     "T1.r3.compile"
+    ],
+    "justification": "Both fine-tuned recipes’ compile-rate means exceed the base model’s value in T1.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c2.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c2.n2",
+      "source_type": "cell",
+      "expression": "T1.r3.compile",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c3",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1/cmp1",
+     "exp1/cmp2",
+     "T1.r3"
+    ],
+    "justification": "The two pre-specified endpoints compare Ridgeline-FT with Plainweave-FT; neither comparison involves Fernleaf-1.3B.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c4",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "T1.r3"
+    ],
+    "justification": "S1 and S2 test only Ridgeline-FT against Plainweave-FT; no test against Fernleaf-1.3B is reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c5",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r2.pass1",
+     "S1"
+    ],
+    "justification": "T1 and S1 establish a positive paired pass@1 advantage for Ridgeline-FT on Quillbench.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c5.n1",
+      "source_type": "test",
+      "expression": "(S1.ci_low + S1.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c6",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 reports the paired test, positive confidence interval, and Holm-adjusted p-value below the stated alpha.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c6.n1",
+      "source_type": "test",
+      "expression": "(S1.ci_low + S1.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c6.n2",
+      "source_type": "test",
+      "expression": "(1 - S1.alpha) * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c6.n3",
+      "source_type": "test",
+      "expression": "S1.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c6.n4",
+      "source_type": "test",
+      "expression": "S1.ci_high",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c6.n5",
+      "source_type": "test",
+      "expression": "S1.p_value",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c7",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1",
+     "T1",
+     "S1",
+     "S2"
+    ],
+    "justification": "The reported experiment, table, and tests all concern Quillbench; no other benchmark is evaluated.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c8",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1"
+    ],
+    "justification": "The experimental setup states that evaluation used all 420 Quillbench problems, which were Python problems.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c8.n1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "Evaluation uses greedy decoding on all 420 Quillbench problems (Python, hidden unit tests).",
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c9",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "exp1"
+    ],
+    "justification": "The experimental setup explicitly specifies greedy decoding for the Quillbench evaluation.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c10",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "exp1"
+    ],
+    "justification": "Both fine-tuning recipes start from Fernleaf-1.3B, and T1 identifies it as the base model.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c11",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r2.pass1",
+     "S1"
+    ],
+    "justification": "T1 reports the means and SDs over eight seeds, while S1 establishes the positive paired pass@1 difference.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c11.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.pass1.spread",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n3",
+      "source_type": "cell",
+      "expression": "T1.r2.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n4",
+      "source_type": "cell",
+      "expression": "T1.r2.pass1.spread",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n5",
+      "source_type": "test",
+      "expression": "S1.n",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n6",
+      "source_type": "test",
+      "expression": "(S1.ci_low + S1.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c12",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 reports this paired t-test and a Holm-adjusted p-value below alpha; its confidence interval is wholly positive.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c12.n1",
+      "source_type": "test",
+      "expression": "S1.statistic",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c12.n2",
+      "source_type": "test",
+      "expression": "S1.df",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c12.n3",
+      "source_type": "test",
+      "expression": "S1.p_value",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c12.n4",
+      "source_type": "test",
+      "expression": "(1 - S1.alpha) * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c12.n5",
+      "source_type": "test",
+      "expression": "S1.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c12.n6",
+      "source_type": "test",
+      "expression": "S1.ci_high",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c13",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 explicitly identifies the interval as unadjusted and reports the paired test and Holm-adjusted significance result.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c13.n1",
+      "source_type": "test",
+      "expression": "S1.statistic",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n2",
+      "source_type": "test",
+      "expression": "S1.df",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n3",
+      "source_type": "test",
+      "expression": "S1.p_value",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n4",
+      "source_type": "test",
+      "expression": "(1 - S1.alpha) * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n5",
+      "source_type": "test",
+      "expression": "S1.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c13.n6",
+      "source_type": "test",
+      "expression": "S1.ci_high",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c14",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.compile",
+     "T1.r2.compile",
+     "S2"
+    ],
+    "justification": "T1 and S2 establish a positive paired compile-rate advantage for Ridgeline-FT.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c14.n1",
+      "source_type": "test",
+      "expression": "(S2.ci_low + S2.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c15",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S2"
+    ],
+    "justification": "S2 reports a wholly positive confidence interval and a Holm-adjusted p-value below alpha for the paired compile-rate comparison.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c15.n1",
+      "source_type": "test",
+      "expression": "(S2.ci_low + S2.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n2",
+      "source_type": "test",
+      "expression": "(1 - S2.alpha) * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n3",
+      "source_type": "test",
+      "expression": "S2.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n4",
+      "source_type": "test",
+      "expression": "S2.ci_high",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n5",
+      "source_type": "test",
+      "expression": "S2.p_value",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c16",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r3.pass1"
+    ],
+    "justification": "T1 reports a higher pass@1 value for Ridgeline-FT than for Fernleaf-1.3B.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c16.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c16.n2",
+      "source_type": "cell",
+      "expression": "T1.r3.pass1",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c17",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2.pass1",
+     "T1.r3.pass1"
+    ],
+    "justification": "T1 reports a higher pass@1 value for Plainweave-FT than for Fernleaf-1.3B.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c17.n1",
+      "source_type": "cell",
+      "expression": "T1.r2.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c17.n2",
+      "source_type": "cell",
+      "expression": "T1.r3.pass1",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c18",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.compile",
+     "T1.r3.compile"
+    ],
+    "justification": "T1 reports a higher compile rate for Ridgeline-FT than for Fernleaf-1.3B.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c18.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.compile",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c18.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.compile",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c18.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.compile",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c19",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r2.compile",
+     "T1.r3.compile"
+    ],
+    "justification": "T1 reports a higher compile rate for Plainweave-FT than for Fernleaf-1.3B.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c19.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.compile",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c19.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.compile",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c19.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.compile",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c20",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "S1",
+     "S2"
+    ],
+    "justification": "T1 supplies raw results, while the only reported tests, S1 and S2, exclude comparisons with Fernleaf-1.3B.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c21",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "T1.r3"
+    ],
+    "justification": "S1 and S2 test only the fine-tuned recipes against each other; no base-model comparison test is reported.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c22",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.compile",
+     "T1.r2.compile",
+     "S2"
+    ],
+    "justification": "T1 reports the compile-rate means and SDs, and S2 establishes a positive paired difference.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c22.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.compile",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c22.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.compile.spread",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c22.n3",
+      "source_type": "cell",
+      "expression": "T1.r2.compile",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c22.n4",
+      "source_type": "cell",
+      "expression": "T1.r2.compile.spread",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c22.n5",
+      "source_type": "test",
+      "expression": "(S2.ci_low + S2.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c23",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S2"
+    ],
+    "justification": "S2 reports the paired test, positive confidence interval, and Holm-adjusted p-value below the stated alpha.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c23.n1",
+      "source_type": "test",
+      "expression": "(S2.ci_low + S2.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n2",
+      "source_type": "test",
+      "expression": "S2.statistic",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n3",
+      "source_type": "test",
+      "expression": "S2.df",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n4",
+      "source_type": "test",
+      "expression": "S2.p_value",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n5",
+      "source_type": "test",
+      "expression": "(1 - S2.alpha) * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n6",
+      "source_type": "test",
+      "expression": "S2.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n7",
+      "source_type": "test",
+      "expression": "S2.ci_high",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c24",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r2.pass1",
+     "T1.r3.pass1"
+    ],
+    "justification": "Both fine-tuned recipes have higher raw pass@1 means than Fernleaf-1.3B in T1.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c24.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c24.n2",
+      "source_type": "cell",
+      "expression": "T1.r3.compile",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c25",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.compile",
+     "T1.r2.compile",
+     "T1.r3.compile"
+    ],
+    "justification": "Both fine-tuned recipes have higher raw compile-rate means than Fernleaf-1.3B in T1.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c25.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.pass1",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c25.n2",
+      "source_type": "cell",
+      "expression": "T1.r3.compile",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c26",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1",
+     "S1",
+     "S2"
+    ],
+    "justification": "Only raw base-model results appear in T1; S1 and S2 test Ridgeline-FT against Plainweave-FT, not either recipe against the base.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c27",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S2"
+    ],
+    "justification": "S2 explicitly identifies the interval as unadjusted and reports the paired test and Holm-adjusted significance result.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c27.n1",
+      "source_type": "test",
+      "expression": "(S2.ci_low + S2.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c27.n2",
+      "source_type": "test",
+      "expression": "S2.statistic",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c27.n3",
+      "source_type": "test",
+      "expression": "S2.df",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c27.n4",
+      "source_type": "test",
+      "expression": "S2.p_value",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c27.n5",
+      "source_type": "test",
+      "expression": "(1 - S2.alpha) * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c27.n6",
+      "source_type": "test",
+      "expression": "S2.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c27.n7",
+      "source_type": "test",
+      "expression": "S2.ci_high",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -374,3 +374,20 @@ affects claim counts; result-claim and passage-level metrics are reported to lim
    to package values (for example an invented key `T1.r1.jga.avg`, or a parenthetical gain misread as a spread);
    L06 keeps 2 numeric facts and RP-09 keeps 5. Reviewer-proposed core findings were added for 15 of 20 packages and
    reviewer-rejected findings were dropped for 3 diagnostic packages. Every change is in each checklist's `merge_log`.
+7. **Checker fixes found while inspecting disputes (2026-10-18, before any consensus was frozen or scored).**
+   Inspection of the first disputed and agreed numeric errors showed three implementation defects in
+   `evaluation/numeric_fidelity.py`, fixed in code with unit tests; no label was edited by hand.
+   * Numbers written as words in quoted prose ("four held-out collections", "a single training run") were not
+     recognised, so correct counts were reported as value mismatches. Number words are now parsed.
+   * A count written only as a word whose quoted prose states no count at all ("a single dataset", where the package
+     just names one dataset) cannot be checked deterministically; it is now marked not checkable (excluded from
+     numeric metrics; the judges' qualitative label still covers the claim). Digit-written numbers, and word counts
+     whose quote does state a count, are still checked strictly.
+   * Quotes copied from the rendered package without its markdown backticks did not match verbatim; quote matching
+     now ignores backticks and bold markers. A "± x" shown in a cell's text without a structured spread field now
+     resolves as that cell's `.spread`.
+   Adjudication was re-run for the cases whose dispute sets changed; earlier adjudication records are kept under
+   `annotation/ai_extended/raw/_superseded/`.
+8. **Judge B cost reservation.** The budget guard reserved $0.75 per in-flight Judge B call, which refused real-paper
+   coverage calls at $4.33 actual spend. Reservations (and the CLI's own per-call cap) are now $0.75 for verification
+   and $0.25 for coverage, alignment and checklist review; the $6.50 total cap is unchanged.
