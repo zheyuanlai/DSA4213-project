@@ -1,0 +1,752 @@
+{
+ "status": "ok",
+ "stage": "verify",
+ "item_key": "synthetic_K21",
+ "judge": "C",
+ "backend": "openrouter",
+ "model_requested": "qwen/qwen3.7-plus",
+ "settings": {
+  "temperature": "0",
+  "seed": "4213",
+  "reasoning": "off"
+ },
+ "prompt_name": "verify",
+ "prompt_template_sha256": "3026925c674e91a9b072596136da2a8052797e9cb6d4bcf36fe28952df482d85",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "a97b932837beefd120d8787affeb152e23437e1f378ab95851ef08cf49e56235",
+ "cache_key": "ca4d63116fc6d6120951d8f4c96ce9e6ca2677e033d8b7344efedc0ce052db4e",
+ "salt": "",
+ "started_at": "2026-10-18T12:42:26Z",
+ "finished_at": "2026-10-18T12:43:50Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\n  \"claims\": [\n    {\n      \"claim_id\": \"c1\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\",\n       \"T1.r3.ndcg\"\n      ],\n      \"justification\": \"Table T1 shows Bramblewood (41.2) and Larkspur-Seq (40.7) exceed Most-Popular (18.3).\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c1.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c1.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c1.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.ndcg\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c2\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\",\n       \"S1\"\n      ],\n      \"justification\": \"Table T1 reports means; S1 CI [0.21, 0.85] implies mean diff 0.5.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c2.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c2.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c2.n3\", \"source_type\": \"test\", \"expression\": \"(S1.ci_low + S1.ci_high) / 2\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c3\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"S1 is explicitly described as a paired t-test.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": []\n    },\n    {\n      \"claim_id\": \"c4\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"S1 reports p=0.0043 and 95% CI [0.21, 0.85].\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c4.n1\", \"source_type\": \"test\", \"expression\": \"S1.p_value\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c4.n2\", \"source_type\": \"test\", \"expression\": \"S1.alpha * 100\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c4.n3\", \"source_type\": \"test\", \"expression\": \"S1.ci_low\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c4.n4\", \"source_type\": \"test\", \"expression\": \"S1.ci_high\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c5\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.recall\",\n       \"T1.r2.recall\"\n      ],\n      \"justification\": \"Table T1 shows Bramblewood Recall@20 (63.8) > Larkspur-Seq (63.1).\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c5.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c5.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.recall.mean\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c6\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"Only S1 (NDCG@10) is reported; no test for Recall@20 exists in package.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": []\n    },\n    {\n      \"claim_id\": \"c7\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"S1 specifies paired t-test, n=10, paired by seed.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c7.n1\", \"source_type\": \"test\", \"expression\": \"S1.n\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c8\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"S1 reports t=3.79, df=9, p=0.0043, 95% CI [0.21, 0.85].\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c8.n1\", \"source_type\": \"test\", \"expression\": \"S1.statistic\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c8.n2\", \"source_type\": \"test\", \"expression\": \"S1.df\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c8.n3\", \"source_type\": \"test\", \"expression\": \"S1.p_value\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c8.n4\", \"source_type\": \"test\", \"expression\": \"S1.alpha * 100\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c8.n5\", \"source_type\": \"test\", \"expression\": \"S1.ci_low\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c8.n6\", \"source_type\": \"test\", \"expression\": \"S1.ci_high\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c9\",\n      \"label\": \"OVERSTATED\",\n      \"entailment\": \"NOT_ENTAILED\",\n      \"error_subtype\": \"unsupported_magnitude\",\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"Package reports 0.5 pp difference but does not characterize it as 'small'.\",\n      \"confidence\": \"medium\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c9.n1\", \"source_type\": \"test\", \"expression\": \"(S1.ci_low + S1.ci_high) / 2\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c10\",\n      \"label\": \"OVERSTATED\",\n      \"entailment\": \"NOT_ENTAILED\",\n      \"error_subtype\": \"unsupported_magnitude\",\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\",\n       \"T1.r3.ndcg\"\n      ],\n      \"justification\": \"Table T1 supports higher scores, but 'substantially' is an unsupported magnitude claim.\",\n      \"confidence\": \"medium\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c10.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c10.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c10.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.ndcg\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c11\",\n      \"label\": \"OVERSTATED\",\n      \"entailment\": \"NOT_ENTAILED\",\n      \"error_subtype\": \"unsupported_magnitude\",\n      \"evidence_ids\": [\n       \"T1.r1.recall\",\n       \"T1.r2.recall\",\n       \"T1.r3.recall\"\n      ],\n      \"justification\": \"Table T1 supports higher scores, but 'substantially' is an unsupported magnitude claim.\",\n      \"confidence\": \"medium\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c11.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c11.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c11.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.ndcg\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c11.n4\", \"source_type\": \"cell\", \"expression\": \"T1.r1.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c11.n5\", \"source_type\": \"cell\", \"expression\": \"T1.r2.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c11.n6\", \"source_type\": \"cell\", \"expression\": \"T1.r3.recall\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c12\",\n      \"label\": \"UNSUPPORTED\",\n      \"entailment\": \"NOT_ENTAILED\",\n      \"error_subtype\": \"unwarranted_causal_inference\",\n      \"evidence_ids\": [],\n      \"justification\": \"Attributing performance gap to 'personalization benefit' is a causal claim not tested.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": []\n    },\n    {\n      \"claim_id\": \"c13\",\n      \"label\": \"OVERSTATED\",\n      \"entailment\": \"NOT_ENTAILED\",\n      \"error_subtype\": \"unsupported_magnitude\",\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\",\n       \"T1.r3.ndcg\"\n      ],\n      \"justification\": \"Table T1 supports higher scores, but 'far exceeded' is an unsupported magnitude claim.\",\n      \"confidence\": \"medium\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c13.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r3.ndcg\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c14\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\",\n       \"T1.r3.ndcg\"\n      ],\n      \"justification\": \"Table T1 shows both neural models have higher NDCG@10 than Most-Popular.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c14.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c14.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c14.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.ndcg\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c15\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.recall\",\n       \"T1.r2.recall\",\n       \"T1.r3.recall\"\n      ],\n      \"justification\": \"Table T1 shows both neural models have higher Recall@20 than Most-Popular.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c15.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c15.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c15.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.recall\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c16\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"Only S1 (NDCG@10) is reported; no tests for Most-Popular comparisons exist.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": []\n    },\n    {\n      \"claim_id\": \"c17\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"S1\"\n      ],\n      \"justification\": \"S1 shows statistically significant positive difference for Bramblewood over Larkspur-Seq.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": []\n    },\n    {\n      \"claim_id\": \"c18\",\n      \"label\": \"OVERSTATED\",\n      \"entailment\": \"NOT_ENTAILED\",\n      \"error_subtype\": \"unsupported_magnitude\",\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\",\n       \"T1.r3.ndcg\"\n      ],\n      \"justification\": \"Table T1 supports higher scores, but 'substantially' is an unsupported magnitude claim.\",\n      \"confidence\": \"medium\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c18.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r3.ndcg\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c19\",\n      \"label\": \"UNSUPPORTED\",\n      \"entailment\": \"NOT_ENTAILED\",\n      \"error_subtype\": \"unwarranted_causal_inference\",\n      \"evidence_ids\": [],\n      \"justification\": \"Claiming results 'confirm value of personalization' is a causal interpretation not established by data.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": []\n    },\n    {\n      \"claim_id\": \"c20\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\"\n      ],\n      \"justification\": \"Table T1 reports means and SDs for both models across 10 seeds.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c20.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c20.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.spread\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c20.n3\", \"source_type\": \"test\", \"expression\": \"S1.n\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c20.n4\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c20.n5\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.spread\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c21\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.ndcg\",\n       \"T1.r2.ndcg\",\n       \"T1.r3.ndcg\"\n      ],\n      \"justification\": \"Table T1 shows both neural models have higher NDCG@10 than Most-Popular.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c21.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c21.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.ndcg.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c21.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.ndcg\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c22\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.recall\",\n       \"T1.r2.recall\",\n       \"T1.r3.recall\"\n      ],\n      \"justification\": \"Table T1 shows both neural models have higher Recall@20 than Most-Popular.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c22.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c22.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c22.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.recall\", \"quote\": null, \"scale\": 1}\n      ]\n    },\n    {\n      \"claim_id\": \"c23\",\n      \"label\": \"SUPPORTED\",\n      \"entailment\": \"ENTAILED\",\n      \"error_subtype\": null,\n      \"evidence_ids\": [\n       \"T1.r1.recall\",\n       \"T1.r2.recall\",\n       \"T1.r3.recall\"\n      ],\n      \"justification\": \"Table T1 shows both neural models have higher Recall@20 than Most-Popular.\",\n      \"confidence\": \"high\",\n      \"extraction_flag\": \"OK\",\n      \"numbers\": [\n       {\"number_id\": \"c23.n1\", \"source_type\": \"cell\", \"expression\": \"T1.r1.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c23.n2\", \"source_type\": \"cell\", \"expression\": \"T1.r2.recall.mean\", \"quote\": null, \"scale\": 1},\n       {\"number_id\": \"c23.n3\", \"source_type\": \"cell\", \"expression\": \"T1.r3.recall\", \"quote\": null, \"scale\": 1}\n      ]\n    }\n  ]\n}",
+ "usage": {
+  "prompt_tokens": 8310,
+  "completion_tokens": 5143,
+  "total_tokens": 13453,
+  "cost": 0.008947328,
+  "is_byok": false,
+  "prompt_tokens_details": {
+   "cached_tokens": 1152,
+   "cache_write_tokens": 0,
+   "audio_tokens": 0,
+   "video_tokens": 0
+  },
+  "cost_details": {
+   "upstream_inference_cost": 0.008947328,
+   "upstream_inference_prompt_cost": 0.002364288,
+   "upstream_inference_completions_cost": 0.00658304
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 0,
+   "image_tokens": 0,
+   "audio_tokens": 0
+  }
+ },
+ "cost_usd": 0.008947328,
+ "cost_source": "provider_reported",
+ "latency_s": 83.8,
+ "model_reported": "qwen/qwen3.7-plus",
+ "model_report_source": "requested; provider Alibaba; generation gen-1792326925-UatrWJBogzsZcVhSDqxI",
+ "tool_use_detected": [],
+ "cli_version": "src/openrouter_client.py",
+ "finish_reason": "stop",
+ "parsed": {
+  "claims": [
+   {
+    "claim_id": "c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "justification": "Table T1 shows Bramblewood (41.2) and Larkspur-Seq (40.7) exceed Most-Popular (18.3).",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c1.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c1.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c1.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.ndcg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "S1"
+    ],
+    "justification": "Table T1 reports means; S1 CI [0.21, 0.85] implies mean diff 0.5.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c2.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c2.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c2.n3",
+      "source_type": "test",
+      "expression": "(S1.ci_low + S1.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c3",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 is explicitly described as a paired t-test.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c4",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 reports p=0.0043 and 95% CI [0.21, 0.85].",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c4.n1",
+      "source_type": "test",
+      "expression": "S1.p_value",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c4.n2",
+      "source_type": "test",
+      "expression": "S1.alpha * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c4.n3",
+      "source_type": "test",
+      "expression": "S1.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c4.n4",
+      "source_type": "test",
+      "expression": "S1.ci_high",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c5",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.recall",
+     "T1.r2.recall"
+    ],
+    "justification": "Table T1 shows Bramblewood Recall@20 (63.8) > Larkspur-Seq (63.1).",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c5.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c5.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.recall.mean",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c6",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "Only S1 (NDCG@10) is reported; no test for Recall@20 exists in package.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c7",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 specifies paired t-test, n=10, paired by seed.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c7.n1",
+      "source_type": "test",
+      "expression": "S1.n",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c8",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 reports t=3.79, df=9, p=0.0043, 95% CI [0.21, 0.85].",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c8.n1",
+      "source_type": "test",
+      "expression": "S1.statistic",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n2",
+      "source_type": "test",
+      "expression": "S1.df",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n3",
+      "source_type": "test",
+      "expression": "S1.p_value",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n4",
+      "source_type": "test",
+      "expression": "S1.alpha * 100",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n5",
+      "source_type": "test",
+      "expression": "S1.ci_low",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c8.n6",
+      "source_type": "test",
+      "expression": "S1.ci_high",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c9",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_magnitude",
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "Package reports 0.5 pp difference but does not characterize it as 'small'.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c9.n1",
+      "source_type": "test",
+      "expression": "(S1.ci_low + S1.ci_high) / 2",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c10",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_magnitude",
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "justification": "Table T1 supports higher scores, but 'substantially' is an unsupported magnitude claim.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c10.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c10.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c10.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.ndcg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c11",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_magnitude",
+    "evidence_ids": [
+     "T1.r1.recall",
+     "T1.r2.recall",
+     "T1.r3.recall"
+    ],
+    "justification": "Table T1 supports higher scores, but 'substantially' is an unsupported magnitude claim.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c11.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.ndcg",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n4",
+      "source_type": "cell",
+      "expression": "T1.r1.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n5",
+      "source_type": "cell",
+      "expression": "T1.r2.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c11.n6",
+      "source_type": "cell",
+      "expression": "T1.r3.recall",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c12",
+    "label": "UNSUPPORTED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unwarranted_causal_inference",
+    "evidence_ids": [],
+    "justification": "Attributing performance gap to 'personalization benefit' is a causal claim not tested.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c13",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_magnitude",
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "justification": "Table T1 supports higher scores, but 'far exceeded' is an unsupported magnitude claim.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c13.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.ndcg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c14",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "justification": "Table T1 shows both neural models have higher NDCG@10 than Most-Popular.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c14.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c14.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.ndcg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c15",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.recall",
+     "T1.r2.recall",
+     "T1.r3.recall"
+    ],
+    "justification": "Table T1 shows both neural models have higher Recall@20 than Most-Popular.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c15.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c15.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.recall",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c16",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "Only S1 (NDCG@10) is reported; no tests for Most-Popular comparisons exist.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c17",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "S1"
+    ],
+    "justification": "S1 shows statistically significant positive difference for Bramblewood over Larkspur-Seq.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c18",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unsupported_magnitude",
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "justification": "Table T1 supports higher scores, but 'substantially' is an unsupported magnitude claim.",
+    "confidence": "medium",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c18.n1",
+      "source_type": "cell",
+      "expression": "T1.r3.ndcg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c19",
+    "label": "UNSUPPORTED",
+    "entailment": "NOT_ENTAILED",
+    "error_subtype": "unwarranted_causal_inference",
+    "evidence_ids": [],
+    "justification": "Claiming results 'confirm value of personalization' is a causal interpretation not established by data.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": []
+   },
+   {
+    "claim_id": "c20",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg"
+    ],
+    "justification": "Table T1 reports means and SDs for both models across 10 seeds.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c20.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c20.n2",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.spread",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c20.n3",
+      "source_type": "test",
+      "expression": "S1.n",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c20.n4",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c20.n5",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.spread",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c21",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "justification": "Table T1 shows both neural models have higher NDCG@10 than Most-Popular.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c21.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c21.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.ndcg.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c21.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.ndcg",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c22",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.recall",
+     "T1.r2.recall",
+     "T1.r3.recall"
+    ],
+    "justification": "Table T1 shows both neural models have higher Recall@20 than Most-Popular.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c22.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c22.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c22.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.recall",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   },
+   {
+    "claim_id": "c23",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "error_subtype": null,
+    "evidence_ids": [
+     "T1.r1.recall",
+     "T1.r2.recall",
+     "T1.r3.recall"
+    ],
+    "justification": "Table T1 shows both neural models have higher Recall@20 than Most-Popular.",
+    "confidence": "high",
+    "extraction_flag": "OK",
+    "numbers": [
+     {
+      "number_id": "c23.n1",
+      "source_type": "cell",
+      "expression": "T1.r1.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n2",
+      "source_type": "cell",
+      "expression": "T1.r2.recall.mean",
+      "quote": null,
+      "scale": 1
+     },
+     {
+      "number_id": "c23.n3",
+      "source_type": "cell",
+      "expression": "T1.r3.recall",
+      "quote": null,
+      "scale": 1
+     }
+    ]
+   }
+  ]
+ }
+}

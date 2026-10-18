@@ -471,9 +471,9 @@ def provenance(raw_dir: Path | None = None) -> dict[str, Any]:
         s["used_in_results"] += rel in used
         s["cost_usd"] += cost
         u = r.get("usage") or {}
-        s["input_tokens"] += int(u.get("input_tokens") or 0) + int(u.get("cache_creation_input_tokens") or 0) + \
-            int(u.get("cache_read_input_tokens") or 0)
-        s["output_tokens"] += int(u.get("output_tokens") or 0)
+        s["input_tokens"] += int(u.get("input_tokens") or u.get("prompt_tokens") or 0) + \
+            int(u.get("cache_creation_input_tokens") or 0) + int(u.get("cache_read_input_tokens") or 0)
+        s["output_tokens"] += int(u.get("output_tokens") or u.get("completion_tokens") or 0)
         s["latency_s"] += float(r.get("latency_s") or 0)
         s["tool_use_discarded"] += sum(1 for a in r.get("failed_attempts", []) if "tool use" in str(a.get("error", "")))
         models = rows.setdefault(key + "#models", set())
@@ -482,4 +482,5 @@ def provenance(raw_dir: Path | None = None) -> dict[str, Any]:
     out = {k: (sorted(v) if isinstance(v, set) else dict(v)) for k, v in rows.items()}
     return {"by_stage_judge": out, "total_metered_cost_usd": round(total_cost, 4),
             "note": "Judge B (Claude CLI) cost is list price reported by the CLI; Judge A/adjudicator (Codex CLI, "
-                    "ChatGPT subscription) has no per-call USD charge. No OpenRouter call was made."}
+                    "ChatGPT subscription) has no per-call USD charge; Judge C (OpenRouter, Qwen 3.7 Plus) cost is "
+                    "provider-reported and also logged in outputs/cost_ledger.jsonl (stage eval_ext)."}

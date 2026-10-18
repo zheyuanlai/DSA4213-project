@@ -48,7 +48,7 @@ def _claims(fam: str, only: list[str] | None):
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("stage", choices=("packets", "checklists", "extract", "verify", "coverage", "align", "adjudicate",
-                                      "consensus", "score", "report", "stability"))
+                                      "consensus", "score", "report", "stability", "majority"))
     ap.add_argument("--families", default=",".join(FAMS))
     ap.add_argument("--judge", choices=("A", "B", "C"), default="A",
                     help="C = third-family judge (Qwen via OpenRouter; claim verification only, protocol amendment 12)")
@@ -59,6 +59,11 @@ def main(argv: list[str] | None = None) -> int:
     a = ap.parse_args(argv)
     fams = [f for f in a.families.split(",") if f]
     only = [x for x in a.only.split(",") if x] or None
+    if a.stage == "majority":
+        from evaluation import majority_vote as MV
+        MV.run()
+        print("written results/ai_extended/majority_vote.json and tables/majority_vote.md")
+        return 0
     if a.stage == "stability":
         from evaluation import adjudicator_stability as S
         if not a.replicate:

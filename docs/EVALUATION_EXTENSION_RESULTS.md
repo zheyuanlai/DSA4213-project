@@ -80,8 +80,10 @@ adjudication (§10).
 
 **Spend.** Metered (Claude CLI, list price): **$5.22** in total, of which $0.69 was pilot calls superseded before the
 main run; cap $6.50; task limit $7.00. Codex CLI (ChatGPT subscription): no per-call USD charge; 5.5 M input and
-1.0 M output tokens for the calls used in results. OpenRouter: **$0** (no key is configured and no call was made);
-the project's earlier OpenRouter spend of $0.70 and its reserve are unchanged.
+1.0 M output tokens for the calls used in results. OpenRouter: **$0** for the main evaluation (no key was configured
+then). A key became available afterwards and funded the third-judge sensitivity analysis (§11): **$0.51**, logged in
+the project ledger under stage `eval_ext` (cap $1.78). Total extension spend is therefore $5.73, under the $7 limit;
+total project OpenRouter spend is $1.22, reconciled with OpenRouter's own counter.
 
 ## 4. Results
 
@@ -294,13 +296,15 @@ results JSON).
 The small synthetic verification effect and the negative-finding advantage of the outline lineage hold under
 either judge. Real-paper C4 vs C2 differences in support and overall finding recall change sign with the judge and
 should be read as no evidence either way; the small real-paper gain of C4 over its own draft holds under both.
+A third judge family and a 2-of-3 majority without any adjudicator are reported in §11.
 
 ## 7. Implications for the hypotheses
 
 * **H1 (verification vs direct generation and the writer–reviewer loop).** Against direct generation (C1), C4 is
   better on strict whole-passage success (+0.156 [0.000, +0.312]) and, under each judge alone, on atomic support.
   Against the writer–reviewer loop (C2), **C4 does not outperform**: every quality interval includes zero, and C4 is
-  worse on numeric recall (−0.109 [−0.185, −0.033]). On real papers C4 is not better than C1 or C2 in support. Its
+  worse on numeric recall (−0.109 [−0.185, −0.033]). Under a 2-of-3 majority of three AI judge families the support
+  difference is −0.004 [−0.048, +0.036] (§11). On real papers C4 is not better than C1 or C2 in support. Its
   real-paper advantage in negative-finding recall comes from the outline step that C3/C4/C7 share, not from
   verification.
 * **H2 (strengthening).** Untestable as designed: STRENGTHEN never fired, C4 and C5 are indistinguishable on every
@@ -320,6 +324,10 @@ should be read as no evidence either way; the small real-paper gain of C4 over i
 * All labels are AI-generated. The two judges come from different families, but they, the extractor and the
   adjudicator may share errors; the adjudicator shares Judge A's family and leaned towards Judge A on real-paper
   coverage. There is **no independent human validation**.
+* A third judge family (Qwen 3.7 Plus, §11) agrees only moderately with the other two (Fleiss κ 0.52 synthetic,
+  0.42 real) and is much more lenient on real papers. Under a 2-of-3 majority the synthetic C4 − C2 support difference
+  changes sign (both versions include zero) and C2 − C1 becomes clearly positive; real-paper passage-level contrasts
+  (11 papers) also change sign.
 * The adjudicator is not fully repeatable on borderline disputes (§10): re-asking identical prompts changed 19% of
   synthetic and 10% of real-paper label decisions and 31% of real-paper coverage decisions. No planned contrast changed
   sign, but edit-level rates rest on few errors and moved noticeably.
@@ -391,7 +399,69 @@ model, not human reliability.
 The primary results remain those reported in §4–§7. Conclusions that depend on single borderline decisions, in
 particular real-paper finding recall and per-system repair rates, should be read with this instability in mind.
 
-## 11. Reproduction and files
+## 11. Third judge family and 2-of-3 majority
+
+Pre-specified in protocol §11, amendment 12, and committed before any call. **Judge C = Qwen 3.7 Plus**
+(`qwen/qwen3.7-plus`, Alibaba, served first-party through OpenRouter; temperature 0, seed 4213, reasoning off,
+JSON-schema output) re-verified all 1,591 claims (1,404 after de-duplication) with the identical prompt used by
+Judges A and B. DeepSeek models were not used as judges because a DeepSeek model is the system being evaluated.
+53 billed calls for 52 cases (the K05 pilot was reused; one response repeated a claim ID and was re-asked); cost
+**$0.51**, provider-reported and logged in
+`outputs/cost_ledger.jsonl`. A **2-of-3 majority** of A, B and C, with no adjudicator, then re-scored every planned
+contrast; numbers are still checked by code. Tables: `results/ai_extended/tables/majority_vote.md`; data:
+`results/ai_extended/majority_vote.json`. The primary results above are unchanged.
+
+| Agreement before adjudication | A–B | A–C | B–C | Fleiss κ (A, B, C) |
+|---|---|---|---|---|
+| Synthetic claim label | 0.941 (κ 0.56) | 0.945 (κ 0.65) | 0.910 (κ 0.34) | 0.52 |
+| Real-paper claim label | 0.918 (κ 0.65) | 0.873 (κ 0.31) | 0.873 (κ 0.24) | 0.42 |
+| Long-package claim label | 0.970 | 0.985 | 0.985 | ≈ 0 (almost all SUPPORTED) |
+
+* **The judges differ in strictness, and the third family does not side with one of the others throughout.** On
+  synthetic cases Judge C is strict about magnitude and intensifier wording, like Judge A (C labels 35 claims
+  overstated, A 29, B 11). On the 42 synthetic label disputes between A and B, C agreed with A 34 times; the
+  GPT-family adjudicator had chosen A only 18 times. So on synthetic data the adjudicator did not favour its own
+  family; it was more lenient than the majority. On real papers C is the most lenient judge: it called SUPPORTED 37 of
+  the 50 claims that both A and B flagged as errors, and on the 40 real-paper label disputes it sided with A 16 times,
+  with B 17 times and with neither 7 times.
+* **Majority consensus vs primary.** 33 of 844 synthetic and 30 of 612 real-paper final labels change. Synthetic support
+  under the majority: C1 0.897, C2 0.956, C6 0.931, C7 0.926, C3 0.944, C4 0.952, C5 0.952 (primary 0.926–0.970).
+  Real-paper support: C1 0.923, C2 0.910, draft 0.886, C3 0.902, C4 0.905 (primary 0.856–0.894). The majority found
+  no 2-of-3 agreement for 1 synthetic and 9 real-paper labels and for 40 and 23 numbers (mostly where two judges'
+  number mappings were unusable); those keep the adjudicated decision.
+
+| Contrast (support rate) | Primary (adjudicated) | 2-of-3 majority | Judge C alone |
+|---|---|---|---|
+| Synthetic C4 − C2 | +0.027 [−0.009, +0.063] | −0.004 [−0.048, +0.036] | −0.014 [−0.064, +0.032] |
+| Synthetic C4 − C1 | +0.044 [−0.001, +0.093] | +0.055 [+0.013, +0.097] | +0.059 [+0.011, +0.108] |
+| Synthetic C4 − C7 (verification) | +0.022 [+0.004, +0.050] | +0.026 [+0.004, +0.054] | +0.030 [+0.008, +0.059] |
+| Synthetic C4 − C3 | +0.007 [0.000, +0.019] | +0.007 [0.000, +0.019] | +0.011 [0.000, +0.025] |
+| Synthetic C2 − C1 | +0.017 [−0.023, +0.062] | **+0.059 [+0.016, +0.110]** | +0.073 [+0.030, +0.128] |
+| Real C4 − C2 | +0.005 [−0.068, +0.086] | +0.007 [−0.077, +0.100] | +0.008 [−0.028, +0.044] |
+| Real C4 − C1 | −0.023 [−0.079, +0.044] | −0.014 [−0.082, +0.065] | −0.023 [−0.078, +0.037] |
+| Real C4 − draft (verification) | +0.018 [0.000, +0.057] | +0.018 [0.000, +0.058] | −0.001 [−0.003, 0.000] |
+
+* **What holds under all three readings:** C4 is better than direct generation on synthetic support; verification
+  improves on the shared synthetic draft; C4 and C3 are equivalent up to a small margin; C4 and C5 are identical;
+  C4's lower numeric recall against C2 (−0.109 [−0.185, −0.033]) is unchanged, because the reference facts and the
+  number checks do not depend on the label vote; and on real papers no contrast of C4 with C1 or C2 has an interval
+  excluding zero.
+* **What changes:** the synthetic C4 − C2 support difference changes sign (every version includes zero, so "C4 does
+  not outperform C2" holds and becomes "no difference"); the generic reviser's gain over direct generation (C2 − C1)
+  becomes clearly positive under the majority; real-paper "fully supported passage" contrasts, which rest on 11 papers
+  and a binary outcome, change sign; and Judge C alone sees no gain of C4 over its real-paper draft.
+* **Edits under the majority:** synthetic repair recall 0.35 for C4 and C5 (7 of 20 draft errors), 0.25 for C3, 0.32
+  for C6 and 0.68 for C2 (with 5 new errors); real-paper 0.13 for C4, 0.09 for C3 and 0.69 for C2 (with 11 new
+  errors). The qualitative edit conclusions in §4.4 are unchanged.
+
+Across all 90 contrast–metric pairs (45 synthetic, 30 real, 15 long), the majority changes the sign of 12 (5 synthetic,
+7 real; several are differences near zero) and whether the interval excludes zero for 7 (all synthetic); the largest
+shift is 0.27, on a real-paper passage-level rate.
+Conclusions about the full agent versus the baselines do not depend on the adjudicator, but the synthetic ranking of
+C2 against C1 and C4, and every real-paper passage-level comparison, do depend on how borderline magnitude wording
+is judged.
+
+## 12. Reproduction and files
 
 ```bash
 python scripts/run_extended_evaluation.py packets      # blinded packets
@@ -403,11 +473,13 @@ python scripts/run_extended_evaluation.py report       # tables, figures, agreem
 python scripts/run_extended_evaluation.py adjudicate --replicate r1   # §10 test-retest (new calls)
 python scripts/run_extended_evaluation.py consensus --replicate r1
 python scripts/run_extended_evaluation.py stability --replicate r1
+OPENROUTER_API_KEY=... python scripts/run_extended_evaluation.py verify --judge C   # §11 (paid; cached)
+python scripts/run_extended_evaluation.py majority
 ```
 
 Judge calls are cached by input hash, so re-running reproduces the frozen labels without new calls. Code:
 `evaluation/{extended_data,numeric_fidelity,atomic_claims,edit_analysis,extended_pipeline,extended_consensus,
-extended_metrics,extended_stats,extended_report,judges}.py`. Annotations: `annotation/ai_extended/` (prompts,
+extended_metrics,extended_stats,extended_report,judges,adjudicator_stability,majority_vote}.py`. Annotations: `annotation/ai_extended/` (prompts,
 packets, frozen claims and checklists, readings, adjudications, consensus with sha256 manifests, raw judge
 records). Results: `results/ai_extended/` (`SUMMARY.md`, `tables/`, `figures/`, per-family `results.json` and
 `agreement.json`, `provenance.json`). Tests: `tests/test_{numeric_fidelity,atomic_claims,edit_analysis,

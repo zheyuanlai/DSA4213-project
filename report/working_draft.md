@@ -109,6 +109,10 @@ verification; proxy metrics mistaken for calibration; benchmark traps being lear
 * **Ceiling effect.** The pre-registered focal-label metric is saturated on the synthetic TEST set.
 * **Post-freeze metrics.** The evidence-level metrics in §5.2 were designed after the frozen evaluation and the first AI
   results; they are exploratory, and several checker and scoring refinements are documented in the protocol's amendment log.
+* **Judge dependence.** A third AI judge family (Qwen 3.7 Plus) agrees only moderately with the other two. Under a
+  2-of-3 majority, C4 − C2 synthetic support is −0.004 [−0.048, +0.036] (no difference), C4 − C1 and the verification
+  effect stay positive, the generic reviser's gain over direct generation becomes clearly positive, and real-paper
+  passage-level contrasts change sign (`docs/EVALUATION_EXTENSION_RESULTS.md` §11).
 * **Adjudicator instability.** Re-asking the AI adjudicator the identical prompts changed 19% of synthetic and 10% of
   real-paper disputed label decisions and 31% of real-paper coverage decisions; no planned contrast changed sign, but
   per-system repair rates and real-paper finding recall moved (`docs/EVALUATION_EXTENSION_RESULTS.md` §10).

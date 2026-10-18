@@ -5,7 +5,7 @@ DSA4213 *Natural Language Processing for Data Science* (NUS, Sem 1 AY2026/27), G
 
 > **Status: technical work and exploratory AI evaluation complete; no human annotation has been performed.**
 > 224/224 primary outputs, 46/48 real-paper outputs and 24/24 diagnostic outputs exist, and the optional human-validation packets are built.
-> Total OpenRouter spend is $0.71, reconciled. An exploratory H2 failure diagnostic is in [`docs/H2_DIAGNOSTIC.md`](docs/H2_DIAGNOSTIC.md). Human-scored calibration results (H1–H3) do not exist. A separate
+> Total OpenRouter spend is $1.22, reconciled ($0.71 for the experiments; $0.51 for a third AI judge in the evaluation extension). An exploratory H2 failure diagnostic is in [`docs/H2_DIAGNOSTIC.md`](docs/H2_DIAGNOSTIC.md). Human-scored calibration results (H1–H3) do not exist. A separate
 > [`multi-agent AI annotation`](docs/AI_ANNOTATION_RESULTS.md) is complete and must not be reported as human evaluation. A post-freeze,
 > exploratory [evidence-level evaluation](docs/EVALUATION_EXTENSION_RESULTS.md) (atomic claims, deterministic numeric checks, finding
 > completeness, verifier edits; two AI judge families with AI adjudication; protocol in [`docs/EVALUATION_EXTENSION_PROTOCOL.md`](docs/EVALUATION_EXTENSION_PROTOCOL.md))
