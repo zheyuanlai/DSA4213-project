@@ -99,6 +99,11 @@ def test_score_end_to_end_dummy():
     s = res["summary"]
     assert s["C4"]["calibration_accuracy"] == 1.0 and s["C7"]["calibration_accuracy"] == 0.0
     assert s["C7"]["overstatement_rate"] == 0.5 and s["C7"]["understatement_rate"] == 0.5
+    assert s["C4"]["ordinal_mae"] == 0.0 and s["C7"]["ordinal_mae"] == 1.0
+    assert s["C4"]["macro_f1"] == pytest.approx(2 / 3)  # level 0 has no support in this tiny fixture
+    assert s["C7"]["severe_error_rate"] == 0.0
+    assert s["C4"]["per_level"]["1"]["recall"] == 1.0
+    assert "numeric_errors" in res["comparisons"]["verification_C4_vs_C7"]
     assert s["C5"]["n_missing_outputs"] == 1  # ITT keeps the failed run in the denominator
     assert res["transitions"]["C7->C4"] == {"over->correct (fix)": 1, "under->correct (fix)": 1}
     co = score(cons, mapping, gold, rubric, itt=False)

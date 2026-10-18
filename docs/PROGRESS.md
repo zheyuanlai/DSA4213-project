@@ -60,3 +60,13 @@ claims an experiment that was not run.
 - Design and 12 counterfactual DEV drafts committed first (`docs/H2_DIAGNOSTIC.md`); run once as `h2diag_v1` (C4 vs C5, frozen model/tools/budget), $0.011.
 - Result: no STRENGTHEN on any draft; C4 = C5 on all 12. Claim-strengthening probes (SIG/CON/EFF): evidence retrieved 3/3 in both conditions, stronger fact acknowledged in SIG/CON, still ACCEPT. Omitted-finding probes (ROB/GEN/CIT): evidence mostly not retrieved.
 - Documentation-only revision after external review: corrected the primary-run denominator (406 verified claims, not 488), split the probe types, named the retrieval measure precisely, and removed the claim that 0/6 false strengthening shows safety.
+
+## Phase 8: exploratory multi-agent AI annotation (2026-10-18)
+
+- Four blinded AI roles independently labelled the existing AB/CD packets; agreement was computed
+  within pair and every disagreement was adjudicated against the supplied evidence.
+- Consensus coverage: 122 synthetic outputs, 39 real-paper outputs, and 151 real-paper sentences.
+- Added macro-F1, ordinal MAE, severe-error rate, and paired uncertainty for numeric, negative-result,
+  unsupported-claim, and real-paper outcomes. The original outputs and TEST gold were unchanged.
+- Results are in `docs/AI_ANNOTATION_RESULTS.md` and `results/ai_scored/`. They are explicitly
+  exploratory AI judgements, not the human evaluation promised in the frozen protocol.

@@ -92,8 +92,10 @@ def score(consensus: list[dict[str, str]], mapping: list[dict[str, str]], gold: 
                 hat = int(row.get("expressed_level") or 0)
                 if (row.get("focal_addressed") or "no") == "no":
                     hat = 0
+                abs_error = abs(hat - g["gold_level"])
                 d.update(gold=g["gold_level"], hat=hat, correct=int(hat == g["gold_level"]), over=int(hat > g["gold_level"]),
-                         under=int(hat < g["gold_level"]), omitted=int((row.get("focal_addressed") or "no") == "no"))
+                         under=int(hat < g["gold_level"]), omitted=int((row.get("focal_addressed") or "no") == "no"),
+                         abs_error=abs_error, severe_error=int(abs_error == 2))
             cov = _ids(row.get("findings_covered"))
             d["coverage"] = (len(cov & set(req)) / len(req)) if req else None
             d["n_req"], d["n_covered"] = len(req), len(cov & set(req))
@@ -117,9 +119,23 @@ def score(consensus: list[dict[str, str]], mapping: list[dict[str, str]], gold: 
         ordv = [d for d in pc.values() if "hat" in d]
         strong = [d for d in ordv if d["gold"] == 2]
         weak = [d for d in ordv if d["gold"] != 2]
+        per_level = {}
+        for level in range(3):
+            tp = sum(d["gold"] == level and d["hat"] == level for d in ordv)
+            fp = sum(d["gold"] != level and d["hat"] == level for d in ordv)
+            fn = sum(d["gold"] == level and d["hat"] != level for d in ordv)
+            precision = tp / (tp + fp) if tp + fp else 0.0
+            recall = tp / (tp + fn) if tp + fn else 0.0
+            f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+            per_level[str(level)] = {"support": sum(d["gold"] == level for d in ordv), "precision": precision,
+                                     "recall": recall, "f1": f1}
         summary[c] = {
             "n_ordinal": len(ordv),
             "calibration_accuracy": mean([d["correct"] for d in ordv]),
+            "macro_f1": mean([v["f1"] for v in per_level.values()]),
+            "ordinal_mae": mean([d["abs_error"] for d in ordv]),
+            "severe_error_rate": mean([d["severe_error"] for d in ordv]),
+            "per_level": per_level,
             "overstatement_rate": mean([d["over"] for d in ordv]),
             "understatement_rate": mean([d["under"] for d in ordv]),
             "omission_rate": mean([d["omitted"] for d in ordv]),
@@ -153,8 +169,11 @@ def score(consensus: list[dict[str, str]], mapping: list[dict[str, str]], gold: 
         if x not in per_case or y not in per_case:
             continue
         res = {}
-        for metric, subset in (("correct", None), ("over", None), ("under", None), ("coverage", None),
-                               ("under", "strong"), ("over", "nonstrong"), ("unsupported", None)):
+        for metric, subset in (("correct", None), ("abs_error", None), ("severe_error", None),
+                               ("over", None), ("under", None), ("coverage", None),
+                               ("under", "strong"), ("over", "nonstrong"), ("unsupported", None),
+                               ("numeric_errors", None), ("num_fact_acc", None),
+                               ("neg_recall", None), ("neg_reframed", None)):
             def vals(cond):
                 out = {}
                 for case, d in per_case[cond].items():

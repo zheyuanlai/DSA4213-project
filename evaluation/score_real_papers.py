@@ -167,7 +167,8 @@ def score(cons_out: list[dict[str, str]], cons_sent: list[dict[str, str]], mappi
     for x, y in (("C4", "C2"), ("C4", "C1"), ("C4", "C3")):
         if x in per and y in per:
             comps[f"{x}_vs_{y}"] = {k: paired_bootstrap({c: v[k] for c, v in per[x].items()}, {c: v[k] for c, v in per[y].items()})
-                                    for k in ("supported_rate", "overstated_rate", "understated_rate", "readability")}
+                                    for k in ("supported_rate", "overstated_rate", "understated_rate", "unsupported_rate",
+                                              "numeric_error_rate", "readability")}
     return {"summary": summary, "comparisons": comps, "per_case": per}
 
 

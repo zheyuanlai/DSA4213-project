@@ -3,11 +3,11 @@
 **Overstatement and Understatement in Agent-Written Results Sections**
 DSA4213 *Natural Language Processing for Data Science* (NUS, Sem 1 AY2026/27), Group 5. This is a private repository.
 
-> **Status: technical work complete through automatic evaluation; AWAITING BLIND HUMAN ANNOTATION
-> by group members.** 224/224 primary outputs, 46/48 real-paper outputs and 24/24 diagnostic outputs exist, and the blind packets are built.
-> Total OpenRouter spend is $0.71, reconciled. An exploratory H2 failure diagnostic is in [`docs/H2_DIAGNOSTIC.md`](docs/H2_DIAGNOSTIC.md). Human-scored calibration results (H1–H3) do not exist yet. Everything labelled
-> PROXY in this repository is an unvalidated automatic heuristic, not a calibration result. Start with
-> [`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md), [`docs/AUTOMATIC_RESULTS.md`](docs/AUTOMATIC_RESULTS.md) and [`docs/FINAL_AUDIT.md`](docs/FINAL_AUDIT.md).
+> **Status: technical work and exploratory AI evaluation complete; no human annotation has been performed.**
+> 224/224 primary outputs, 46/48 real-paper outputs and 24/24 diagnostic outputs exist, and the optional human-validation packets are built.
+> Total OpenRouter spend is $0.71, reconciled. An exploratory H2 failure diagnostic is in [`docs/H2_DIAGNOSTIC.md`](docs/H2_DIAGNOSTIC.md). Human-scored calibration results (H1–H3) do not exist. A separate
+> [`multi-agent AI annotation`](docs/AI_ANNOTATION_RESULTS.md) is complete and must not be reported as human evaluation. Everything labelled PROXY is an unvalidated automatic heuristic. Start with
+> [`docs/AI_ANNOTATION_RESULTS.md`](docs/AI_ANNOTATION_RESULTS.md), [`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md), [`docs/AUTOMATIC_RESULTS.md`](docs/AUTOMATIC_RESULTS.md) and [`docs/FINAL_AUDIT.md`](docs/FINAL_AUDIT.md).
 
 ## What this is
 
@@ -84,11 +84,11 @@ Every call goes through `src/cost_guard.py`: a hard cap of $12, per-stage caps, 
 | `data/diagnostic/` | 8 exploratory long-package cases (gold private) |
 | `outputs/` | DEV-pilot and diagnostic run records, job manifests, cost ledger + reconciliation (no secrets). TEST and real-paper raw records are withheld until annotation ends (sha256 in `outputs/WITHHELD_UNTIL_ANNOTATION.json`) |
 | `evaluation/` | automatic metrics, paired bootstrap, blinding, merge/κ, human scoring |
-| `annotation/` | guide, instructions, DEV-only training example; `pass1/`, `pass2/` (synthetic, two passes), `real/` (real papers): blinded packets, empty A/B sheets, viewers |
-| `results/automatic/` | automatic and PROXY results (aggregate only) |
+| `annotation/` | guide and blinded human-review packets; separate AI-only labels and consensus under `annotation/ai/` |
+| `results/` | automatic/PROXY results plus explicitly AI-scored exploratory results under `results/ai_*` |
 | `docs/` | plan, progress, protocol freeze, model selection, deviations, automatic results, handoff, audit |
 
-## Human annotation (next step, by group members)
+## Optional human validation (by group members)
 
 See [`annotation/README_HUMAN_REVIEW.md`](annotation/README_HUMAN_REVIEW.md) and
 [`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md). Annotation is done by four students in two independent
@@ -102,6 +102,7 @@ and [`annotation/four_person/README_COORDINATOR.md`](annotation/four_person/READ
 Planned roles from the proposal (*planning context only, not a record of work done*): Li Jiajun (benchmark and annotation protocol),
 Xiao Xinkai (evidence store, tools and real-paper packages), Liu Yuxin (writer, verifier and baselines), and Lai Zheyuan (coordination, evaluation and report).
 **Actual contribution shares must be confirmed by all four students for the final report.**
-AI disclosure: the code, synthetic benchmark drafts, real-paper package extraction and documentation in this repository were produced
-with Claude Code (Anthropic) under the coordinator's direction. AI assistants are not group members, and their work does not count as student contribution.
+AI disclosure: the code, synthetic benchmark drafts, real-paper package extraction, documentation, and the separate exploratory annotations
+under `annotation/ai/` were produced with AI assistants under the coordinator's direction. AI assistants are not group members, their labels
+are not human judgements, and their work does not count as student contribution.
 Real-paper excerpts are used under their CC licences ([`data/real_papers/README.md`](data/real_papers/README.md)).
