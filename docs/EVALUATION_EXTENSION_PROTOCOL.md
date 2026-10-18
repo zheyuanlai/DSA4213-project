@@ -439,3 +439,22 @@ affects claim counts; result-claim and passage-level metrics are reported to lim
       4213), and whether its sign or its exclusion of zero changes.
     The primary results remain the reported ones; the replicate is a sensitivity analysis. Agreement here is AI–AI
     test–retest of one model, not human reliability.
+12. **Third judge family and 2-of-3 majority (specified 2026-10-18, before any Judge C call; exploratory).** An
+    OpenRouter key became available after the main analysis. A third judge, **Judge C = Qwen 3.7 Plus**
+    (`qwen/qwen3.7-plus`, Alibaba, served first-party), re-verifies every claim with the identical verification
+    prompt and schema used by Judges A and B (same blinded packets, same de-duplication and local IDs), through the
+    project's own OpenRouter client and cost guard: temperature 0, seed 4213, reasoning disabled (the project
+    convention), JSON-schema output, `require_parameters` routing. Spend is logged in `outputs/cost_ledger.jsonl` under
+    a new stage `eval_ext` whose cap is **$1.78** (the room left under the extension's $7 limit after $5.22 of metered
+    Claude calls). DeepSeek models are not used as judges because a DeepSeek model is the system being evaluated.
+    One synthetic case (K05) is run first to confirm valid output and cost; its prompt is identical to the main run, so
+    the pilot call is reused, and the settings above are not changed afterwards unless the output is invalid.
+    Analysis (`evaluation/majority_vote.py`, `results/ai_extended/majority_vote.json`), unchanged primary results:
+    * agreement of Judge C with Judges A and B (raw, Cohen's κ) and Fleiss' κ over the three judges;
+    * on items the A–B adjudication decided, how often Judge C agrees with the adjudicator's decision, split by
+      whether the adjudicator sided with Judge A (its own model family) or Judge B;
+    * a **2-of-3 majority consensus** with no adjudicator: label and entailment by majority of A, B, C; each number by
+      majority of the three deterministic verdicts (correct vs error) among usable mappings; where no majority exists,
+      the primary adjudicated decision is kept and the count reported;
+    * every planned contrast re-scored from the majority consensus and from Judge C alone, with the same bootstrap,
+      reporting sign and zero-exclusion changes. Finding coverage and alignment are not re-judged.

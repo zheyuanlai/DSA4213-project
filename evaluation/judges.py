@@ -58,6 +58,12 @@ JUDGE_A = JudgeSpec("A", "codex", "gpt-5.6-sol", (("model_reasoning_effort", "hi
 JUDGE_B = JudgeSpec("B", "claude", "claude-sonnet-5-5", ())
 JUDGE_B_LITE = JudgeSpec("B", "claude", "claude-haiku-5-5", ())
 ADJUDICATOR = JudgeSpec("ADJ", "codex", "gpt-5.6-sol", (("model_reasoning_effort", "high"),))
+# Judge C (protocol amendment 12): a third, Alibaba-family judge through the project's own OpenRouter client and
+# cost ledger. DeepSeek models are excluded as judges because a DeepSeek model is the system being evaluated.
+JUDGE_C = JudgeSpec("C", "openrouter", "qwen/qwen3.7-plus", (("temperature", "0"), ("seed", "4213"), ("reasoning", "off")))
+OPENROUTER_STAGE = "eval_ext"
+OPENROUTER_STAGE_CAP_USD = 1.78  # remaining room under the extension's $7 external-inference cap
+OPENROUTER_MAX_TOKENS = 24000
 
 
 def judge_b_for(family: str, stage: str) -> JudgeSpec:
@@ -263,6 +269,61 @@ def _claude_call(spec: JudgeSpec, prompt: str, schema: dict[str, Any], system: s
         shutil.rmtree(work, ignore_errors=True)
 
 
+_OR_CLIENT: dict[str, Any] = {}
+
+
+def _openrouter_client(spec: JudgeSpec):
+    """The project's OpenRouter client with its CostGuard: provider-reported cost is appended to the shared, secret-free
+    ledger (outputs/cost_ledger.jsonl) and calls are refused beyond the project hard cap or the eval_ext stage cap."""
+    if spec.model not in _OR_CLIENT:
+        import yaml
+        from src.cost_guard import CostGuard, Pricing
+        from src.openrouter_client import OpenRouterClient
+        budget = yaml.safe_load((ROOT / "configs" / "budget.yaml").read_text())
+        guard = CostGuard(ROOT / "outputs" / "cost_ledger.jsonl", float(budget["hard_cap_usd"]),
+                          {OPENROUTER_STAGE: OPENROUTER_STAGE_CAP_USD}, Pricing(0.32e-6, 1.28e-6), max_inflight=3)
+        st = spec.settings_dict
+        decoding = {"temperature": float(st.get("temperature", 0)), "seed": int(st.get("seed", 4213)),
+                    "reasoning": {"enabled": st.get("reasoning", "off") != "off"}}
+        _OR_CLIENT[spec.model] = OpenRouterClient(spec.model, {"require_parameters": True}, decoding, guard,
+                                                  timeout_s=600.0, max_retries=2, app_title="DSA4213-project-eval-ext")
+    return _OR_CLIENT[spec.model]
+
+
+def _openrouter_call(spec: JudgeSpec, prompt: str, schema: dict[str, Any], system: str, item_key: str) -> dict[str, Any]:
+    client = _openrouter_client(spec)
+    rf = {"type": "json_schema", "json_schema": {"name": "judgement", "strict": True, "schema": schema}}
+    t0 = time.time()
+    try:
+        res = client.chat([{"role": "system", "content": system}, {"role": "user", "content": prompt}],
+                          role="eval_ext_judge", max_tokens=OPENROUTER_MAX_TOKENS, response_format=rf,
+                          ctx={"stage": OPENROUTER_STAGE, "case_id": item_key, "condition": None,
+                               "run_tag": "eval_ext_judge_C", "prompt_hash": hashlib.sha256(prompt.encode()).hexdigest()[:16]})
+    except Exception as e:  # BudgetExceeded, FatalAPIError, TransientAPIError
+        raise JudgeError(f"openrouter: {type(e).__name__}: {str(e)[:300]}") from e
+    text = res.content or ""
+    i, j = text.find("{"), text.rfind("}")
+    if i < 0 or j < i:
+        raise JudgeError(f"openrouter returned no JSON (finish {res.finish_reason})", res.cost_usd)
+    return {"raw_response": text[i:j + 1], "usage": res.usage, "cost_usd": res.cost_usd, "cost_source": res.cost_source,
+            "latency_s": round(time.time() - t0, 1), "model_reported": spec.model,
+            "model_report_source": f"requested; provider {res.provider}; generation {res.generation_id}",
+            "tool_use_detected": [], "cli_version": "src/openrouter_client.py", "finish_reason": res.finish_reason}
+
+
+def openrouter_spent(raw_dir: Optional[Path] = None) -> float:
+    raw_dir = raw_dir or RAW_DIR
+    total = 0.0
+    for p in raw_dir.rglob("*.json"):
+        try:
+            rec = json.loads(p.read_text())
+        except json.JSONDecodeError:
+            continue
+        if rec.get("backend") == "openrouter":
+            total += float(rec.get("cost_usd") or 0.0) + sum(float(a.get("cost_usd") or 0.0) for a in rec.get("failed_attempts", []))
+    return total
+
+
 _VERSIONS: dict[str, str] = {}
 
 
@@ -386,6 +447,8 @@ def call_judge(spec: JudgeSpec, stage: str, item_key: str, prompt_name: str, pro
                     failed.append({"attempt": attempt, "error": f"tool use {meta['tool_use_detected']}", **meta})
                     errors.append("tool use detected; discarded")
                     continue
+            elif spec.backend == "openrouter":
+                meta = _openrouter_call(spec, prompt, schema, system, item_key)
             elif spec.backend == "mock":
                 parsed = MOCK_RESPONDERS[stage](prompt, schema)
                 meta = {"raw_response": json.dumps(parsed), "usage": None, "cost_usd": 0.0, "latency_s": 0.0,

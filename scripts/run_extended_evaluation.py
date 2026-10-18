@@ -26,7 +26,7 @@ if str(ROOT) not in sys.path:
 
 from evaluation import extended_pipeline as P  # noqa: E402
 from evaluation.extended_data import load_family, write_private_registry  # noqa: E402
-from evaluation.judges import JUDGE_A, claude_spent, judge_b_for, write_used  # noqa: E402
+from evaluation.judges import JUDGE_A, JUDGE_C, claude_spent, judge_b_for, openrouter_spent, write_used  # noqa: E402
 
 FAMS = ("synthetic", "real", "diagnostic")
 
@@ -50,7 +50,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("stage", choices=("packets", "checklists", "extract", "verify", "coverage", "align", "adjudicate",
                                       "consensus", "score", "report", "stability"))
     ap.add_argument("--families", default=",".join(FAMS))
-    ap.add_argument("--judge", choices=("A", "B"), default="A")
+    ap.add_argument("--judge", choices=("A", "B", "C"), default="A",
+                    help="C = third-family judge (Qwen via OpenRouter; claim verification only, protocol amendment 12)")
     ap.add_argument("--only", default="")
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--replicate", default="", help="adjudicate/consensus/stability: name of an adjudication replicate "
@@ -78,7 +79,9 @@ def main(argv: list[str] | None = None) -> int:
         print(f"report written to {out.relative_to(ROOT)}; Judge B spend ${claude_spent():.4f}")
         return 0
     for fam in fams:
-        judge = JUDGE_A if a.judge == "A" else judge_b_for(fam, a.stage)
+        if a.judge == "C" and a.stage != "verify":
+            ap.error("Judge C is used for claim verification only")
+        judge = JUDGE_A if a.judge == "A" else JUDGE_C if a.judge == "C" else judge_b_for(fam, a.stage)
         print(f"== {a.stage} [{fam}] judge {judge.name} ({judge.model})" if a.stage in ("verify", "coverage", "align")
               else f"== {a.stage} [{fam}]", flush=True)
         if a.stage in ("adjudicate", "consensus"):
@@ -115,7 +118,7 @@ def main(argv: list[str] | None = None) -> int:
             P.run_alignment(data, packets, _claims(fam, only), judge, workers=a.workers)
     if not a.replicate:  # replicate records live outside raw/ and are not part of the primary used-lists
         write_used(f"{a.stage}_{'-'.join(fams)}_{a.judge}" + (f"_only-{'-'.join(only)}" if only else ""))
-    print(f"Judge B spend so far: ${claude_spent():.4f}")
+    print(f"Judge B spend so far: ${claude_spent():.4f}; Judge C (OpenRouter) ${openrouter_spent():.4f}")
     return 0
 
 
