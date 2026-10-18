@@ -50,10 +50,12 @@ def load_readings(fam: str) -> dict[str, dict[str, dict[str, Any]]]:
     return {j: {r["claim_id"]: r for r in load_jsonl(EXT / "readings" / f"{fam}_verify_{j}.jsonl")} for j in JUDGES}
 
 
-def majority_claims(fam: str, data: FamilyData) -> tuple[list[dict[str, Any]], dict[str, int]]:
+def majority_claims(fam: str, data: FamilyData, fallback: str = "adjudicated") -> tuple[list[dict[str, Any]], dict[str, int]]:
     """Claim records from a 2-of-3 majority of A, B and C, with no adjudicator.
 
-    Where the three disagree completely, the primary (adjudicated) decision is kept and counted."""
+    Where the three disagree completely: ``fallback="adjudicated"`` keeps the primary (adjudicated) decision;
+    ``fallback="exclude"`` leaves the item out (label -> UNRESOLVED, number -> not checkable), so the result does not
+    depend on the adjudicator at all."""
     raw = load_jsonl(EXT / "claims" / f"{fam}.jsonl")
     rd = load_readings(fam)
     primary = {r["claim_id"]: r for r in load_jsonl(EXT / "consensus" / f"{fam}_claims.jsonl")}
@@ -68,7 +70,7 @@ def majority_claims(fam: str, data: FamilyData) -> tuple[list[dict[str, Any]], d
         reads = [rd[j][cid] for j in JUDGES]
         label = _majority([r["label"] for r in reads])
         if label is None:
-            label = p["label_consensus"]
+            label = p["label_consensus"] if fallback == "adjudicated" else "UNRESOLVED"
             stats["label_no_majority"] += 1
         ent = _majority([r["entailment"] for r in reads])
         if ent is None:
@@ -84,6 +86,8 @@ def majority_claims(fam: str, data: FamilyData) -> tuple[list[dict[str, Any]], d
                 pv = p["numbers"][idx]
                 status, operands, alt = pv["verdict"], pv.get("operands", []), pv.get("alt_correct_mappings", [])
                 mapping = pv.get("mapping")
+                if fallback == "exclude":
+                    status, operands, alt = "INVALID_MAPPING", [], []
             else:
                 agree = [(j, v) for j, v in vs if v.status != "INVALID_MAPPING" and _verdict_class(v.status) == maj]
                 j0, v0 = agree[0]
@@ -97,8 +101,10 @@ def majority_claims(fam: str, data: FamilyData) -> tuple[list[dict[str, Any]], d
             final = "EXCLUDED"
         else:
             final = "NUMERIC_ERROR" if num_err else label
+        if final == "UNRESOLVED":
+            fe = None
         fe = None
-        if final not in ("EXCLUDED", "NOT_VERIFIABLE"):
+        if final not in ("EXCLUDED", "NOT_VERIFIABLE", "UNRESOLVED"):
             fe = bool(num_err or ent in ERRORISH)
         elif final == "NOT_VERIFIABLE":
             fe = bool(num_err)
@@ -190,12 +196,17 @@ def run() -> dict[str, Any]:
         prim = {"claims": primary["claims"]}
         cov_sets: dict[str, set[str]] = {}  # coverage is not re-judged: required-finding loss is left out here
         maj_edits = edits(fam, data, maj_claims, recs, cov_sets)["summary"]
+        strict_claims, strict_stats = majority_claims(fam, data, fallback="exclude")
+        srecs = text_records(fam, data, strict_claims, checklists)
+        strict = {"claims": {"summary": summarize_texts(srecs), "comparisons": compare_texts(srecs, COMPARISONS[fam], clusters)}}
         rows_m, rows_c = contrast_sensitivity(prim, maj), contrast_sensitivity(prim, conly)
+        rows_s = contrast_sensitivity(prim, strict)
         report["families"][fam] = {
             "agreement": agreement(fam, data), "adjudicator_check": adjudicator_check(fam), "majority_stats": stats,
             "summary": {"primary": _summ(primary["claims"]["summary"]), "majority": _summ(maj["claims"]["summary"]),
                         "judge_C_only": _summ(conly["claims"]["summary"])},
-            "contrasts_majority": rows_m, "contrasts_judge_C": rows_c,
+            "contrasts_majority": rows_m, "contrasts_judge_C": rows_c, "contrasts_majority_strict": rows_s,
+            "majority_strict_stats": strict_stats,
             "edits_majority": {c: {k: v.get(k) for k in ("initial_errors", "corrected", "removed", "new_errors", "repair_recall")}
                                for c, v in maj_edits.items()},
             "edits_primary": {c: {k: v.get(k) for k in ("initial_errors", "corrected", "removed", "new_errors", "repair_recall")}
@@ -204,7 +215,7 @@ def run() -> dict[str, Any]:
                 lab: {"n": len(rows), "sign_changes": sum(1 for r in rows if r["same_sign"] is False),
                       "zero_exclusion_changes": sum(1 for r in rows if r["primary_excludes_zero"] != r["replicate_excludes_zero"]),
                       "max_abs_shift": max((abs(r["shift"]) for r in rows if r["shift"] is not None), default=None)}
-                for lab, rows in (("majority", rows_m), ("judge_C_only", rows_c))}}
+                for lab, rows in (("majority", rows_m), ("majority_strict", rows_s), ("judge_C_only", rows_c))}}
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / "majority_vote.json").write_text(json.dumps(report, indent=1, default=str), encoding="utf-8")
     (OUT / "tables").mkdir(parents=True, exist_ok=True)
@@ -240,19 +251,23 @@ def render_markdown(report: dict[str, Any]) -> str:
             g = lambda k: " / ".join(_f(s[v][c][k]) for v in ("primary", "majority", "judge_C_only"))  # noqa: E731
             L.append(f"| {fam} | {c} | {g('support_rate')} | {g('factual_error_rate')} | {g('fully_supported')} |")
     L += ["", "## Planned contrasts: primary vs majority vs Judge C alone (non-degenerate rows)", "",
-          "| Set | Contrast | Metric | Primary | 2-of-3 majority | Judge C alone |", "|---|---|---|---|---|---|"]
+          "| Set | Contrast | Metric | Primary | 2-of-3 majority | majority, no fallback | Judge C alone |",
+          "|---|---|---|---|---|---|---|"]
     for fam, r in report["families"].items():
         cmap = {(x["contrast"], x["metric"]): x for x in r["contrasts_judge_C"]}
+        smap = {(x["contrast"], x["metric"]): x for x in r["contrasts_majority_strict"]}
         for x in r["contrasts_majority"]:
             if x["primary"].get("degenerate") and x["replicate"].get("degenerate"):
                 continue
             y = cmap.get((x["contrast"], x["metric"]), {}).get("replicate", {})
+            z = smap.get((x["contrast"], x["metric"]), {}).get("replicate", {})
             L.append(f"| {fam} | {x['contrast'].replace('_vs_', ' − ')} | {x['metric']} | {_ci_s(x['primary'])} | "
-                     f"{_ci_s(x['replicate'])} | {_ci_s(y) if y else '—'} |")
+                     f"{_ci_s(x['replicate'])} | {_ci_s(z) if z else '—'} | {_ci_s(y) if y else '—'} |")
         for lab, v in r["contrast_summary"].items():
             L.append(f"| {fam} | **all {v['n']} contrasts, {lab}** | | sign changes {v['sign_changes']} | "
-                     f"zero-exclusion changes {v['zero_exclusion_changes']} | max shift {_f(v['max_abs_shift'])} |")
-    L += ["", "Majority fallbacks to the adjudicated decision (no 2-of-3 agreement): " +
+                     f"zero-exclusion changes {v['zero_exclusion_changes']} | max shift {_f(v['max_abs_shift'])} | |")
+    L += ["", "Items without a 2-of-3 majority keep the adjudicated decision in the main majority column and are excluded in "
+          "the no-fallback column: " +
           "; ".join(f"{fam}: {r['majority_stats'].get('label_no_majority', 0)} labels, "
                     f"{r['majority_stats'].get('number_no_majority', 0)} numbers"
                     for fam, r in report["families"].items()), ""]

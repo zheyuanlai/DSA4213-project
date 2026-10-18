@@ -427,9 +427,58 @@ def write_summary() -> None:
     (OUT / "SUMMARY.md").write_text("\n".join(L), encoding="utf-8")
 
 
+def write_main_table() -> str:
+    """The one headline table (C1-C4) used by the final report; every value is read from results JSON."""
+    syn, real = load("synthetic"), load("real")
+    ai = json.loads((ROOT / "results" / "ai_scored" / "synthetic" / "ai_results_ITT.json").read_text())
+    conds = ["C1", "C2", "C3", "C4"]
+    names = {"C1": "C1 direct", "C2": "C2 writer–reviewer", "C3": "C3 scripted verifier", "C4": "C4 full agent"}
+    cs, cr = syn["claims"]["summary"], real["claims"]["summary"]
+    L = ["| Synthetic TEST (32 cases) | " + " | ".join(names[c] for c in conds) + " | C4 − C2 [95% CI] |",
+         "|---|" + "---|" * (len(conds) + 1)]
+
+    def row(label: str, vals: list, diff: Optional[dict] = None, fmt: str = "{:.3f}") -> None:
+        cells = ["—" if v is None else fmt.format(v) for v in vals]
+        L.append(f"| {label} | " + " | ".join(cells) + f" | {ci(diff) if diff else '—'} |")
+
+    row("Focal exact accuracy (24 ordinal cases)", [ai["summary"][c]["calibration_accuracy"] for c in conds],
+        syn["metric_a"]["comparisons"]["C4_vs_C2"]["focal_correct"])
+    row("Strict complete-and-correct passage", [syn["metric_a"]["summary"]["ITT"][c]["complete_correct"] for c in conds],
+        syn["metric_a"]["comparisons"]["C4_vs_C2"]["complete_correct"])
+    comp = syn["claims"]["comparisons"]["C4_vs_C2"]
+    row("Atomic claim support rate", [cs[c]["support_rate"]["value"] for c in conds], comp["support_rate"])
+    row("Atomic factual error rate", [cs[c]["factual_error_rate"]["value"] for c in conds], comp["factual_error_rate"])
+    row("Fully supported passage", [cs[c]["fully_supported"] for c in conds], comp["fully_supported"])
+    row("Numeric precision", [cs[c]["numeric_precision"]["value"] for c in conds], comp["numeric_precision"])
+    row("Numeric recall (64 required facts)", [cs[c]["numeric_recall"]["value"] for c in conds], comp["numeric_recall"])
+    row("Cost per passage (USD)", [syn["efficiency"][c]["cost_usd_per_text"] for c in conds], None, "{:.5f}")
+    row("Evidence-tool calls per passage", [syn["efficiency"][c]["tool_calls_per_text"] for c in conds], None, "{:.1f}")
+    L += ["", "| Real papers (12; C3/C4 completed on 11) | " + " | ".join(names[c] for c in conds) + " | C4 − C2 [95% CI] |",
+          "|---|" + "---|" * (len(conds) + 1)]
+    comp = real["claims"]["comparisons"]["C4_vs_C2"]
+    cc = real["completeness"]["comparisons"]["C4_vs_C2"]
+    sm = real["completeness"]["summary"]
+    row("Atomic claim support rate", [cr[c]["support_rate"]["value"] for c in conds], comp["support_rate"])
+    row("Atomic factual error rate", [cr[c]["factual_error_rate"]["value"] for c in conds], comp["factual_error_rate"])
+    row("Finding recall (package checklist)", [sm[c]["finding_recall"]["value"] for c in conds], cc["finding_recall"])
+    row("Negative/null-finding recall", [sm[c]["negative_finding_recall"]["value"] for c in conds], cc["negative_finding_recall"])
+    row("Numeric precision", [cr[c]["numeric_precision"]["value"] for c in conds], comp["numeric_precision"])
+    row("Numeric recall (checklist facts)", [cr[c]["numeric_recall"]["value"] for c in conds], comp["numeric_recall"])
+    row("Cost per passage (USD)", [real["efficiency"][c]["cost_usd_per_text"] for c in conds], None, "{:.5f}")
+    md = "\n".join(L) + "\n"
+    (OUT / "tables").mkdir(parents=True, exist_ok=True)
+    (OUT / "tables" / "main_table.md").write_text(
+        "# Main results table (C1–C4)\n\nAI-judged labels (two judge families plus AI adjudication); numeric verdicts "
+        "deterministic. Rates pool claims or findings over cases; intervals are paired case (paper) bootstraps, 10,000 "
+        "resamples, seed 4213. Real-paper intervals use the 11 papers where both systems completed.\n\n" + md,
+        encoding="utf-8")
+    return md
+
+
 def main() -> None:
     write_tables()
     write_summary()
+    write_main_table()
     write_figures()
 
 

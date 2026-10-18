@@ -26,3 +26,11 @@ def test_fleiss_kappa_matches_hand_computation():
     assert fleiss_kappa(rows) == pytest.approx(1 / 3)
     assert fleiss_kappa([("a", "a", "a"), ("a", "a", "a")]) is None  # no variation: undefined, not 1
     assert fleiss_kappa([]) is None
+
+
+def test_no_majority_label_is_unresolved_and_left_out_of_rates():
+    from evaluation import atomic_claims as ac
+    rec = {"claim_id": "x", "unit_id": "U", "alias": "K", "claim_type": "comparison", "result_claim": True,
+           "final_label": "UNRESOLVED", "factual_error": None, "numbers": []}
+    counts = ac.claim_counts([rec])
+    assert counts["n_assessable"] == 0 and counts["n_unresolved"] == 1
