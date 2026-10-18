@@ -338,15 +338,20 @@ class CallResult:
 
 def call_judge(spec: JudgeSpec, stage: str, item_key: str, prompt_name: str, prompt: str, *,
                data_segments: list[str], forbidden_texts: list[str] = (), raw_dir: Optional[Path] = None,
-               validator: Optional[Callable[[dict[str, Any]], list[str]]] = None, max_attempts: int = 2) -> CallResult:
+               validator: Optional[Callable[[dict[str, Any]], list[str]]] = None, max_attempts: int = 2,
+               salt: str = "") -> CallResult:
+    """Run (or reuse) one judgement. ``salt`` is added to the cache key only, never to the prompt: a replicate
+    with a new salt re-asks the identical question, which is what a test-retest needs."""
     raw_dir = raw_dir or RAW_DIR
     schema_name = prompt_name if prompt_name in SCHEMAS else stage
     schema = SCHEMAS[schema_name]
     check_leakage(prompt, data_segments, forbidden_texts)
     system, system_hash = load_prompt("system")
     _, template_hash = load_prompt(prompt_name)
-    key_src = json.dumps([spec.backend, spec.model, spec.settings, prompt_name, template_hash, system_hash,
-                          schema, prompt], sort_keys=True)
+    key_parts: list[Any] = [spec.backend, spec.model, spec.settings, prompt_name, template_hash, system_hash, schema, prompt]
+    if salt:  # an empty salt keeps every existing cache key unchanged
+        key_parts.append({"salt": salt})
+    key_src = json.dumps(key_parts, sort_keys=True)
     key = hashlib.sha256(key_src.encode()).hexdigest()
     out_dir = raw_dir / stage / spec.name
     path = out_dir / f"{item_key}__{key[:12]}.json"
@@ -398,7 +403,7 @@ def call_judge(spec: JudgeSpec, stage: str, item_key: str, prompt_name: str, pro
             rec = {"status": "ok", "stage": stage, "item_key": item_key, "judge": spec.name, "backend": spec.backend,
                    "model_requested": spec.model, "settings": spec.settings_dict, "prompt_name": prompt_name,
                    "prompt_template_sha256": template_hash, "system_prompt_sha256": system_hash,
-                   "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(), "cache_key": key,
+                   "prompt_sha256": hashlib.sha256(prompt.encode()).hexdigest(), "cache_key": key, "salt": salt,
                    "started_at": started, "finished_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                    "attempt": attempt, "failed_attempts": failed, **meta, "parsed": parsed}
             out_dir.mkdir(parents=True, exist_ok=True)

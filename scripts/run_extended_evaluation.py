@@ -48,14 +48,23 @@ def _claims(fam: str, only: list[str] | None):
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("stage", choices=("packets", "checklists", "extract", "verify", "coverage", "align", "adjudicate",
-                                      "consensus", "score", "report"))
+                                      "consensus", "score", "report", "stability"))
     ap.add_argument("--families", default=",".join(FAMS))
     ap.add_argument("--judge", choices=("A", "B"), default="A")
     ap.add_argument("--only", default="")
     ap.add_argument("--workers", type=int, default=3)
+    ap.add_argument("--replicate", default="", help="adjudicate/consensus/stability: name of an adjudication replicate "
+                    "(re-asks identical prompts with a new cache salt; writes under annotation/ai_extended/replicates/)")
     a = ap.parse_args(argv)
     fams = [f for f in a.families.split(",") if f]
     only = [x for x in a.only.split(",") if x] or None
+    if a.stage == "stability":
+        from evaluation import adjudicator_stability as S
+        if not a.replicate:
+            ap.error("stability needs --replicate")
+        S.run(a.replicate)
+        print(f"written results/ai_extended/adjudicator_stability.json for replicate {a.replicate}")
+        return 0
     if a.stage == "report":
         import json
         from evaluation import extended_consensus as C
@@ -75,7 +84,8 @@ def main(argv: list[str] | None = None) -> int:
         if a.stage in ("adjudicate", "consensus"):
             from evaluation import extended_consensus as C
             data, packets = _packets(fam, only)
-            (C.run_adjudication if a.stage == "adjudicate" else C.build_consensus)(data, packets, workers=a.workers)
+            (C.run_adjudication if a.stage == "adjudicate" else C.build_consensus)(
+                data, packets, workers=a.workers, replicate=a.replicate or None)
             continue
         if a.stage == "score":
             from evaluation import extended_metrics as M
@@ -103,7 +113,8 @@ def main(argv: list[str] | None = None) -> int:
             P.run_coverage(data, packets, cl, judge, workers=a.workers)
         elif a.stage == "align":
             P.run_alignment(data, packets, _claims(fam, only), judge, workers=a.workers)
-    write_used(f"{a.stage}_{'-'.join(fams)}_{a.judge}" + (f"_only-{'-'.join(only)}" if only else ""))
+    if not a.replicate:  # replicate records live outside raw/ and are not part of the primary used-lists
+        write_used(f"{a.stage}_{'-'.join(fams)}_{a.judge}" + (f"_only-{'-'.join(only)}" if only else ""))
     print(f"Judge B spend so far: ${claude_spent():.4f}")
     return 0
 

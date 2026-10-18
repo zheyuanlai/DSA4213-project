@@ -253,9 +253,9 @@ def compare_texts(recs: dict[str, dict[str, dict[str, Any]]], pairs: list[tuple[
 
 # ----------------------------------------------------------------------------- completeness (real, diagnostic)
 def completeness(fam: str, data: FamilyData, checklists: dict[str, Any], recs: dict[str, dict[str, dict[str, Any]]],
-                 coverage_source: str = "consensus") -> dict[str, Any]:
+                 coverage_source: str = "consensus", cdir: Optional[Path] = None) -> dict[str, Any]:
     """Finding completeness. ``coverage_source`` = consensus (primary) or A / B (single-judge sensitivity)."""
-    path = EXT / "consensus" / f"{fam}_coverage.jsonl" if coverage_source == "consensus" else \
+    path = (cdir or EXT / "consensus") / f"{fam}_coverage.jsonl" if coverage_source == "consensus" else \
         EXT / "readings" / f"{fam}_coverage_{coverage_source}.jsonl"
     cov = {(r["text_id"], r["item_id"]): r["status"] for r in load_jsonl(path)}
     from evaluation.extended_pipeline import coverage_items
@@ -331,12 +331,13 @@ def _items_den(items: list[dict[str, Any]], den: str) -> int:
 
 
 # ----------------------------------------------------------------------------- edits, decisions, efficiency
-def edits(fam: str, data: FamilyData, claims: list[dict[str, Any]], recs, coverage_sets) -> dict[str, Any]:
+def edits(fam: str, data: FamilyData, claims: list[dict[str, Any]], recs, coverage_sets,
+          cdir: Optional[Path] = None) -> dict[str, Any]:
     by_unit: dict[str, list[dict[str, Any]]] = {}
     for c in claims:
         by_unit.setdefault(c["unit_id"], []).append(c)
     labels = {c["claim_id"]: c["final_label"] for c in claims}
-    align = {(r["draft_text_id"], r["final_text_id"]): r for r in load_jsonl(EXT / "consensus" / f"{fam}_alignment.jsonl")}
+    align = {(r["draft_text_id"], r["final_text_id"]): r for r in load_jsonl((cdir or EXT / "consensus") / f"{fam}_alignment.jsonl")}
     per: dict[str, dict[str, Any]] = {}
     examples = []
     for (case_id, cond), rv in sorted(data.runs.items()):
@@ -463,9 +464,12 @@ def single_judge_sensitivity(fam: str, data: FamilyData, checklists, clusters) -
 
 
 # ----------------------------------------------------------------------------- family scoring
-def score_family(fam: str) -> dict[str, Any]:
+def score_family(fam: str, consensus_dir: Optional[Path] = None, write: bool = True) -> dict[str, Any]:
+    """Score one family. ``consensus_dir`` scores an alternative consensus (e.g. an adjudication replicate);
+    such runs are returned only (``write=False``) and skip the single-judge analysis, which does not depend on it."""
     data = load_family(fam)
-    claims = load_jsonl(EXT / "consensus" / f"{fam}_claims.jsonl")
+    cdir = consensus_dir or EXT / "consensus"
+    claims = load_jsonl(cdir / f"{fam}_claims.jsonl")
     checklists = json.loads((EXT / "checklists" / f"{fam}.json").read_text()) if fam != "synthetic" else None
     recs = text_records(fam, data, claims, checklists)
     clusters = {c: c[:-1] for c in data.cases} if fam == "synthetic" else None
@@ -490,16 +494,16 @@ def score_family(fam: str) -> dict[str, Any]:
                         for cond, d in recs.items() for case_id, r in d.items()}
         res["metric_a"] = metric_a(atomic_clean)
     else:
-        res["completeness"] = completeness(fam, data, checklists, {k: v for k, v in recs.items()})
+        res["completeness"] = completeness(fam, data, checklists, {k: v for k, v in recs.items()}, cdir=cdir)
         res["completeness_single_judge"] = {}
-        for j in ("A", "B"):
+        for j in (("A", "B") if consensus_dir is None else ()):
             cj = completeness(fam, data, checklists, recs, coverage_source=j)
             res["completeness_single_judge"][j] = {
                 "summary": {c: {k: v[k]["value"] for k in v if isinstance(v[k], dict) and "value" in v[k]}
                             for c, v in cj["summary"].items()},
                 "comparisons": {n: {k: {kk: x.get(kk) for kk in ("diff", "ci_low", "ci_high", "n")}
                                     for k, x in comp.items() if isinstance(x, dict)} for n, comp in cj["comparisons"].items()}}
-        for r in load_jsonl(EXT / "consensus" / f"{fam}_coverage.jsonl"):
+        for r in load_jsonl(cdir / f"{fam}_coverage.jsonl"):
             if r["status"] == "CORRECT" and not r["item_id"].startswith("G"):
                 coverage_sets.setdefault(r["text_id"], set()).add(r["item_id"])
         for t in data.texts:
@@ -521,8 +525,9 @@ def score_family(fam: str) -> dict[str, Any]:
             res["completeness"]["spearman_recall_readability"] = _spearman([p["recall"] for p in pts], [p["readability"] for p in pts])
             sp = [p for p in pts if p["support_rate"] is not None]
             res["completeness"]["spearman_recall_support"] = _spearman([p["recall"] for p in sp], [p["support_rate"] for p in sp])
-    res["single_judge_sensitivity"] = single_judge_sensitivity(fam, data, checklists, clusters)
-    res["edits"] = edits(fam, data, claims, recs, coverage_sets)
+    if consensus_dir is None:
+        res["single_judge_sensitivity"] = single_judge_sensitivity(fam, data, checklists, clusters)
+    res["edits"] = edits(fam, data, claims, recs, coverage_sets, cdir=cdir)
     res["retrieval"] = retrieval(fam, data, claims)
     quality = {}
     for cond in data.family.conditions:
@@ -533,6 +538,8 @@ def score_family(fam: str) -> dict[str, Any]:
             q["fully_supported_passage"] = res["claims"]["summary"][cond]["fully_supported"]
         quality[cond] = q
     res["efficiency"] = efficiency(data, quality, res["edits"]["summary"])
+    if not write:
+        return res
     OUT.joinpath(fam).mkdir(parents=True, exist_ok=True)
     # output IDs per condition would reproduce the private condition mapping: keep them in private/ only
     priv = ROOT / "private" / "extended"

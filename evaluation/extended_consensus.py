@@ -11,7 +11,7 @@ import json
 import random
 from collections import Counter
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 from evaluation import atomic_claims as ac
 from evaluation.extended_data import FamilyData
@@ -20,6 +20,15 @@ from evaluation.extended_pipeline import (
 )
 from evaluation.judges import ADJUDICATOR, call_judge, fill, load_prompt
 from evaluation.numeric_fidelity import EvidenceValues
+
+
+def replicate_dirs(replicate: Optional[str]) -> tuple[Path, Optional[Path], str]:
+    """(adjudication dir, raw-record dir, cache salt). A replicate re-asks the identical prompts with a new cache
+    salt and writes only under annotation/ai_extended/replicates/<name>/; the primary files are never touched."""
+    if not replicate:
+        return EXT / "adjudication", None, ""
+    base = EXT / "replicates" / replicate
+    return base / "adjudication", base / "raw", f"replicate={replicate}"
 
 
 def _order(key: str) -> dict[str, str]:
@@ -75,8 +84,10 @@ def _fmt_mapping(m: dict[str, Any]) -> str:
     return "none (no referenced source in the package)"
 
 
-def run_claim_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> list[dict[str, Any]]:
+def run_claim_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3,
+                           replicate: Optional[str] = None) -> list[dict[str, Any]]:
     fam = data.family.name
+    adj_dir, raw_dir, salt = replicate_dirs(replicate)
     rows, claims, ra, rb = claim_dispute_table(data)
     tmpl, _ = load_prompt("adjudicate_claims")
     inv = {v: k for k, v in data.aliases.items()}
@@ -127,7 +138,7 @@ def run_claim_adjudication(data: FamilyData, packets: dict[str, Any], workers: i
                     probs.append(f"{cid}: numbers mismatch")
             return probs
 
-        res = call_judge(ADJUDICATOR, "adjudicate_claims", f"{fam}_{alias}", "adjudicate_claims", prompt,
+        res = call_judge(ADJUDICATOR, "adjudicate_claims", f"{fam}_{alias}", "adjudicate_claims", prompt, raw_dir=raw_dir, salt=salt,
                          data_segments=data_segments(pk, [claims[r["claim_id"]] for r in by_alias[alias]]) + segs,
                          forbidden_texts=forbidden_texts(fam, inv[alias]), validator=validator)
         return [{**d, "_reading_map": maps[d["item_id"]], "disputed_fields": want[d["item_id"]]["fields"],
@@ -135,14 +146,16 @@ def run_claim_adjudication(data: FamilyData, packets: dict[str, Any], workers: i
 
     res = _parallel([(a, (lambda a=a: job(a))) for a in sorted(by_alias)], workers) if by_alias else {}
     out = [d for a in sorted(res) for d in res[a]]
-    _dump_jsonl(EXT / "adjudication" / f"{fam}_claims.jsonl", out)
-    _dump_jsonl(EXT / "adjudication" / f"{fam}_claims_disputes.jsonl", rows)
+    _dump_jsonl(adj_dir / f"{fam}_claims.jsonl", out)
+    _dump_jsonl(adj_dir / f"{fam}_claims_disputes.jsonl", rows)
     return out
 
 
 # ----------------------------------------------------------------------------- coverage
-def run_coverage_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> list[dict[str, Any]]:
+def run_coverage_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3,
+                              replicate: Optional[str] = None) -> list[dict[str, Any]]:
     fam = data.family.name
+    adj_dir, raw_dir, salt = replicate_dirs(replicate)
     if fam not in ("real", "diagnostic"):
         return []
     A = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "A")}
@@ -174,7 +187,7 @@ def run_coverage_adjudication(data: FamilyData, packets: dict[str, Any], workers
             segs += [items[iid]["description"], rd["A"]["justification"], rd["B"]["justification"]]
         prompt = fill(tmpl, PACKAGE=pk["package_markdown"], ITEMS="\n\n".join(blocks))
         want = set(maps)
-        res = call_judge(ADJUDICATOR, "adjudicate_coverage", f"{fam}_{alias}", "adjudicate_coverage", prompt,
+        res = call_judge(ADJUDICATOR, "adjudicate_coverage", f"{fam}_{alias}", "adjudicate_coverage", prompt, raw_dir=raw_dir, salt=salt,
                          data_segments=data_segments(pk) + segs, forbidden_texts=forbidden_texts(fam, inv[alias]),
                          validator=lambda p: [] if {d["item_id"] for d in p["decisions"]} == want else ["item ids mismatch"])
         lab2tid = {v: k for k, v in tid2lab.items()}
@@ -184,7 +197,7 @@ def run_coverage_adjudication(data: FamilyData, packets: dict[str, Any], workers
 
     res = _parallel([(a, (lambda a=a: job(a))) for a in sorted(disputes)], workers) if disputes else {}
     out = [d for a in sorted(res) for d in res[a]]
-    _dump_jsonl(EXT / "adjudication" / f"{fam}_coverage.jsonl", out)
+    _dump_jsonl(adj_dir / f"{fam}_coverage.jsonl", out)
     return out
 
 
@@ -197,8 +210,10 @@ def alignment_disputes(xa: dict[str, Any], xb: dict[str, Any]) -> bool:
     return xa["relation"] != "DELETED" and set(xa["matched_y"]) != set(xb["matched_y"])
 
 
-def run_alignment_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> list[dict[str, Any]]:
+def run_alignment_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3,
+                               replicate: Optional[str] = None) -> list[dict[str, Any]]:
     fam = data.family.name
+    adj_dir, raw_dir, salt = replicate_dirs(replicate)
     A = {r["pair_id"]: r for r in _readings(fam, "align", "A")}
     B = {r["pair_id"]: r for r in _readings(fam, "align", "B")}
     claims = {c["claim_id"]: c for c in load_jsonl(EXT / "claims" / f"{fam}.jsonl")}
@@ -231,7 +246,7 @@ def run_alignment_adjudication(data: FamilyData, packets: dict[str, Any], worker
             segs += [claims[cid]["proposition"]] + [claims[y]["proposition"] for y in ys]
         prompt = fill(tmpl, ITEMS="\n\n".join(blocks))
         want = set(maps)
-        res = call_judge(ADJUDICATOR, "adjudicate_align", f"{fam}_{alias}", "adjudicate_align", prompt,
+        res = call_judge(ADJUDICATOR, "adjudicate_align", f"{fam}_{alias}", "adjudicate_align", prompt, raw_dir=raw_dir, salt=salt,
                          data_segments=data_segments(pk) + segs, forbidden_texts=forbidden_texts(fam, inv[alias]),
                          validator=lambda p: [] if {d["item_id"] for d in p["decisions"]} == want else ["item ids mismatch"])
         return [{"pair_id": d["item_id"].split("::")[0], "claim_id": d["item_id"].split("::")[1],
@@ -240,22 +255,27 @@ def run_alignment_adjudication(data: FamilyData, packets: dict[str, Any], worker
 
     res = _parallel([(a, (lambda a=a: job(a))) for a in sorted(disputes)], workers) if disputes else {}
     out = [d for a in sorted(res) for d in res[a]]
-    _dump_jsonl(EXT / "adjudication" / f"{fam}_align.jsonl", out)
+    _dump_jsonl(adj_dir / f"{fam}_align.jsonl", out)
     return out
 
 
-def run_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> None:
-    run_claim_adjudication(data, packets, workers)
-    run_coverage_adjudication(data, packets, workers)
-    run_alignment_adjudication(data, packets, workers)
+def run_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3, replicate: Optional[str] = None) -> None:
+    run_claim_adjudication(data, packets, workers, replicate)
+    run_coverage_adjudication(data, packets, workers, replicate)
+    run_alignment_adjudication(data, packets, workers, replicate)
 
 
 # ----------------------------------------------------------------------------- consensus
-def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0) -> dict[str, Path]:
+def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0,
+                    replicate: Optional[str] = None) -> dict[str, Path]:
+    """Freeze consensus files; with ``replicate``, build the alternative consensus from that replicate's
+    adjudications under annotation/ai_extended/replicates/<name>/consensus/ instead."""
     fam = data.family.name
+    adj_dir, _, _ = replicate_dirs(replicate)
+    cons_dir = EXT / "consensus" if not replicate else EXT / "replicates" / replicate / "consensus"
     rows, claims, ra, rb = claim_dispute_table(data)
-    adj = {d["item_id"]: d for d in load_jsonl(EXT / "adjudication" / f"{fam}_claims.jsonl")} \
-        if (EXT / "adjudication" / f"{fam}_claims.jsonl").exists() else {}
+    adj = {d["item_id"]: d for d in load_jsonl(adj_dir / f"{fam}_claims.jsonl")} \
+        if (adj_dir / f"{fam}_claims.jsonl").exists() else {}
     skipped = {r["claim_id"]: r["skipped_fields_numeric_error"] for r in rows}
     evs: dict[str, EvidenceValues] = {}
     final = []
@@ -284,13 +304,13 @@ def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0)
                                    "label": d.get("label"), "entailment": d.get("entailment"),
                                    "extraction_valid": d.get("extraction_valid")}
         final.append(rec)
-    out = {"claims": EXT / "consensus" / f"{fam}_claims.jsonl"}
+    out = {"claims": cons_dir / f"{fam}_claims.jsonl"}
     _dump_jsonl(out["claims"], final)
     if fam in ("real", "diagnostic"):  # finding coverage is judged only for these families
         A = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "A")}
         B = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "B")}
-        cadj = {(d["text_id"], d["item_id"]): d for d in load_jsonl(EXT / "adjudication" / f"{fam}_coverage.jsonl")} \
-            if (EXT / "adjudication" / f"{fam}_coverage.jsonl").exists() else {}
+        cadj = {(d["text_id"], d["item_id"]): d for d in load_jsonl(adj_dir / f"{fam}_coverage.jsonl")} \
+            if (adj_dir / f"{fam}_coverage.jsonl").exists() else {}
         cov = []
         for k in sorted(A):
             if A[k]["status"] == B[k]["status"]:
@@ -302,12 +322,12 @@ def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0)
             cov.append({"text_id": k[0], "item_id": k[1], "alias": A[k]["alias"], "status": st, "source": src,
                         "readings": {"A": A[k]["status"], "B": B[k]["status"]},
                         "adjudication_rationale": cadj.get(k, {}).get("rationale")})
-        out["coverage"] = EXT / "consensus" / f"{fam}_coverage.jsonl"
+        out["coverage"] = cons_dir / f"{fam}_coverage.jsonl"
         _dump_jsonl(out["coverage"], cov)
     A = {r["pair_id"]: r for r in _readings(fam, "align", "A")}
     B = {r["pair_id"]: r for r in _readings(fam, "align", "B")}
-    aadj = {(d["pair_id"], d["claim_id"]): d for d in load_jsonl(EXT / "adjudication" / f"{fam}_align.jsonl")} \
-        if (EXT / "adjudication" / f"{fam}_align.jsonl").exists() else {}
+    aadj = {(d["pair_id"], d["claim_id"]): d for d in load_jsonl(adj_dir / f"{fam}_align.jsonl")} \
+        if (adj_dir / f"{fam}_align.jsonl").exists() else {}
     aligned = []
     for pid, pa in sorted(A.items()):
         xs = []
@@ -325,9 +345,9 @@ def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0)
         added = [y for y in pa["y_claims"] if y not in matched]
         aligned.append({k: pa[k] for k in ("pair_id", "alias", "draft_text_id", "final_text_id", "y_claims")} |
                        {"x_claims": xs, "added_y": added})
-    out["alignment"] = EXT / "consensus" / f"{fam}_alignment.jsonl"
+    out["alignment"] = cons_dir / f"{fam}_alignment.jsonl"
     _dump_jsonl(out["alignment"], aligned)
-    manifest = EXT / "consensus" / f"MANIFEST_{fam}.json"
+    manifest = cons_dir / f"MANIFEST_{fam}.json"
     manifest.write_text(json.dumps({k: {"path": str(p.relative_to(EXT.parent.parent)),
                                         "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for k, p in out.items()},
                                    indent=1))

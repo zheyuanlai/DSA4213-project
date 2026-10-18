@@ -423,3 +423,19 @@ affects claim counts; result-claim and passage-level metrics are reported to lim
       had to be re-adjudicated because their disputes changed; in those cases the adjudicator
       reproduced 4 of 9 earlier label decisions and 24 of 27 number-mapping choices, which changed 5 further labels.
       All results and documents were regenerated from the corrected consensus.
+11. **Adjudicator test–retest (specified 2026-10-18, before the replicate run; exploratory).** Re-adjudication of four
+    real-paper cases after amendment 10 suggested that the adjudicator's label decisions are unstable. To measure this
+    on the full set, every claim, coverage and alignment adjudication prompt is re-asked once, **verbatim**, to the same
+    adjudicator (GPT-5.6 via Codex CLI, reasoning effort high); only the cache key carries a salt (`replicate=r1`), so
+    no cached answer is reused. No Claude call is made. The replicate writes only under
+    `annotation/ai_extended/replicates/r1/`; the primary adjudication, consensus and results are not changed.
+    Reported (`evaluation/adjudicator_stability.py`, `results/ai_extended/adjudicator_stability.json`):
+    * per-field agreement between the two adjudications of the same disputed items (label, entailment, extraction
+      validity, number-mapping choice, coverage status, alignment relation), as raw agreement and Cohen's κ, with
+      the changed decisions listed;
+    * the number of final consensus labels, numeric verdicts and coverage statuses that differ when the replicate
+      adjudication is used;
+    * every planned contrast re-scored from the replicate consensus with the same bootstrap (10,000 resamples, seed
+      4213), and whether its sign or its exclusion of zero changes.
+    The primary results remain the reported ones; the replicate is a sensitivity analysis. Agreement here is AI–AI
+    test–retest of one model, not human reliability.

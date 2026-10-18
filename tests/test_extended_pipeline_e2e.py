@@ -38,7 +38,8 @@ def fixture_family(ev):  # noqa: F811
     return FamilyData(fam, {"FIX-1": case}, {"Dx1": draft, "Dx2": final}, runs, {"FIX-1": "F01"})
 
 
-def test_pipeline_end_to_end_with_mock_judges(fixture_family, tmp_path, monkeypatch):
+def run_fixture_pipeline(fixture_family, tmp_path, monkeypatch, sig_adjudication="OVERSTATED"):
+    """Run the whole pipeline on the one-case fixture with mock judges; return (data, packets, out, prompts)."""
     for mod in (P, C):
         monkeypatch.setattr(mod, "EXT", tmp_path / "ext")
     monkeypatch.setattr(judges, "RAW_DIR", tmp_path / "raw")
@@ -95,8 +96,9 @@ def test_pipeline_end_to_end_with_mock_judges(fixture_family, tmp_path, monkeypa
             nums = [{"number_id": n, "choice": "own", "source_type": "cell", "expression": "T1.r2.d1", "quote": None,
                      "scale": 1} for n in re.findall(r"number (\S+\.n\d+) ", block)]
             nums = list({n["number_id"]: n for n in nums}.values())
-            out.append({"item_id": it, "label": "OVERSTATED", "entailment": "NOT_ENTAILED", "extraction_valid": True,
-                        "numbers": nums, "rationale": "No test supports significance.", "evidence_ids": ["S1"]})
+            ent = "ENTAILED" if sig_adjudication == "SUPPORTED" else "NOT_ENTAILED"
+            out.append({"item_id": it, "label": sig_adjudication, "entailment": ent, "extraction_valid": True,
+                        "numbers": nums, "rationale": "Decided from S1.", "evidence_ids": ["S1"]})
         return {"decisions": out}
 
     mock_a, mock_b = judges.JudgeSpec("A", "mock", "mock-a"), judges.JudgeSpec("B", "mock", "mock-b")
@@ -118,6 +120,11 @@ def test_pipeline_end_to_end_with_mock_judges(fixture_family, tmp_path, monkeypa
     C.run_claim_adjudication(data, packets, workers=1)
     C.run_alignment_adjudication(data, packets, workers=1)
     out = C.build_consensus(data, packets)
+    return data, packets, out, prompts
+
+
+def test_pipeline_end_to_end_with_mock_judges(fixture_family, tmp_path, monkeypatch):
+    data, packets, out, prompts = run_fixture_pipeline(fixture_family, tmp_path, monkeypatch)
     final = {r["claim_id"]: r for r in P.load_jsonl(out["claims"])}
 
     sig = next(r for r in final.values() if r["unit_id"] == unit_id("FIX-1", S2))
