@@ -414,7 +414,7 @@ def agreement_stats(data: FamilyData) -> dict[str, Any]:
     nside = Counter()
     for d in nums:
         for n in d["numbers"]:
-            nside[{"own": "own_mapping"}.get(n["choice"], "judge_" + d["_reading_map"][n["choice"]])] += 1
+            nside["own_mapping" if n["choice"] == "own" else "judge_" + d["_reading_map"][n["choice"]]] += 1
     out["adjudication_number_choices"] = dict(nside)
     return out
 

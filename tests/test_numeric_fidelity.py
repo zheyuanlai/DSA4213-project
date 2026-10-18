@@ -152,3 +152,53 @@ def test_quotes_ignore_markdown_and_text_spreads_resolve(ev):
     assert chk(ev, "0.004", 0.004, Mapping("cell", "T1.r1.d1.spread"), role="statistical") == "CORRECT"
     q = "d1 = Data-1 (higher is better)"
     assert check_assertion(Assertion("1", 1, role="setup"), Mapping("text", quote=q), ev).status in ("CORRECT", "VALUE_MISMATCH")
+
+
+def test_aggregate_fact_is_reported_by_its_attaining_cell(ev):
+    f = RequiredFact("best", 0.837, 0.0005, frozenset({"T1.r1.d1", "T1.r2.d1"}))  # max over the Data-1 column
+    a, m = Assertion("0.837", 0.837), Mapping("cell", "T1.r1.d1")
+    assert fact_reported(f, [(a, m, check_assertion(a, m, ev))])
+    a2, m2 = Assertion("0.837", 0.837), Mapping("text", quote="0.837 ± 0.004")  # no operands: not evidence-linked
+    assert not fact_reported(f, [(a2, m2, check_assertion(a2, m2, ev))])
+
+
+def _pkg_with(cells_r1, cells_r2, caption="Scores.", extra_cols=("a",)):
+    cols = [{"column_id": c, "header": c.upper(), "higher_is_better": True} for c in extra_cols]
+    return EvidenceValues.from_package(ResearchPackage.model_validate({
+        "question": "Q?", "methods_summary": "M.", "experimental_setup": "Run in 2020 on two datasets.",
+        "results_tables": [{"table_id": "T1", "caption": caption, "columns": cols,
+                            "rows": [{"row_id": "r1", "label": "A", "cells": cells_r1},
+                                     {"row_id": "r2", "label": "B", "cells": cells_r2}]}],
+        "task_instruction": "Write."}))
+
+
+def test_displayed_gain_in_cell_text_is_accepted_but_sd_parenthetical_is_not_a_gain():
+    ev2 = _pkg_with({"a": {"text": "22.51 (2.33 ↑)", "value": 22.51}}, {"a": {"text": "20.17", "value": 20.17}},
+                    caption="Mean ROUGE-L; gain over the base loss in parentheses.")
+    a = Assertion("2.33", 2.33, role="derived")
+    assert check_assertion(a, Mapping("cell", "T1.r1.a - T1.r2.a"), ev2).status == "CORRECT"
+    ev3 = _pkg_with({"a": {"text": "66.2 (4.9)", "value": 66.2}}, {"a": {"text": "61.3", "value": 61.3}},
+                    caption="Accuracy, mean over 5 splits, standard deviation in parentheses.")
+    assert "T1.r1.a.spread" in ev3.values and ev3.values["T1.r1.a.spread"].value == 4.9
+    b = Assertion("4.8", 4.8, role="derived")  # true gain is 4.9: the SD must not rescue a wrong gain
+    assert check_assertion(Assertion("4.9", 4.9, role="derived"), Mapping("cell", "T1.r1.a - T1.r2.a"), ev3).correct
+    assert not check_assertion(b, Mapping("cell", "T1.r1.a - T1.r2.a"), ev3).correct
+
+
+def test_scientific_notation_and_exact_bounds(ev):
+    ev2 = _pkg_with({"a": {"text": "1.2e-4", "value": 0.00012}}, {"a": {"text": "5.1e-3", "value": 0.0051}})
+    assert check_assertion(Assertion("1.2e-4", 0.00012), Mapping("cell", "T1.r1.a"), ev2).correct
+    assert not check_assertion(Assertion("2.8e-4", 0.00028), Mapping("cell", "T1.r1.a"), ev2).correct
+    # p = 0.036 satisfies "p < 0.05"; a bound is compared exactly, without rounding slack
+    assert check_assertion(Assertion("p < 0.05", 0.05, role="statistical"), Mapping("test", "S1", comparator="<"), ev).correct
+    assert not check_assertion(Assertion("p < 0.03", 0.03, role="statistical"), Mapping("test", "S1", comparator="<"), ev).correct
+    assert not check_assertion(Assertion("p < 0.035", 0.035, role="statistical"), Mapping("test", "S1", comparator="<"), ev).correct
+    # a year in quoted prose is not a bound on a quantity
+    assert check_assertion(Assertion("more than 40", 40, role="setup"),
+                           Mapping("text", quote="Run in 2020 on two datasets.", comparator=">"), ev2).status != "CORRECT"
+
+
+def test_no_source_branch_does_not_turn_word_counts_or_bounds_into_errors(ev):
+    assert check_assertion(Assertion("single", 1, role="setup"), Mapping("none"), ev).status == "INVALID_MAPPING"
+    assert check_assertion(Assertion("p < 0.001", 0.001, role="statistical"), Mapping("none", comparator="<"), ev).status == "INVALID_MAPPING"
+    assert check_assertion(Assertion("7.7", 7.7), Mapping("none"), ev).status == "FABRICATED"

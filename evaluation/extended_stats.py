@@ -59,7 +59,8 @@ def ratio_diff(num_a: dict[str, float], den_a: dict[str, float], num_b: dict[str
            "resampling_unit": "case", "den_a": float(da.sum()), "den_b": float(db.sum()),
            "n_a_better": int((ra[both] > rb[both]).sum()), "n_b_better": int((ra[both] < rb[both]).sum()),
            "n_tied": int((ra[both] == rb[both]).sum())}
-    res["degenerate"] = bool(np.allclose(na * db, nb * da)) and (res["n_a_better"] == res["n_b_better"] == 0)
+    # degenerate = no difference at all and a collapsed interval (identical labels in every resample)
+    res["degenerate"] = bool(abs(point) < 1e-12 and abs(res["ci_low"]) < 1e-12 and abs(res["ci_high"]) < 1e-12)
     if clusters is not None:
         groups: dict[str, list[int]] = {}
         for i, k in enumerate(keys):

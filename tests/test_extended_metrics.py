@@ -77,3 +77,8 @@ def test_zero_denominators_are_undefined_not_zero():
     r = ratio_diff({"k": 0}, {"k": 0}, {"k": 1}, {"k": 2})
     assert r["diff"] is None
     assert rate_ci({"k": 0}, {"k": 0}) == (None, None, None)
+
+
+def test_degenerate_flag_requires_zero_difference_and_collapsed_interval():
+    r = ratio_diff({"k1": 1, "k2": 0}, {"k1": 1, "k2": 0}, {"k1": 1, "k2": 0}, {"k1": 1, "k2": 5})
+    assert r["diff"] > 0 and not r["degenerate"]

@@ -1,0 +1,256 @@
+{
+ "status": "ok",
+ "stage": "adjudicate_claims",
+ "item_key": "real_RP-01",
+ "judge": "ADJ",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "adjudicate_claims",
+ "prompt_template_sha256": "cfb52809f07e96480ae4b62b1ba735219ed5ef9a8ad77dbbdc6fc4e191537678",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "267d766d80fefd11bac2496edf75f1a4bc770068fe1a87cd37a585971a97e5c8",
+ "cache_key": "ee6a8cf49d2c6e7de2f7e22e40ddd01a434076287b9210cfacfbe1045b385c06",
+ "started_at": "2026-10-18T11:28:26Z",
+ "finished_at": "2026-10-18T11:28:48Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"decisions\":[{\"item_id\":\"U-09ff20f817.c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-09ff20f817.c2.n1\",\"choice\":\"1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The tables report one p-value per cell; no repeated training runs are reported for these results.\",\"scale\":1}],\"rationale\":\"The setup explicitly reports no repeated training runs, supporting “single” as one run. [Experimental setup]\",\"evidence_ids\":[\"T1\"]},{\"item_id\":\"U-0d816bd5f2.c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-0d816bd5f2.c1.n1\",\"choice\":\"1\",\"source_type\":\"cell\",\"expression\":\"min(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r5.cont_heldout, T2.r6.cont_heldout)\",\"quote\":null,\"scale\":1}],\"rationale\":\"As a range endpoint for held-out subsets, 0.15 refers to the series minimum, even though T2’s actual minimum is 0.07. [T2]\",\"evidence_ids\":[\"T2\"]},{\"item_id\":\"U-553b2f39b4.c1\",\"label\":\"OVERSTATED\",\"entailment\":\"NOT_ENTAILED\",\"extraction_valid\":true,\"numbers\":[],\"rationale\":\"T2 establishes no flags only for its specific uncontaminated-model and held-out checks; the unqualified claim generalizes to all unseen data. [T2; exp2/cmp1]\",\"evidence_ids\":[\"T2\",\"exp2/cmp1\"]},{\"item_id\":\"U-553b2f39b4.c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-553b2f39b4.c2.n1\",\"choice\":\"1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}],\"rationale\":\"The package explicitly identifies 0.05 as the detection cutoff, and every T2 value exceeds it. [T1 note; T2]\",\"evidence_ids\":[\"T1\",\"T2\"]},{\"item_id\":\"U-a34e281696.c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-a34e281696.c1.n1\",\"choice\":\"1\",\"source_type\":\"none\",\"expression\":null,\"quote\":null,\"scale\":1}],\"rationale\":\"The 0.001 figure is a stated comparison bound, not a sourced cell; all four Method M values satisfy it. [T1.r6]\",\"evidence_ids\":[\"T1.r6\"]},{\"item_id\":\"U-a34e281696.c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-a34e281696.c2.n1\",\"choice\":\"2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}],\"rationale\":\"The table note supplies the 0.05 threshold; PaCoST exceeds it on three benchmarks and LLM DI (same) on four. [T1.r1; T1.r2]\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\"]},{\"item_id\":\"U-aee476b5cd.c3\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-aee476b5cd.c3.n1\",\"choice\":\"own\",\"source_type\":\"text\",\"expression\":\"count(intentional-contamination setups described in exp1)\",\"quote\":\"Pythia-1B was continually pretrained on 6.7B tokens of OpenWebText mixed with the public versions; each benchmark appears exactly once and makes up less than 0.001% of the corpus.\",\"scale\":1}],\"rationale\":\"Neither reading maps “single” to the number of contamination setups: one describes training repetitions, while the other maps benchmark occurrences. The package describes one setup. [exp1; Experimental setup]\",\"evidence_ids\":[\"exp1\"]},{\"item_id\":\"U-b3c4c31f57.c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-b3c4c31f57.c1.n1\",\"choice\":\"1\",\"source_type\":\"none\",\"expression\":null,\"quote\":null,\"scale\":1}],\"rationale\":\"The 0.001 figure is a comparison bound rather than a table cell; every Method M value is below it. [T1.r6]\",\"evidence_ids\":[\"T1.r6\"]},{\"item_id\":\"U-b3c4c31f57.c2\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-b3c4c31f57.c2.n1\",\"choice\":\"2\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}],\"rationale\":\"The table note explicitly supplies 0.05, and nine of the twelve PaCoST and LLM DI values exceed it. [T1.r1–r3]\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\"]},{\"item_id\":\"U-cd49fad02f.c1\",\"label\":\"SUPPORTED\",\"entailment\":\"ENTAILED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-cd49fad02f.c1.n1\",\"choice\":\"1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}],\"rationale\":\"The package identifies 0.05 as the cutoff, and all uncontaminated-model values range from 0.21 to 0.55. [T1 note; T2]\",\"evidence_ids\":[\"T1\",\"T2\"]},{\"item_id\":\"U-cd49fad02f.c3\",\"label\":\"UNSUPPORTED\",\"entailment\":\"CONTRADICTED\",\"extraction_valid\":true,\"numbers\":[{\"number_id\":\"U-cd49fad02f.c3.n2\",\"choice\":\"1\",\"source_type\":\"text\",\"expression\":null,\"quote\":\"The original marks p < 0.05 in bold; bolding is not reproduced.\",\"scale\":1}],\"rationale\":\"The package explicitly supplies the 0.05 cutoff; Abstracts is 0.07, which is above rather than below it. [T1 note; T2.r5]\",\"evidence_ids\":[\"T1\",\"T2.r5.cont_heldout\"]}]}",
+ "usage": {
+  "input_tokens": 22042,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 2561,
+  "reasoning_output_tokens": 1034
+ },
+ "cost_usd": null,
+ "latency_s": 22.3,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "decisions": [
+   {
+    "item_id": "U-09ff20f817.c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-09ff20f817.c2.n1",
+      "choice": "1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The tables report one p-value per cell; no repeated training runs are reported for these results.",
+      "scale": 1
+     }
+    ],
+    "rationale": "The setup explicitly reports no repeated training runs, supporting “single” as one run. [Experimental setup]",
+    "evidence_ids": [
+     "T1"
+    ]
+   },
+   {
+    "item_id": "U-0d816bd5f2.c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-0d816bd5f2.c1.n1",
+      "choice": "1",
+      "source_type": "cell",
+      "expression": "min(T2.r1.cont_heldout, T2.r2.cont_heldout, T2.r3.cont_heldout, T2.r4.cont_heldout, T2.r5.cont_heldout, T2.r6.cont_heldout)",
+      "quote": null,
+      "scale": 1
+     }
+    ],
+    "rationale": "As a range endpoint for held-out subsets, 0.15 refers to the series minimum, even though T2’s actual minimum is 0.07. [T2]",
+    "evidence_ids": [
+     "T2"
+    ]
+   },
+   {
+    "item_id": "U-553b2f39b4.c1",
+    "label": "OVERSTATED",
+    "entailment": "NOT_ENTAILED",
+    "extraction_valid": true,
+    "numbers": [],
+    "rationale": "T2 establishes no flags only for its specific uncontaminated-model and held-out checks; the unqualified claim generalizes to all unseen data. [T2; exp2/cmp1]",
+    "evidence_ids": [
+     "T2",
+     "exp2/cmp1"
+    ]
+   },
+   {
+    "item_id": "U-553b2f39b4.c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-553b2f39b4.c2.n1",
+      "choice": "1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ],
+    "rationale": "The package explicitly identifies 0.05 as the detection cutoff, and every T2 value exceeds it. [T1 note; T2]",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   },
+   {
+    "item_id": "U-a34e281696.c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-a34e281696.c1.n1",
+      "choice": "1",
+      "source_type": "none",
+      "expression": null,
+      "quote": null,
+      "scale": 1
+     }
+    ],
+    "rationale": "The 0.001 figure is a stated comparison bound, not a sourced cell; all four Method M values satisfy it. [T1.r6]",
+    "evidence_ids": [
+     "T1.r6"
+    ]
+   },
+   {
+    "item_id": "U-a34e281696.c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-a34e281696.c2.n1",
+      "choice": "2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ],
+    "rationale": "The table note supplies the 0.05 threshold; PaCoST exceeds it on three benchmarks and LLM DI (same) on four. [T1.r1; T1.r2]",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2"
+    ]
+   },
+   {
+    "item_id": "U-aee476b5cd.c3",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-aee476b5cd.c3.n1",
+      "choice": "own",
+      "source_type": "text",
+      "expression": "count(intentional-contamination setups described in exp1)",
+      "quote": "Pythia-1B was continually pretrained on 6.7B tokens of OpenWebText mixed with the public versions; each benchmark appears exactly once and makes up less than 0.001% of the corpus.",
+      "scale": 1
+     }
+    ],
+    "rationale": "Neither reading maps “single” to the number of contamination setups: one describes training repetitions, while the other maps benchmark occurrences. The package describes one setup. [exp1; Experimental setup]",
+    "evidence_ids": [
+     "exp1"
+    ]
+   },
+   {
+    "item_id": "U-b3c4c31f57.c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-b3c4c31f57.c1.n1",
+      "choice": "1",
+      "source_type": "none",
+      "expression": null,
+      "quote": null,
+      "scale": 1
+     }
+    ],
+    "rationale": "The 0.001 figure is a comparison bound rather than a table cell; every Method M value is below it. [T1.r6]",
+    "evidence_ids": [
+     "T1.r6"
+    ]
+   },
+   {
+    "item_id": "U-b3c4c31f57.c2",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-b3c4c31f57.c2.n1",
+      "choice": "2",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ],
+    "rationale": "The table note explicitly supplies 0.05, and nine of the twelve PaCoST and LLM DI values exceed it. [T1.r1–r3]",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3"
+    ]
+   },
+   {
+    "item_id": "U-cd49fad02f.c1",
+    "label": "SUPPORTED",
+    "entailment": "ENTAILED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-cd49fad02f.c1.n1",
+      "choice": "1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ],
+    "rationale": "The package identifies 0.05 as the cutoff, and all uncontaminated-model values range from 0.21 to 0.55. [T1 note; T2]",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   },
+   {
+    "item_id": "U-cd49fad02f.c3",
+    "label": "UNSUPPORTED",
+    "entailment": "CONTRADICTED",
+    "extraction_valid": true,
+    "numbers": [
+     {
+      "number_id": "U-cd49fad02f.c3.n2",
+      "choice": "1",
+      "source_type": "text",
+      "expression": null,
+      "quote": "The original marks p < 0.05 in bold; bolding is not reproduced.",
+      "scale": 1
+     }
+    ],
+    "rationale": "The package explicitly supplies the 0.05 cutoff; Abstracts is 0.07, which is above rather than below it. [T1 note; T2.r5]",
+    "evidence_ids": [
+     "T1",
+     "T2.r5.cont_heldout"
+    ]
+   }
+  ]
+ }
+}

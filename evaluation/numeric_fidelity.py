@@ -24,7 +24,7 @@ from typing import Any, Iterable, Optional
 from src.package_schema import ResearchPackage
 from src.render import render_package
 
-NUM_RE = re.compile(r"(?<![A-Za-z0-9_.])[-−+]?\d+(?:,\d{3})*(?:\.\d+)?")
+NUM_RE = re.compile(r"(?<![A-Za-z0-9_.])[-−+]?\d+(?:,\d{3})*(?:\.\d+)?(?:[eE][-−+]?\d+)?")
 ALLOWED_SCALES = (1.0, 100.0, 0.01, 1000.0, 0.001)
 APPROX_REL_TOL = 0.05
 TEST_FIELDS = ("p_value", "statistic", "df", "n", "ci_low", "ci_high", "alpha", "ci_level")
@@ -55,9 +55,13 @@ def normalize_text(s: str) -> str:
 
 
 def decimals_of(token: str) -> int:
-    token = token.strip().replace(",", "")
-    m = re.search(r"\.(\d+)", token)
-    return len(m.group(1)) if m else 0
+    """Decimal places of a displayed number, counting a scientific exponent ("1.2e-4" -> 5)."""
+    token = token.strip().replace(",", "").replace("−", "-")
+    m = re.search(r"\d+(?:\.(\d+))?(?:[eE]([-+]?\d+))?", token)
+    if not m:
+        return 0
+    d = len(m.group(1) or "")
+    return max(0, d - int(m.group(2))) if m.group(2) else d
 
 
 def parse_number(token: str) -> Optional[float]:
@@ -65,6 +69,9 @@ def parse_number(token: str) -> Optional[float]:
     if not m:
         return None
     return float(m.group(0).replace(",", "").replace("−", "-"))
+
+
+SD_IN_PARENS = re.compile(r"(standard deviation|\bSDs?\b|\bstd\b)[^.]*parenthes|parenthes[^.]*(standard deviation|\bSDs?\b|\bstd\b)", re.I)
 
 
 # ----------------------------------------------------------------------------- evidence values
@@ -100,8 +107,10 @@ class EvidenceValues:
                                     and math.isclose(abs(parse_number(n)), abs(cell.spread), rel_tol=1e-9)),
                                    repr(cell.spread))
                         ev.values[key + ".spread"] = Quantity(cell.spread, 0.5 * 10 ** -decimals_of(tok), "spread")
-                    else:  # a "± x" shown in the cell text without a structured spread field
+                    else:  # a "± x", or "(x)" where the caption says SDs are in parentheses, without a spread field
                         m = re.search(r"±\s*([0-9]+(?:\.[0-9]+)?)", cell.text)
+                        if not m and SD_IN_PARENS.search(f"{t.caption} {t.notes or ''}"):
+                            m = re.search(r"\(\s*([0-9]+(?:\.[0-9]+)?)\s*\)", cell.text)
                         if m:
                             ev.values[key + ".spread"] = Quantity(float(m.group(1)), 0.5 * 10 ** -decimals_of(m.group(1)), "spread")
         for s in pkg.statistical_tests:
@@ -302,23 +311,52 @@ def asserted_tolerance(a: Assertion, expected: float) -> float:
 def _compare(a: float, comparator: str, expected: float, tol: float, upper_bound: bool) -> bool:
     if upper_bound:  # package only says p < expected
         # an exact or lower-bound statement cannot be verified from "p < x"
-        return comparator in ("<", "<=") and expected <= a + tol
+        return comparator in ("<", "<=") and expected <= a + 1e-9 * max(1.0, abs(a))
     if comparator == "=":
         return abs(a - expected) <= tol
-    if comparator == "<":
-        return expected < a + tol
-    if comparator == "<=":
-        return expected <= a + tol
-    if comparator == ">":
-        return expected > a - tol
-    if comparator == ">=":
-        return expected >= a - tol
+    # bounds get no rounding slack; equality is accepted because texts often restate a threshold the package
+    # itself states ("p < 0.05" for alpha = 0.05, "less than 1%" quoting "less than 1%")
+    eps = 1e-9 * max(1.0, abs(a))
+    if comparator in ("<", "<="):
+        return expected <= a + eps
+    if comparator in (">", ">="):
+        return expected >= a - eps
     return False
 
 
 def _cell_parts(key: str) -> Optional[tuple[str, str, str]]:
     parts = key.split(".")
     return (parts[0], parts[1], parts[2]) if len(parts) == 3 else None
+
+
+def displayed_value(expression: str, raw: float, ev: EvidenceValues) -> Optional[float]:
+    """A number the package itself prints for this derived quantity (e.g. a gain shown as "22.51 (2.33 ↑)").
+
+    Returns it when some operand cell's text shows a further number (not its value or spread) that equals the
+    derived quantity up to the package's own display rounding; the writer may then quote the displayed figure."""
+    try:
+        _, names = evaluate(expression, ev)
+        ptol = package_tolerance(expression, ev)
+    except ExpressionError:
+        return None
+    if len(names) < 2:
+        return None
+    cells = {(t.table_id, r.row_id, c): cell for t in ev.package.results_tables for r in t.rows for c, cell in r.cells.items()}
+    for key in names.values():
+        parts = key.split(".")
+        if len(parts) != 3:
+            continue
+        cell = cells.get(tuple(parts))
+        if cell is None:
+            continue
+        for tok in NUM_RE.findall(normalize_text(cell.text)):
+            v = parse_number(tok)
+            if v is None or (cell.value is not None and math.isclose(v, cell.value)) or \
+                    (cell.spread is not None and math.isclose(v, cell.spread)):
+                continue
+            if abs(abs(v) - abs(raw)) <= ptol * 1.0001 + 1e-9:
+                return math.copysign(abs(v), raw)
+    return None
 
 
 def plausible_alternatives(operands: tuple[str, ...], derived: bool, ev: EvidenceValues) -> list[tuple[str, float]]:
@@ -403,6 +441,10 @@ def check_assertion(a: Assertion, m: Mapping, ev: EvidenceValues) -> Verdict:
         return Verdict(INVALID, note=f"bad comparator {comparator}")
     st = (m.source_type or "").lower()
     if st == "none":
+        if not re.search(r"\d", a.as_written):
+            return Verdict(INVALID, note="implicit count with no referenced source: not checkable")
+        if comparator != "=":
+            return Verdict(INVALID, note="bound with no referenced source: not checkable")
         tol = asserted_tolerance(a, a.value)
         where = _anywhere(a.value, ev, tol)
         if where:
@@ -418,8 +460,10 @@ def check_assertion(a: Assertion, m: Mapping, ev: EvidenceValues) -> Verdict:
         if not found:  # e.g. "a single dataset" mapped to prose that names one dataset: not checkable
             return Verdict(INVALID, note="quote contains no number to check against")
         for tok, n in found:
+            if comparator != "=" and n == int(n) and 1900 <= n <= 2100 and "." not in tok:
+                continue  # a year is not a bound on a reported quantity
             exp = n * scale
-            tol = asserted_tolerance(a, exp)
+            tol = asserted_tolerance(a, exp) if comparator == "=" else 1e-12
             if _compare(a.value, comparator, exp, tol, False):
                 return Verdict(CORRECT, exp, tol, (), "matched quoted prose")
         states_a_count = any(v == int(v) and 0 <= v <= 20 for _, v in found)
@@ -440,16 +484,20 @@ def check_assertion(a: Assertion, m: Mapping, ev: EvidenceValues) -> Verdict:
     upper = len(names) == 1 and ev.values[next(iter(names.values()))].upper_bound
     expected = raw * scale
     # package values are treated as exact as displayed (they are the evidence the writer saw); the tolerance
-    # is the rounding of the asserted number, widened for explicitly approximate wording
-    tol = asserted_tolerance(a, expected)
+    # is the rounding of the asserted number, widened for explicitly approximate wording. A stated bound
+    # ("p < 0.05", "over 90") is compared exactly.
+    tol = asserted_tolerance(a, expected) if comparator == "=" else 1e-12
     if _compare(a.value, comparator, expected, tol, upper):
         return Verdict(CORRECT, expected, tol, operands)
+    shown = displayed_value(m.expression, raw, ev)
+    if comparator == "=" and shown is not None and abs(a.value - shown * scale) <= asserted_tolerance(a, shown * scale):
+        return Verdict(CORRECT, shown * scale, tol, operands, "matches the value the package displays for this quantity")
     if comparator != "=":
         return Verdict("VALUE_MISMATCH", expected, tol, operands, "bound not satisfied")
     if expected != 0 and abs(a.value + expected) <= tol:
         return Verdict("SIGN_OR_DIRECTION", expected, tol, operands)
     for k in (100.0, 0.01, 1000.0, 0.001):
-        if abs(a.value - expected * k) <= tol * k and not math.isclose(k, 1.0):
+        if abs(a.value - expected * k) <= tol:
             return Verdict("UNIT_OR_SCALE", expected, tol, operands, f"off by factor {k:g}")
     py, _ = tokenize_expression(m.expression, ev)
     derived = len(names) > 1 or bool(re.search(r"[-+*/]|\b(abs|min|max|mean|sum|count|round)\(", py))
@@ -503,13 +551,17 @@ def gold_fact(f: dict[str, Any], ev: EvidenceValues) -> RequiredFact:
         else:  # derivation written with numbers: map each number to a unique cell with that value
             nums = [parse_number(t) for t in NUM_RE.findall(normalize_text(lhs))]
             found: set[str] = set()
+            unique = True
             for n in nums:
                 if n is None or n in (100.0,):
                     continue
                 hits = [k for k, q in ev.values.items() if q.kind == "cell" and math.isclose(q.value, n, abs_tol=1e-9)]
                 if len(hits) == 1:
                     found.add(hits[0])
-            ops = found or None
+                else:
+                    unique = False
+            # if any number cannot be tied to one cell, match on value alone rather than on a partial operand set
+            ops = found if (found and unique) else None
     return RequiredFact(f["fact_id"], float(f["value"]), float(f.get("tolerance") or 0.0),
                         frozenset(ops) if ops else None, True, f.get("description", ""))
 
@@ -521,7 +573,7 @@ def fact_from_expression(fact_id: str, expression: str, ev: EvidenceValues, desc
 
 
 def fact_reported(fact: RequiredFact, checked: list[tuple[Assertion, Mapping, Verdict]]) -> bool:
-    """A required fact is reported iff some CORRECT assertion refers to the same operands and value."""
+    """A required fact is reported iff some CORRECT assertion states its value using its evidence (or part of it)."""
     for a, m, v in checked:
         if not v.correct:
             continue
@@ -531,6 +583,8 @@ def fact_reported(fact: RequiredFact, checked: list[tuple[Assertion, Mapping, Ve
         same_value = abs(val - fact.value) <= tol or (fact.signed_difference and abs(abs(val) - abs(fact.value)) <= tol)
         if not same_value:
             continue
-        if fact.operands is None or frozenset(v.operands) == fact.operands:
+        # same evidence, or a subset of it (a fact defined as an aggregate such as max over rows is reported by
+        # stating the attaining cell's value)
+        if fact.operands is None or (v.operands and frozenset(v.operands) <= fact.operands):
             return True
     return False

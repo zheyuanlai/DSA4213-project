@@ -103,16 +103,19 @@ class LeakageError(RuntimeError):
 def check_leakage(prompt: str, data_segments: list[str], forbidden_texts: list[str] = ()) -> None:
     """Refuse a judge prompt that could reveal conditions, lineage or gold.
 
-    ``data_segments`` are the package rendering and model-written passages/claims; they are model-visible data
-    and may legitimately contain words such as "baseline". Strict patterns are checked on everything except
-    the package; template words only on the instructions and structure we wrote."""
+    ``data_segments`` are the package rendering (first element, by convention) and model-written passages/claims;
+    they are model-visible data and may legitimately contain words such as "baseline". Strict patterns (condition
+    labels, case IDs, run tags, private paths, gold fields) are checked on everything except the package, including
+    model-written text; lineage words only on the instructions and structure we wrote."""
+    package = data_segments[0] if data_segments else ""
+    outside_package = prompt.replace(package, " ") if package else prompt
+    for pat, what in STRICT_PATTERNS:
+        m = pat.search(outside_package)
+        if m:
+            raise LeakageError(f"{what} in judge prompt: {m.group(0)!r}")
     stripped = prompt
     for seg in sorted(set(s for s in data_segments if s), key=len, reverse=True):
         stripped = stripped.replace(seg, " ")
-    for pat, what in STRICT_PATTERNS:
-        m = pat.search(stripped)
-        if m:
-            raise LeakageError(f"{what} in judge prompt: {m.group(0)!r}")
     m = TEMPLATE_WORDS.search(stripped)
     if m:
         raise LeakageError(f"lineage/condition word in judge prompt structure: {m.group(0)!r}")

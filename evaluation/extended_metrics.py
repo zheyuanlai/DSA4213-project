@@ -208,7 +208,7 @@ def summarize_texts(recs: dict[str, dict[str, dict[str, Any]]]) -> dict[str, Any
             v, lo, hi = rate_ci(n, dd)
             s[name] = {"value": v, "ci": [lo, hi], "numerator": sum(n.values()), "denominator": sum(dd.values())}
         p, r = s["numeric_precision"]["value"], s["numeric_recall"]["value"]
-        s["numeric_f1_secondary"] = (2 * p * r / (p + r)) if p and r else None
+        s["numeric_f1_secondary"] = None if p is None or r is None else (0.0 if p + r == 0 else 2 * p * r / (p + r))
         for k in PASSAGE_RATES:
             s[k] = _mean([r[k] for r in d.values()])
         s["claims_per_text"] = _mean([r["all"]["n_claims"] for r in d.values()])
@@ -297,8 +297,8 @@ def completeness(fam: str, data: FamilyData, checklists: dict[str, Any], recs: d
             v, lo, hi = rate_ci({k: r[num] for k, r in d.items()}, {k: r[den] for k, r in d.items()})
             s[name] = {"value": v, "ci": [lo, hi], "numerator": sum(r[num] for r in d.values()),
                        "denominator": sum(r[den] for r in d.values())}
-            # failure-inclusive: a failed run reports nothing
-            if failed.get(cond):
+            # failure-inclusive: a failed run reports nothing (not defined for the misreported share)
+            if failed.get(cond) and name != "finding_incorrect_rate":
                 nn = {**{k: r[num] for k, r in d.items()}, **{c: 0 for c in failed[cond]}}
                 dd = {**{k: r[den] for k, r in d.items()}, **{c: _items_den(items_by_case[c], den) for c in failed[cond]}}
                 v2, lo2, hi2 = rate_ci(nn, dd)
@@ -534,9 +534,21 @@ def score_family(fam: str) -> dict[str, Any]:
         quality[cond] = q
     res["efficiency"] = efficiency(data, quality, res["edits"]["summary"])
     OUT.joinpath(fam).mkdir(parents=True, exist_ok=True)
-    (OUT / fam / "results.json").write_text(json.dumps(res, indent=1, default=_json_default), encoding="utf-8")
+    # output IDs per condition would reproduce the private condition mapping: keep them in private/ only
+    priv = ROOT / "private" / "extended"
+    priv.mkdir(parents=True, exist_ok=True)
+    (priv / f"results_{fam}_with_text_ids.json").write_text(json.dumps(res, indent=1, default=_json_default), encoding="utf-8")
+    (OUT / fam / "results.json").write_text(json.dumps(_strip_text_ids(res), indent=1, default=_json_default), encoding="utf-8")
     print(f"  scored {fam} -> {(OUT / fam / 'results.json').relative_to(ROOT)}")
     return res
+
+
+def _strip_text_ids(o: Any) -> Any:
+    if isinstance(o, dict):
+        return {k: _strip_text_ids(v) for k, v in o.items() if k != "text_id"}
+    if isinstance(o, list):
+        return [_strip_text_ids(v) for v in o]
+    return o
 
 
 def _json_default(o):

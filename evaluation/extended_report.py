@@ -161,14 +161,14 @@ def table_completeness(r: dict[str, Any]) -> str:
 def table_efficiency(r: dict[str, Any]) -> str:
     e = r["efficiency"]
     ret = r["retrieval"]
-    lines = ["| condition | cost USD/text | latency s/text | tool calls/text | tool calls/verified claim | "
+    lines = ["| condition | cost USD/text | latency s/text | tool calls/text | tool calls/verified sentence | "
              "cost per strict-success passage | cost per fully supported passage | repairs/100 tool calls | "
              "verification opportunities | all decisive evidence retrieved | any decisive evidence retrieved |",
              "|---|---|---|---|---|---|---|---|---|---|---|"]
     for c in _conds(e):
         x, rt = e[c], ret.get(c, {})
         lines.append(f"| {c} | {x['cost_usd_per_text']:.5f} | {x['latency_s_per_text']:.1f} | {x['tool_calls_per_text']:.2f} | "
-                     f"{f3(x['tool_calls_per_verified_claim'])} | {_money(x.get('cost_per_complete_correct_passage'))} | "
+                     f"{f3(x['tool_calls_per_verified_claim'])} | {_money(x['cost_per_complete_correct_passage']) if 'cost_per_complete_correct_passage' in x else 'n/a'} | "
                      f"{_money(x.get('cost_per_fully_supported_passage'))} | {f3(x.get('repairs_per_100_tool_calls'))} | "
                      f"{rt.get('opportunities', '—')} | {f3(rt.get('share_all_decisive'))} | {f3(rt.get('share_any_decisive'))} |")
     return "\n".join(lines)
@@ -261,74 +261,88 @@ def write_figures() -> None:
     fig.savefig(fig_dir / "fig1_focal_vs_passage_success.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
 
-    # 2. numerical precision vs recall
-    fig, axes = plt.subplots(1, 3, figsize=(7.4, 2.8), sharey=True)
+    # 2. numerical precision vs recall (coincident conditions share one marker and one label)
+    fig, axes = plt.subplots(1, 3, figsize=(7.6, 2.9), sharey=True)
     for ax, fam in zip(axes, FAMS):
         s = R[fam]["claims"]["summary"]
+        groups: dict[tuple[float, float], list[str]] = {}
         for c in _conds(s):
             p, rc = s[c]["numeric_precision"], s[c]["numeric_recall"]
-            if p["value"] is None or rc["value"] is None:
-                continue
+            if p["value"] is not None and rc["value"] is not None:
+                groups.setdefault((round(rc["value"], 3), round(p["value"], 3)), []).append(c)
+        for k, (key, cs) in enumerate(sorted(groups.items())):
+            c = cs[0]
+            p, rc = s[c]["numeric_precision"], s[c]["numeric_recall"]
             ax.errorbar(rc["value"], p["value"], xerr=[[rc["value"] - rc["ci"][0]], [rc["ci"][1] - rc["value"]]],
                         yerr=[[p["value"] - p["ci"][0]], [p["ci"][1] - p["value"]]], fmt="o", color=SLOT[0],
-                        ecolor="#9ec5f4", elinewidth=0.8, markersize=4, markeredgecolor=SURFACE)
-            ax.annotate(c, (rc["value"], p["value"]), xytext=(3, 3), textcoords="offset points", fontsize=7, color=INK)
+                        ecolor="#86b6ef", elinewidth=0.9, markersize=4.5, markeredgecolor=SURFACE, zorder=3)
+            right = k % 2 == 0
+            ax.annotate("/".join(cs), (rc["value"], p["value"]), xytext=(6, 4) if right else (-6, -11),
+                        textcoords="offset points", fontsize=7, color=INK, ha="left" if right else "right")
         ax.set_xlabel("recall of required numeric facts", color=INK2)
         _style(ax, FAM_LABEL[fam])
         ax.set_xlim(0, 1.02)
     axes[0].set_ylabel("precision of reported numbers", color=INK2)
-    axes[0].set_ylim(0.5, 1.02)
-    fig.suptitle("Numerical precision vs recall (deterministic checks of AI evidence mappings; 95% CI)", fontsize=9,
-                 x=0.01, ha="left", color=INK)
+    axes[0].set_ylim(0.85, 1.005)
+    fig.suptitle("Numerical precision vs recall (deterministic checks of AI evidence mappings; 95% case-bootstrap CI)",
+                 fontsize=9, x=0.01, ha="left", color=INK)
     fig.tight_layout()
     fig.savefig(fig_dir / "fig2_numeric_precision_recall.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
 
-    # 3 + 5. atomic claim label distributions by family (synthetic vs real vs long)
-    labs = [("n_supported", "Supported", SLOT[0]), ("n_overstated", "Overstated", SLOT[1]),
-            ("n_understated", "Understated", SLOT[2]), ("n_unsupported", "Unsupported", SLOT[3]),
-            ("n_numeric_error", "Numeric error", SLOT[4])]
-    fig, axes = plt.subplots(1, 3, figsize=(7.6, 3.0), sharey=True, gridspec_kw={"width_ratios": [7, 5, 3]})
+    # 3 + 5. atomic-claim error profiles by dataset (zero-based stacked error shares; support = 1 - bar)
+    labs = [("n_overstated", "Overstated", SLOT[1]), ("n_understated", "Understated", SLOT[2]),
+            ("n_unsupported", "Unsupported", SLOT[3]), ("n_numeric_error", "Numeric error", SLOT[4])]
+    fig, axes = plt.subplots(1, 3, figsize=(7.8, 3.1), sharey=True, gridspec_kw={"width_ratios": [7, 5, 3], "wspace": 0.15})
     for ax, fam in zip(axes, FAMS):
         pc = R[fam]["claims"]["per_case"]
         cs = _conds(pc)
         bottom = np.zeros(len(cs))
+        tot = np.array([sum(r["all"]["n_assessable"] for r in pc[c].values()) for c in cs], float)
         for k, lab, col in labs:
-            tot = np.array([sum(r["all"]["n_assessable"] for r in pc[c].values()) for c in cs], float)
             v = np.array([sum(r["all"][k] for r in pc[c].values()) for c in cs], float) / np.where(tot > 0, tot, 1)
             ax.bar(cs, v, 0.7, bottom=bottom, color=col, label=lab, edgecolor=SURFACE, linewidth=1)
             bottom += v
-        ax.set_ylim(0.6 if fam != "diagnostic" else 0.6, 1.0)
-        _style(ax, FAM_LABEL[fam].split(" (")[0] + f"\n(n claims={int(sum(sum(r['all']['n_assessable'] for r in pc[c].values()) for c in cs))})")
+        for i, b in enumerate(bottom):
+            ax.annotate(f"{b:.2f}", (i, b), xytext=(0, 2), textcoords="offset points", ha="center", fontsize=6.5, color=INK2)
+        per_text = np.mean([sum(r["all"]["n_assessable"] for r in pc[c].values()) / len(pc[c]) for c in cs])
+        _style(ax, FAM_LABEL[fam].split(" (")[0])
+        ax.set_xlabel(f"{len(next(iter(pc.values())))} cases, ~{per_text:.0f} claims/text", color=INK2, fontsize=7)
         ax.tick_params(axis="x", labelsize=7)
-    axes[0].set_ylabel("share of assessable atomic claims (axis from 0.6)", color=INK2)
+    axes[0].set_ylabel("share of assessable claims with an error", color=INK2)
+    axes[0].set_ylim(0, 0.2)
     axes[-1].legend(frameon=False, fontsize=7, loc="upper left", bbox_to_anchor=(1.0, 1.0))
-    fig.suptitle("Atomic claim labels by condition and dataset (AI-judged; numeric errors from deterministic checks)",
-                 fontsize=9, x=0.01, ha="left", color=INK)
+    fig.suptitle("Atomic-claim error profile (AI-judged labels; numeric errors from deterministic checks); support rate = 1 - bar",
+                 fontsize=9, x=0.01, y=1.03, ha="left", color=INK)
     fig.tight_layout()
     fig.savefig(fig_dir / "fig3_atomic_label_profiles.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
 
-    # 4. beneficial vs harmful edits
+    # 4. fate of draft errors after editing, and errors introduced
     rows = []
     for fam in FAMS:
-        for c, x in R[fam]["edits"]["summary"].items():
-            rows.append((f"{fam[:3]}·{c}", x))
-    fig, ax = plt.subplots(figsize=(7.2, 2.9))
-    names = [r[0] for r in rows]
-    ben = np.array([r[1].get("beneficial", 0) for r in rows])
-    neu = np.array([r[1].get("neutral", 0) for r in rows])
-    har = np.array([r[1].get("harmful", 0) for r in rows])
-    ax.bar(names, ben, color=SLOT[0], label="beneficial (error corrected/removed)", edgecolor=SURFACE)
-    ax.bar(names, neu, bottom=ben, color="#c3c2b7", label="neutral", edgecolor=SURFACE)
-    ax.bar(names, har, bottom=ben + neu, color=SLOT[1], label="harmful (error introduced / content lost)", edgecolor=SURFACE)
-    for i, r in enumerate(rows):
-        ax.annotate(f"{r[1].get('initial_errors', 0)} init.\nerr.", (i, ben[i] + neu[i] + har[i]), xytext=(0, 2),
-                    textcoords="offset points", ha="center", fontsize=6, color=INK2)
-    ax.set_ylabel("substantive claim edits (count)", color=INK2)
-    ax.tick_params(axis="x", labelsize=7, rotation=0)
-    _style(ax, "Verifier and reviser edits vs their own starting draft (AI-judged before/after labels)")
-    ax.legend(frameon=False, fontsize=7, loc="upper right")
+        for c in _conds(R[fam]["edits"]["summary"]):
+            rows.append((f"{ {'synthetic': 'Syn', 'real': 'Real', 'diagnostic': 'Long'}[fam]} {c}", R[fam]["edits"]["summary"][c]))
+    fig, ax = plt.subplots(figsize=(7.2, 3.2))
+    y = np.arange(len(rows))[::-1]
+    parts = [("corrected", "corrected", SLOT[0]), ("removed", "removed (claim deleted)", "#86b6ef"),
+             ("retained_edited", "still wrong after an edit", SLOT[3]), ("retained_unedited", "left in unedited sentences", "#c3c2b7")]
+    left = np.zeros(len(rows))
+    for k, lab, col in parts:
+        v = np.array([r[1].get(k, 0) for r in rows], float)
+        ax.barh(y, v, 0.65, left=left, color=col, label=lab, edgecolor=SURFACE, linewidth=1)
+        left += v
+    for yi, (name, x), l in zip(y, rows, left):
+        rr = x.get("repair_recall")
+        ax.annotate(f"repair {rr:.2f}; +{x.get('new_errors', 0)} new error(s)" if rr is not None else "no draft errors",
+                    (l, yi), xytext=(4, 0), textcoords="offset points", va="center", fontsize=6.5, color=INK2)
+    ax.set_yticks(y, [r[0] for r in rows], fontsize=7)
+    ax.set_xlabel("draft claims with an error (count)", color=INK2)
+    ax.set_xlim(0, max(left) * 1.45)
+    ax.xaxis.grid(True, color=GRID, linewidth=0.6)
+    ax.yaxis.grid(False)
+    _style(ax, "Fate of each system's draft errors after its edit (AI-judged before/after labels)")
+    ax.legend(frameon=False, fontsize=7, loc="upper center", bbox_to_anchor=(0.45, -0.17), ncol=4)
     fig.tight_layout()
     fig.savefig(fig_dir / "fig4_edit_outcomes.png", dpi=220, bbox_inches="tight")
     plt.close(fig)
@@ -353,11 +367,11 @@ def write_figures() -> None:
 
 
 def _pareto(ax, pts, title):
-    import numpy as np
+    from matplotlib.ticker import FuncFormatter, NullFormatter
     pts = [p for p in pts if p[0] is not None and p[1] is not None]
-    for cost, q, c, tools in pts:
+    for i, (cost, q, c, tools) in enumerate(sorted(pts, key=lambda p: (p[0], p[1]))):
         ax.scatter(cost, q, s=20 + 6 * (tools or 0), color=SLOT[0], edgecolor=SURFACE, linewidth=1, zorder=3)
-        ax.annotate(c, (cost, q), xytext=(4, 3), textcoords="offset points", fontsize=7, color=INK)
+        ax.annotate(c, (cost, q), xytext=(6, 5) if i % 2 == 0 else (6, -11), textcoords="offset points", fontsize=7, color=INK)
     front, best = [], -1.0
     for cost, q, c, _ in sorted(pts):
         if q > best:
@@ -365,11 +379,14 @@ def _pareto(ax, pts, title):
             best = q
     ax.plot([p[0] for p in front], [p[1] for p in front], color=SLOT[1], linewidth=1.2, zorder=2)
     ax.set_xscale("log")
+    ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"${v:.4f}".rstrip("0") if v < 0.01 else f"${v:.2f}"))
+    ax.xaxis.set_minor_formatter(NullFormatter())
+    xs = [p[0] for p in pts]
+    ax.set_xticks([x for x in (0.0002, 0.0005, 0.001, 0.002, 0.005) if min(xs) / 1.5 <= x <= max(xs) * 1.5])
     lo = min(p[1] for p in pts)
     ax.set_ylim(max(0, lo - 0.08), min(1.0, max(p[1] for p in pts) + 0.05))
     _style(ax, title)
     ax.xaxis.grid(True, color=GRID, linewidth=0.6)
-    _ = np
 
 
 def write_summary() -> None:
@@ -384,10 +401,7 @@ def write_summary() -> None:
         L += [f"## {FAM_LABEL[fam]}", ""]
         head = ["condition", "support rate", "factual error rate", "overstated", "understated", "unsupported",
                 "numeric precision", "numeric recall", "fully supported passages"]
-        if fam == "synthetic":
-            head.insert(1, "strict complete & correct")
-        else:
-            head.insert(1, "finding recall")
+        head.insert(1, "strict complete & correct" if fam == "synthetic" else "finding recall")
         head.append("cost USD/text")
         L += ["| " + " | ".join(head) + " |", "|" + "---|" * len(head)]
         for c in _conds(s):

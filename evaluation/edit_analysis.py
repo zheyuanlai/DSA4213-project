@@ -110,9 +110,13 @@ def analyze_run(draft_units: list[str], final_units: list[str], claims_by_unit: 
             if rel == "DELETED":
                 if before in ERRORS:
                     cls = "beneficial"
+                elif before in UNKNOWN:
+                    cls = "neutral"
                 else:
                     r.deleted_correct += 1
-                    cls = "harmful" if (c.get("result_claim", True) and r.findings_lost > 0) else "neutral"
+                    # each required finding lost in this run is attributed to at most one deleted correct claim
+                    harmful_left = r.findings_lost - sum(1 for e in r.events if e["class"] == "harmful" and e["relation"] == "DELETED")
+                    cls = "harmful" if (c.get("result_claim", True) and harmful_left > 0) else "neutral"
             else:
                 if x.get("direction") == "WEAKENED":
                     r.weakened += 1
@@ -152,9 +156,10 @@ def summarize(runs: list[RunEdits]) -> dict[str, Any]:
     for r in runs:
         tot.update({k: v for k, v in r.as_dict().items() if isinstance(v, int)})
     t = dict(tot)
+    known = t.get("initial_errors", 0) - t.get("unknown", 0)  # unresolved outcomes leave the denominator
     return {**t,
-            "repair_recall": ratio(t.get("corrected", 0) + t.get("removed", 0), t.get("initial_errors", 0)),
-            "repair_recall_corrected_only": ratio(t.get("corrected", 0), t.get("initial_errors", 0)),
+            "repair_recall": ratio(t.get("corrected", 0) + t.get("removed", 0), known),
+            "repair_recall_corrected_only": ratio(t.get("corrected", 0), known),
             "edit_precision": ratio(t.get("beneficial", 0), t.get("substantive_edits", 0)),
             "harmful_edit_rate": ratio(t.get("harmful", 0), t.get("substantive_edits", 0)),
             "unnecessary_weakening_rate": ratio(t.get("weakened_correct", 0), t.get("weakened", 0))}

@@ -391,3 +391,35 @@ affects claim counts; result-claim and passage-level metrics are reported to lim
 8. **Judge B cost reservation.** The budget guard reserved $0.75 per in-flight Judge B call, which refused real-paper
    coverage calls at $4.33 actual spend. Reservations (and the CLI's own per-call cap) are now $0.75 for verification
    and $0.25 for coverage, alignment and checklist review; the $6.50 total cap is unchanged.
+9. **Scoring refinements made after first scoring (2026-10-18; post hoc, applied identically to every condition).**
+   * *Required-fact matching.* Some checklist numeric facts are aggregates (e.g. the best score as `max` over rows).
+     A passage that states the attaining cell's value was not credited because its evidence set differed from the
+     fact's. A correct assertion now reports a fact when its evidence is a subset of the fact's evidence and its value
+     matches. This changed real-paper numeric recall from 0.18–0.19 to 0.21–0.24 for all conditions alike.
+   * *Harmful deletions.* The first implementation marked every deleted correct claim as harmful whenever its run lost
+     any required finding (30 harmful deletions against 4 lost findings for real-paper C2). Each lost required finding is
+     now attributed to at most one deleted correct claim; the rest count as neutral. This affects only C2, whose
+     real-paper harmful-edit rate fell from 0.31 to 0.15.
+   No label, checklist or claim was changed. Both rules have unit tests.
+10. **Fixes from an independent code review (2026-10-18, after the first consensus commit `dba147b`).** A read-only
+    review of the extension code found implementation defects; all are fixed in code with unit tests, and no AI
+    judge reading was edited. The earlier consensus remains in git history.
+    * A derived quantity the package itself prints (e.g. a gain shown as "22.51 (2.33 ↑)") was scored as an
+      arithmetic error when the writer quoted it; it is now accepted when it equals the derived quantity up to the
+      package's own display rounding. Parenthetical numbers that a caption declares to be standard deviations now
+      resolve as `.spread`.
+    * A number mapped to "no source" that is an implicit word count or a bound is now not checkable (as in amendment 7)
+      instead of being searched against all evidence, which had matched "single" to any value near 1.
+    * Scientific notation now gets its true display precision. Stated bounds are compared without rounding slack
+      (equality is accepted, since texts restate thresholds such as "p < 0.05"), and years in quoted prose cannot
+      satisfy a bound.
+    * Smaller fixes: the unit-scale error window; gold facts whose written derivation cannot be tied to unique cells are
+      matched on value; the degenerate-interval flag now requires a zero difference and a collapsed interval; unresolved
+      edit outcomes leave the repair denominator; no failure-inclusive value is reported for the misreported share; F1 is
+      0 (not undefined) when precision or recall is 0; the leakage check now applies its strict patterns to model-written
+      text as well (only the package is exempt).
+    * Effect on the frozen consensus: 2 synthetic and 15 real-paper claims changed from NUMERIC_ERROR to SUPPORTED;
+      2 real-paper claims changed from SUPPORTED to NUMERIC_ERROR (re-adjudicated number mappings). Four real-paper cases
+      had to be re-adjudicated because their disputes changed; in those cases the adjudicator
+      reproduced 4 of 9 earlier label decisions and 24 of 27 number-mapping choices, which changed 5 further labels.
+      All results and documents were regenerated from the corrected consensus.

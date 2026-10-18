@@ -79,3 +79,20 @@ def test_decisive_evidence_retrieval_rules():
     assert r["all"] and r["n_tool_calls"] == 2
     r2 = decisive_retrieval(trace, ["T1.r1.acc", "S1"], {"S1": "exp1/cmp1"})
     assert r2["any"] and not r2["all"]
+
+
+def test_lost_findings_are_attributed_to_at_most_one_deletion_each():
+    by_unit = {"U-a": [cl("a1", "U-a"), cl("a2", "U-a"), cl("a3", "U-a")]}
+    labels = {"a1": "SUPPORTED", "a2": "SUPPORTED", "a3": "SUPPORTED"}
+    align = {"x_claims": [{"claim_id": c, "relation": "DELETED", "direction": None, "matched_y": []} for c in ("a1", "a2", "a3")],
+             "added_y": []}
+    r = analyze_run(["U-a"], [], by_unit, labels, align, covered_draft={"f1", "f2"}, covered_final={"f2"})
+    assert r.deleted_correct == 3 and r.harmful == 1 and r.neutral == 2
+
+
+def test_unresolved_outcomes_leave_the_repair_denominator():
+    labels = {"d2a": "OVERSTATED", "f1a": "UNRESOLVED"}
+    align = {"x_claims": [{"claim_id": "d2a", "relation": "MODIFIED", "direction": "WEAKENED", "matched_y": ["f1a"]}],
+             "added_y": []}
+    r = analyze_run(["U-d2"], ["U-f1"], BY_UNIT, labels, align)
+    assert r.unknown == 1 and summarize([r])["repair_recall"] is None
