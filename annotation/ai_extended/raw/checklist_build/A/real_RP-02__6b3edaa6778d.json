@@ -1,0 +1,187 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "real_RP-02",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "4eaebd85107973337613552bb389156075b25245c97b615c32bc8ac7e7fe7ab2",
+ "cache_key": "6b3edaa6778d738fd7ef60e31a57a95d3e7d2fbf2eb42923e55f787576993a55",
+ "started_at": "2026-10-18T10:17:47Z",
+ "finished_at": "2026-10-18T10:18:14Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"With the default Ada embedding, the two large models showed the expected persona pattern only partially: no medical-role instruction was significant, whereas non-medical roles were significant for 2 of 4 personas in GPT-4 and 3 of 4 in GPT-3.5, with higher pooled mean omega for non-medical than medical roles.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"]},{\"finding_id\":\"F2\",\"description\":\"The smaller models did not show a consistent medical-versus-non-medical separation under Ada: their pooled mean omega values were nearly identical, and significant shifts occurred for some medical roles while several non-medical roles were not significant.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"]},{\"finding_id\":\"F3\",\"description\":\"The audit was strongly and non-uniformly sensitive to embedding choice, as changing from Ada to Jasper, Stella, or Kalm substantially altered persona-specific omega values and significance patterns, with particularly large changes for the robot and child personas.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\",\"T2.r6\",\"T2.r7\",\"T2.r8\"]},{\"finding_id\":\"F4\",\"description\":\"The embedding comparison has restricted interpretability because the appendix does not identify the generating language model, although its Ada estimates coincide with GPT-3.5 in T1, so it does not establish embedding sensitivity across multiple generators.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"supporting\",\"evidence_ids\":[\"T1\",\"T2\"]},{\"finding_id\":\"F5\",\"description\":\"The reported significance stars are cellwise permutation-test thresholds without exact p-values, and no multiple-comparison correction is indicated, limiting inference from the many persona-by-model and persona-by-embedding tests.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"supporting\",\"evidence_ids\":[\"T1\",\"T2\"]},{\"finding_id\":\"F6\",\"description\":\"A non-significant cell should be interpreted only as no detectable semantic shift under Method M, not as evidence that the full text-generation distributions are identical.\",\"polarity\":\"neutral\",\"kind\":\"other\",\"importance\":\"supporting\",\"evidence_ids\":[\"P1\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"Pooled mean omega for medical personas across GPT-4 and GPT-3.5 under Ada.\",\"expression\":\"mean(T1.r1.gpt4,T1.r2.gpt4,T1.r3.gpt4,T1.r4.gpt4,T1.r1.gpt35,T1.r2.gpt35,T1.r3.gpt35,T1.r4.gpt35)\",\"value\":0.2075,\"unit\":\"omega\",\"finding_id\":\"F1\"},{\"fact_id\":\"N2\",\"description\":\"Pooled mean omega for non-medical personas across GPT-4 and GPT-3.5 under Ada.\",\"expression\":\"mean(T1.r5.gpt4,T1.r6.gpt4,T1.r7.gpt4,T1.r8.gpt4,T1.r5.gpt35,T1.r6.gpt35,T1.r7.gpt35,T1.r8.gpt35)\",\"value\":0.26625,\"unit\":\"omega\",\"finding_id\":\"F1\"},{\"fact_id\":\"N3\",\"description\":\"Difference between pooled non-medical and medical mean omega for the two large models under Ada.\",\"expression\":\"mean(T1.r5.gpt4,T1.r6.gpt4,T1.r7.gpt4,T1.r8.gpt4,T1.r5.gpt35,T1.r6.gpt35,T1.r7.gpt35,T1.r8.gpt35)-mean(T1.r1.gpt4,T1.r2.gpt4,T1.r3.gpt4,T1.r4.gpt4,T1.r1.gpt35,T1.r2.gpt35,T1.r3.gpt35,T1.r4.gpt35)\",\"value\":0.05875,\"unit\":\"omega\",\"finding_id\":\"F1\"},{\"fact_id\":\"N4\",\"description\":\"Pooled mean omega for medical personas across the five reported smaller models under Ada.\",\"expression\":\"mean(T1.r1.llama8b,T1.r2.llama8b,T1.r3.llama8b,T1.r4.llama8b,T1.r1.gpt2,T1.r2.gpt2,T1.r3.gpt2,T1.r4.gpt2,T1.r1.gemma9b,T1.r2.gemma9b,T1.r3.gemma9b,T1.r4.gemma9b,T1.r1.phi3,T1.r2.phi3,T1.r3.phi3,T1.r4.phi3,T1.r1.mistral7b,T1.r2.mistral7b,T1.r3.mistral7b,T1.r4.mistral7b)\",\"value\":0.24,\"unit\":\"omega\",\"finding_id\":\"F2\"},{\"fact_id\":\"N5\",\"description\":\"Pooled mean omega for non-medical personas across the five reported smaller models under Ada.\",\"expression\":\"mean(T1.r5.llama8b,T1.r6.llama8b,T1.r7.llama8b,T1.r8.llama8b,T1.r5.gpt2,T1.r6.gpt2,T1.r7.gpt2,T1.r8.gpt2,T1.r5.gemma9b,T1.r6.gemma9b,T1.r7.gemma9b,T1.r8.gemma9b,T1.r5.phi3,T1.r6.phi3,T1.r7.phi3,T1.r8.phi3,T1.r5.mistral7b,T1.r6.mistral7b,T1.r7.mistral7b,T1.r8.mistral7b)\",\"value\":0.241,\"unit\":\"omega\",\"finding_id\":\"F2\"},{\"fact_id\":\"N6\",\"description\":\"Difference between pooled non-medical and medical mean omega for the five reported smaller models.\",\"expression\":\"mean(T1.r5.llama8b,T1.r6.llama8b,T1.r7.llama8b,T1.r8.llama8b,T1.r5.gpt2,T1.r6.gpt2,T1.r7.gpt2,T1.r8.gpt2,T1.r5.gemma9b,T1.r6.gemma9b,T1.r7.gemma9b,T1.r8.gemma9b,T1.r5.phi3,T1.r6.phi3,T1.r7.phi3,T1.r8.phi3,T1.r5.mistral7b,T1.r6.mistral7b,T1.r7.mistral7b,T1.r8.mistral7b)-mean(T1.r1.llama8b,T1.r2.llama8b,T1.r3.llama8b,T1.r4.llama8b,T1.r1.gpt2,T1.r2.gpt2,T1.r3.gpt2,T1.r4.gpt2,T1.r1.gemma9b,T1.r2.gemma9b,T1.r3.gemma9b,T1.r4.gemma9b,T1.r1.phi3,T1.r2.phi3,T1.r3.phi3,T1.r4.phi3,T1.r1.mistral7b,T1.r2.mistral7b,T1.r3.mistral7b,T1.r4.mistral7b)\",\"value\":0.001,\"unit\":\"omega\",\"finding_id\":\"F2\"},{\"fact_id\":\"N7\",\"description\":\"Range of omega estimates across embeddings for the robot-from-the-future persona.\",\"expression\":\"max(T2.r6.ada,T2.r6.jasper,T2.r6.stella,T2.r6.kalm)-min(T2.r6.ada,T2.r6.jasper,T2.r6.stella,T2.r6.kalm)\",\"value\":0.22,\"unit\":\"omega\",\"finding_id\":\"F3\"},{\"fact_id\":\"N8\",\"description\":\"Range of omega estimates across embeddings for the child persona.\",\"expression\":\"max(T2.r8.ada,T2.r8.jasper,T2.r8.stella,T2.r8.kalm)-min(T2.r8.ada,T2.r8.jasper,T2.r8.stella,T2.r8.kalm)\",\"value\":0.15,\"unit\":\"omega\",\"finding_id\":\"F3\"}]}",
+ "usage": {
+  "input_tokens": 18122,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 3428,
+  "reasoning_output_tokens": 1510
+ },
+ "cost_usd": null,
+ "latency_s": 26.3,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "With the default Ada embedding, the two large models showed the expected persona pattern only partially: no medical-role instruction was significant, whereas non-medical roles were significant for 2 of 4 personas in GPT-4 and 3 of 4 in GPT-3.5, with higher pooled mean omega for non-medical than medical roles.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "The smaller models did not show a consistent medical-versus-non-medical separation under Ada: their pooled mean omega values were nearly identical, and significant shifts occurred for some medical roles while several non-medical roles were not significant.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "The audit was strongly and non-uniformly sensitive to embedding choice, as changing from Ada to Jasper, Stella, or Kalm substantially altered persona-specific omega values and significance patterns, with particularly large changes for the robot and child personas.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5",
+     "T2.r6",
+     "T2.r7",
+     "T2.r8"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "The embedding comparison has restricted interpretability because the appendix does not identify the generating language model, although its Ada estimates coincide with GPT-3.5 in T1, so it does not establish embedding sensitivity across multiple generators.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "The reported significance stars are cellwise permutation-test thresholds without exact p-values, and no multiple-comparison correction is indicated, limiting inference from the many persona-by-model and persona-by-embedding tests.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   },
+   {
+    "finding_id": "F6",
+    "description": "A non-significant cell should be interpreted only as no detectable semantic shift under Method M, not as evidence that the full text-generation distributions are identical.",
+    "polarity": "neutral",
+    "kind": "other",
+    "importance": "supporting",
+    "evidence_ids": [
+     "P1"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "Pooled mean omega for medical personas across GPT-4 and GPT-3.5 under Ada.",
+    "expression": "mean(T1.r1.gpt4,T1.r2.gpt4,T1.r3.gpt4,T1.r4.gpt4,T1.r1.gpt35,T1.r2.gpt35,T1.r3.gpt35,T1.r4.gpt35)",
+    "value": 0.2075,
+    "unit": "omega",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N2",
+    "description": "Pooled mean omega for non-medical personas across GPT-4 and GPT-3.5 under Ada.",
+    "expression": "mean(T1.r5.gpt4,T1.r6.gpt4,T1.r7.gpt4,T1.r8.gpt4,T1.r5.gpt35,T1.r6.gpt35,T1.r7.gpt35,T1.r8.gpt35)",
+    "value": 0.26625,
+    "unit": "omega",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Difference between pooled non-medical and medical mean omega for the two large models under Ada.",
+    "expression": "mean(T1.r5.gpt4,T1.r6.gpt4,T1.r7.gpt4,T1.r8.gpt4,T1.r5.gpt35,T1.r6.gpt35,T1.r7.gpt35,T1.r8.gpt35)-mean(T1.r1.gpt4,T1.r2.gpt4,T1.r3.gpt4,T1.r4.gpt4,T1.r1.gpt35,T1.r2.gpt35,T1.r3.gpt35,T1.r4.gpt35)",
+    "value": 0.05875,
+    "unit": "omega",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Pooled mean omega for medical personas across the five reported smaller models under Ada.",
+    "expression": "mean(T1.r1.llama8b,T1.r2.llama8b,T1.r3.llama8b,T1.r4.llama8b,T1.r1.gpt2,T1.r2.gpt2,T1.r3.gpt2,T1.r4.gpt2,T1.r1.gemma9b,T1.r2.gemma9b,T1.r3.gemma9b,T1.r4.gemma9b,T1.r1.phi3,T1.r2.phi3,T1.r3.phi3,T1.r4.phi3,T1.r1.mistral7b,T1.r2.mistral7b,T1.r3.mistral7b,T1.r4.mistral7b)",
+    "value": 0.24,
+    "unit": "omega",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N5",
+    "description": "Pooled mean omega for non-medical personas across the five reported smaller models under Ada.",
+    "expression": "mean(T1.r5.llama8b,T1.r6.llama8b,T1.r7.llama8b,T1.r8.llama8b,T1.r5.gpt2,T1.r6.gpt2,T1.r7.gpt2,T1.r8.gpt2,T1.r5.gemma9b,T1.r6.gemma9b,T1.r7.gemma9b,T1.r8.gemma9b,T1.r5.phi3,T1.r6.phi3,T1.r7.phi3,T1.r8.phi3,T1.r5.mistral7b,T1.r6.mistral7b,T1.r7.mistral7b,T1.r8.mistral7b)",
+    "value": 0.241,
+    "unit": "omega",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N6",
+    "description": "Difference between pooled non-medical and medical mean omega for the five reported smaller models.",
+    "expression": "mean(T1.r5.llama8b,T1.r6.llama8b,T1.r7.llama8b,T1.r8.llama8b,T1.r5.gpt2,T1.r6.gpt2,T1.r7.gpt2,T1.r8.gpt2,T1.r5.gemma9b,T1.r6.gemma9b,T1.r7.gemma9b,T1.r8.gemma9b,T1.r5.phi3,T1.r6.phi3,T1.r7.phi3,T1.r8.phi3,T1.r5.mistral7b,T1.r6.mistral7b,T1.r7.mistral7b,T1.r8.mistral7b)-mean(T1.r1.llama8b,T1.r2.llama8b,T1.r3.llama8b,T1.r4.llama8b,T1.r1.gpt2,T1.r2.gpt2,T1.r3.gpt2,T1.r4.gpt2,T1.r1.gemma9b,T1.r2.gemma9b,T1.r3.gemma9b,T1.r4.gemma9b,T1.r1.phi3,T1.r2.phi3,T1.r3.phi3,T1.r4.phi3,T1.r1.mistral7b,T1.r2.mistral7b,T1.r3.mistral7b,T1.r4.mistral7b)",
+    "value": 0.001,
+    "unit": "omega",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N7",
+    "description": "Range of omega estimates across embeddings for the robot-from-the-future persona.",
+    "expression": "max(T2.r6.ada,T2.r6.jasper,T2.r6.stella,T2.r6.kalm)-min(T2.r6.ada,T2.r6.jasper,T2.r6.stella,T2.r6.kalm)",
+    "value": 0.22,
+    "unit": "omega",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Range of omega estimates across embeddings for the child persona.",
+    "expression": "max(T2.r8.ada,T2.r8.jasper,T2.r8.stella,T2.r8.kalm)-min(T2.r8.ada,T2.r8.jasper,T2.r8.stella,T2.r8.kalm)",
+    "value": 0.15,
+    "unit": "omega",
+    "finding_id": "F3"
+   }
+  ]
+ }
+}

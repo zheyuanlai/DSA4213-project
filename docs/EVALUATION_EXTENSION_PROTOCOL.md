@@ -352,3 +352,25 @@ affects claim counts; result-claim and passage-level metrics are reported to lim
    error either way; the error *type* reported is the one from Judge A's mapping.
 4. **Synthetic case IDs in prompts.** Synthetic packets use the existing `K` aliases; diagnostic packets use `L`
    aliases from a seeded shuffle. Real papers keep `RP-xx`.
+5. **Pilot-based changes (2026-10-18, before the main verification, coverage and alignment runs).** A pilot on
+   one synthetic case (K05) and one real paper (RP-08) led to these changes; pilot judgments made with superseded
+   prompts are kept for spend accounting only and are not used.
+   * Extraction: a separate scope claim is emitted only when it asserts something no other claim from the same
+     sentence asserts (the pilot produced duplicates such as "the comparison covers every collection" next to
+     "A outperformed B on every collection", which would double-count generality errors).
+   * Verification: both `entailment` and `label` explicitly ignore exact numeric values, which are checked by code
+     (in the pilot one judge penalised a wrong number in the label, creating avoidable disputes). Justifications are
+     limited to 25 words. Claims of one case with the same proposition and the same numbers are verified once and
+     the reading is copied (`copied_from` is recorded). Prompts use short local IDs (`c1`, `c1.n1`), mapped back in code.
+   * Judge B model: the metered cap does not cover Sonnet 5.5 everywhere (pilot cost per synthetic case: Sonnet
+     $0.12, Haiku 5.5 $0.012; both agreed with Judge A on 43/43 and 42/43 pilot labels, with 0/62 numeric disputes).
+     Judge B is therefore **Claude Sonnet 5.5 for real-paper and long-diagnostic verification and coverage**, and
+     **Claude Haiku 5.5 for synthetic verification and for all alignment**. Agreement is reported per family with
+     the model named. Judge B returns plain JSON that is validated locally against the same schema (the CLI's
+     structured-output mode made the model emit the object twice).
+   * Label/entailment disputes on a claim that is already a numeric error under agreed numeric verdicts are not
+     adjudicated, because they cannot change any metric; Judge A's value is kept and the claim is marked.
+6. **Checklist merge outcome.** The deterministic merge (§6) dropped numeric facts whose expression did not resolve
+   to package values (for example an invented key `T1.r1.jga.avg`, or a parenthetical gain misread as a spread);
+   L06 keeps 2 numeric facts and RP-09 keeps 5. Reviewer-proposed core findings were added for 15 of 20 packages and
+   reviewer-rejected findings were dropped for 3 diagnostic packages. Every change is in each checklist's `merge_log`.

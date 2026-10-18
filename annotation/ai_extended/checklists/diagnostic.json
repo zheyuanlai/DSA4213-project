@@ -1,0 +1,1819 @@
+{
+ "family": "diagnostic",
+ "procedure": "protocol §6: Judge A build, Judge B review, deterministic merge",
+ "checklists": {
+  "L01": {
+   "alias": "L01",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Across the three training-platform test splits, Brackenridge-Tox achieved higher average macro-F1 than Owlery-Enc (81.9% versus 79.8%; a 2.1-point difference), with the paired seed-level comparison statistically significant (t=10.64, p<0.001, 95% CI [1.58, 2.69]).",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg",
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Brackenridge-Tox outperformed Owlery-Enc on each individual training-platform test split: Gildcrest Forums, Nettlebank, and Pikestaff Chat.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r1.gild",
+      "T1.r2.gild",
+      "T1.r1.nett",
+      "T1.r2.nett",
+      "T1.r1.pike",
+      "T1.r2.pike"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "In the pooled training-platform subtype analysis, Brackenridge-Tox exceeded Owlery-Enc for all four toxicity subtypes, with the largest advantage for identity attacks (3.7 points).",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1.insult",
+      "T2.r2.insult",
+      "T2.r1.threat",
+      "T2.r2.threat",
+      "T2.r1.ident",
+      "T2.r2.ident",
+      "T2.r1.obsc",
+      "T2.r2.obsc"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The Cobble-Board result does not establish generalization to a genuinely unseen test platform because that collection was used for early stopping, checkpoint selection, and threshold choice and had no separate test partition; moreover, no significance test is reported for its model comparison.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T3",
+      "exp3/cmp4"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "No genuinely held-out unseen-platform test exists: the only out-of-pool evaluation (Cobble-Board) was tuned on, so the generalization question remains unanswered; the advantage is confirmed only on held-out splits of training platforms.",
+     "polarity": "null",
+     "kind": "negative_or_null",
+     "importance": "core",
+     "evidence_ids": [
+      "T3",
+      "exp3/cmp4"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Brackenridge-Tox average macro-F1 across the three training-platform test splits.",
+     "expression": "T1.r1.avg",
+     "value": 81.9,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 81.9,
+     "operands": [
+      "T1.r1.avg"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Owlery-Enc average macro-F1 across the three training-platform test splits.",
+     "expression": "T1.r2.avg",
+     "value": 79.8,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 79.8,
+     "operands": [
+      "T1.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Brackenridge-Tox's average macro-F1 advantage over Owlery-Enc on the training-platform test splits.",
+     "expression": "T1.r1.avg - T1.r2.avg",
+     "value": 2.1,
+     "unit": "percentage points",
+     "finding_id": "F1",
+     "computed_value": 2.1000000000000085,
+     "operands": [
+      "T1.r1.avg",
+      "T1.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Paired t-test statistic for the training-platform average comparison.",
+     "expression": "S1.statistic",
+     "value": 10.64,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 10.64,
+     "operands": [
+      "S1.statistic"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Lower endpoint of the 95% confidence interval for the paired training-platform difference.",
+     "expression": "S1.ci_low",
+     "value": 1.58,
+     "unit": "percentage points",
+     "finding_id": "F1",
+     "computed_value": 1.58,
+     "operands": [
+      "S1.ci_low"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Upper endpoint of the 95% confidence interval for the paired training-platform difference.",
+     "expression": "S1.ci_high",
+     "value": 2.69,
+     "unit": "percentage points",
+     "finding_id": "F1",
+     "computed_value": 2.69,
+     "operands": [
+      "S1.ci_high"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Brackenridge-Tox macro-F1 on Cobble-Board.",
+     "expression": "T3.r1.mf1",
+     "value": 71.8,
+     "unit": "%",
+     "finding_id": null,
+     "computed_value": 71.8,
+     "operands": [
+      "T3.r1.mf1"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Brackenridge-Tox's descriptive macro-F1 advantage over Owlery-Enc on Cobble-Board.",
+     "expression": "T3.r1.mf1 - T3.r2.mf1",
+     "value": 2.9,
+     "unit": "percentage points",
+     "finding_id": null,
+     "computed_value": 2.8999999999999915,
+     "operands": [
+      "T3.r1.mf1",
+      "T3.r2.mf1"
+     ]
+    }
+   ],
+   "merge_log": [
+    "dropped F4: reviewer marked UNSUPPORTED (Cobble-Board numbers are correct, but it was the development set, so describing it as an unseen platform outside training is misleading.)",
+    "F5: unknown evidence ids ['Experimental setup', 'T3.note'] removed",
+    "added F6 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Matches T1 averages (81.9 vs 79.8) and S1 statistics; central in-distribution result."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "All three platform splits favor Brackenridge-Tox (84.6/82.1, 79.3/77.0, 81.8/80.2); directly supported."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "All four subtypes higher; identity gap 3.7 is largest (threat 2.5, insult 1.3, obscene 0.8). Correct."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "UNSUPPORTED",
+     "comment": "Cobble-Board numbers are correct, but it was the development set, so describing it as an unseen platform outside training is misleading."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "Supported: Cobble-Board used for early stopping, checkpoint and threshold selection, no test partition, and no test reported for cmp4."
+    }
+   ]
+  },
+  "L02": {
+   "alias": "L02",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Under matched Coldharbour-LiDAR timing conditions, Gossamer-Seg had substantially lower median per-scan latency than Tumbril-3D (29.4 versus 47.8 ms).",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T3.r1.med",
+      "T3.r2.med"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Gossamer-Seg also achieved higher matched-condition throughput (34.0 versus 20.9 scans/s) and lower 90th-percentile latency (33.1 versus 52.6 ms) than Tumbril-3D.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T3.r1.thr",
+      "T3.r2.thr",
+      "T3.r1.p90",
+      "T3.r2.p90"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "The speed advantage did not incur a lower mean test mIoU: Gossamer-Seg scored 67.9% versus 67.5% for Tumbril-3D, but the 0.4-percentage-point paired difference was not statistically significant (p=0.18; 95% CI −0.46 to 1.26; n=3 seeds).",
+     "polarity": "mixed",
+     "kind": "negative_or_null",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.test",
+      "T1.r2.test",
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "Selected per-class test IoUs were mixed: Gossamer-Seg was higher for car, cyclist, and pole, but lower for pedestrian and vegetation.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T5.r1.car",
+      "T5.r2.car",
+      "T5.r1.ped",
+      "T5.r2.ped",
+      "T5.r1.cyc",
+      "T5.r2.cyc",
+      "T5.r1.pole",
+      "T5.r2.pole",
+      "T5.r1.veg",
+      "T5.r2.veg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Despite being faster in matched timing, Gossamer-Seg had higher analytical compute proxies than Tumbril-3D—96.3 versus 81.5 GFLOPs per scan and 41.7 versus 38.2 million parameters.",
+     "polarity": "negative",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T4.r1.gflops",
+      "T4.r2.gflops",
+      "T4.r1.params",
+      "T4.r2.params"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "The originally published latencies are not a controlled head-to-head comparison because the methods used different accelerators, batch sizes, precision, and latency accounting, so the matched re-timing is the appropriate basis for the speed conclusion.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "P1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Gossamer-Seg median matched latency",
+     "expression": "T3.r1.med",
+     "value": 29.4,
+     "unit": "ms/scan",
+     "finding_id": "F1",
+     "computed_value": 29.4,
+     "operands": [
+      "T3.r1.med"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Tumbril-3D median matched latency",
+     "expression": "T3.r2.med",
+     "value": 47.8,
+     "unit": "ms/scan",
+     "finding_id": "F1",
+     "computed_value": 47.8,
+     "operands": [
+      "T3.r2.med"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Absolute reduction in median latency for Gossamer-Seg relative to Tumbril-3D",
+     "expression": "T3.r2.med - T3.r1.med",
+     "value": 18.4,
+     "unit": "ms/scan",
+     "finding_id": "F1",
+     "computed_value": 18.4,
+     "operands": [
+      "T3.r1.med",
+      "T3.r2.med"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Gossamer-Seg matched throughput",
+     "expression": "T3.r1.thr",
+     "value": 34.0,
+     "unit": "scans/s",
+     "finding_id": "F2",
+     "computed_value": 34.0,
+     "operands": [
+      "T3.r1.thr"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Tumbril-3D matched throughput",
+     "expression": "T3.r2.thr",
+     "value": 20.9,
+     "unit": "scans/s",
+     "finding_id": "F2",
+     "computed_value": 20.9,
+     "operands": [
+      "T3.r2.thr"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Gossamer-Seg mean test mIoU",
+     "expression": "T1.r1.test",
+     "value": 67.9,
+     "unit": "%",
+     "finding_id": "F3",
+     "computed_value": 67.9,
+     "operands": [
+      "T1.r1.test"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Mean paired test-mIoU advantage of Gossamer-Seg over Tumbril-3D",
+     "expression": "T1.r1.test - T1.r2.test",
+     "value": 0.4,
+     "unit": "percentage points",
+     "finding_id": "F3",
+     "computed_value": 0.4000000000000057,
+     "operands": [
+      "T1.r1.test",
+      "T1.r2.test"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Two-sided paired t-test p-value for the test-mIoU difference",
+     "expression": "S1.p_value",
+     "value": 0.18,
+     "unit": null,
+     "finding_id": "F3",
+     "computed_value": 0.18,
+     "operands": [
+      "S1.p_value"
+     ]
+    }
+   ],
+   "merge_log": [],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Directly supported by T3 matched medians, 29.4 vs 47.8 ms; the central answer on speed."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "T3 supports higher throughput and lower p90 latency for Gossamer-Seg."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Supported by T1 and S1: a 0.4-point difference that is not significant. The 'did not incur lower' wording is acceptable, and the evidence shows no detectable cost."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "T5 values match: higher on car, cyclist and pole; lower on pedestrian and vegetation. Per-class differences are small and untested."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "T4 shows higher GFLOPs and parameters for Gossamer-Seg, despite the faster measured latency."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "T2 and P1 show differing hardware, batch size, precision and accounting; the published figures are not comparable."
+    }
+   ]
+  },
+  "L03": {
+   "alias": "L03",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Loamwise-ViT achieved higher clean Harrowfield-Leaf top-1 accuracy than Ferncastle-CNN (91.4% versus 89.7%), with a statistically significant paired mean advantage of 1.7 percentage points across five seeds.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r1.acc",
+      "T1.r2.acc",
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "TRIVIAL"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Loamwise-ViT met the pre-specified robustness criterion at every tested JPEG quality from 90 through 10 because its accuracy drop never exceeded 1.8 points, below the 2.0-point limit.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Ferncastle-CNN met the robustness criterion only at JPEG qualities 90 and 70 and exceeded the 2.0-point drop limit at qualities 50, 30 and 10.",
+     "polarity": "negative",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1.fc_drop",
+      "T2.r2.fc_drop",
+      "T2.r3.fc_drop",
+      "T2.r4.fc_drop",
+      "T2.r5.fc_drop"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "Under the most severe tested compression, JPEG quality 10, Loamwise-ViT retained 89.6% accuracy with a 1.8-point drop, whereas Ferncastle-CNN fell to 79.9% with a 9.8-point drop.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r5.lw_acc",
+      "T2.r5.lw_drop",
+      "T2.r5.fc_acc",
+      "T2.r5.fc_drop"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The JPEG evidence is limited to mean performance on one test split at five specified quality settings, and the package reports no inferential test or uncertainty interval for the JPEG comparisons.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2",
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "Loamwise-ViT's JPEG robustness does not generalize to all perturbations: it exceeded the 2.0-point criterion under motion blur at 7 px (2.9) and 11 px (6.1) and under brightness ×0.6 (wait 1.7 meets) and ×0.4 (3.4). Robustness is specific to JPEG, although it still dropped less than Ferncastle-CNN.",
+     "polarity": "mixed",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T3.r2.lw_drop",
+      "T3.r3.lw_drop",
+      "T4.r3.lw_drop",
+      "T4.r2.lw_drop"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Loamwise-ViT clean top-1 accuracy.",
+     "expression": "T2.r0.lw_acc",
+     "value": 91.4,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 91.4,
+     "operands": [
+      "T2.r0.lw_acc"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Loamwise-ViT clean accuracy advantage over Ferncastle-CNN.",
+     "expression": "T2.r0.lw_acc - T2.r0.fc_acc",
+     "value": 1.7,
+     "unit": "percentage points",
+     "finding_id": "F1",
+     "computed_value": 1.7000000000000028,
+     "operands": [
+      "T2.r0.fc_acc",
+      "T2.r0.lw_acc"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "P-value for the paired clean-accuracy comparison between Loamwise-ViT and Ferncastle-CNN.",
+     "expression": "S1.p_value",
+     "value": 0.0011,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.0011,
+     "operands": [
+      "S1.p_value"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Largest Loamwise-ViT accuracy drop across the five tested JPEG settings.",
+     "expression": "max(T2.r1.lw_drop, T2.r2.lw_drop, T2.r3.lw_drop, T2.r4.lw_drop, T2.r5.lw_drop)",
+     "value": 1.8,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 1.8,
+     "operands": [
+      "T2.r1.lw_drop",
+      "T2.r2.lw_drop",
+      "T2.r3.lw_drop",
+      "T2.r4.lw_drop",
+      "T2.r5.lw_drop"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Ferncastle-CNN accuracy drop at JPEG quality 50, the first tested setting at which its drop exceeded 2.0 points.",
+     "expression": "T2.r3.fc_drop",
+     "value": 2.6,
+     "unit": "percentage points",
+     "finding_id": "F3",
+     "computed_value": 2.6,
+     "operands": [
+      "T2.r3.fc_drop"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Loamwise-ViT accuracy at JPEG quality 10.",
+     "expression": "T2.r5.lw_acc",
+     "value": 89.6,
+     "unit": "%",
+     "finding_id": "F4",
+     "computed_value": 89.6,
+     "operands": [
+      "T2.r5.lw_acc"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Ferncastle-CNN accuracy drop at JPEG quality 10.",
+     "expression": "T2.r5.fc_drop",
+     "value": 9.8,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 9.8,
+     "operands": [
+      "T2.r5.fc_drop"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Loamwise-ViT accuracy advantage over Ferncastle-CNN at JPEG quality 10.",
+     "expression": "T2.r5.lw_acc - T2.r5.fc_acc",
+     "value": 9.7,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 9.699999999999989,
+     "operands": [
+      "T2.r5.fc_acc",
+      "T2.r5.lw_acc"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F6 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "TRIVIAL",
+     "comment": "Supported (91.4 vs 89.7, p=0.0011, CI 1.14–2.26), but clean accuracy is background, not the JPEG robustness answer."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Drops 0.1–1.8 at all five qualities, all ≤2.0 criterion; directly answers the question."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Ferncastle drops 0.3, 1.2 then 2.6, 4.9, 9.8; meets criterion only at 90 and 70."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "Quality 10 values match T2: 89.6/1.8 versus 79.9/9.8."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "S1 covers only clean accuracy; JPEG tables are means with no tests or intervals. Valid scope caveat."
+    }
+   ]
+  },
+  "L04": {
+   "alias": "L04",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Across the five benchmarks, Sprocket-AD achieved a higher mean event-F1 than Lanyard-TS (78.4% versus 77.2%), a 1.2-percentage-point descriptive advantage.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Sprocket-AD had higher event-F1 than Lanyard-TS on Rookhaven-Server, Mallowmere-Water, Tinderbox-HVAC, and Whitlow-Rail, while the methods tied at 78.4% on Quayside-Grid v2.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Because no statistical tests were reported, the package establishes only a descriptive event-F1 advantage and does not establish whether Sprocket-AD's advantage over Lanyard-TS is statistically significant.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "Sprocket-AD also outperformed the deterministic Dunmore-Iso baseline on every benchmark and by 13.7 percentage points in average event-F1.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r3"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Detection-delay results were mixed: relative to Lanyard-TS, Sprocket-AD had lower median delay on Rookhaven-Server, Quayside-Grid v2, and Whitlow-Rail but higher delay on Mallowmere-Water and Tinderbox-HVAC.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "The full Sprocket-AD had higher average event-F1 than every ablated variant, with removing both the frequency branch and adaptive thresholds reducing the average from 78.4% to 75.8%.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T3.r1",
+      "T3.r2",
+      "T3.r3",
+      "T3.r4"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "The default 128-step input window produced the highest average event-F1 among the tested window lengths, although the 256-step result was close (78.4% versus 78.1%).",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T4.r1",
+      "T4.r2",
+      "T4.r3",
+      "T4.r4"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F8",
+     "description": "Compared with Lanyard-TS, Sprocket-AD used fewer parameters and had lower training and inference times (3.2 M versus 5.8 M parameters, 14 versus 22 minutes, and 0.9 versus 1.4 ms per window).",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T5.r1",
+      "T5.r2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F9",
+     "description": "Quayside-Grid v2 uses revised labels, so its scores are not directly comparable to version 1 results; the tie there should be interpreted cautiously.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "P1",
+      "T1.r1.quay",
+      "T1.r2.quay"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Sprocket-AD average event-F1 across the five benchmarks",
+     "expression": "T1.r1.avg",
+     "value": 78.4,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 78.4,
+     "operands": [
+      "T1.r1.avg"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Lanyard-TS average event-F1 across the five benchmarks",
+     "expression": "T1.r2.avg",
+     "value": 77.2,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 77.2,
+     "operands": [
+      "T1.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Sprocket-AD's average event-F1 advantage over Lanyard-TS",
+     "expression": "T1.r1.avg - T1.r2.avg",
+     "value": 1.2,
+     "unit": "percentage points",
+     "finding_id": "F1",
+     "computed_value": 1.2000000000000028,
+     "operands": [
+      "T1.r1.avg",
+      "T1.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Event-F1 difference between Sprocket-AD and Lanyard-TS on Quayside-Grid v2",
+     "expression": "T1.r1.quay - T1.r2.quay",
+     "value": 0,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 0.0,
+     "operands": [
+      "T1.r1.quay",
+      "T1.r2.quay"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Sprocket-AD's average event-F1 advantage over Dunmore-Iso",
+     "expression": "T1.r1.avg - T1.r3.avg",
+     "value": 13.7,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 13.700000000000003,
+     "operands": [
+      "T1.r1.avg",
+      "T1.r3.avg"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Average event-F1 decrease when both the frequency branch and adaptive thresholds are removed",
+     "expression": "T3.r1.avg - T3.r4.avg",
+     "value": 2.6,
+     "unit": "percentage points",
+     "finding_id": "F6",
+     "computed_value": 2.6000000000000085,
+     "operands": [
+      "T3.r1.avg",
+      "T3.r4.avg"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Average event-F1 advantage of the default 128-step window over the 512-step window",
+     "expression": "T4.r2.avg - T4.r4.avg",
+     "value": 1.4,
+     "unit": "percentage points",
+     "finding_id": "F7",
+     "computed_value": 1.4000000000000057,
+     "operands": [
+      "T4.r2.avg",
+      "T4.r4.avg"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Reduction in inference time per window for Sprocket-AD relative to Lanyard-TS",
+     "expression": "T5.r2.infer - T5.r1.infer",
+     "value": 0.5,
+     "unit": "ms",
+     "finding_id": "F8",
+     "computed_value": 0.4999999999999999,
+     "operands": [
+      "T5.r1.infer",
+      "T5.r2.infer"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F9 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 averages 78.4 vs 77.2; difference 1.2 points is correct and central."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "T1 per-benchmark values match: four wins, tie at 78.4 on Quayside-Grid v2."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Package reports no statistical tests, so only descriptive advantage; important caveat for a small margin."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "Sprocket-AD exceeds Dunmore-Iso on all benchmarks; 78.4−64.7=13.7 correct."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "T2 matches: lower delay on rook, quay, whit; higher on mall, tind."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "T3 full 78.4 exceeds all variants; both removed gives 75.8."
+    },
+    {
+     "item_id": "F7",
+     "verdict": "VALID",
+     "comment": "T4: 128 highest at 78.4, 256 close at 78.1."
+    },
+    {
+     "item_id": "F8",
+     "verdict": "VALID",
+     "comment": "T5 values correct: fewer parameters, shorter training and inference than Lanyard-TS."
+    }
+   ]
+  },
+  "L05": {
+   "alias": "L05",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "On Fenmoor-Test across the four English→X pairs, adding pivot-filtered back-translation to Wickersham-MT increased average BLEU from 12.0 to 15.1, a gain of 3.1 points.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r3.avg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Wickersham-MT's 3.1-point average BLEU gain was 2.7 points smaller than the 5.8-point average improvement previously reported by Rasmussen-Obi and Petrakis (2023).",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r3.avg",
+      "P2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Pivot-filtered back-translation improved Wickersham-MT BLEU over genuine-only training for every evaluated pair, with gains of 3.1 for en→ne, 2.4 for en→si, 4.0 for en→km, and 2.9 for en→ps.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r3"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "The improvement was also present in chrF, whose four-pair average rose from 39.0 with genuine data only to 42.3 with pivot-filtered back-translation.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1.avg",
+      "T2.r3.avg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Pivot filtering outperformed unfiltered back-translation by 1.7 average BLEU points and 2.0 average chrF points on Fenmoor-Test.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r2.avg",
+      "T1.r3.avg",
+      "T2.r2.avg",
+      "T2.r3.avg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "The comparisons are descriptive because each configuration was trained only once and no statistical tests were reported.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "The roughly 6 BLEU gain attributed to Ambergate & Toivonen (2022) is not supported by their cited passage P1, which states no gain. The usable baseline is P2's 5.8 BLEU, so the comparison rests on P2, not the often-cited figure.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "P1",
+      "P2"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    },
+    {
+     "finding_id": "F8",
+     "description": "The previously reported gain for unfiltered back-translation was 2.9 BLEU (P2). Wickersham-MT's unfiltered gain was 1.4 (13.4 vs 12.0). Both the filtered and unfiltered gains are smaller than previously reported.",
+     "polarity": "negative",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "P2",
+      "T1.r1.avg",
+      "T1.r2.avg"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Average BLEU gain from pivot-filtered back-translation over genuine-only training",
+     "expression": "T1.r3.avg - T1.r1.avg",
+     "value": 3.1,
+     "unit": "BLEU points",
+     "finding_id": "F1",
+     "computed_value": 3.0999999999999996,
+     "operands": [
+      "T1.r1.avg",
+      "T1.r3.avg"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Shortfall of Wickersham-MT's gain relative to the previously reported gain",
+     "expression": "5.8 - (T1.r3.avg - T1.r1.avg)",
+     "value": 2.7,
+     "unit": "BLEU points",
+     "finding_id": "F2",
+     "computed_value": 2.7,
+     "operands": [
+      "T1.r1.avg",
+      "T1.r3.avg"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Largest per-pair BLEU gain, attained for en→km",
+     "expression": "T1.r3.km - T1.r1.km",
+     "value": 4.0,
+     "unit": "BLEU points",
+     "finding_id": "F3",
+     "computed_value": 4.0,
+     "operands": [
+      "T1.r1.km",
+      "T1.r3.km"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Average chrF gain from pivot-filtered back-translation over genuine-only training",
+     "expression": "T2.r3.avg - T2.r1.avg",
+     "value": 3.3,
+     "unit": "chrF points",
+     "finding_id": "F4",
+     "computed_value": 3.299999999999997,
+     "operands": [
+      "T2.r1.avg",
+      "T2.r3.avg"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Average BLEU advantage of pivot-filtered over unfiltered back-translation",
+     "expression": "T1.r3.avg - T1.r2.avg",
+     "value": 1.7,
+     "unit": "BLEU points",
+     "finding_id": "F5",
+     "computed_value": 1.6999999999999993,
+     "operands": [
+      "T1.r2.avg",
+      "T1.r3.avg"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Average chrF advantage of pivot-filtered over unfiltered back-translation",
+     "expression": "T2.r3.avg - T2.r2.avg",
+     "value": 2.0,
+     "unit": "chrF points",
+     "finding_id": "F5",
+     "computed_value": 2.0,
+     "operands": [
+      "T2.r2.avg",
+      "T2.r3.avg"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F7 proposed by reviewer",
+    "added F8 proposed by reviewer",
+    "dropped N2: expression invalid (expression references no evidence)"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 averages 12.0 to 15.1 give a 3.1 BLEU gain; this is the main result."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "P2 reports 5.8 average BLEU on four low-resource pairs; 5.8−3.1=2.7. Different setup, so the comparison is descriptive."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "T1 per-pair differences are 3.1, 2.4, 4.0 and 2.9, all positive."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "T2 average chrF rose from 39.0 to 42.3, which supports the claim."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "BLEU 15.1 vs 13.4 gives 1.7. chrF 42.3 vs 40.3 gives 2.0. Both are correct."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "The package states single runs and no statistical tests, so the caveat is supported and relevant."
+    }
+   ]
+  },
+  "L06": {
+   "alias": "L06",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "On the Merriwold-Dialog 2.0 test set, Corvane-DST had a higher mean joint goal accuracy than Halloway-DST across five paired random seeds (56.8% versus 56.1%), an observed advantage of 0.7 percentage points.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.jga",
+      "T1.r2.jga"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "The package reports no statistical significance test or confidence interval for the headline Corvane-DST versus Halloway-DST comparison on Merriwold-Dialog 2.0, so the 0.7-point observed advantage cannot be characterized as statistically significant from the supplied evidence.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "exp1/cmp1",
+      "T1.r1.jga",
+      "T1.r2.jga"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Corvane-DST substantially outperformed the lighter Pipkin-Span baseline in Merriwold-Dialog 2.0 JGA (56.8% versus 52.3%), with a statistically significant paired mean difference of 4.5 percentage points.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r1.jga",
+      "T1.r3.jga",
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "On the Tarnby-Schema test set containing services unseen during training, Corvane-DST exceeded Halloway-DST in mean JGA by 2.3 percentage points (41.9% versus 39.6%), and the paired test supported this advantage.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1.jga",
+      "T2.r2.jga",
+      "S2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The single-domain Merriwold-Dialog 2.0 results were mixed: Corvane-DST exceeded Halloway-DST for train, restaurant, and attraction dialogues but trailed it for hotel and taxi dialogues.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T3.r1",
+      "T3.r2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "Corvane-DST's advantage over Halloway-DST is small on the in-domain test set (0.7 points, with overlapping SDs of 0.6 and 1.3). It is larger on unseen-service Tarnby-Schema (2.3 points, significant). Per-domain results are mixed, so the benefit is not uniform.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.jga",
+      "T1.r2.jga",
+      "T2.r1.jga",
+      "T2.r2.jga",
+      "S2",
+      "T3.r1",
+      "T3.r2"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N5",
+     "description": "Paired-test statistic for Corvane-DST versus Pipkin-Span on Merriwold-Dialog 2.0.",
+     "expression": "S1.statistic",
+     "value": 12.58,
+     "unit": null,
+     "finding_id": "F3",
+     "computed_value": 12.58,
+     "operands": [
+      "S1.statistic"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Paired-test p-value for Corvane-DST versus Halloway-DST on Tarnby-Schema.",
+     "expression": "S2.p_value",
+     "value": 0.0046,
+     "unit": null,
+     "finding_id": "F4",
+     "computed_value": 0.0046,
+     "operands": [
+      "S2.p_value"
+     ]
+    }
+   ],
+   "merge_log": [
+    "dropped F6: reviewer marked UNSUPPORTED (The numbers are correct, but the item is labelled as an ablation drop with no stated test. It is also a secondary result, not about Halloway.)",
+    "added F7 proposed by reviewer",
+    "dropped N1: expression invalid (expression references no evidence)",
+    "dropped N2: expression invalid (expression references no evidence)",
+    "dropped N3: expression invalid (expression references no evidence)",
+    "dropped N4: expression invalid (expression references no evidence)",
+    "dropped N6: expression invalid (expression references no evidence)",
+    "dropped N8: expression invalid (expression references no evidence)"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 shows 56.8 vs 56.1; the 0.7-point difference is correct and is the central result."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Statistical tests list only S1 and S2. No test covers exp1/cmp1, and SDs overlap, so significance can't be claimed."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "T1 gives 56.8 vs 52.3, and S1 reports a significant paired difference with CI [3.51, 5.5]. The 4.5-point gap matches the table means."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "T2 gives 41.9 vs 39.6, and S2 reports p=0.0046 with CI [1.18, 3.42]. The result is secondary-set evidence."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "T3 matches: Corvane is higher on train, restaurant and attraction, and lower on hotel and taxi. No tests are given, and some domains are small."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "UNSUPPORTED",
+     "comment": "The numbers are correct, but the item is labelled as an ablation drop with no stated test. It is also a secondary result, not about Halloway."
+    }
+   ]
+  },
+  "L07": {
+   "alias": "L07",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "On the standard shaped-reward Thistlewood-Manip suite, Heronsgate achieved 64.3% average success versus Pallister's 61.8%, an advantage of 2.5 percentage points.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.avg",
+      "T1.r2.avg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "The 2.5-percentage-point shaped-reward advantage of Heronsgate over Pallister was statistically significant in the paired eight-seed comparison (two-sided paired t-test, p=0.0015; 95% CI [1.33, 3.67]).",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "S2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Heronsgate's per-task shaped-reward results were mixed: it outperformed Pallister on drawer-open, block-stack, door-unlock, and lid-twist, but underperformed on peg-insert and cable-route.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1.drawer",
+      "T2.r2.drawer",
+      "T2.r1.peg",
+      "T2.r2.peg",
+      "T2.r1.block",
+      "T2.r2.block",
+      "T2.r1.door",
+      "T2.r2.door",
+      "T2.r1.cable",
+      "T2.r2.cable",
+      "T2.r1.lid",
+      "T2.r2.lid"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "On the secondary sparse-reward suite, Heronsgate's observed average-success advantage over Pallister was only 0.7 percentage points and was not statistically significant (p=0.47), so the shaped-reward superiority did not carry over conclusively to this setting.",
+     "polarity": "null",
+     "kind": "negative_or_null",
+     "importance": "core",
+     "evidence_ids": [
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Heronsgate required more training compute than Pallister on the main evaluation, using 9.5 versus 7.8 GPU-hours.",
+     "polarity": "negative",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r1.gpuh",
+      "T1.r2.gpuh"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Heronsgate average success on shaped-reward Thistlewood-Manip",
+     "expression": "T1.r1.avg",
+     "value": 64.3,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 64.3,
+     "operands": [
+      "T1.r1.avg"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Pallister average success on shaped-reward Thistlewood-Manip",
+     "expression": "T1.r2.avg",
+     "value": 61.8,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 61.8,
+     "operands": [
+      "T1.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Heronsgate minus Pallister average-success difference on shaped-reward Thistlewood-Manip",
+     "expression": "T1.r1.avg - T1.r2.avg",
+     "value": 2.5,
+     "unit": "percentage points",
+     "finding_id": "F1",
+     "computed_value": 2.5,
+     "operands": [
+      "T1.r1.avg",
+      "T1.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Paired-test p-value for the shaped-reward average-success comparison",
+     "expression": "S2.p_value",
+     "value": 0.0015,
+     "unit": null,
+     "finding_id": "F2",
+     "computed_value": 0.0015,
+     "operands": [
+      "S2.p_value"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Lower endpoint of the 95% confidence interval for the shaped-reward paired difference",
+     "expression": "S2.ci_low",
+     "value": 1.33,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 1.33,
+     "operands": [
+      "S2.ci_low"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Upper endpoint of the 95% confidence interval for the shaped-reward paired difference",
+     "expression": "S2.ci_high",
+     "value": 3.67,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 3.67,
+     "operands": [
+      "S2.ci_high"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Heronsgate minus Pallister average-success difference on Thistlewood-Manip-Sparse",
+     "expression": "T3.r1.avg - T3.r2.avg",
+     "value": 0.7,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 0.7000000000000028,
+     "operands": [
+      "T3.r1.avg",
+      "T3.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Paired-test p-value for the sparse-reward average-success comparison",
+     "expression": "S1.p_value",
+     "value": 0.47,
+     "unit": null,
+     "finding_id": "F4",
+     "computed_value": 0.47,
+     "operands": [
+      "S1.p_value"
+     ]
+    }
+   ],
+   "merge_log": [
+    "dropped F6: reviewer marked UNSUPPORTED (T4 has no variance or tests; 'sensitive' overstated. α=0.5 at 61.0 omitted. Also tangential to the comparison question.)"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 values 64.3 vs 61.8 give a 2.5-point difference; main result."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "S2 reports p=0.0015 and CI [1.33, 3.67], matching the claim."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "T2 confirms Heronsgate higher on four tasks and lower on peg and cable."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "38.2 vs 37.5 is 0.7 points; p=0.47, CI includes zero. Wording 'not carry over conclusively' is cautious."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "T1 gpuh shows 9.5 vs 7.8 GPU-hours; a real cost tradeoff."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "UNSUPPORTED",
+     "comment": "T4 has no variance or tests; 'sensitive' overstated. α=0.5 at 61.0 omitted. Also tangential to the comparison question."
+    }
+   ]
+  },
+  "L08": {
+   "alias": "L08",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "On the six scaffold-split test sets, Larchmont-GNN achieved higher mean test ROC-AUC than Quintrell-MP on every dataset, with dataset-level gains ranging from 0.3 to 1.6 ROC-AUC points.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1.gors",
+      "T2.r1.holl",
+      "T2.r1.ivy",
+      "T2.r1.jess",
+      "T2.r1.kels",
+      "T2.r1.lum",
+      "T2.r2.gors",
+      "T2.r2.holl",
+      "T2.r2.ivy",
+      "T2.r2.jess",
+      "T2.r2.kels",
+      "T2.r2.lum"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Averaged across the six datasets, Larchmont-GNN scored 79.4 versus 78.4 for Quintrell-MP, an advantage of 1.0 ROC-AUC point.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1.avg",
+      "T2.r2.avg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Larchmont-GNN did not surpass the pretrained Avonlea-Chem-XL overall: its average was 0.6 points lower, although it scored higher on Hollin-Sol and Jessamine-Kin and lower on the other four datasets.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1.avg",
+      "T2.r3.avg",
+      "T2.r1.gors",
+      "T2.r3.gors",
+      "T2.r1.holl",
+      "T2.r3.holl",
+      "T2.r1.ivy",
+      "T2.r3.ivy",
+      "T2.r1.jess",
+      "T2.r3.jess",
+      "T2.r1.kels",
+      "T2.r3.kels",
+      "T2.r1.lum",
+      "T2.r3.lum"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "The ablation results support contributions from both added components: removing ring-aware pooling, distance features, or both reduced the six-dataset average from 79.4 to 78.7, 78.9, and 78.0, respectively.",
+     "polarity": "positive",
+     "kind": "other",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T3.r1.avg",
+      "T3.r2.avg",
+      "T3.r3.avg",
+      "T3.r4.avg"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Because no statistical tests were reported, the package does not establish whether Larchmont-GNN's observed advantages over Quintrell-MP are statistically significant.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "Larchmont-GNN costs slightly more than Quintrell-MP (4.8M vs 4.1M parameters; 210 vs 180 ms per 1,000 molecules). Neither needs pretraining. Avonlea-Chem-XL is far larger and costlier (310M parameters, 2950 ms, 2400 GPU-hours), and Larchmont-GNN's average is within 0.6 points of it.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T4.r1.params",
+      "T4.r2.params",
+      "T4.r1.infer",
+      "T4.r2.infer",
+      "T4.r3.params",
+      "T4.r3.infer",
+      "T4.r3.pre"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Larchmont-GNN's average test ROC-AUC across the six datasets.",
+     "expression": "T2.r1.avg",
+     "value": 79.4,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F2",
+     "computed_value": 79.4,
+     "operands": [
+      "T2.r1.avg"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Quintrell-MP's average test ROC-AUC across the six datasets.",
+     "expression": "T2.r2.avg",
+     "value": 78.4,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F2",
+     "computed_value": 78.4,
+     "operands": [
+      "T2.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Larchmont-GNN's average advantage over Quintrell-MP.",
+     "expression": "T2.r1.avg - T2.r2.avg",
+     "value": 1.0,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F2",
+     "computed_value": 1.0,
+     "operands": [
+      "T2.r1.avg",
+      "T2.r2.avg"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Smallest dataset-level advantage of Larchmont-GNN over Quintrell-MP, occurring on Ivybridge-Tox and Lumley-Metab.",
+     "expression": "min(T2.r1.gors - T2.r2.gors, T2.r1.holl - T2.r2.holl, T2.r1.ivy - T2.r2.ivy, T2.r1.jess - T2.r2.jess, T2.r1.kels - T2.r2.kels, T2.r1.lum - T2.r2.lum)",
+     "value": 0.3,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F1",
+     "computed_value": 0.29999999999999716,
+     "operands": [
+      "T2.r1.gors",
+      "T2.r1.holl",
+      "T2.r1.ivy",
+      "T2.r1.jess",
+      "T2.r1.kels",
+      "T2.r1.lum",
+      "T2.r2.gors",
+      "T2.r2.holl",
+      "T2.r2.ivy",
+      "T2.r2.jess",
+      "T2.r2.kels",
+      "T2.r2.lum"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Largest dataset-level advantage of Larchmont-GNN over Quintrell-MP, occurring on Jessamine-Kin and Kelso-Brain.",
+     "expression": "max(T2.r1.gors - T2.r2.gors, T2.r1.holl - T2.r2.holl, T2.r1.ivy - T2.r2.ivy, T2.r1.jess - T2.r2.jess, T2.r1.kels - T2.r2.kels, T2.r1.lum - T2.r2.lum)",
+     "value": 1.6,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F1",
+     "computed_value": 1.6000000000000085,
+     "operands": [
+      "T2.r1.gors",
+      "T2.r1.holl",
+      "T2.r1.ivy",
+      "T2.r1.jess",
+      "T2.r1.kels",
+      "T2.r1.lum",
+      "T2.r2.gors",
+      "T2.r2.holl",
+      "T2.r2.ivy",
+      "T2.r2.jess",
+      "T2.r2.kels",
+      "T2.r2.lum"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Avonlea-Chem-XL's average test ROC-AUC across the six datasets.",
+     "expression": "T2.r3.avg",
+     "value": 80.0,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F3",
+     "computed_value": 80.0,
+     "operands": [
+      "T2.r3.avg"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Avonlea-Chem-XL's average advantage over Larchmont-GNN.",
+     "expression": "T2.r3.avg - T2.r1.avg",
+     "value": 0.6,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F3",
+     "computed_value": 0.5999999999999943,
+     "operands": [
+      "T2.r1.avg",
+      "T2.r3.avg"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Decrease in average ROC-AUC when both ring-aware pooling and distance features were removed.",
+     "expression": "T3.r1.avg - T3.r4.avg",
+     "value": 1.4,
+     "unit": "ROC-AUC points (×100)",
+     "finding_id": "F4",
+     "computed_value": 1.4000000000000057,
+     "operands": [
+      "T3.r1.avg",
+      "T3.r4.avg"
+     ]
+    }
+   ],
+   "merge_log": [
+    "F5: unknown evidence ids ['Statistical tests'] removed",
+    "added F6 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Gains are 0.7, 1.5, 0.3, 1.6, 1.6 and 0.3, so the stated range of 0.3–1.6 is correct."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "The averages of 79.4 and 78.4 are in T2, so the 1.0-point gap is correct."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "The average is 79.4 vs 80.0. Larchmont-GNN is higher on Hollin-Sol and Jessamine-Kin and lower on the other four."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "The T3 values are correct. Each removal lowers the average, though no significance tests are reported."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "The package states that no statistical tests were reported. The caveat matters because the gains are small."
+    }
+   ]
+  }
+ }
+}

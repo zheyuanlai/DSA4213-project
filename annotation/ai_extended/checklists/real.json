@@ -1,0 +1,3361 @@
+{
+ "family": "real",
+ "procedure": "protocol §6: Judge A build, Judge B review, deterministic merge",
+ "checklists": {
+  "RP-01": {
+   "alias": "RP-01",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Method M detected membership for each intentionally included benchmark—TriviaQA, ARC-C, MMLU, and GSM8K—with all four p-values below 0.001.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r6.triviaqa",
+      "T1.r6.arcc",
+      "T1.r6.mmlu",
+      "T1.r6.gsm8k"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Across all four benchmarks, Method M produced lower membership p-values than PaCoST and both the same-question and different-question variants of LLM DI.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "The full Method M produced lower p-values than both ablations on every benchmark; removing watermarking still yielded p-values below 0.05 throughout, whereas removing pairing did so only for GSM8K.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r4",
+      "T1.r5",
+      "T1.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "Method M did not flag unseen data in either false-positive setting: all p-values for the uncontaminated model and contaminated-model held-out subsets were above 0.05 across the four benchmarks and the two additional collections.",
+     "polarity": "positive",
+     "kind": "negative_or_null",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5",
+      "T2.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Claims about comparative reliability are limited because each table cell contains one p-value, no repeated training runs were reported, and no statistical test directly compared methods across runs or benchmarks.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "The baselines mostly failed to detect the contamination at p<0.05. PaCoST was significant only on TriviaQA (1.6e-3). LLM DI (same) was never significant. LLM DI (different) was significant only on TriviaQA and MMLU (0.02, 0.03), while Method M was significant on all four.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r6"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Method M's membership p-value on TriviaQA was 0.00012.",
+     "expression": "T1.r6.triviaqa",
+     "value": 0.00012,
+     "unit": "p-value",
+     "finding_id": "F1",
+     "computed_value": 0.00012,
+     "operands": [
+      "T1.r6.triviaqa"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Method M's membership p-value on ARC-C was 0.00028.",
+     "expression": "T1.r6.arcc",
+     "value": 0.00028,
+     "unit": "p-value",
+     "finding_id": "F1",
+     "computed_value": 0.00028,
+     "operands": [
+      "T1.r6.arcc"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Method M's membership p-value on MMLU was 0.00070.",
+     "expression": "T1.r6.mmlu",
+     "value": 0.0007,
+     "unit": "p-value",
+     "finding_id": "F1",
+     "computed_value": 0.0007,
+     "operands": [
+      "T1.r6.mmlu"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Method M's membership p-value on GSM8K was 0.0000066.",
+     "expression": "T1.r6.gsm8k",
+     "value": 6.6e-06,
+     "unit": "p-value",
+     "finding_id": "F1",
+     "computed_value": 6.6e-06,
+     "operands": [
+      "T1.r6.gsm8k"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "The smallest false-positive-check p-value for the uncontaminated model was 0.21.",
+     "expression": "min(T2.r1.uncont,T2.r2.uncont,T2.r3.uncont,T2.r4.uncont,T2.r5.uncont,T2.r6.uncont)",
+     "value": 0.21,
+     "unit": "p-value",
+     "finding_id": "F4",
+     "computed_value": 0.21,
+     "operands": [
+      "T2.r1.uncont",
+      "T2.r2.uncont",
+      "T2.r3.uncont",
+      "T2.r4.uncont",
+      "T2.r5.uncont",
+      "T2.r6.uncont"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "The smallest false-positive-check p-value for held-out subsets of the contaminated model was 0.07.",
+     "expression": "min(T2.r1.cont_heldout,T2.r2.cont_heldout,T2.r3.cont_heldout,T2.r4.cont_heldout,T2.r5.cont_heldout,T2.r6.cont_heldout)",
+     "value": 0.07,
+     "unit": "p-value",
+     "finding_id": "F4",
+     "computed_value": 0.07,
+     "operands": [
+      "T2.r1.cont_heldout",
+      "T2.r2.cont_heldout",
+      "T2.r3.cont_heldout",
+      "T2.r4.cont_heldout",
+      "T2.r5.cont_heldout",
+      "T2.r6.cont_heldout"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "The largest p-value among Method M's four intentional-contamination results was 0.00070.",
+     "expression": "max(T1.r6.triviaqa,T1.r6.arcc,T1.r6.mmlu,T1.r6.gsm8k)",
+     "value": 0.0007,
+     "unit": "p-value",
+     "finding_id": "F1",
+     "computed_value": 0.0007,
+     "operands": [
+      "T1.r6.arcc",
+      "T1.r6.gsm8k",
+      "T1.r6.mmlu",
+      "T1.r6.triviaqa"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "The smallest p-value across all unseen-data false-positive checks was 0.07.",
+     "expression": "min(T2.r1.uncont,T2.r1.cont_heldout,T2.r2.uncont,T2.r2.cont_heldout,T2.r3.uncont,T2.r3.cont_heldout,T2.r4.uncont,T2.r4.cont_heldout,T2.r5.uncont,T2.r5.cont_heldout,T2.r6.uncont,T2.r6.cont_heldout)",
+     "value": 0.07,
+     "unit": "p-value",
+     "finding_id": "F4",
+     "computed_value": 0.07,
+     "operands": [
+      "T2.r1.cont_heldout",
+      "T2.r1.uncont",
+      "T2.r2.cont_heldout",
+      "T2.r2.uncont",
+      "T2.r3.cont_heldout",
+      "T2.r3.uncont",
+      "T2.r4.cont_heldout",
+      "T2.r4.uncont",
+      "T2.r5.cont_heldout",
+      "T2.r5.uncont",
+      "T2.r6.cont_heldout",
+      "T2.r6.uncont"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F6 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 Method M p-values are 1.2e-4, 2.8e-4, 7.0e-4 and 6.6e-6, all below 0.001."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Method M is lowest in every column, including TriviaQA (1.2e-4 vs PaCoST 1.6e-3)."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Checked: Method M is below both ablations everywhere. No-watermark is below 0.05 on all four. No-pairing is below 0.05 only on GSM8K (0.02)."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "All T2 p-values are at least 0.07, so none are below 0.05."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "The setup states one p-value per cell, no repeated runs, and no statistical tests reported. This is a legitimate limitation."
+    }
+   ]
+  },
+  "RP-02": {
+   "alias": "RP-02",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "With the default Ada embedding, the two large models showed the expected persona pattern only partially: no medical-role instruction was significant, whereas non-medical roles were significant for 2 of 4 personas in GPT-4 and 3 of 4 in GPT-3.5, with higher pooled mean omega for non-medical than medical roles.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6",
+      "T1.r7",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "The smaller models did not show a consistent medical-versus-non-medical separation under Ada: their pooled mean omega values were nearly identical, and significant shifts occurred for some medical roles while several non-medical roles were not significant.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6",
+      "T1.r7",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "The audit was strongly and non-uniformly sensitive to embedding choice, as changing from Ada to Jasper, Stella, or Kalm substantially altered persona-specific omega values and significance patterns, with particularly large changes for the robot and child personas.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5",
+      "T2.r6",
+      "T2.r7",
+      "T2.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "The embedding comparison has restricted interpretability because the appendix does not identify the generating language model, although its Ada estimates coincide with GPT-3.5 in T1, so it does not establish embedding sensitivity across multiple generators.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The reported significance stars are cellwise permutation-test thresholds without exact p-values, and no multiple-comparison correction is indicated, limiting inference from the many persona-by-model and persona-by-embedding tests.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "A non-significant cell should be interpreted only as no detectable semantic shift under Method M, not as evidence that the full text-generation distributions are identical.",
+     "polarity": "neutral",
+     "kind": "other",
+     "importance": "supporting",
+     "evidence_ids": [
+      "P1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "Under Jasper, Stella and Kalm, every persona cell is significant, including medical roles, though medical omegas are small (0.02–0.09) and mostly below non-medical ones except the robot. Significance alone therefore does not separate medical from non-medical roles. Effect size does, apart from the robot persona.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5",
+      "T2.r6",
+      "T2.r7",
+      "T2.r8"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Pooled mean omega for medical personas across GPT-4 and GPT-3.5 under Ada.",
+     "expression": "mean(T1.r1.gpt4,T1.r2.gpt4,T1.r3.gpt4,T1.r4.gpt4,T1.r1.gpt35,T1.r2.gpt35,T1.r3.gpt35,T1.r4.gpt35)",
+     "value": 0.2075,
+     "unit": "omega",
+     "finding_id": "F1",
+     "computed_value": 0.20750000000000002,
+     "operands": [
+      "T1.r1.gpt35",
+      "T1.r1.gpt4",
+      "T1.r2.gpt35",
+      "T1.r2.gpt4",
+      "T1.r3.gpt35",
+      "T1.r3.gpt4",
+      "T1.r4.gpt35",
+      "T1.r4.gpt4"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Pooled mean omega for non-medical personas across GPT-4 and GPT-3.5 under Ada.",
+     "expression": "mean(T1.r5.gpt4,T1.r6.gpt4,T1.r7.gpt4,T1.r8.gpt4,T1.r5.gpt35,T1.r6.gpt35,T1.r7.gpt35,T1.r8.gpt35)",
+     "value": 0.26625,
+     "unit": "omega",
+     "finding_id": "F1",
+     "computed_value": 0.26625,
+     "operands": [
+      "T1.r5.gpt35",
+      "T1.r5.gpt4",
+      "T1.r6.gpt35",
+      "T1.r6.gpt4",
+      "T1.r7.gpt35",
+      "T1.r7.gpt4",
+      "T1.r8.gpt35",
+      "T1.r8.gpt4"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Difference between pooled non-medical and medical mean omega for the two large models under Ada.",
+     "expression": "mean(T1.r5.gpt4,T1.r6.gpt4,T1.r7.gpt4,T1.r8.gpt4,T1.r5.gpt35,T1.r6.gpt35,T1.r7.gpt35,T1.r8.gpt35)-mean(T1.r1.gpt4,T1.r2.gpt4,T1.r3.gpt4,T1.r4.gpt4,T1.r1.gpt35,T1.r2.gpt35,T1.r3.gpt35,T1.r4.gpt35)",
+     "value": 0.05875,
+     "unit": "omega",
+     "finding_id": "F1",
+     "computed_value": 0.05874999999999997,
+     "operands": [
+      "T1.r1.gpt35",
+      "T1.r1.gpt4",
+      "T1.r2.gpt35",
+      "T1.r2.gpt4",
+      "T1.r3.gpt35",
+      "T1.r3.gpt4",
+      "T1.r4.gpt35",
+      "T1.r4.gpt4",
+      "T1.r5.gpt35",
+      "T1.r5.gpt4",
+      "T1.r6.gpt35",
+      "T1.r6.gpt4",
+      "T1.r7.gpt35",
+      "T1.r7.gpt4",
+      "T1.r8.gpt35",
+      "T1.r8.gpt4"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Pooled mean omega for medical personas across the five reported smaller models under Ada.",
+     "expression": "mean(T1.r1.llama8b,T1.r2.llama8b,T1.r3.llama8b,T1.r4.llama8b,T1.r1.gpt2,T1.r2.gpt2,T1.r3.gpt2,T1.r4.gpt2,T1.r1.gemma9b,T1.r2.gemma9b,T1.r3.gemma9b,T1.r4.gemma9b,T1.r1.phi3,T1.r2.phi3,T1.r3.phi3,T1.r4.phi3,T1.r1.mistral7b,T1.r2.mistral7b,T1.r3.mistral7b,T1.r4.mistral7b)",
+     "value": 0.24,
+     "unit": "omega",
+     "finding_id": "F2",
+     "computed_value": 0.24,
+     "operands": [
+      "T1.r1.gemma9b",
+      "T1.r1.gpt2",
+      "T1.r1.llama8b",
+      "T1.r1.mistral7b",
+      "T1.r1.phi3",
+      "T1.r2.gemma9b",
+      "T1.r2.gpt2",
+      "T1.r2.llama8b",
+      "T1.r2.mistral7b",
+      "T1.r2.phi3",
+      "T1.r3.gemma9b",
+      "T1.r3.gpt2",
+      "T1.r3.llama8b",
+      "T1.r3.mistral7b",
+      "T1.r3.phi3",
+      "T1.r4.gemma9b",
+      "T1.r4.gpt2",
+      "T1.r4.llama8b",
+      "T1.r4.mistral7b",
+      "T1.r4.phi3"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Pooled mean omega for non-medical personas across the five reported smaller models under Ada.",
+     "expression": "mean(T1.r5.llama8b,T1.r6.llama8b,T1.r7.llama8b,T1.r8.llama8b,T1.r5.gpt2,T1.r6.gpt2,T1.r7.gpt2,T1.r8.gpt2,T1.r5.gemma9b,T1.r6.gemma9b,T1.r7.gemma9b,T1.r8.gemma9b,T1.r5.phi3,T1.r6.phi3,T1.r7.phi3,T1.r8.phi3,T1.r5.mistral7b,T1.r6.mistral7b,T1.r7.mistral7b,T1.r8.mistral7b)",
+     "value": 0.241,
+     "unit": "omega",
+     "finding_id": "F2",
+     "computed_value": 0.24100000000000002,
+     "operands": [
+      "T1.r5.gemma9b",
+      "T1.r5.gpt2",
+      "T1.r5.llama8b",
+      "T1.r5.mistral7b",
+      "T1.r5.phi3",
+      "T1.r6.gemma9b",
+      "T1.r6.gpt2",
+      "T1.r6.llama8b",
+      "T1.r6.mistral7b",
+      "T1.r6.phi3",
+      "T1.r7.gemma9b",
+      "T1.r7.gpt2",
+      "T1.r7.llama8b",
+      "T1.r7.mistral7b",
+      "T1.r7.phi3",
+      "T1.r8.gemma9b",
+      "T1.r8.gpt2",
+      "T1.r8.llama8b",
+      "T1.r8.mistral7b",
+      "T1.r8.phi3"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Difference between pooled non-medical and medical mean omega for the five reported smaller models.",
+     "expression": "mean(T1.r5.llama8b,T1.r6.llama8b,T1.r7.llama8b,T1.r8.llama8b,T1.r5.gpt2,T1.r6.gpt2,T1.r7.gpt2,T1.r8.gpt2,T1.r5.gemma9b,T1.r6.gemma9b,T1.r7.gemma9b,T1.r8.gemma9b,T1.r5.phi3,T1.r6.phi3,T1.r7.phi3,T1.r8.phi3,T1.r5.mistral7b,T1.r6.mistral7b,T1.r7.mistral7b,T1.r8.mistral7b)-mean(T1.r1.llama8b,T1.r2.llama8b,T1.r3.llama8b,T1.r4.llama8b,T1.r1.gpt2,T1.r2.gpt2,T1.r3.gpt2,T1.r4.gpt2,T1.r1.gemma9b,T1.r2.gemma9b,T1.r3.gemma9b,T1.r4.gemma9b,T1.r1.phi3,T1.r2.phi3,T1.r3.phi3,T1.r4.phi3,T1.r1.mistral7b,T1.r2.mistral7b,T1.r3.mistral7b,T1.r4.mistral7b)",
+     "value": 0.001,
+     "unit": "omega",
+     "finding_id": "F2",
+     "computed_value": 0.0010000000000000286,
+     "operands": [
+      "T1.r1.gemma9b",
+      "T1.r1.gpt2",
+      "T1.r1.llama8b",
+      "T1.r1.mistral7b",
+      "T1.r1.phi3",
+      "T1.r2.gemma9b",
+      "T1.r2.gpt2",
+      "T1.r2.llama8b",
+      "T1.r2.mistral7b",
+      "T1.r2.phi3",
+      "T1.r3.gemma9b",
+      "T1.r3.gpt2",
+      "T1.r3.llama8b",
+      "T1.r3.mistral7b",
+      "T1.r3.phi3",
+      "T1.r4.gemma9b",
+      "T1.r4.gpt2",
+      "T1.r4.llama8b",
+      "T1.r4.mistral7b",
+      "T1.r4.phi3",
+      "T1.r5.gemma9b",
+      "T1.r5.gpt2",
+      "T1.r5.llama8b",
+      "T1.r5.mistral7b",
+      "T1.r5.phi3",
+      "T1.r6.gemma9b",
+      "T1.r6.gpt2",
+      "T1.r6.llama8b",
+      "T1.r6.mistral7b",
+      "T1.r6.phi3",
+      "T1.r7.gemma9b",
+      "T1.r7.gpt2",
+      "T1.r7.llama8b",
+      "T1.r7.mistral7b",
+      "T1.r7.phi3",
+      "T1.r8.gemma9b",
+      "T1.r8.gpt2",
+      "T1.r8.llama8b",
+      "T1.r8.mistral7b",
+      "T1.r8.phi3"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Range of omega estimates across embeddings for the robot-from-the-future persona.",
+     "expression": "max(T2.r6.ada,T2.r6.jasper,T2.r6.stella,T2.r6.kalm)-min(T2.r6.ada,T2.r6.jasper,T2.r6.stella,T2.r6.kalm)",
+     "value": 0.22,
+     "unit": "omega",
+     "finding_id": "F3",
+     "computed_value": 0.22,
+     "operands": [
+      "T2.r6.ada",
+      "T2.r6.jasper",
+      "T2.r6.kalm",
+      "T2.r6.stella"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Range of omega estimates across embeddings for the child persona.",
+     "expression": "max(T2.r8.ada,T2.r8.jasper,T2.r8.stella,T2.r8.kalm)-min(T2.r8.ada,T2.r8.jasper,T2.r8.stella,T2.r8.kalm)",
+     "value": 0.15,
+     "unit": "omega",
+     "finding_id": "F3",
+     "computed_value": 0.14999999999999997,
+     "operands": [
+      "T2.r8.ada",
+      "T2.r8.jasper",
+      "T2.r8.kalm",
+      "T2.r8.stella"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F7 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Counts check: GPT-4 2/4, GPT-3.5 3/4 non-medical significant, no medical significant; non-medical means higher (≈0.255 vs 0.223; 0.278 vs 0.193)."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Pooled means ≈0.240 vs 0.241; GPT-2, Gemma, Mistral have significant medical cells; many non-medical cells non-significant."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Under alternative embeddings all cells significant and omegas change sharply, e.g. robot 0.26→0.04, child 0.33→0.48."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "T2 note says generating LLM unnamed; Ada column matches GPT-3.5 in T1. Limitation is supported."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "T1 note says no multiple-comparison correction indicated; only star thresholds are given, with many separate tests."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "Directly supported by P1 on interpreting non-rejection; useful interpretive caveat."
+    }
+   ]
+  },
+  "RP-03": {
+   "alias": "RP-03",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "At round 5, Method M achieved the highest aya average win rate against the seed model for both Llama3-8B (73.22%) and Gemma2-2B (66.36%) among the reported methods.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r8.ll_r5",
+      "T1.r8.ge_r5",
+      "T1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Method M did not outperform the strongest alternative filter, Max-Reward, consistently across models and rounds: it trailed Max-Reward for Llama3-8B in rounds 3 and 4 but led it for Llama3-8B in round 5 and for Gemma2-2B in all three reported rounds.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r7",
+      "T1.r8",
+      "exp1/cmp1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Across every reported model-round combination, Method M had a higher aya win rate than Mult-Full, Rand, UAB, and LCL.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r8",
+      "exp1/cmp2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "After round 5, Method M's Global MMLU and multilingual ARC-C accuracies were descriptively above the corresponding seed-model values for both models, indicating no observed degradation on the reported alignment-tax benchmarks.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r7",
+      "exp2/cmp1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Method M was not uniformly best on the knowledge and reasoning benchmarks, because several other filters produced higher final accuracies on individual model-benchmark combinations.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r4",
+      "T2.r5",
+      "T2.r6",
+      "T2.r7",
+      "exp2/cmp1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "All non-random results are single-run point estimates, and no significance tests or confidence intervals were reported, so the observed advantages do not establish statistical reliability.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "Monolingual training (Mono) was not better than multilingual training overall: on Gemma2-2B Mono win rate fell (43.01 to 38.11) and was far below Mult-Full (about 57-60), while on Llama3-8B Mono was comparable to Mult-Full. Method M beat Mono in all cells except none.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r8",
+      "exp1/cmp3"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Method M's round-5 aya win rate for Llama3-8B.",
+     "expression": "T1.r8.ll_r5",
+     "value": 73.22,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 73.22,
+     "operands": [
+      "T1.r8.ll_r5"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Method M's round-5 aya win rate for Gemma2-2B.",
+     "expression": "T1.r8.ge_r5",
+     "value": 66.36,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 66.36,
+     "operands": [
+      "T1.r8.ge_r5"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Method M's round-5 advantage over Max-Reward for Llama3-8B.",
+     "expression": "T1.r8.ll_r5 - T1.r7.ll_r5",
+     "value": 2.58,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 2.5799999999999983,
+     "operands": [
+      "T1.r7.ll_r5",
+      "T1.r8.ll_r5"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Method M's round-5 advantage over Max-Reward for Gemma2-2B.",
+     "expression": "T1.r8.ge_r5 - T1.r7.ge_r5",
+     "value": 4.54,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 4.539999999999999,
+     "operands": [
+      "T1.r7.ge_r5",
+      "T1.r8.ge_r5"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Method M's round-3 difference from Max-Reward for Llama3-8B.",
+     "expression": "T1.r8.ll_r3 - T1.r7.ll_r3",
+     "value": -0.65,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": -0.6500000000000057,
+     "operands": [
+      "T1.r7.ll_r3",
+      "T1.r8.ll_r3"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Method M's round-4 difference from Max-Reward for Llama3-8B.",
+     "expression": "T1.r8.ll_r4 - T1.r7.ll_r4",
+     "value": -0.4,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": -0.4000000000000057,
+     "operands": [
+      "T1.r7.ll_r4",
+      "T1.r8.ll_r4"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Smallest Method M accuracy change relative to the seed across the four reported model-benchmark combinations.",
+     "expression": "min(T2.r7.ll_mmlu - T2.r1.ll_mmlu, T2.r7.ll_arc - T2.r1.ll_arc, T2.r7.ge_mmlu - T2.r1.ge_mmlu, T2.r7.ge_arc - T2.r1.ge_arc)",
+     "value": 0.05,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 0.04999999999999716,
+     "operands": [
+      "T2.r1.ge_arc",
+      "T2.r1.ge_mmlu",
+      "T2.r1.ll_arc",
+      "T2.r1.ll_mmlu",
+      "T2.r7.ge_arc",
+      "T2.r7.ge_mmlu",
+      "T2.r7.ll_arc",
+      "T2.r7.ll_mmlu"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Largest Method M accuracy change relative to the seed across the four reported model-benchmark combinations.",
+     "expression": "max(T2.r7.ll_mmlu - T2.r1.ll_mmlu, T2.r7.ll_arc - T2.r1.ll_arc, T2.r7.ge_mmlu - T2.r1.ge_mmlu, T2.r7.ge_arc - T2.r1.ge_arc)",
+     "value": 0.53,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 0.5300000000000011,
+     "operands": [
+      "T2.r1.ge_arc",
+      "T2.r1.ge_mmlu",
+      "T2.r1.ll_arc",
+      "T2.r1.ll_mmlu",
+      "T2.r7.ge_arc",
+      "T2.r7.ge_mmlu",
+      "T2.r7.ll_arc",
+      "T2.r7.ll_mmlu"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F7 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Round 5: 73.22 vs next-best 70.64 (Llama); 66.36 vs 62.51 (Gemma). Highest in T1."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Matches T1: Llama R3/R4 trailing (66.58<67.23, 69.99<70.39); leads Llama R5 and all Gemma rounds."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Method M exceeds Mult-Full, Rand, UAB, LCL in all six model-round cells."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "All four values exceed seed (48.90>48.67, 72.28>72.23, 39.18>38.88, 63.38>62.85), though margins are tiny."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "E.g., Max-Reward Gemma MMLU 42.48 and Min-Len Llama MMLU 50.62 exceed Method M."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "Package states single runs except Rand and no significance tests or confidence intervals."
+    }
+   ]
+  },
+  "RP-04": {
+   "alias": "RP-04",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "On the in-domain Amharic Passage Retrieval test split, Model M-110M outperformed the strongest multilingual baseline on MRR@10, NDCG@10, and Recall@10/50/100, with all five improvements marked statistically significant by paired t-tests at p < 0.05.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r7",
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "The smaller Model M-40M and Model M-42M variants also exceeded every multilingual baseline on all five in-domain metrics despite having substantially fewer parameters.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "The in-domain advantage did not carry over to zero-shot 2AIRTC evaluation: multilingual-e5-large-instruct outperformed every Model M variant on MRR@100, NDCG@100, Recall@100, and Recall@200, although Model M-110M was only 0.001 lower on Recall@200.",
+     "polarity": "negative",
+     "kind": "negative_or_null",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r3",
+      "T2.r5",
+      "T2.r6",
+      "T2.r7"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "The 2AIRTC comparison has no reported significance tests, and its sparse or incomplete relevance judgments make recall-based transfer results unreliable.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2",
+      "P1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The in-domain results report neither random-seed variation nor variance estimates, while the paired tests provide only p < 0.05 markers without exact p-values, test statistics, sample size, or sidedness.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "S1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "On 2AIRTC, Model M's transfer is mixed. Model M-110M beats gte-multilingual-base and ties or trails snowflake and e5 closely on recall. Model M-40M is clearly weaker, so transfer depends on model size. gte-modernbert-base fails on both datasets.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r4",
+      "T2.r5",
+      "T2.r6",
+      "T2.r7",
+      "T1.r1"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Model M-110M's in-domain MRR@10 was 0.775.",
+     "expression": "T1.r7.mrr10",
+     "value": 0.775,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.775,
+     "operands": [
+      "T1.r7.mrr10"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Model M-110M exceeded the best in-domain multilingual MRR@10 by 0.103.",
+     "expression": "T1.r7.mrr10 - max(T1.r1.mrr10, T1.r2.mrr10, T1.r3.mrr10, T1.r4.mrr10)",
+     "value": 0.103,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.10299999999999998,
+     "operands": [
+      "T1.r1.mrr10",
+      "T1.r2.mrr10",
+      "T1.r3.mrr10",
+      "T1.r4.mrr10",
+      "T1.r7.mrr10"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Model M-110M's in-domain NDCG@10 was 0.808.",
+     "expression": "T1.r7.ndcg10",
+     "value": 0.808,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.808,
+     "operands": [
+      "T1.r7.ndcg10"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Model M-110M exceeded the best in-domain multilingual NDCG@10 by 0.099.",
+     "expression": "T1.r7.ndcg10 - max(T1.r1.ndcg10, T1.r2.ndcg10, T1.r3.ndcg10, T1.r4.ndcg10)",
+     "value": 0.099,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.09900000000000009,
+     "operands": [
+      "T1.r1.ndcg10",
+      "T1.r2.ndcg10",
+      "T1.r3.ndcg10",
+      "T1.r4.ndcg10",
+      "T1.r7.ndcg10"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Model M-110M's in-domain Recall@10 was 0.913.",
+     "expression": "T1.r7.r10",
+     "value": 0.913,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.913,
+     "operands": [
+      "T1.r7.r10"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Model M-110M exceeded the best in-domain multilingual Recall@10 by 0.082.",
+     "expression": "T1.r7.r10 - max(T1.r1.r10, T1.r2.r10, T1.r3.r10, T1.r4.r10)",
+     "value": 0.082,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.08200000000000007,
+     "operands": [
+      "T1.r1.r10",
+      "T1.r2.r10",
+      "T1.r3.r10",
+      "T1.r4.r10",
+      "T1.r7.r10"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "On 2AIRTC, multilingual-e5-large-instruct exceeded Model M-110M in MRR@100 by 0.044.",
+     "expression": "T2.r3.mrr100 - T2.r7.mrr100",
+     "value": 0.044,
+     "unit": null,
+     "finding_id": "F3",
+     "computed_value": 0.04400000000000004,
+     "operands": [
+      "T2.r3.mrr100",
+      "T2.r7.mrr100"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "On 2AIRTC, multilingual-e5-large-instruct exceeded Model M-110M in Recall@200 by 0.001.",
+     "expression": "T2.r3.r200 - T2.r7.r200",
+     "value": 0.001,
+     "unit": null,
+     "finding_id": "F3",
+     "computed_value": 0.0010000000000000009,
+     "operands": [
+      "T2.r3.r200",
+      "T2.r7.r200"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F6 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Model M-110M beats the best baseline on every T1 metric, and S1 gives † markers on all five."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Both 40M and 42M exceed every baseline on all five T1 metrics. Margins for 40M are small, and no significance is reported for them."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "e5 leads on all four T2 metrics. Recall@200 is 0.911 vs 0.910 for the 110M model."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "The T2 note says no significance markers. P1 and the T2 caption say judgments are incomplete and recall is unreliable."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "The package states no seeds or variance are reported. S1 lacks exact p-values, test statistic, n and sidedness."
+    }
+   ]
+  },
+  "RP-05": {
+   "alias": "RP-05",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "On Dataset D, Method M's beam variant descriptively achieved the strongest structural adherence of all reported systems under both automatic and human evaluation, with the highest Match Scores and lowest Levenshtein distances.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6",
+      "T1.r7",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "The beam variant's content results were mixed rather than showing a uniform accuracy cost: its ROUGE-L was below DeepSeek-V3 and vanilla LLaMa-3-8B, its FactCC was below Claude but above the other reported systems, and its AlignScore was the highest by a very small margin.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6",
+      "T1.r7",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Compared with vanilla LLaMa-3-8B, Method M's edit variant improved both automatic structural metrics, but did not improve human Match Score and had worse human Levenshtein distance; it also had much lower ROUGE-L, while its FactCC was higher and AlignScore was unreported.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r5",
+      "T1.r7"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "Fine-tuning LLaMa-3-8B did not consistently improve structural adherence over vanilla LLaMa-3-8B and reduced ROUGE-L, although it increased FactCC.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r5",
+      "T1.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "All results are from a single run with no variance estimates or significance tests, and human structural evaluation covered 100 summaries per model from two annotators, so the observed advantages are descriptive rather than established as statistically significant.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "Automatic structural metrics use the same discourse classifier that guides Method M (and selects best-of-16 for vanilla baselines), so the automatic advantage may be partly circular. Only the human evaluation, on 100 summaries from two annotators, is independent, though it also favors the beam variant.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r8",
+      "T1.r5"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "The beam variant's automatic Match Score exceeded the best prompted baseline's score by 0.46.",
+     "expression": "T1.r8.auto_ms - max(T1.r1.auto_ms, T1.r2.auto_ms, T1.r3.auto_ms, T1.r4.auto_ms, T1.r5.auto_ms)",
+     "value": 0.46,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.45999999999999996,
+     "operands": [
+      "T1.r1.auto_ms",
+      "T1.r2.auto_ms",
+      "T1.r3.auto_ms",
+      "T1.r4.auto_ms",
+      "T1.r5.auto_ms",
+      "T1.r8.auto_ms"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "The beam variant's automatic Levenshtein distance was 0.32 lower than the best prompted-baseline value.",
+     "expression": "min(T1.r1.auto_lev, T1.r2.auto_lev, T1.r3.auto_lev, T1.r4.auto_lev, T1.r5.auto_lev) - T1.r8.auto_lev",
+     "value": 0.32,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.32,
+     "operands": [
+      "T1.r1.auto_lev",
+      "T1.r2.auto_lev",
+      "T1.r3.auto_lev",
+      "T1.r4.auto_lev",
+      "T1.r5.auto_lev",
+      "T1.r8.auto_lev"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "The beam variant's human Match Score exceeded the best prompted-baseline score by 0.31.",
+     "expression": "T1.r8.hum_ms - max(T1.r1.hum_ms, T1.r2.hum_ms, T1.r3.hum_ms, T1.r4.hum_ms, T1.r5.hum_ms)",
+     "value": 0.31,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.31000000000000005,
+     "operands": [
+      "T1.r1.hum_ms",
+      "T1.r2.hum_ms",
+      "T1.r3.hum_ms",
+      "T1.r4.hum_ms",
+      "T1.r5.hum_ms",
+      "T1.r8.hum_ms"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "The beam variant's human Levenshtein distance was 0.32 lower than the best prompted-baseline value.",
+     "expression": "min(T1.r1.hum_lev, T1.r2.hum_lev, T1.r3.hum_lev, T1.r4.hum_lev, T1.r5.hum_lev) - T1.r8.hum_lev",
+     "value": 0.32,
+     "unit": null,
+     "finding_id": "F1",
+     "computed_value": 0.31999999999999995,
+     "operands": [
+      "T1.r1.hum_lev",
+      "T1.r2.hum_lev",
+      "T1.r3.hum_lev",
+      "T1.r4.hum_lev",
+      "T1.r5.hum_lev",
+      "T1.r8.hum_lev"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "The beam variant achieved 42.98% ROUGE-L.",
+     "expression": "T1.r8.rl",
+     "value": 42.98,
+     "unit": "%",
+     "finding_id": "F2",
+     "computed_value": 42.98,
+     "operands": [
+      "T1.r8.rl"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "The beam variant's ROUGE-L was 4.20 percentage points below the highest prompted-baseline value.",
+     "expression": "max(T1.r1.rl, T1.r2.rl, T1.r3.rl, T1.r4.rl, T1.r5.rl) - T1.r8.rl",
+     "value": 4.2,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 4.200000000000003,
+     "operands": [
+      "T1.r1.rl",
+      "T1.r2.rl",
+      "T1.r3.rl",
+      "T1.r4.rl",
+      "T1.r5.rl",
+      "T1.r8.rl"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "The beam variant achieved a FactCC score of 0.64.",
+     "expression": "T1.r8.factcc",
+     "value": 0.64,
+     "unit": null,
+     "finding_id": "F2",
+     "computed_value": 0.64,
+     "operands": [
+      "T1.r8.factcc"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "The beam variant achieved an AlignScore of 0.3890.",
+     "expression": "T1.r8.align",
+     "value": 0.389,
+     "unit": null,
+     "finding_id": "F2",
+     "computed_value": 0.389,
+     "operands": [
+      "T1.r8.align"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F6 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Beam variant has best Auto MS 0.72, Lev 0.32, Human MS 0.55, Lev 0.17 across all rows."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Values check: ROUGE-L 42.98 below r1/r5; FactCC 0.64 below Claude 0.70; AlignScore 0.3890 barely above 0.3888."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Auto MS/Lev improved, human MS tied 0.24, human Lev worse 0.65 vs 0.49; ROUGE-L far lower, FactCC higher."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "Fine-tuned is actually worse or equal on all structural metrics; 'not consistently improve' understates but is true. ROUGE-L down, FactCC up."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "Note states single run, no significance tests, two annotators, 100 summaries per model."
+    }
+   ]
+  },
+  "RP-06": {
+   "alias": "RP-06",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Across the five low-resource targets (BN, AZ, MN, MR, KA), both Method M-static and Method M-dynamic achieved higher COMET scores than supervised fine-tuning for every language.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Low-resource BLEU improvements were not fully consistent: both Method M variants improved BN, AZ, and MN, but M-static decreased MR and tied KA, while M-dynamic decreased KA and improved MR only slightly.",
+     "polarity": "mixed",
+     "kind": "negative_or_null",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r4",
+      "T1.r5",
+      "T1.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "On the high-resource DE and ZH pairs, Method M-dynamic exceeded supervised fine-tuning on both COMET and BLEU, whereas Method M-static was mixed, decreasing both metrics on DE and differing only marginally from supervised on ZH.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.de",
+      "T1.r1.zh",
+      "T1.r2.de",
+      "T1.r2.zh",
+      "T1.r3.de",
+      "T1.r3.zh",
+      "T1.r4.de",
+      "T1.r4.zh",
+      "T1.r5.de",
+      "T1.r5.zh",
+      "T1.r6.de",
+      "T1.r6.zh"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "In the four-language average, Method M-dynamic with FILTER and NN outperformed every REINFORCE and PPO variant on BLEU, COMET-KIWI, COMET, and XCOMET; it was the best system on the first three metrics, while Method M-static had the highest XCOMET score.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5",
+      "T2.r6",
+      "T2.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Every reported REINFORCE and PPO configuration scored below ordinary supervised fine-tuning on all four metrics in the four-language average.",
+     "polarity": "negative",
+     "kind": "negative_or_null",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "For Method M-dynamic, adding FILTER and NN increased all four averaged metrics relative to the otherwise reported dynamic configuration without those data techniques.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r7",
+      "T2.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "The main-table results are three-seed means without standard deviations or significance tests, so the package does not establish whether the reported differences are statistically reliable.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F8",
+     "description": "COMET-KIWI was used as Method M's training signal, the RL reward, the early-stopping criterion, and a reported evaluation metric, while COMET, XCOMET, and BLEU provided additional evaluation views.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F9",
+     "description": "In the four-language average, Method M-dynamic with FILTER/NN beat supervised on all four metrics (BLEU +0.36, KIWI +1.66, COMET +0.74, XCOMET +0.81). Static trailed supervised on BLEU (14.04 vs 14.11), and dynamic without FILTER/NN trailed on XCOMET and KIWI-adjacent gains, so the gain depends on the data techniques.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r6",
+      "T2.r7",
+      "T2.r8"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Method M-dynamic's mean COMET gain over supervised fine-tuning across the five low-resource targets.",
+     "expression": "mean(T1.r3.bn,T1.r3.az,T1.r3.mn,T1.r3.mr,T1.r3.ka)-mean(T1.r1.bn,T1.r1.az,T1.r1.mn,T1.r1.mr,T1.r1.ka)",
+     "value": 2.14,
+     "unit": "COMET points",
+     "finding_id": "F1",
+     "computed_value": 2.1400000000000006,
+     "operands": [
+      "T1.r1.az",
+      "T1.r1.bn",
+      "T1.r1.ka",
+      "T1.r1.mn",
+      "T1.r1.mr",
+      "T1.r3.az",
+      "T1.r3.bn",
+      "T1.r3.ka",
+      "T1.r3.mn",
+      "T1.r3.mr"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Method M-dynamic's mean BLEU gain over supervised fine-tuning across the five low-resource targets, despite the per-language inconsistency.",
+     "expression": "mean(T1.r6.bn,T1.r6.az,T1.r6.mn,T1.r6.mr,T1.r6.ka)-mean(T1.r4.bn,T1.r4.az,T1.r4.mn,T1.r4.mr,T1.r4.ka)",
+     "value": 0.734,
+     "unit": "BLEU points",
+     "finding_id": "F2",
+     "computed_value": 0.734,
+     "operands": [
+      "T1.r4.az",
+      "T1.r4.bn",
+      "T1.r4.ka",
+      "T1.r4.mn",
+      "T1.r4.mr",
+      "T1.r6.az",
+      "T1.r6.bn",
+      "T1.r6.ka",
+      "T1.r6.mn",
+      "T1.r6.mr"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Method M-dynamic's mean COMET gain over supervised fine-tuning across the two high-resource targets.",
+     "expression": "mean(T1.r3.de,T1.r3.zh)-mean(T1.r1.de,T1.r1.zh)",
+     "value": 0.41,
+     "unit": "COMET points",
+     "finding_id": "F3",
+     "computed_value": 0.4099999999999966,
+     "operands": [
+      "T1.r1.de",
+      "T1.r1.zh",
+      "T1.r3.de",
+      "T1.r3.zh"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Method M-dynamic with FILTER and NN's BLEU margin over the strongest reported RL baseline.",
+     "expression": "T2.r8.bleu-max(T2.r2.bleu,T2.r3.bleu,T2.r4.bleu,T2.r5.bleu)",
+     "value": 0.53,
+     "unit": "BLEU points",
+     "finding_id": "F4",
+     "computed_value": 0.5300000000000011,
+     "operands": [
+      "T2.r2.bleu",
+      "T2.r3.bleu",
+      "T2.r4.bleu",
+      "T2.r5.bleu",
+      "T2.r8.bleu"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Method M-dynamic with FILTER and NN's COMET-KIWI margin over the strongest reported RL baseline.",
+     "expression": "T2.r8.kiwi-max(T2.r2.kiwi,T2.r3.kiwi,T2.r4.kiwi,T2.r5.kiwi)",
+     "value": 2.48,
+     "unit": "COMET-KIWI points",
+     "finding_id": "F4",
+     "computed_value": 2.480000000000004,
+     "operands": [
+      "T2.r2.kiwi",
+      "T2.r3.kiwi",
+      "T2.r4.kiwi",
+      "T2.r5.kiwi",
+      "T2.r8.kiwi"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Method M-dynamic with FILTER and NN's COMET margin over the strongest reported RL baseline.",
+     "expression": "T2.r8.comet-max(T2.r2.comet,T2.r3.comet,T2.r4.comet,T2.r5.comet)",
+     "value": 1.6,
+     "unit": "COMET points",
+     "finding_id": "F4",
+     "computed_value": 1.6000000000000085,
+     "operands": [
+      "T2.r2.comet",
+      "T2.r3.comet",
+      "T2.r4.comet",
+      "T2.r5.comet",
+      "T2.r8.comet"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "The best Method M XCOMET result, obtained by M-static, exceeded the strongest reported RL baseline by this margin.",
+     "expression": "T2.r6.xcomet-max(T2.r2.xcomet,T2.r3.xcomet,T2.r4.xcomet,T2.r5.xcomet)",
+     "value": 0.93,
+     "unit": "XCOMET points",
+     "finding_id": "F4",
+     "computed_value": 0.9299999999999997,
+     "operands": [
+      "T2.r2.xcomet",
+      "T2.r3.xcomet",
+      "T2.r4.xcomet",
+      "T2.r5.xcomet",
+      "T2.r6.xcomet"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Adding FILTER and NN to Method M-dynamic increased its averaged COMET-KIWI score by this amount.",
+     "expression": "T2.r8.kiwi-T2.r7.kiwi",
+     "value": 2.03,
+     "unit": "COMET-KIWI points",
+     "finding_id": "F6",
+     "computed_value": 2.030000000000001,
+     "operands": [
+      "T2.r7.kiwi",
+      "T2.r8.kiwi"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F9 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "COMET is higher for both M variants than supervised on all five low-resource pairs, as T1 shows."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "BLEU details match T1: gains on BN, AZ, MN; static MR down and KA tied; dynamic KA down and MR +0.02."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "Dynamic beats supervised on DE and ZH for COMET and BLEU. Static is lower on DE and within 0.02 on ZH."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "r8 beats all RL rows on all four metrics. It is best on BLEU, KIWI and COMET. Static r6 has the top XCOMET."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "All four RL rows are below supervised on every metric. The closest is XCOMET at 59.99 vs 60.05."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "r8 exceeds r7 on all four metrics. The XCOMET gain is 1.09 and the KIWI gain 2.03."
+    },
+    {
+     "item_id": "F7",
+     "verdict": "VALID",
+     "comment": "The package states seed means only and no significance tests, so reliability of the differences is unestablished."
+    },
+    {
+     "item_id": "F8",
+     "verdict": "VALID",
+     "comment": "Supported by the T2 note and methods. It limits how far KIWI gains can be read as independent quality gains."
+    }
+   ]
+  },
+  "RP-07": {
+   "alias": "RP-07",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "With the RankT5 backbone, Method M achieved the highest Recall@5 on all three datasets, exceeding the best baseline on HotpotQA, Musique, and 2WikiHop.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "With the BGE-Base backbone, Method M's Recall@5 result was mixed: it was highest on 2WikiHop but below the best baseline on HotpotQA and Musique.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "In answer generation with RankT5 rerankers, Method M produced the highest exact-match score on each dataset, although its gains over the best baselines were only 0.2–0.4 points.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "In answer generation with BGE-Base rerankers, Method M was best on Musique, tied for best on HotpotQA, and trailed LOOP on 2WikiHop.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Overall, Method M did not consistently outperform the LLM-supervised objectives across every dataset and reranker backbone, because the BGE-Base results included losses and a tie despite uniformly positive RankT5 comparisons.",
+     "polarity": "mixed",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "The comparisons are based on one run per configuration and include neither variance estimates nor significance tests, so the reliability of the observed differences is unquantified.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "The smallest Recall@5 advantage of Method M over the best baseline across the three RankT5 datasets was 2.9 points.",
+     "expression": "min(T1.r5.hq_t5-max(T1.r1.hq_t5,T1.r2.hq_t5,T1.r3.hq_t5,T1.r4.hq_t5),T1.r5.mu_t5-max(T1.r1.mu_t5,T1.r2.mu_t5,T1.r3.mu_t5,T1.r4.mu_t5),T1.r5.wk_t5-max(T1.r1.wk_t5,T1.r2.wk_t5,T1.r3.wk_t5,T1.r4.wk_t5))",
+     "value": 2.9,
+     "unit": "Recall@5 points",
+     "finding_id": "F1",
+     "computed_value": 2.8999999999999986,
+     "operands": [
+      "T1.r1.hq_t5",
+      "T1.r1.mu_t5",
+      "T1.r1.wk_t5",
+      "T1.r2.hq_t5",
+      "T1.r2.mu_t5",
+      "T1.r2.wk_t5",
+      "T1.r3.hq_t5",
+      "T1.r3.mu_t5",
+      "T1.r3.wk_t5",
+      "T1.r4.hq_t5",
+      "T1.r4.mu_t5",
+      "T1.r4.wk_t5",
+      "T1.r5.hq_t5",
+      "T1.r5.mu_t5",
+      "T1.r5.wk_t5"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "The largest Recall@5 advantage of Method M over the best baseline across the three RankT5 datasets was 5.7 points.",
+     "expression": "max(T1.r5.hq_t5-max(T1.r1.hq_t5,T1.r2.hq_t5,T1.r3.hq_t5,T1.r4.hq_t5),T1.r5.mu_t5-max(T1.r1.mu_t5,T1.r2.mu_t5,T1.r3.mu_t5,T1.r4.mu_t5),T1.r5.wk_t5-max(T1.r1.wk_t5,T1.r2.wk_t5,T1.r3.wk_t5,T1.r4.wk_t5))",
+     "value": 5.7,
+     "unit": "Recall@5 points",
+     "finding_id": "F1",
+     "computed_value": 5.700000000000003,
+     "operands": [
+      "T1.r1.hq_t5",
+      "T1.r1.mu_t5",
+      "T1.r1.wk_t5",
+      "T1.r2.hq_t5",
+      "T1.r2.mu_t5",
+      "T1.r2.wk_t5",
+      "T1.r3.hq_t5",
+      "T1.r3.mu_t5",
+      "T1.r3.wk_t5",
+      "T1.r4.hq_t5",
+      "T1.r4.mu_t5",
+      "T1.r4.wk_t5",
+      "T1.r5.hq_t5",
+      "T1.r5.mu_t5",
+      "T1.r5.wk_t5"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Across the BGE-Base Recall@5 comparisons, Method M's worst difference from the best baseline was −0.7 points.",
+     "expression": "min(T1.r5.hq_bge-max(T1.r1.hq_bge,T1.r2.hq_bge,T1.r3.hq_bge,T1.r4.hq_bge),T1.r5.mu_bge-max(T1.r1.mu_bge,T1.r2.mu_bge,T1.r3.mu_bge,T1.r4.mu_bge),T1.r5.wk_bge-max(T1.r1.wk_bge,T1.r2.wk_bge,T1.r3.wk_bge,T1.r4.wk_bge))",
+     "value": -0.7,
+     "unit": "Recall@5 points",
+     "finding_id": "F2",
+     "computed_value": -0.7000000000000028,
+     "operands": [
+      "T1.r1.hq_bge",
+      "T1.r1.mu_bge",
+      "T1.r1.wk_bge",
+      "T1.r2.hq_bge",
+      "T1.r2.mu_bge",
+      "T1.r2.wk_bge",
+      "T1.r3.hq_bge",
+      "T1.r3.mu_bge",
+      "T1.r3.wk_bge",
+      "T1.r4.hq_bge",
+      "T1.r4.mu_bge",
+      "T1.r4.wk_bge",
+      "T1.r5.hq_bge",
+      "T1.r5.mu_bge",
+      "T1.r5.wk_bge"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Across the BGE-Base Recall@5 comparisons, Method M's best difference from the best baseline was 0.9 points.",
+     "expression": "max(T1.r5.hq_bge-max(T1.r1.hq_bge,T1.r2.hq_bge,T1.r3.hq_bge,T1.r4.hq_bge),T1.r5.mu_bge-max(T1.r1.mu_bge,T1.r2.mu_bge,T1.r3.mu_bge,T1.r4.mu_bge),T1.r5.wk_bge-max(T1.r1.wk_bge,T1.r2.wk_bge,T1.r3.wk_bge,T1.r4.wk_bge))",
+     "value": 0.9,
+     "unit": "Recall@5 points",
+     "finding_id": "F2",
+     "computed_value": 0.9000000000000057,
+     "operands": [
+      "T1.r1.hq_bge",
+      "T1.r1.mu_bge",
+      "T1.r1.wk_bge",
+      "T1.r2.hq_bge",
+      "T1.r2.mu_bge",
+      "T1.r2.wk_bge",
+      "T1.r3.hq_bge",
+      "T1.r3.mu_bge",
+      "T1.r3.wk_bge",
+      "T1.r4.hq_bge",
+      "T1.r4.mu_bge",
+      "T1.r4.wk_bge",
+      "T1.r5.hq_bge",
+      "T1.r5.mu_bge",
+      "T1.r5.wk_bge"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "The smallest exact-match advantage of Method M over the best baseline across the RankT5 datasets was 0.2 points.",
+     "expression": "min(T2.r5.hq_t5-max(T2.r1.hq_t5,T2.r2.hq_t5,T2.r3.hq_t5,T2.r4.hq_t5),T2.r5.mu_t5-max(T2.r1.mu_t5,T2.r2.mu_t5,T2.r3.mu_t5,T2.r4.mu_t5),T2.r5.wk_t5-max(T2.r1.wk_t5,T2.r2.wk_t5,T2.r3.wk_t5,T2.r4.wk_t5))",
+     "value": 0.2,
+     "unit": "EM points",
+     "finding_id": "F3",
+     "computed_value": 0.20000000000000284,
+     "operands": [
+      "T2.r1.hq_t5",
+      "T2.r1.mu_t5",
+      "T2.r1.wk_t5",
+      "T2.r2.hq_t5",
+      "T2.r2.mu_t5",
+      "T2.r2.wk_t5",
+      "T2.r3.hq_t5",
+      "T2.r3.mu_t5",
+      "T2.r3.wk_t5",
+      "T2.r4.hq_t5",
+      "T2.r4.mu_t5",
+      "T2.r4.wk_t5",
+      "T2.r5.hq_t5",
+      "T2.r5.mu_t5",
+      "T2.r5.wk_t5"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "The largest exact-match advantage of Method M over the best baseline across the RankT5 datasets was 0.4 points.",
+     "expression": "max(T2.r5.hq_t5-max(T2.r1.hq_t5,T2.r2.hq_t5,T2.r3.hq_t5,T2.r4.hq_t5),T2.r5.mu_t5-max(T2.r1.mu_t5,T2.r2.mu_t5,T2.r3.mu_t5,T2.r4.mu_t5),T2.r5.wk_t5-max(T2.r1.wk_t5,T2.r2.wk_t5,T2.r3.wk_t5,T2.r4.wk_t5))",
+     "value": 0.4,
+     "unit": "EM points",
+     "finding_id": "F3",
+     "computed_value": 0.3999999999999986,
+     "operands": [
+      "T2.r1.hq_t5",
+      "T2.r1.mu_t5",
+      "T2.r1.wk_t5",
+      "T2.r2.hq_t5",
+      "T2.r2.mu_t5",
+      "T2.r2.wk_t5",
+      "T2.r3.hq_t5",
+      "T2.r3.mu_t5",
+      "T2.r3.wk_t5",
+      "T2.r4.hq_t5",
+      "T2.r4.mu_t5",
+      "T2.r4.wk_t5",
+      "T2.r5.hq_t5",
+      "T2.r5.mu_t5",
+      "T2.r5.wk_t5"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Across the BGE-Base exact-match comparisons, Method M's worst difference from the best baseline was −0.3 points.",
+     "expression": "min(T2.r5.hq_bge-max(T2.r1.hq_bge,T2.r2.hq_bge,T2.r3.hq_bge,T2.r4.hq_bge),T2.r5.mu_bge-max(T2.r1.mu_bge,T2.r2.mu_bge,T2.r3.mu_bge,T2.r4.mu_bge),T2.r5.wk_bge-max(T2.r1.wk_bge,T2.r2.wk_bge,T2.r3.wk_bge,T2.r4.wk_bge))",
+     "value": -0.3,
+     "unit": "EM points",
+     "finding_id": "F4",
+     "computed_value": -0.29999999999999716,
+     "operands": [
+      "T2.r1.hq_bge",
+      "T2.r1.mu_bge",
+      "T2.r1.wk_bge",
+      "T2.r2.hq_bge",
+      "T2.r2.mu_bge",
+      "T2.r2.wk_bge",
+      "T2.r3.hq_bge",
+      "T2.r3.mu_bge",
+      "T2.r3.wk_bge",
+      "T2.r4.hq_bge",
+      "T2.r4.mu_bge",
+      "T2.r4.wk_bge",
+      "T2.r5.hq_bge",
+      "T2.r5.mu_bge",
+      "T2.r5.wk_bge"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Across the BGE-Base exact-match comparisons, Method M's best difference from the best baseline was 0.2 points.",
+     "expression": "max(T2.r5.hq_bge-max(T2.r1.hq_bge,T2.r2.hq_bge,T2.r3.hq_bge,T2.r4.hq_bge),T2.r5.mu_bge-max(T2.r1.mu_bge,T2.r2.mu_bge,T2.r3.mu_bge,T2.r4.mu_bge),T2.r5.wk_bge-max(T2.r1.wk_bge,T2.r2.wk_bge,T2.r3.wk_bge,T2.r4.wk_bge))",
+     "value": 0.2,
+     "unit": "EM points",
+     "finding_id": "F4",
+     "computed_value": 0.19999999999999574,
+     "operands": [
+      "T2.r1.hq_bge",
+      "T2.r1.mu_bge",
+      "T2.r1.wk_bge",
+      "T2.r2.hq_bge",
+      "T2.r2.mu_bge",
+      "T2.r2.wk_bge",
+      "T2.r3.hq_bge",
+      "T2.r3.mu_bge",
+      "T2.r3.wk_bge",
+      "T2.r4.hq_bge",
+      "T2.r4.mu_bge",
+      "T2.r4.wk_bge",
+      "T2.r5.hq_bge",
+      "T2.r5.mu_bge",
+      "T2.r5.wk_bge"
+     ]
+    }
+   ],
+   "merge_log": [],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 RankT5: 84.4 vs 78.7, 57.9 vs 55.0, 82.7 vs 79.2; M best on all three."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "BGE: M 81.1 < EMDR 81.8 on HotpotQA; 57.6 < PDist 58.2 on Musique; 81.4 best on 2WikiHop."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "RankT5 EM: M best on all; margins 0.3, 0.4, 0.2 over best baseline."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "BGE EM: HotpotQA 60.9 ties PDist; Musique 39.9 best; 2WikiHop 70.9 below LOOP 71.2."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "Supported: RankT5 wins everywhere, BGE shows two recall losses, an EM tie and an EM loss."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "Package states single runs and no variance or significance tests; important caveat for small margins."
+    }
+   ]
+  },
+  "RP-08": {
+   "alias": "RP-08",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "With Zephyr, Method M achieved higher unseen-domain accuracy than both ZeroGen and SuperGen on SGD and Clinc150.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.sgd",
+      "T1.r1.clinc",
+      "T1.r4.sgd",
+      "T1.r4.clinc",
+      "T1.r6.sgd",
+      "T1.r6.clinc"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "With Llama3, Method M achieved higher unseen-domain accuracy than both ZeroGen and SuperGen on SGD and Clinc150, attaining the highest T1 mean on each dataset.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r2.sgd",
+      "T1.r2.clinc",
+      "T1.r5.sgd",
+      "T1.r5.clinc",
+      "T1.r7.sgd",
+      "T1.r7.clinc"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Method M using either open 7–8B generator outperformed ZeroGen using ChatGPT on both SGD and Clinc150.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r3.sgd",
+      "T1.r3.clinc",
+      "T1.r6.sgd",
+      "T1.r6.clinc",
+      "T1.r7.sgd",
+      "T1.r7.clinc"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "At the default 1x data volume, fine-tuning the rewriter improved Method M accuracy over the non-fine-tuned rewriter in all four dataset–generator settings, by 2.7–7.2 percentage points, and every improvement was significant in a one-sided paired t-test at alpha 0.05.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1.sgd_z",
+      "T2.r1.sgd_l",
+      "T2.r1.cl_z",
+      "T2.r1.cl_l",
+      "T2.r2.sgd_z",
+      "T2.r2.sgd_l",
+      "T2.r2.cl_z",
+      "T2.r2.cl_l",
+      "S1",
+      "S2",
+      "S3",
+      "S4"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The baseline comparisons in T1 are descriptive because no significance test was reported, while the ablation reports only significance markers and omits exact p-values, test statistics, and the pairing unit.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1",
+      "T2",
+      "S1",
+      "S2",
+      "S3",
+      "S4"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "Without fine-tuning, the rewriter gives little or no gain over directly generated utterances. At 1x, NFT is below ZeroGen for SGD/Llama3 (67.5 vs 68.7) and ties it on Clinc150/Llama3 (73.8). It is above ZeroGen for Zephyr (65.0 vs 61.3; 73.3 vs 69.9). So most of the Llama3 gain depends on fine-tuning, while the Zephyr gain is partly retained.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.sgd",
+      "T1.r2.sgd",
+      "T1.r2.clinc",
+      "T2.r1.sgd_z",
+      "T2.r1.sgd_l",
+      "T2.r1.cl_z",
+      "T2.r1.cl_l"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    },
+    {
+     "finding_id": "F7",
+     "description": "At 2x data volume, the fine-tuned rewriter again beats NFT in all four settings (marked **). Fine-tuned accuracy is stable or rises slightly, while NFT is mixed (e.g., SGD/Zephyr falls to 62.9).",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r3.sgd_z",
+      "T2.r4.sgd_z",
+      "T2.r3.cl_l",
+      "T2.r4.cl_l"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Method M with Llama3 achieved 72.4% accuracy on SGD, the highest SGD mean in T1.",
+     "expression": "T1.r7.sgd",
+     "value": 72.4,
+     "unit": "%",
+     "finding_id": "F2",
+     "computed_value": 72.4,
+     "operands": [
+      "T1.r7.sgd"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Method M with Llama3 achieved 76.9% accuracy on Clinc150, the highest Clinc150 mean in T1.",
+     "expression": "T1.r7.clinc",
+     "value": 76.9,
+     "unit": "%",
+     "finding_id": "F2",
+     "computed_value": 76.9,
+     "operands": [
+      "T1.r7.clinc"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "On SGD, Method M with Llama3 exceeded the strongest non-Method-M result, ZeroGen with Llama3, by 3.7 percentage points.",
+     "expression": "T1.r7.sgd - T1.r2.sgd",
+     "value": 3.7,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 3.700000000000003,
+     "operands": [
+      "T1.r2.sgd",
+      "T1.r7.sgd"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "On Clinc150, Method M with Llama3 exceeded the strongest non-Method-M result, ZeroGen with Llama3, by 3.1 percentage points.",
+     "expression": "T1.r7.clinc - T1.r2.clinc",
+     "value": 3.1,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 3.1000000000000085,
+     "operands": [
+      "T1.r2.clinc",
+      "T1.r7.clinc"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "At 1x on SGD with Zephyr, fine-tuning the rewriter improved accuracy by 7.2 percentage points.",
+     "expression": "T2.r2.sgd_z - T2.r1.sgd_z",
+     "value": 7.2,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 7.200000000000003,
+     "operands": [
+      "T2.r1.sgd_z",
+      "T2.r2.sgd_z"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "At 1x on SGD with Llama3, fine-tuning the rewriter improved accuracy by 4.9 percentage points.",
+     "expression": "T2.r2.sgd_l - T2.r1.sgd_l",
+     "value": 4.9,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 4.900000000000006,
+     "operands": [
+      "T2.r1.sgd_l",
+      "T2.r2.sgd_l"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "At 1x on Clinc150 with Zephyr, fine-tuning the rewriter improved accuracy by 2.7 percentage points.",
+     "expression": "T2.r2.cl_z - T2.r1.cl_z",
+     "value": 2.7,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 2.700000000000003,
+     "operands": [
+      "T2.r1.cl_z",
+      "T2.r2.cl_z"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "At 1x on Clinc150 with Llama3, fine-tuning the rewriter improved accuracy by 3.1 percentage points.",
+     "expression": "T2.r2.cl_l - T2.r1.cl_l",
+     "value": 3.1,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 3.1000000000000085,
+     "operands": [
+      "T2.r1.cl_l",
+      "T2.r2.cl_l"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F6 proposed by reviewer",
+    "added F7 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Zephyr: 72.2 vs 61.3/58.9 (SGD); 76.0 vs 69.9/65.8 (Clinc). Supported; no significance test."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "Llama3: 72.4 vs 68.7/67.4; 76.9 vs 73.8/71.4; highest means in T1. Supported."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "ChatGPT ZeroGen 60.2/71.3 is below Method M's 72.2/72.4 and 76.0/76.9."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "Gains are 7.2, 4.9, 2.7, 3.1 points, all marked ** in the one-sided paired t-tests."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "The package notes no T1 significance test and no exact p-values, statistics, or pairing unit for T2."
+    }
+   ]
+  },
+  "RP-09": {
+   "alias": "RP-09",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Adding Method M increased average ROUGE-L for every reported paired KD loss: GKD from 20.17 to 22.51, KLD from 18.10 to 19.70, and SRKL from 21.44 to 22.94; the table note reports the same average-direction result for four omitted losses.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r3.avg",
+      "T1.r4.avg",
+      "T1.r5.avg",
+      "T1.r6.avg",
+      "T1.r7.avg",
+      "T1.r8.avg",
+      "T1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "For each displayed KD loss, Method M improved ROUGE-L on all five evaluation sets, so the improvement was consistent across the 15 shown loss-by-dataset comparisons, with GKD having the largest reported average gain at 2.33 points.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6",
+      "T1.r7",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "The strongest displayed student by average score, SRKL with Method M, remained 0.50 ROUGE-L below the teacher overall, although it exceeded the teacher on VicunaEval and S-NI and remained below it on the other three sets.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "In the KLD ablation, full Method M achieved the highest ROUGE-L on every evaluation set among plain KLD and all ablated variants.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The easy-to-hard curriculum ordering alone, with both adaptive schedules removed, did not improve KLD consistently: it scored lower than plain KLD on four of five sets and only 0.09 points higher on SelfInst.",
+     "polarity": "negative",
+     "kind": "negative_or_null",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "The component results identify the rising temperature schedule as the main driver and the supervised-ratio schedule as an additional contributor: removing temperature produced scores below plain KLD on all five sets, retaining temperature but removing the ratio schedule improved all five, and restoring the ratio schedule increased all five again.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "The evidence is limited to the included GPT-2 results and descriptive seed means: no standard deviations or significance tests are reported, the number of independent training runs is unstated, and the analogous OPT table is not included.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Average ROUGE-L of GKD with Method M.",
+     "expression": "T1.r4.avg",
+     "value": 22.51,
+     "unit": "ROUGE-L points",
+     "finding_id": "F1",
+     "computed_value": 22.51,
+     "operands": [
+      "T1.r4.avg"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Average-score gap between the teacher and the best displayed student, SRKL with Method M.",
+     "expression": "T1.r1.avg - T1.r8.avg",
+     "value": 0.5,
+     "unit": "ROUGE-L points",
+     "finding_id": "F3",
+     "computed_value": 0.5,
+     "operands": [
+      "T1.r1.avg",
+      "T1.r8.avg"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Mean five-set improvement of full Method M over plain KLD in the ablation table.",
+     "expression": "mean(T2.r5.dolly,T2.r5.selfinst,T2.r5.vicuna,T2.r5.sni,T2.r5.unni) - mean(T2.r1.dolly,T2.r1.selfinst,T2.r1.vicuna,T2.r1.sni,T2.r1.unni)",
+     "value": 1.6,
+     "unit": "ROUGE-L points",
+     "finding_id": "F4",
+     "computed_value": 1.6000000000000014,
+     "operands": [
+      "T2.r1.dolly",
+      "T2.r1.selfinst",
+      "T2.r1.sni",
+      "T2.r1.unni",
+      "T2.r1.vicuna",
+      "T2.r5.dolly",
+      "T2.r5.selfinst",
+      "T2.r5.sni",
+      "T2.r5.unni",
+      "T2.r5.vicuna"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Mean five-set deficit of the no-temperature variant relative to plain KLD.",
+     "expression": "mean(T2.r3.dolly,T2.r3.selfinst,T2.r3.vicuna,T2.r3.sni,T2.r3.unni) - mean(T2.r1.dolly,T2.r1.selfinst,T2.r1.vicuna,T2.r1.sni,T2.r1.unni)",
+     "value": -0.684,
+     "unit": "ROUGE-L points",
+     "finding_id": "F6",
+     "computed_value": -0.684000000000001,
+     "operands": [
+      "T2.r1.dolly",
+      "T2.r1.selfinst",
+      "T2.r1.sni",
+      "T2.r1.unni",
+      "T2.r1.vicuna",
+      "T2.r3.dolly",
+      "T2.r3.selfinst",
+      "T2.r3.sni",
+      "T2.r3.unni",
+      "T2.r3.vicuna"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Mean five-set increment from restoring the supervised-ratio schedule to the variant that already retains the temperature schedule.",
+     "expression": "mean(T2.r5.dolly,T2.r5.selfinst,T2.r5.vicuna,T2.r5.sni,T2.r5.unni) - mean(T2.r4.dolly,T2.r4.selfinst,T2.r4.vicuna,T2.r4.sni,T2.r4.unni)",
+     "value": 0.416,
+     "unit": "ROUGE-L points",
+     "finding_id": "F6",
+     "computed_value": 0.41600000000000037,
+     "operands": [
+      "T2.r4.dolly",
+      "T2.r4.selfinst",
+      "T2.r4.sni",
+      "T2.r4.unni",
+      "T2.r4.vicuna",
+      "T2.r5.dolly",
+      "T2.r5.selfinst",
+      "T2.r5.sni",
+      "T2.r5.unni",
+      "T2.r5.vicuna"
+     ]
+    }
+   ],
+   "merge_log": [
+    "F2: unknown evidence ids ['T1.r4.avg.spread'] removed",
+    "dropped N2: expression invalid (expression references no evidence)",
+    "dropped N3: expression invalid (expression references no evidence)",
+    "dropped N4: expression invalid (expression references no evidence)"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Averages match T1 for GKD, KLD and SRKL; the table note supports the four omitted losses."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "All 15 loss-by-dataset comparisons improve. GKD's +2.33 is the largest average gain shown."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "22.94 vs 23.44 is 0.50 below. It beats the teacher on VicunaEval and S-NI and trails on the other three."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "Full Method M is the highest on all five sets in T2, though SelfInst is close (11.56 vs 11.47)."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "Ordering-only variant is below KLD on four sets and above by 0.09 on SelfInst."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "The per-set comparisons hold. Calling temperature the main driver is a reasonable but somewhat interpretive reading of the ablation."
+    },
+    {
+     "item_id": "F7",
+     "verdict": "VALID",
+     "comment": "The package states no SDs or tests, an unstated number of training runs, and that the OPT table is excluded."
+    }
+   ]
+  },
+  "RP-10": {
+   "alias": "RP-10",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Averaged across five models on GSM8K, Method M reduced relative output length to 64.25% of the zero-shot baseline but also reduced relative accuracy to 97.00%, so the shorter reasoning did not fully preserve average accuracy.",
+     "polarity": "mixed",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r7"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Averaged across five models on MATH500, Method M reduced relative output length to 76.30% while achieving 102.56% relative accuracy, indicating shorter reasoning without an average accuracy loss on this dataset.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r7"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Method M had the lowest relative reasoning length among all approaches listed in T1 on both GSM8K and MATH500, although its GSM8K accuracy trade-off prevents a uniformly positive accuracy-preservation conclusion.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6",
+      "T1.r7",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "Compared with budget-matched Method M, full-budget Method M produced shorter outputs on both datasets, with slightly lower relative accuracy on GSM8K but slightly higher relative accuracy on MATH500.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r7",
+      "T1.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "The shortening effect transferred across datasets but weakened out of domain: GSM8K-trained models tested on MATH had 99.21% relative accuracy and 88.34% relative length, while MATH-trained models tested on GSM8K had 98.53% relative accuracy and 90.36% relative length.",
+     "polarity": "mixed",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r2",
+      "T2.r4"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "No significance tests were reported, so the observed average accuracy differences cannot be interpreted as statistically established preservation, improvement, or degradation.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "Reasoning length was measured as mean output tokens over all outputs, including incorrect ones, so the reported reductions reflect total generation cost rather than the length of correct solutions alone.",
+     "polarity": "neutral",
+     "kind": "other",
+     "importance": "supporting",
+     "evidence_ids": [
+      "P1"
+     ],
+     "source": "build",
+     "review_verdict": "TRIVIAL"
+    },
+    {
+     "finding_id": "F8",
+     "description": "Fine-tuning on external GPT-4o CoT shortened reasoning on GSM8K (67.60% relative length), nearly as much as Method M. It cut MATH relative accuracy to 90.52% with a large SD (15.07). Self-generated approaches kept MATH accuracy at about 102%, so the source of the training data matters.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r3",
+      "T1.r7"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Method M relative accuracy on GSM8K",
+     "expression": "T1.r7.gsm_racc",
+     "value": 97,
+     "unit": "%",
+     "finding_id": "F1",
+     "computed_value": 97.0,
+     "operands": [
+      "T1.r7.gsm_racc"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Reduction in Method M relative length from the GSM8K zero-shot baseline",
+     "expression": "T1.r1.gsm_rlen - T1.r7.gsm_rlen",
+     "value": 35.75,
+     "unit": "percentage points",
+     "finding_id": "F1",
+     "computed_value": 35.75,
+     "operands": [
+      "T1.r1.gsm_rlen",
+      "T1.r7.gsm_rlen"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Method M relative accuracy on MATH500",
+     "expression": "T1.r7.math_racc",
+     "value": 102.56,
+     "unit": "%",
+     "finding_id": "F2",
+     "computed_value": 102.56,
+     "operands": [
+      "T1.r7.math_racc"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Reduction in Method M relative length from the MATH500 zero-shot baseline",
+     "expression": "T1.r1.math_rlen - T1.r7.math_rlen",
+     "value": 23.7,
+     "unit": "percentage points",
+     "finding_id": "F2",
+     "computed_value": 23.700000000000003,
+     "operands": [
+      "T1.r1.math_rlen",
+      "T1.r7.math_rlen"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Mean out-of-domain relative accuracy across the two transfer directions",
+     "expression": "mean(T2.r2.racc, T2.r4.racc)",
+     "value": 98.87,
+     "unit": "%",
+     "finding_id": "F5",
+     "computed_value": 98.87,
+     "operands": [
+      "T2.r2.racc",
+      "T2.r4.racc"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Mean out-of-domain relative length across the two transfer directions",
+     "expression": "mean(T2.r2.rlen, T2.r4.rlen)",
+     "value": 89.35,
+     "unit": "%",
+     "finding_id": "F5",
+     "computed_value": 89.35,
+     "operands": [
+      "T2.r2.rlen",
+      "T2.r4.rlen"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Additional GSM8K relative-length reduction from full-budget Method M versus its budget-matched variant",
+     "expression": "T1.r8.gsm_rlen - T1.r7.gsm_rlen",
+     "value": 2.9,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 2.9000000000000057,
+     "operands": [
+      "T1.r7.gsm_rlen",
+      "T1.r8.gsm_rlen"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Additional MATH500 relative-length reduction from full-budget Method M versus its budget-matched variant",
+     "expression": "T1.r8.math_rlen - T1.r7.math_rlen",
+     "value": 4.13,
+     "unit": "percentage points",
+     "finding_id": "F4",
+     "computed_value": 4.13000000000001,
+     "operands": [
+      "T1.r7.math_rlen",
+      "T1.r8.math_rlen"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F8 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 r7 shows 64.25% length and 97.00% relative accuracy on GSM8K; the mixed framing is accurate."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "T1 r7 shows 76.30% length and 102.56% relative accuracy on MATH500, matching the item."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "r7 has the lowest Rel. Len on both datasets (GSM8K 64.25 vs 67.15 for r8 and 67.60 for r3; MATH 76.30)."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "r7 is shorter than r8 on both datasets. Its accuracy is lower on GSM8K (97.00 vs 97.44) and higher on MATH (102.56 vs 101.58)."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "T2 values are quoted correctly. Out-of-domain lengths (88–90%) are well above in-domain lengths (64–76%), so the effect weakened but persisted."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "The package states that no significance tests were reported, so the small average differences cannot be called established."
+    },
+    {
+     "item_id": "F7",
+     "verdict": "TRIVIAL",
+     "comment": "P1 supports it, but it is a measurement definition rather than a result a Results passage needs."
+    }
+   ]
+  },
+  "RP-11": {
+   "alias": "RP-11",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "Method M had a larger mean certified radius than both CERT-ED and RanMASK on Yelp, SpamAssassin, and LUN, with gains over CERT-ED of 0.24, 0.51, and 0.71 edits, respectively.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r2.yelp_cr",
+      "T1.r2.spam_cr",
+      "T1.r2.lun_cr",
+      "T1.r3.yelp_cr",
+      "T1.r3.spam_cr",
+      "T1.r3.lun_cr",
+      "T1.r4.yelp_cr",
+      "T1.r4.spam_cr",
+      "T1.r4.lun_cr"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Method M+ also had a larger mean certified radius than CERT-ED and RanMASK on all three datasets, but compared with Method M it was lower on Yelp and SpamAssassin and substantially higher on LUN.",
+     "polarity": "mixed",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r2.yelp_cr",
+      "T1.r2.spam_cr",
+      "T1.r2.lun_cr",
+      "T1.r3.yelp_cr",
+      "T1.r3.spam_cr",
+      "T1.r3.lun_cr",
+      "T1.r4.yelp_cr",
+      "T1.r4.spam_cr",
+      "T1.r4.lun_cr",
+      "T1.r5.yelp_cr",
+      "T1.r5.spam_cr",
+      "T1.r5.lun_cr"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "The robustness gains came with lower clean accuracy than NoSmooth on every dataset: Method M lost 12.27, 5.49, and 1.28 percentage points on Yelp, SpamAssassin, and LUN, while Method M+ lost 13.03, 5.42, and 4.07 points.",
+     "polarity": "negative",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1.yelp_acc",
+      "T1.r1.spam_acc",
+      "T1.r1.lun_acc",
+      "T1.r4.yelp_acc",
+      "T1.r4.spam_acc",
+      "T1.r4.lun_acc",
+      "T1.r5.yelp_acc",
+      "T1.r5.spam_acc",
+      "T1.r5.lun_acc"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "Certified-region cardinality results were not uniformly favorable: relative to CERT-ED, Method M was lower on Yelp but higher on SpamAssassin and LUN, whereas Method M+ was lower on Yelp and SpamAssassin but much higher on LUN.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r2.yelp_cc",
+      "T2.r2.spam_cc",
+      "T2.r2.lun_cc",
+      "T2.r3.yelp_cc",
+      "T2.r3.spam_cc",
+      "T2.r3.lun_cc",
+      "T2.r4.yelp_cc",
+      "T2.r4.spam_cc",
+      "T2.r4.lun_cc"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Method M's adaptation to input length was mixed relative to CERT-ED, with a higher Wasserstein distance on Yelp but lower distances on SpamAssassin and LUN.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r2.yelp_w",
+      "T2.r2.spam_w",
+      "T2.r2.lun_w",
+      "T2.r3.yelp_w",
+      "T2.r3.spam_w",
+      "T2.r3.lun_w"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "Method M+ had a lower Wasserstein distance than CERT-ED on all three datasets, indicating more consistent tracking of certified radius with input length by this metric.",
+     "polarity": "positive",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T2.r2.yelp_w",
+      "T2.r2.spam_w",
+      "T2.r2.lun_w",
+      "T2.r4.yelp_w",
+      "T2.r4.spam_w",
+      "T2.r4.lun_w"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "RanMASK certifies Hamming distance rather than edit distance, so its certified-radius and region-size numbers do not provide a like-for-like edit-distance comparison with Method M, Method M+, or CERT-ED.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "P1",
+      "T2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F8",
+     "description": "The apparent cross-dataset advantages are descriptive rather than statistically established because no significance tests or repeated training runs were reported, and the standard errors measure variation across test examples for one trained model.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "core",
+     "evidence_ids": [
+      "T1"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F9",
+     "description": "Against CERT-ED, Method M and M+ did not improve clean accuracy: CERT-ED had higher accuracy on Yelp (58.57 vs 56.98/56.22) and LUN (98.20 vs 97.88/95.09), and slightly higher on SpamAssassin (88.26 vs 87.99/88.06). The certified-radius gains therefore came with small further accuracy costs.",
+     "polarity": "negative",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r3.yelp_acc",
+      "T1.r3.spam_acc",
+      "T1.r3.lun_acc",
+      "T1.r4.yelp_acc",
+      "T1.r4.spam_acc",
+      "T1.r4.lun_acc",
+      "T1.r5.yelp_acc",
+      "T1.r5.spam_acc",
+      "T1.r5.lun_acc"
+     ],
+     "source": "review",
+     "review_verdict": "PROPOSED"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Method M's mean-certified-radius gain over CERT-ED on Yelp.",
+     "expression": "T1.r4.yelp_cr - T1.r3.yelp_cr",
+     "value": 0.24,
+     "unit": "edits",
+     "finding_id": "F1",
+     "computed_value": 0.24,
+     "operands": [
+      "T1.r3.yelp_cr",
+      "T1.r4.yelp_cr"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Method M's mean-certified-radius gain over CERT-ED on SpamAssassin.",
+     "expression": "T1.r4.spam_cr - T1.r3.spam_cr",
+     "value": 0.51,
+     "unit": "edits",
+     "finding_id": "F1",
+     "computed_value": 0.5099999999999998,
+     "operands": [
+      "T1.r3.spam_cr",
+      "T1.r4.spam_cr"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Method M's mean-certified-radius gain over CERT-ED on LUN.",
+     "expression": "T1.r4.lun_cr - T1.r3.lun_cr",
+     "value": 0.71,
+     "unit": "edits",
+     "finding_id": "F1",
+     "computed_value": 0.71,
+     "operands": [
+      "T1.r3.lun_cr",
+      "T1.r4.lun_cr"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Method M+'s mean-certified-radius gain over CERT-ED on Yelp.",
+     "expression": "T1.r5.yelp_cr - T1.r3.yelp_cr",
+     "value": 0.02,
+     "unit": "edits",
+     "finding_id": "F2",
+     "computed_value": 0.020000000000000018,
+     "operands": [
+      "T1.r3.yelp_cr",
+      "T1.r5.yelp_cr"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Method M+'s mean-certified-radius gain over CERT-ED on SpamAssassin.",
+     "expression": "T1.r5.spam_cr - T1.r3.spam_cr",
+     "value": 0.42,
+     "unit": "edits",
+     "finding_id": "F2",
+     "computed_value": 0.41999999999999993,
+     "operands": [
+      "T1.r3.spam_cr",
+      "T1.r5.spam_cr"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Method M+'s mean-certified-radius gain over CERT-ED on LUN.",
+     "expression": "T1.r5.lun_cr - T1.r3.lun_cr",
+     "value": 5.75,
+     "unit": "edits",
+     "finding_id": "F2",
+     "computed_value": 5.749999999999999,
+     "operands": [
+      "T1.r3.lun_cr",
+      "T1.r5.lun_cr"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Largest clean-accuracy loss of Method M relative to NoSmooth across the three datasets.",
+     "expression": "max(T1.r1.yelp_acc - T1.r4.yelp_acc, T1.r1.spam_acc - T1.r4.spam_acc, T1.r1.lun_acc - T1.r4.lun_acc)",
+     "value": 12.27,
+     "unit": "percentage points",
+     "finding_id": "F3",
+     "computed_value": 12.270000000000003,
+     "operands": [
+      "T1.r1.lun_acc",
+      "T1.r1.spam_acc",
+      "T1.r1.yelp_acc",
+      "T1.r4.lun_acc",
+      "T1.r4.spam_acc",
+      "T1.r4.yelp_acc"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Largest clean-accuracy loss of Method M+ relative to NoSmooth across the three datasets.",
+     "expression": "max(T1.r1.yelp_acc - T1.r5.yelp_acc, T1.r1.spam_acc - T1.r5.spam_acc, T1.r1.lun_acc - T1.r5.lun_acc)",
+     "value": 13.03,
+     "unit": "percentage points",
+     "finding_id": "F3",
+     "computed_value": 13.030000000000001,
+     "operands": [
+      "T1.r1.lun_acc",
+      "T1.r1.spam_acc",
+      "T1.r1.yelp_acc",
+      "T1.r5.lun_acc",
+      "T1.r5.spam_acc",
+      "T1.r5.yelp_acc"
+     ]
+    }
+   ],
+   "merge_log": [
+    "added F9 proposed by reviewer"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "Differences check out: 0.99-0.75, 2.86-2.35, 5.65-4.94; Method M also exceeds RanMASK everywhere."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "M+ exceeds CERT-ED everywhere (0.77>0.75 marginal); below M on Yelp and Spam, far above on LUN."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "All accuracy drops computed correctly against NoSmooth for M and M+."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "Directions versus CERT-ED match T2 cardinality values for both M and M+."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "Yelp 0.28 vs 0.26 higher; Spam 0.20 vs 0.42 and LUN 0.30 vs 0.34 lower; correct."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "M+ distances 0.24 are below CERT-ED on all three datasets."
+    },
+    {
+     "item_id": "F7",
+     "verdict": "VALID",
+     "comment": "P1 states RanMASK supports only Hamming certificates; comparability caveat is supported."
+    },
+    {
+     "item_id": "F8",
+     "verdict": "VALID",
+     "comment": "Table note and statistical tests section confirm no significance tests or repeated runs."
+    }
+   ]
+  },
+  "RP-12": {
+   "alias": "RP-12",
+   "findings": [
+    {
+     "finding_id": "F1",
+     "description": "In the Llama 3-to-Mistral NeMo 12B transplant, Method M with k=64 outperformed FOCUS, ZeroEmbed, and MeanEmbed on all six accuracy benchmarks and achieved lower WikiText bits per byte.",
+     "polarity": "positive",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r3",
+      "T1.r4",
+      "T1.r5",
+      "T1.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F2",
+     "description": "Despite leading the alternative initializations in the Mistral NeMo setting, Method M with k=64 remained below the original-tokenizer model on every reported metric, with an especially large GSM8K loss.",
+     "polarity": "negative",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r3"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F3",
+     "description": "Increasing Method M's anchor count from k=8 to k=64 improved MMLU, ARC-C, GSM8K, AGIEval, and WikiText, but produced tiny decreases on XNLI and Lambada.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "supporting",
+     "evidence_ids": [
+      "T1.r2",
+      "T1.r3"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F4",
+     "description": "In the Qwen 2.5-to-Llama 3 1B transplant, Method M outperformed all four published zero-shot methods on MMLU, ARC-C, Belebele, and WikiText, although FOCUS scored higher on GSM8K.",
+     "polarity": "mixed",
+     "kind": "main_result",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r2",
+      "T2.r3",
+      "T2.r4",
+      "T2.r5",
+      "T2.r6"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F5",
+     "description": "Against the simple initializations in the Llama 3 1B setting, Method M tied ZeroEmbed on MMLU, ARC-C, and GSM8K, was 0.0001 below MeanEmbed on MMLU while tying it on ARC-C and GSM8K, and performed better than both on Belebele and WikiText.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r2",
+      "T2.r7",
+      "T2.r8"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F6",
+     "description": "Relative to the original Llama 3 1B model, Method M preserved ARC-C exactly and nearly preserved MMLU, but performed worse on GSM8K, Belebele, and WikiText.",
+     "polarity": "mixed",
+     "kind": "comparison",
+     "importance": "core",
+     "evidence_ids": [
+      "T2.r1",
+      "T2.r2"
+     ],
+     "source": "build",
+     "review_verdict": "VALID"
+    },
+    {
+     "finding_id": "F7",
+     "description": "The comparisons are descriptive because no statistical tests were reported; additionally, T1 reports a single evaluation per model, and standard errors are unavailable for T1 WikiText and T2 Belebele and WikiText.",
+     "polarity": "neutral",
+     "kind": "scope_limitation",
+     "importance": "supporting",
+     "evidence_ids": [],
+     "source": "build",
+     "review_verdict": "VALID"
+    }
+   ],
+   "numeric_facts": [
+    {
+     "fact_id": "N1",
+     "description": "Method M's MMLU accuracy in the Mistral NeMo transplant was 0.6222.",
+     "expression": "T1.r3.mmlu",
+     "value": 0.6222,
+     "unit": "accuracy fraction",
+     "finding_id": "F1",
+     "computed_value": 0.6222,
+     "operands": [
+      "T1.r3.mmlu"
+     ]
+    },
+    {
+     "fact_id": "N2",
+     "description": "Method M exceeded the better simple initializer on MMLU in the Mistral NeMo transplant by 0.0286.",
+     "expression": "T1.r3.mmlu - max(T1.r5.mmlu, T1.r6.mmlu)",
+     "value": 0.0286,
+     "unit": "accuracy fraction",
+     "finding_id": "F1",
+     "computed_value": 0.02859999999999996,
+     "operands": [
+      "T1.r3.mmlu",
+      "T1.r5.mmlu",
+      "T1.r6.mmlu"
+     ]
+    },
+    {
+     "fact_id": "N3",
+     "description": "Method M reduced WikiText bits per byte by 0.1576 relative to the better simple initializer in the Mistral NeMo transplant.",
+     "expression": "min(T1.r5.wikitext, T1.r6.wikitext) - T1.r3.wikitext",
+     "value": 0.1576,
+     "unit": "bits/byte",
+     "finding_id": "F1",
+     "computed_value": 0.15759999999999996,
+     "operands": [
+      "T1.r3.wikitext",
+      "T1.r5.wikitext",
+      "T1.r6.wikitext"
+     ]
+    },
+    {
+     "fact_id": "N4",
+     "description": "Method M's GSM8K accuracy was 0.4125 below the original Mistral NeMo model.",
+     "expression": "T1.r1.gsm8k - T1.r3.gsm8k",
+     "value": 0.4125,
+     "unit": "accuracy fraction",
+     "finding_id": "F2",
+     "computed_value": 0.4125,
+     "operands": [
+      "T1.r1.gsm8k",
+      "T1.r3.gsm8k"
+     ]
+    },
+    {
+     "fact_id": "N5",
+     "description": "Method M's MMLU accuracy was 0.0033 below the original Llama 3 1B model.",
+     "expression": "T2.r1.mmlu - T2.r2.mmlu",
+     "value": 0.0033,
+     "unit": "accuracy fraction",
+     "finding_id": "F6",
+     "computed_value": 0.003300000000000025,
+     "operands": [
+      "T2.r1.mmlu",
+      "T2.r2.mmlu"
+     ]
+    },
+    {
+     "fact_id": "N6",
+     "description": "Method M exactly matched the original Llama 3 1B model on ARC-C.",
+     "expression": "T2.r1.arcc - T2.r2.arcc",
+     "value": 0,
+     "unit": "accuracy fraction",
+     "finding_id": "F6",
+     "computed_value": 0.0,
+     "operands": [
+      "T2.r1.arcc",
+      "T2.r2.arcc"
+     ]
+    },
+    {
+     "fact_id": "N7",
+     "description": "Method M's GSM8K accuracy was 0.0531 below the original Llama 3 1B model.",
+     "expression": "T2.r1.gsm8k - T2.r2.gsm8k",
+     "value": 0.0531,
+     "unit": "accuracy fraction",
+     "finding_id": "F6",
+     "computed_value": 0.05310000000000001,
+     "operands": [
+      "T2.r1.gsm8k",
+      "T2.r2.gsm8k"
+     ]
+    },
+    {
+     "fact_id": "N8",
+     "description": "Method M exceeded the best published zero-shot method's MMLU accuracy in the Llama 3 1B transplant by 0.0945.",
+     "expression": "T2.r2.mmlu - max(T2.r3.mmlu, T2.r4.mmlu, T2.r5.mmlu, T2.r6.mmlu)",
+     "value": 0.0945,
+     "unit": "accuracy fraction",
+     "finding_id": "F4",
+     "computed_value": 0.09449999999999997,
+     "operands": [
+      "T2.r2.mmlu",
+      "T2.r3.mmlu",
+      "T2.r4.mmlu",
+      "T2.r5.mmlu",
+      "T2.r6.mmlu"
+     ]
+    }
+   ],
+   "merge_log": [
+    "F7: unknown evidence ids ['T1.notes', 'T2.notes'] removed"
+   ],
+   "reviewer_comments": [
+    {
+     "item_id": "F1",
+     "verdict": "VALID",
+     "comment": "T1 r3 beats FOCUS, ZeroEmbed and MeanEmbed on all six accuracy metrics and has lower WikiText bits per byte."
+    },
+    {
+     "item_id": "F2",
+     "verdict": "VALID",
+     "comment": "k=64 is below baseline on all seven metrics, including WikiText, which is worse because it is higher. GSM8K falls from 0.5588 to 0.1463."
+    },
+    {
+     "item_id": "F3",
+     "verdict": "VALID",
+     "comment": "The direction of every change matches T1. The XNLI and Lambada drops are tiny (0.0002) and well within the standard errors."
+    },
+    {
+     "item_id": "F4",
+     "verdict": "VALID",
+     "comment": "Method M is best on MMLU, ARC-C, Belebele and WikiText. FOCUS is higher on GSM8K (0.0174 vs 0.0144)."
+    },
+    {
+     "item_id": "F5",
+     "verdict": "VALID",
+     "comment": "The ties and the 0.0001 MMLU gap against MeanEmbed are accurate. The Belebele and WikiText advantages are small."
+    },
+    {
+     "item_id": "F6",
+     "verdict": "VALID",
+     "comment": "ARC-C is identical, MMLU is 0.0033 lower, and GSM8K, Belebele and WikiText are worse than the original."
+    },
+    {
+     "item_id": "F7",
+     "verdict": "VALID",
+     "comment": "The package reports no statistical tests, a single evaluation per model, and no standard errors for the listed metrics."
+    }
+   ]
+  }
+ }
+}

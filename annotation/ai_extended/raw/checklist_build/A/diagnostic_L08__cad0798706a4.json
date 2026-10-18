@@ -1,0 +1,182 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "diagnostic_L08",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "7db354b2f15194826ce8ceca8fb8be45c91b77b82adbaf3f66fc78c570573981",
+ "cache_key": "cad0798706a43640f689c6d403a07ee9cadd750382884cf2fe9161a6b224760c",
+ "started_at": "2026-10-18T10:21:16Z",
+ "finished_at": "2026-10-18T10:21:35Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"On the six scaffold-split test sets, Larchmont-GNN achieved higher mean test ROC-AUC than Quintrell-MP on every dataset, with dataset-level gains ranging from 0.3 to 1.6 ROC-AUC points.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1.gors\",\"T2.r1.holl\",\"T2.r1.ivy\",\"T2.r1.jess\",\"T2.r1.kels\",\"T2.r1.lum\",\"T2.r2.gors\",\"T2.r2.holl\",\"T2.r2.ivy\",\"T2.r2.jess\",\"T2.r2.kels\",\"T2.r2.lum\"]},{\"finding_id\":\"F2\",\"description\":\"Averaged across the six datasets, Larchmont-GNN scored 79.4 versus 78.4 for Quintrell-MP, an advantage of 1.0 ROC-AUC point.\",\"polarity\":\"positive\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1.avg\",\"T2.r2.avg\"]},{\"finding_id\":\"F3\",\"description\":\"Larchmont-GNN did not surpass the pretrained Avonlea-Chem-XL overall: its average was 0.6 points lower, although it scored higher on Hollin-Sol and Jessamine-Kin and lower on the other four datasets.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"supporting\",\"evidence_ids\":[\"T2.r1.avg\",\"T2.r3.avg\",\"T2.r1.gors\",\"T2.r3.gors\",\"T2.r1.holl\",\"T2.r3.holl\",\"T2.r1.ivy\",\"T2.r3.ivy\",\"T2.r1.jess\",\"T2.r3.jess\",\"T2.r1.kels\",\"T2.r3.kels\",\"T2.r1.lum\",\"T2.r3.lum\"]},{\"finding_id\":\"F4\",\"description\":\"The ablation results support contributions from both added components: removing ring-aware pooling, distance features, or both reduced the six-dataset average from 79.4 to 78.7, 78.9, and 78.0, respectively.\",\"polarity\":\"positive\",\"kind\":\"other\",\"importance\":\"supporting\",\"evidence_ids\":[\"T3.r1.avg\",\"T3.r2.avg\",\"T3.r3.avg\",\"T3.r4.avg\"]},{\"finding_id\":\"F5\",\"description\":\"Because no statistical tests were reported, the package does not establish whether Larchmont-GNN's observed advantages over Quintrell-MP are statistically significant.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"core\",\"evidence_ids\":[\"Statistical tests\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"Larchmont-GNN's average test ROC-AUC across the six datasets.\",\"expression\":\"T2.r1.avg\",\"value\":79.4,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F2\"},{\"fact_id\":\"N2\",\"description\":\"Quintrell-MP's average test ROC-AUC across the six datasets.\",\"expression\":\"T2.r2.avg\",\"value\":78.4,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F2\"},{\"fact_id\":\"N3\",\"description\":\"Larchmont-GNN's average advantage over Quintrell-MP.\",\"expression\":\"T2.r1.avg - T2.r2.avg\",\"value\":1.0,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F2\"},{\"fact_id\":\"N4\",\"description\":\"Smallest dataset-level advantage of Larchmont-GNN over Quintrell-MP, occurring on Ivybridge-Tox and Lumley-Metab.\",\"expression\":\"min(T2.r1.gors - T2.r2.gors, T2.r1.holl - T2.r2.holl, T2.r1.ivy - T2.r2.ivy, T2.r1.jess - T2.r2.jess, T2.r1.kels - T2.r2.kels, T2.r1.lum - T2.r2.lum)\",\"value\":0.3,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F1\"},{\"fact_id\":\"N5\",\"description\":\"Largest dataset-level advantage of Larchmont-GNN over Quintrell-MP, occurring on Jessamine-Kin and Kelso-Brain.\",\"expression\":\"max(T2.r1.gors - T2.r2.gors, T2.r1.holl - T2.r2.holl, T2.r1.ivy - T2.r2.ivy, T2.r1.jess - T2.r2.jess, T2.r1.kels - T2.r2.kels, T2.r1.lum - T2.r2.lum)\",\"value\":1.6,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F1\"},{\"fact_id\":\"N6\",\"description\":\"Avonlea-Chem-XL's average test ROC-AUC across the six datasets.\",\"expression\":\"T2.r3.avg\",\"value\":80.0,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F3\"},{\"fact_id\":\"N7\",\"description\":\"Avonlea-Chem-XL's average advantage over Larchmont-GNN.\",\"expression\":\"T2.r3.avg - T2.r1.avg\",\"value\":0.6,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F3\"},{\"fact_id\":\"N8\",\"description\":\"Decrease in average ROC-AUC when both ring-aware pooling and distance features were removed.\",\"expression\":\"T3.r1.avg - T3.r4.avg\",\"value\":1.4,\"unit\":\"ROC-AUC points (×100)\",\"finding_id\":\"F4\"}]}",
+ "usage": {
+  "input_tokens": 17997,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 2281,
+  "reasoning_output_tokens": 1034
+ },
+ "cost_usd": null,
+ "latency_s": 18.5,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "On the six scaffold-split test sets, Larchmont-GNN achieved higher mean test ROC-AUC than Quintrell-MP on every dataset, with dataset-level gains ranging from 0.3 to 1.6 ROC-AUC points.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1.gors",
+     "T2.r1.holl",
+     "T2.r1.ivy",
+     "T2.r1.jess",
+     "T2.r1.kels",
+     "T2.r1.lum",
+     "T2.r2.gors",
+     "T2.r2.holl",
+     "T2.r2.ivy",
+     "T2.r2.jess",
+     "T2.r2.kels",
+     "T2.r2.lum"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "Averaged across the six datasets, Larchmont-GNN scored 79.4 versus 78.4 for Quintrell-MP, an advantage of 1.0 ROC-AUC point.",
+    "polarity": "positive",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1.avg",
+     "T2.r2.avg"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "Larchmont-GNN did not surpass the pretrained Avonlea-Chem-XL overall: its average was 0.6 points lower, although it scored higher on Hollin-Sol and Jessamine-Kin and lower on the other four datasets.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T2.r1.avg",
+     "T2.r3.avg",
+     "T2.r1.gors",
+     "T2.r3.gors",
+     "T2.r1.holl",
+     "T2.r3.holl",
+     "T2.r1.ivy",
+     "T2.r3.ivy",
+     "T2.r1.jess",
+     "T2.r3.jess",
+     "T2.r1.kels",
+     "T2.r3.kels",
+     "T2.r1.lum",
+     "T2.r3.lum"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "The ablation results support contributions from both added components: removing ring-aware pooling, distance features, or both reduced the six-dataset average from 79.4 to 78.7, 78.9, and 78.0, respectively.",
+    "polarity": "positive",
+    "kind": "other",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T3.r1.avg",
+     "T3.r2.avg",
+     "T3.r3.avg",
+     "T3.r4.avg"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "Because no statistical tests were reported, the package does not establish whether Larchmont-GNN's observed advantages over Quintrell-MP are statistically significant.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "core",
+    "evidence_ids": [
+     "Statistical tests"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "Larchmont-GNN's average test ROC-AUC across the six datasets.",
+    "expression": "T2.r1.avg",
+    "value": 79.4,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N2",
+    "description": "Quintrell-MP's average test ROC-AUC across the six datasets.",
+    "expression": "T2.r2.avg",
+    "value": 78.4,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Larchmont-GNN's average advantage over Quintrell-MP.",
+    "expression": "T2.r1.avg - T2.r2.avg",
+    "value": 1.0,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Smallest dataset-level advantage of Larchmont-GNN over Quintrell-MP, occurring on Ivybridge-Tox and Lumley-Metab.",
+    "expression": "min(T2.r1.gors - T2.r2.gors, T2.r1.holl - T2.r2.holl, T2.r1.ivy - T2.r2.ivy, T2.r1.jess - T2.r2.jess, T2.r1.kels - T2.r2.kels, T2.r1.lum - T2.r2.lum)",
+    "value": 0.3,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N5",
+    "description": "Largest dataset-level advantage of Larchmont-GNN over Quintrell-MP, occurring on Jessamine-Kin and Kelso-Brain.",
+    "expression": "max(T2.r1.gors - T2.r2.gors, T2.r1.holl - T2.r2.holl, T2.r1.ivy - T2.r2.ivy, T2.r1.jess - T2.r2.jess, T2.r1.kels - T2.r2.kels, T2.r1.lum - T2.r2.lum)",
+    "value": 1.6,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N6",
+    "description": "Avonlea-Chem-XL's average test ROC-AUC across the six datasets.",
+    "expression": "T2.r3.avg",
+    "value": 80.0,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N7",
+    "description": "Avonlea-Chem-XL's average advantage over Larchmont-GNN.",
+    "expression": "T2.r3.avg - T2.r1.avg",
+    "value": 0.6,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Decrease in average ROC-AUC when both ring-aware pooling and distance features were removed.",
+    "expression": "T3.r1.avg - T3.r4.avg",
+    "value": 1.4,
+    "unit": "ROC-AUC points (×100)",
+    "finding_id": "F4"
+   }
+  ]
+ }
+}

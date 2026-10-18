@@ -1,0 +1,184 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "diagnostic_L02",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "2d9dd4ea6dc4b5b6fe46c987ad9f209448c374af9640fa6c58d31099a6b5ddd0",
+ "cache_key": "4d000587b38c67f233b8012ad8a57bd7731b8b986ad351133e1093cf7d803d62",
+ "started_at": "2026-10-18T10:20:27Z",
+ "finished_at": "2026-10-18T10:20:44Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"Under matched Coldharbour-LiDAR timing conditions, Gossamer-Seg had substantially lower median per-scan latency than Tumbril-3D (29.4 versus 47.8 ms).\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T3.r1.med\",\"T3.r2.med\"]},{\"finding_id\":\"F2\",\"description\":\"Gossamer-Seg also achieved higher matched-condition throughput (34.0 versus 20.9 scans/s) and lower 90th-percentile latency (33.1 versus 52.6 ms) than Tumbril-3D.\",\"polarity\":\"positive\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T3.r1.thr\",\"T3.r2.thr\",\"T3.r1.p90\",\"T3.r2.p90\"]},{\"finding_id\":\"F3\",\"description\":\"The speed advantage did not incur a lower mean test mIoU: Gossamer-Seg scored 67.9% versus 67.5% for Tumbril-3D, but the 0.4-percentage-point paired difference was not statistically significant (p=0.18; 95% CI −0.46 to 1.26; n=3 seeds).\",\"polarity\":\"mixed\",\"kind\":\"negative_or_null\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1.test\",\"T1.r2.test\",\"S1\"]},{\"finding_id\":\"F4\",\"description\":\"Selected per-class test IoUs were mixed: Gossamer-Seg was higher for car, cyclist, and pole, but lower for pedestrian and vegetation.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"supporting\",\"evidence_ids\":[\"T5.r1.car\",\"T5.r2.car\",\"T5.r1.ped\",\"T5.r2.ped\",\"T5.r1.cyc\",\"T5.r2.cyc\",\"T5.r1.pole\",\"T5.r2.pole\",\"T5.r1.veg\",\"T5.r2.veg\"]},{\"finding_id\":\"F5\",\"description\":\"Despite being faster in matched timing, Gossamer-Seg had higher analytical compute proxies than Tumbril-3D—96.3 versus 81.5 GFLOPs per scan and 41.7 versus 38.2 million parameters.\",\"polarity\":\"negative\",\"kind\":\"comparison\",\"importance\":\"supporting\",\"evidence_ids\":[\"T4.r1.gflops\",\"T4.r2.gflops\",\"T4.r1.params\",\"T4.r2.params\"]},{\"finding_id\":\"F6\",\"description\":\"The originally published latencies are not a controlled head-to-head comparison because the methods used different accelerators, batch sizes, precision, and latency accounting, so the matched re-timing is the appropriate basis for the speed conclusion.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"supporting\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"P1\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"Gossamer-Seg median matched latency\",\"expression\":\"T3.r1.med\",\"value\":29.4,\"unit\":\"ms/scan\",\"finding_id\":\"F1\"},{\"fact_id\":\"N2\",\"description\":\"Tumbril-3D median matched latency\",\"expression\":\"T3.r2.med\",\"value\":47.8,\"unit\":\"ms/scan\",\"finding_id\":\"F1\"},{\"fact_id\":\"N3\",\"description\":\"Absolute reduction in median latency for Gossamer-Seg relative to Tumbril-3D\",\"expression\":\"T3.r2.med - T3.r1.med\",\"value\":18.4,\"unit\":\"ms/scan\",\"finding_id\":\"F1\"},{\"fact_id\":\"N4\",\"description\":\"Gossamer-Seg matched throughput\",\"expression\":\"T3.r1.thr\",\"value\":34.0,\"unit\":\"scans/s\",\"finding_id\":\"F2\"},{\"fact_id\":\"N5\",\"description\":\"Tumbril-3D matched throughput\",\"expression\":\"T3.r2.thr\",\"value\":20.9,\"unit\":\"scans/s\",\"finding_id\":\"F2\"},{\"fact_id\":\"N6\",\"description\":\"Gossamer-Seg mean test mIoU\",\"expression\":\"T1.r1.test\",\"value\":67.9,\"unit\":\"%\",\"finding_id\":\"F3\"},{\"fact_id\":\"N7\",\"description\":\"Mean paired test-mIoU advantage of Gossamer-Seg over Tumbril-3D\",\"expression\":\"T1.r1.test - T1.r2.test\",\"value\":0.4,\"unit\":\"percentage points\",\"finding_id\":\"F3\"},{\"fact_id\":\"N8\",\"description\":\"Two-sided paired t-test p-value for the test-mIoU difference\",\"expression\":\"S1.p_value\",\"value\":0.18,\"unit\":null,\"finding_id\":\"F3\"}]}",
+ "usage": {
+  "input_tokens": 18281,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 2024,
+  "reasoning_output_tokens": 988
+ },
+ "cost_usd": null,
+ "latency_s": 16.6,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "Under matched Coldharbour-LiDAR timing conditions, Gossamer-Seg had substantially lower median per-scan latency than Tumbril-3D (29.4 versus 47.8 ms).",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T3.r1.med",
+     "T3.r2.med"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "Gossamer-Seg also achieved higher matched-condition throughput (34.0 versus 20.9 scans/s) and lower 90th-percentile latency (33.1 versus 52.6 ms) than Tumbril-3D.",
+    "polarity": "positive",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T3.r1.thr",
+     "T3.r2.thr",
+     "T3.r1.p90",
+     "T3.r2.p90"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "The speed advantage did not incur a lower mean test mIoU: Gossamer-Seg scored 67.9% versus 67.5% for Tumbril-3D, but the 0.4-percentage-point paired difference was not statistically significant (p=0.18; 95% CI −0.46 to 1.26; n=3 seeds).",
+    "polarity": "mixed",
+    "kind": "negative_or_null",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1.test",
+     "T1.r2.test",
+     "S1"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "Selected per-class test IoUs were mixed: Gossamer-Seg was higher for car, cyclist, and pole, but lower for pedestrian and vegetation.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T5.r1.car",
+     "T5.r2.car",
+     "T5.r1.ped",
+     "T5.r2.ped",
+     "T5.r1.cyc",
+     "T5.r2.cyc",
+     "T5.r1.pole",
+     "T5.r2.pole",
+     "T5.r1.veg",
+     "T5.r2.veg"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "Despite being faster in matched timing, Gossamer-Seg had higher analytical compute proxies than Tumbril-3D—96.3 versus 81.5 GFLOPs per scan and 41.7 versus 38.2 million parameters.",
+    "polarity": "negative",
+    "kind": "comparison",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T4.r1.gflops",
+     "T4.r2.gflops",
+     "T4.r1.params",
+     "T4.r2.params"
+    ]
+   },
+   {
+    "finding_id": "F6",
+    "description": "The originally published latencies are not a controlled head-to-head comparison because the methods used different accelerators, batch sizes, precision, and latency accounting, so the matched re-timing is the appropriate basis for the speed conclusion.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "P1"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "Gossamer-Seg median matched latency",
+    "expression": "T3.r1.med",
+    "value": 29.4,
+    "unit": "ms/scan",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N2",
+    "description": "Tumbril-3D median matched latency",
+    "expression": "T3.r2.med",
+    "value": 47.8,
+    "unit": "ms/scan",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Absolute reduction in median latency for Gossamer-Seg relative to Tumbril-3D",
+    "expression": "T3.r2.med - T3.r1.med",
+    "value": 18.4,
+    "unit": "ms/scan",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Gossamer-Seg matched throughput",
+    "expression": "T3.r1.thr",
+    "value": 34.0,
+    "unit": "scans/s",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N5",
+    "description": "Tumbril-3D matched throughput",
+    "expression": "T3.r2.thr",
+    "value": 20.9,
+    "unit": "scans/s",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N6",
+    "description": "Gossamer-Seg mean test mIoU",
+    "expression": "T1.r1.test",
+    "value": 67.9,
+    "unit": "%",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N7",
+    "description": "Mean paired test-mIoU advantage of Gossamer-Seg over Tumbril-3D",
+    "expression": "T1.r1.test - T1.r2.test",
+    "value": 0.4,
+    "unit": "percentage points",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Two-sided paired t-test p-value for the test-mIoU difference",
+    "expression": "S1.p_value",
+    "value": 0.18,
+    "unit": null,
+    "finding_id": "F3"
+   }
+  ]
+ }
+}

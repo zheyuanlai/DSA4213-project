@@ -1,0 +1,210 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "real_RP-06",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "38447f579a734c7289cecf7a59f1541663ffc6dbb2990dd0d4741d0461e579de",
+ "cache_key": "d775623d4dc333a4a62f383a65476197424053f012b3cd6fb17d59471ba5b2bc",
+ "started_at": "2026-10-18T10:18:26Z",
+ "finished_at": "2026-10-18T10:18:54Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"Across the five low-resource targets (BN, AZ, MN, MR, KA), both Method M-static and Method M-dynamic achieved higher COMET scores than supervised fine-tuning for every language.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\"]},{\"finding_id\":\"F2\",\"description\":\"Low-resource BLEU improvements were not fully consistent: both Method M variants improved BN, AZ, and MN, but M-static decreased MR and tied KA, while M-dynamic decreased KA and improved MR only slightly.\",\"polarity\":\"mixed\",\"kind\":\"negative_or_null\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r4\",\"T1.r5\",\"T1.r6\"]},{\"finding_id\":\"F3\",\"description\":\"On the high-resource DE and ZH pairs, Method M-dynamic exceeded supervised fine-tuning on both COMET and BLEU, whereas Method M-static was mixed, decreasing both metrics on DE and differing only marginally from supervised on ZH.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1.de\",\"T1.r1.zh\",\"T1.r2.de\",\"T1.r2.zh\",\"T1.r3.de\",\"T1.r3.zh\",\"T1.r4.de\",\"T1.r4.zh\",\"T1.r5.de\",\"T1.r5.zh\",\"T1.r6.de\",\"T1.r6.zh\"]},{\"finding_id\":\"F4\",\"description\":\"In the four-language average, Method M-dynamic with FILTER and NN outperformed every REINFORCE and PPO variant on BLEU, COMET-KIWI, COMET, and XCOMET; it was the best system on the first three metrics, while Method M-static had the highest XCOMET score.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\",\"T2.r6\",\"T2.r8\"]},{\"finding_id\":\"F5\",\"description\":\"Every reported REINFORCE and PPO configuration scored below ordinary supervised fine-tuning on all four metrics in the four-language average.\",\"polarity\":\"negative\",\"kind\":\"negative_or_null\",\"importance\":\"supporting\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\"]},{\"finding_id\":\"F6\",\"description\":\"For Method M-dynamic, adding FILTER and NN increased all four averaged metrics relative to the otherwise reported dynamic configuration without those data techniques.\",\"polarity\":\"positive\",\"kind\":\"comparison\",\"importance\":\"supporting\",\"evidence_ids\":[\"T2.r7\",\"T2.r8\"]},{\"finding_id\":\"F7\",\"description\":\"The main-table results are three-seed means without standard deviations or significance tests, so the package does not establish whether the reported differences are statistically reliable.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"core\",\"evidence_ids\":[\"T1\",\"T2\"]},{\"finding_id\":\"F8\",\"description\":\"COMET-KIWI was used as Method M's training signal, the RL reward, the early-stopping criterion, and a reported evaluation metric, while COMET, XCOMET, and BLEU provided additional evaluation views.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"supporting\",\"evidence_ids\":[\"T2\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"Method M-dynamic's mean COMET gain over supervised fine-tuning across the five low-resource targets.\",\"expression\":\"mean(T1.r3.bn,T1.r3.az,T1.r3.mn,T1.r3.mr,T1.r3.ka)-mean(T1.r1.bn,T1.r1.az,T1.r1.mn,T1.r1.mr,T1.r1.ka)\",\"value\":2.14,\"unit\":\"COMET points\",\"finding_id\":\"F1\"},{\"fact_id\":\"N2\",\"description\":\"Method M-dynamic's mean BLEU gain over supervised fine-tuning across the five low-resource targets, despite the per-language inconsistency.\",\"expression\":\"mean(T1.r6.bn,T1.r6.az,T1.r6.mn,T1.r6.mr,T1.r6.ka)-mean(T1.r4.bn,T1.r4.az,T1.r4.mn,T1.r4.mr,T1.r4.ka)\",\"value\":0.734,\"unit\":\"BLEU points\",\"finding_id\":\"F2\"},{\"fact_id\":\"N3\",\"description\":\"Method M-dynamic's mean COMET gain over supervised fine-tuning across the two high-resource targets.\",\"expression\":\"mean(T1.r3.de,T1.r3.zh)-mean(T1.r1.de,T1.r1.zh)\",\"value\":0.41,\"unit\":\"COMET points\",\"finding_id\":\"F3\"},{\"fact_id\":\"N4\",\"description\":\"Method M-dynamic with FILTER and NN's BLEU margin over the strongest reported RL baseline.\",\"expression\":\"T2.r8.bleu-max(T2.r2.bleu,T2.r3.bleu,T2.r4.bleu,T2.r5.bleu)\",\"value\":0.53,\"unit\":\"BLEU points\",\"finding_id\":\"F4\"},{\"fact_id\":\"N5\",\"description\":\"Method M-dynamic with FILTER and NN's COMET-KIWI margin over the strongest reported RL baseline.\",\"expression\":\"T2.r8.kiwi-max(T2.r2.kiwi,T2.r3.kiwi,T2.r4.kiwi,T2.r5.kiwi)\",\"value\":2.48,\"unit\":\"COMET-KIWI points\",\"finding_id\":\"F4\"},{\"fact_id\":\"N6\",\"description\":\"Method M-dynamic with FILTER and NN's COMET margin over the strongest reported RL baseline.\",\"expression\":\"T2.r8.comet-max(T2.r2.comet,T2.r3.comet,T2.r4.comet,T2.r5.comet)\",\"value\":1.6,\"unit\":\"COMET points\",\"finding_id\":\"F4\"},{\"fact_id\":\"N7\",\"description\":\"The best Method M XCOMET result, obtained by M-static, exceeded the strongest reported RL baseline by this margin.\",\"expression\":\"T2.r6.xcomet-max(T2.r2.xcomet,T2.r3.xcomet,T2.r4.xcomet,T2.r5.xcomet)\",\"value\":0.93,\"unit\":\"XCOMET points\",\"finding_id\":\"F4\"},{\"fact_id\":\"N8\",\"description\":\"Adding FILTER and NN to Method M-dynamic increased its averaged COMET-KIWI score by this amount.\",\"expression\":\"T2.r8.kiwi-T2.r7.kiwi\",\"value\":2.03,\"unit\":\"COMET-KIWI points\",\"finding_id\":\"F6\"}]}",
+ "usage": {
+  "input_tokens": 18188,
+  "cached_input_tokens": 0,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 3460,
+  "reasoning_output_tokens": 2000
+ },
+ "cost_usd": null,
+ "latency_s": 28.5,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "Across the five low-resource targets (BN, AZ, MN, MR, KA), both Method M-static and Method M-dynamic achieved higher COMET scores than supervised fine-tuning for every language.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "Low-resource BLEU improvements were not fully consistent: both Method M variants improved BN, AZ, and MN, but M-static decreased MR and tied KA, while M-dynamic decreased KA and improved MR only slightly.",
+    "polarity": "mixed",
+    "kind": "negative_or_null",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r4",
+     "T1.r5",
+     "T1.r6"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "On the high-resource DE and ZH pairs, Method M-dynamic exceeded supervised fine-tuning on both COMET and BLEU, whereas Method M-static was mixed, decreasing both metrics on DE and differing only marginally from supervised on ZH.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1.de",
+     "T1.r1.zh",
+     "T1.r2.de",
+     "T1.r2.zh",
+     "T1.r3.de",
+     "T1.r3.zh",
+     "T1.r4.de",
+     "T1.r4.zh",
+     "T1.r5.de",
+     "T1.r5.zh",
+     "T1.r6.de",
+     "T1.r6.zh"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "In the four-language average, Method M-dynamic with FILTER and NN outperformed every REINFORCE and PPO variant on BLEU, COMET-KIWI, COMET, and XCOMET; it was the best system on the first three metrics, while Method M-static had the highest XCOMET score.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5",
+     "T2.r6",
+     "T2.r8"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "Every reported REINFORCE and PPO configuration scored below ordinary supervised fine-tuning on all four metrics in the four-language average.",
+    "polarity": "negative",
+    "kind": "negative_or_null",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5"
+    ]
+   },
+   {
+    "finding_id": "F6",
+    "description": "For Method M-dynamic, adding FILTER and NN increased all four averaged metrics relative to the otherwise reported dynamic configuration without those data techniques.",
+    "polarity": "positive",
+    "kind": "comparison",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T2.r7",
+     "T2.r8"
+    ]
+   },
+   {
+    "finding_id": "F7",
+    "description": "The main-table results are three-seed means without standard deviations or significance tests, so the package does not establish whether the reported differences are statistically reliable.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "core",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   },
+   {
+    "finding_id": "F8",
+    "description": "COMET-KIWI was used as Method M's training signal, the RL reward, the early-stopping criterion, and a reported evaluation metric, while COMET, XCOMET, and BLEU provided additional evaluation views.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T2"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "Method M-dynamic's mean COMET gain over supervised fine-tuning across the five low-resource targets.",
+    "expression": "mean(T1.r3.bn,T1.r3.az,T1.r3.mn,T1.r3.mr,T1.r3.ka)-mean(T1.r1.bn,T1.r1.az,T1.r1.mn,T1.r1.mr,T1.r1.ka)",
+    "value": 2.14,
+    "unit": "COMET points",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N2",
+    "description": "Method M-dynamic's mean BLEU gain over supervised fine-tuning across the five low-resource targets, despite the per-language inconsistency.",
+    "expression": "mean(T1.r6.bn,T1.r6.az,T1.r6.mn,T1.r6.mr,T1.r6.ka)-mean(T1.r4.bn,T1.r4.az,T1.r4.mn,T1.r4.mr,T1.r4.ka)",
+    "value": 0.734,
+    "unit": "BLEU points",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Method M-dynamic's mean COMET gain over supervised fine-tuning across the two high-resource targets.",
+    "expression": "mean(T1.r3.de,T1.r3.zh)-mean(T1.r1.de,T1.r1.zh)",
+    "value": 0.41,
+    "unit": "COMET points",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Method M-dynamic with FILTER and NN's BLEU margin over the strongest reported RL baseline.",
+    "expression": "T2.r8.bleu-max(T2.r2.bleu,T2.r3.bleu,T2.r4.bleu,T2.r5.bleu)",
+    "value": 0.53,
+    "unit": "BLEU points",
+    "finding_id": "F4"
+   },
+   {
+    "fact_id": "N5",
+    "description": "Method M-dynamic with FILTER and NN's COMET-KIWI margin over the strongest reported RL baseline.",
+    "expression": "T2.r8.kiwi-max(T2.r2.kiwi,T2.r3.kiwi,T2.r4.kiwi,T2.r5.kiwi)",
+    "value": 2.48,
+    "unit": "COMET-KIWI points",
+    "finding_id": "F4"
+   },
+   {
+    "fact_id": "N6",
+    "description": "Method M-dynamic with FILTER and NN's COMET margin over the strongest reported RL baseline.",
+    "expression": "T2.r8.comet-max(T2.r2.comet,T2.r3.comet,T2.r4.comet,T2.r5.comet)",
+    "value": 1.6,
+    "unit": "COMET points",
+    "finding_id": "F4"
+   },
+   {
+    "fact_id": "N7",
+    "description": "The best Method M XCOMET result, obtained by M-static, exceeded the strongest reported RL baseline by this margin.",
+    "expression": "T2.r6.xcomet-max(T2.r2.xcomet,T2.r3.xcomet,T2.r4.xcomet,T2.r5.xcomet)",
+    "value": 0.93,
+    "unit": "XCOMET points",
+    "finding_id": "F4"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Adding FILTER and NN to Method M-dynamic increased its averaged COMET-KIWI score by this amount.",
+    "expression": "T2.r8.kiwi-T2.r7.kiwi",
+    "value": 2.03,
+    "unit": "COMET-KIWI points",
+    "finding_id": "F6"
+   }
+  ]
+ }
+}

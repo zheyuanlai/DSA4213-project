@@ -1,0 +1,187 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "real_RP-12",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "ce313c173ad96a891624315efbf97f8c80f1efa365b8eeab29c99318d57b8997",
+ "cache_key": "36d53a2d0c2ec8ab90698d52db83453c61a4e28eb72b1c72aede7a6c3ef9e823",
+ "started_at": "2026-10-18T10:19:46Z",
+ "finished_at": "2026-10-18T10:20:13Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"In the Llama 3-to-Mistral NeMo 12B transplant, Method M with k=64 outperformed FOCUS, ZeroEmbed, and MeanEmbed on all six accuracy benchmarks and achieved lower WikiText bits per byte.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\"]},{\"finding_id\":\"F2\",\"description\":\"Despite leading the alternative initializations in the Mistral NeMo setting, Method M with k=64 remained below the original-tokenizer model on every reported metric, with an especially large GSM8K loss.\",\"polarity\":\"negative\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r3\"]},{\"finding_id\":\"F3\",\"description\":\"Increasing Method M's anchor count from k=8 to k=64 improved MMLU, ARC-C, GSM8K, AGIEval, and WikiText, but produced tiny decreases on XNLI and Lambada.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"supporting\",\"evidence_ids\":[\"T1.r2\",\"T1.r3\"]},{\"finding_id\":\"F4\",\"description\":\"In the Qwen 2.5-to-Llama 3 1B transplant, Method M outperformed all four published zero-shot methods on MMLU, ARC-C, Belebele, and WikiText, although FOCUS scored higher on GSM8K.\",\"polarity\":\"mixed\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\",\"T2.r6\"]},{\"finding_id\":\"F5\",\"description\":\"Against the simple initializations in the Llama 3 1B setting, Method M tied ZeroEmbed on MMLU, ARC-C, and GSM8K, was 0.0001 below MeanEmbed on MMLU while tying it on ARC-C and GSM8K, and performed better than both on Belebele and WikiText.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r2\",\"T2.r7\",\"T2.r8\"]},{\"finding_id\":\"F6\",\"description\":\"Relative to the original Llama 3 1B model, Method M preserved ARC-C exactly and nearly preserved MMLU, but performed worse on GSM8K, Belebele, and WikiText.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\"]},{\"finding_id\":\"F7\",\"description\":\"The comparisons are descriptive because no statistical tests were reported; additionally, T1 reports a single evaluation per model, and standard errors are unavailable for T1 WikiText and T2 Belebele and WikiText.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"supporting\",\"evidence_ids\":[\"T1.notes\",\"T2.notes\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"Method M's MMLU accuracy in the Mistral NeMo transplant was 0.6222.\",\"expression\":\"T1.r3.mmlu\",\"value\":0.6222,\"unit\":\"accuracy fraction\",\"finding_id\":\"F1\"},{\"fact_id\":\"N2\",\"description\":\"Method M exceeded the better simple initializer on MMLU in the Mistral NeMo transplant by 0.0286.\",\"expression\":\"T1.r3.mmlu - max(T1.r5.mmlu, T1.r6.mmlu)\",\"value\":0.0286,\"unit\":\"accuracy fraction\",\"finding_id\":\"F1\"},{\"fact_id\":\"N3\",\"description\":\"Method M reduced WikiText bits per byte by 0.1576 relative to the better simple initializer in the Mistral NeMo transplant.\",\"expression\":\"min(T1.r5.wikitext, T1.r6.wikitext) - T1.r3.wikitext\",\"value\":0.1576,\"unit\":\"bits/byte\",\"finding_id\":\"F1\"},{\"fact_id\":\"N4\",\"description\":\"Method M's GSM8K accuracy was 0.4125 below the original Mistral NeMo model.\",\"expression\":\"T1.r1.gsm8k - T1.r3.gsm8k\",\"value\":0.4125,\"unit\":\"accuracy fraction\",\"finding_id\":\"F2\"},{\"fact_id\":\"N5\",\"description\":\"Method M's MMLU accuracy was 0.0033 below the original Llama 3 1B model.\",\"expression\":\"T2.r1.mmlu - T2.r2.mmlu\",\"value\":0.0033,\"unit\":\"accuracy fraction\",\"finding_id\":\"F6\"},{\"fact_id\":\"N6\",\"description\":\"Method M exactly matched the original Llama 3 1B model on ARC-C.\",\"expression\":\"T2.r1.arcc - T2.r2.arcc\",\"value\":0,\"unit\":\"accuracy fraction\",\"finding_id\":\"F6\"},{\"fact_id\":\"N7\",\"description\":\"Method M's GSM8K accuracy was 0.0531 below the original Llama 3 1B model.\",\"expression\":\"T2.r1.gsm8k - T2.r2.gsm8k\",\"value\":0.0531,\"unit\":\"accuracy fraction\",\"finding_id\":\"F6\"},{\"fact_id\":\"N8\",\"description\":\"Method M exceeded the best published zero-shot method's MMLU accuracy in the Llama 3 1B transplant by 0.0945.\",\"expression\":\"T2.r2.mmlu - max(T2.r3.mmlu, T2.r4.mmlu, T2.r5.mmlu, T2.r6.mmlu)\",\"value\":0.0945,\"unit\":\"accuracy fraction\",\"finding_id\":\"F4\"}]}",
+ "usage": {
+  "input_tokens": 18288,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 3411,
+  "reasoning_output_tokens": 2182
+ },
+ "cost_usd": null,
+ "latency_s": 27.6,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "In the Llama 3-to-Mistral NeMo 12B transplant, Method M with k=64 outperformed FOCUS, ZeroEmbed, and MeanEmbed on all six accuracy benchmarks and achieved lower WikiText bits per byte.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "Despite leading the alternative initializations in the Mistral NeMo setting, Method M with k=64 remained below the original-tokenizer model on every reported metric, with an especially large GSM8K loss.",
+    "polarity": "negative",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r3"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "Increasing Method M's anchor count from k=8 to k=64 improved MMLU, ARC-C, GSM8K, AGIEval, and WikiText, but produced tiny decreases on XNLI and Lambada.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T1.r2",
+     "T1.r3"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "In the Qwen 2.5-to-Llama 3 1B transplant, Method M outperformed all four published zero-shot methods on MMLU, ARC-C, Belebele, and WikiText, although FOCUS scored higher on GSM8K.",
+    "polarity": "mixed",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5",
+     "T2.r6"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "Against the simple initializations in the Llama 3 1B setting, Method M tied ZeroEmbed on MMLU, ARC-C, and GSM8K, was 0.0001 below MeanEmbed on MMLU while tying it on ARC-C and GSM8K, and performed better than both on Belebele and WikiText.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r2",
+     "T2.r7",
+     "T2.r8"
+    ]
+   },
+   {
+    "finding_id": "F6",
+    "description": "Relative to the original Llama 3 1B model, Method M preserved ARC-C exactly and nearly preserved MMLU, but performed worse on GSM8K, Belebele, and WikiText.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2"
+    ]
+   },
+   {
+    "finding_id": "F7",
+    "description": "The comparisons are descriptive because no statistical tests were reported; additionally, T1 reports a single evaluation per model, and standard errors are unavailable for T1 WikiText and T2 Belebele and WikiText.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T1.notes",
+     "T2.notes"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "Method M's MMLU accuracy in the Mistral NeMo transplant was 0.6222.",
+    "expression": "T1.r3.mmlu",
+    "value": 0.6222,
+    "unit": "accuracy fraction",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N2",
+    "description": "Method M exceeded the better simple initializer on MMLU in the Mistral NeMo transplant by 0.0286.",
+    "expression": "T1.r3.mmlu - max(T1.r5.mmlu, T1.r6.mmlu)",
+    "value": 0.0286,
+    "unit": "accuracy fraction",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Method M reduced WikiText bits per byte by 0.1576 relative to the better simple initializer in the Mistral NeMo transplant.",
+    "expression": "min(T1.r5.wikitext, T1.r6.wikitext) - T1.r3.wikitext",
+    "value": 0.1576,
+    "unit": "bits/byte",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Method M's GSM8K accuracy was 0.4125 below the original Mistral NeMo model.",
+    "expression": "T1.r1.gsm8k - T1.r3.gsm8k",
+    "value": 0.4125,
+    "unit": "accuracy fraction",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N5",
+    "description": "Method M's MMLU accuracy was 0.0033 below the original Llama 3 1B model.",
+    "expression": "T2.r1.mmlu - T2.r2.mmlu",
+    "value": 0.0033,
+    "unit": "accuracy fraction",
+    "finding_id": "F6"
+   },
+   {
+    "fact_id": "N6",
+    "description": "Method M exactly matched the original Llama 3 1B model on ARC-C.",
+    "expression": "T2.r1.arcc - T2.r2.arcc",
+    "value": 0,
+    "unit": "accuracy fraction",
+    "finding_id": "F6"
+   },
+   {
+    "fact_id": "N7",
+    "description": "Method M's GSM8K accuracy was 0.0531 below the original Llama 3 1B model.",
+    "expression": "T2.r1.gsm8k - T2.r2.gsm8k",
+    "value": 0.0531,
+    "unit": "accuracy fraction",
+    "finding_id": "F6"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Method M exceeded the best published zero-shot method's MMLU accuracy in the Llama 3 1B transplant by 0.0945.",
+    "expression": "T2.r2.mmlu - max(T2.r3.mmlu, T2.r4.mmlu, T2.r5.mmlu, T2.r6.mmlu)",
+    "value": 0.0945,
+    "unit": "accuracy fraction",
+    "finding_id": "F4"
+   }
+  ]
+ }
+}

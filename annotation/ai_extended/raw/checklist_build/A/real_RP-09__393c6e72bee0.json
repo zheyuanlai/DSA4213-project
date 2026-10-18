@@ -1,0 +1,196 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "real_RP-09",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "d3203034906601dbb50a1b21092ead0115d6a8a4937a511badd31c4bdfaae54e",
+ "cache_key": "393c6e72bee0e26d55457b90d201c4fee84df0c8b69de991169d2f981f37f954",
+ "started_at": "2026-10-18T10:19:09Z",
+ "finished_at": "2026-10-18T10:19:33Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"Adding Method M increased average ROUGE-L for every reported paired KD loss: GKD from 20.17 to 22.51, KLD from 18.10 to 19.70, and SRKL from 21.44 to 22.94; the table note reports the same average-direction result for four omitted losses.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r3.avg\",\"T1.r4.avg\",\"T1.r5.avg\",\"T1.r6.avg\",\"T1.r7.avg\",\"T1.r8.avg\",\"T1\"]},{\"finding_id\":\"F2\",\"description\":\"For each displayed KD loss, Method M improved ROUGE-L on all five evaluation sets, so the improvement was consistent across the 15 shown loss-by-dataset comparisons, with GKD having the largest reported average gain at 2.33 points.\",\"polarity\":\"positive\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\",\"T1.r4.avg.spread\"]},{\"finding_id\":\"F3\",\"description\":\"The strongest displayed student by average score, SRKL with Method M, remained 0.50 ROUGE-L below the teacher overall, although it exceeded the teacher on VicunaEval and S-NI and remained below it on the other three sets.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r8\"]},{\"finding_id\":\"F4\",\"description\":\"In the KLD ablation, full Method M achieved the highest ROUGE-L on every evaluation set among plain KLD and all ablated variants.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\"]},{\"finding_id\":\"F5\",\"description\":\"The easy-to-hard curriculum ordering alone, with both adaptive schedules removed, did not improve KLD consistently: it scored lower than plain KLD on four of five sets and only 0.09 points higher on SelfInst.\",\"polarity\":\"negative\",\"kind\":\"negative_or_null\",\"importance\":\"supporting\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\"]},{\"finding_id\":\"F6\",\"description\":\"The component results identify the rising temperature schedule as the main driver and the supervised-ratio schedule as an additional contributor: removing temperature produced scores below plain KLD on all five sets, retaining temperature but removing the ratio schedule improved all five, and restoring the ratio schedule increased all five again.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1\",\"T2.r3\",\"T2.r4\",\"T2.r5\"]},{\"finding_id\":\"F7\",\"description\":\"The evidence is limited to the included GPT-2 results and descriptive seed means: no standard deviations or significance tests are reported, the number of independent training runs is unstated, and the analogous OPT table is not included.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"supporting\",\"evidence_ids\":[\"T1\",\"T2\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"Average ROUGE-L of GKD with Method M.\",\"expression\":\"T1.r4.avg\",\"value\":22.51,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F1\"},{\"fact_id\":\"N2\",\"description\":\"Reported average gain from adding Method M to GKD.\",\"expression\":\"T1.r4.avg.spread\",\"value\":2.33,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F2\"},{\"fact_id\":\"N3\",\"description\":\"Reported average gain from adding Method M to KLD.\",\"expression\":\"T1.r6.avg.spread\",\"value\":1.6,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F1\"},{\"fact_id\":\"N4\",\"description\":\"Reported average gain from adding Method M to SRKL.\",\"expression\":\"T1.r8.avg.spread\",\"value\":1.51,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F1\"},{\"fact_id\":\"N5\",\"description\":\"Average-score gap between the teacher and the best displayed student, SRKL with Method M.\",\"expression\":\"T1.r1.avg - T1.r8.avg\",\"value\":0.5,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F3\"},{\"fact_id\":\"N6\",\"description\":\"Mean five-set improvement of full Method M over plain KLD in the ablation table.\",\"expression\":\"mean(T2.r5.dolly,T2.r5.selfinst,T2.r5.vicuna,T2.r5.sni,T2.r5.unni) - mean(T2.r1.dolly,T2.r1.selfinst,T2.r1.vicuna,T2.r1.sni,T2.r1.unni)\",\"value\":1.6,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F4\"},{\"fact_id\":\"N7\",\"description\":\"Mean five-set deficit of the no-temperature variant relative to plain KLD.\",\"expression\":\"mean(T2.r3.dolly,T2.r3.selfinst,T2.r3.vicuna,T2.r3.sni,T2.r3.unni) - mean(T2.r1.dolly,T2.r1.selfinst,T2.r1.vicuna,T2.r1.sni,T2.r1.unni)\",\"value\":-0.684,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F6\"},{\"fact_id\":\"N8\",\"description\":\"Mean five-set increment from restoring the supervised-ratio schedule to the variant that already retains the temperature schedule.\",\"expression\":\"mean(T2.r5.dolly,T2.r5.selfinst,T2.r5.vicuna,T2.r5.sni,T2.r5.unni) - mean(T2.r4.dolly,T2.r4.selfinst,T2.r4.vicuna,T2.r4.sni,T2.r4.unni)\",\"value\":0.416,\"unit\":\"ROUGE-L points\",\"finding_id\":\"F6\"}]}",
+ "usage": {
+  "input_tokens": 18145,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 2854,
+  "reasoning_output_tokens": 1552
+ },
+ "cost_usd": null,
+ "latency_s": 23.8,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "Adding Method M increased average ROUGE-L for every reported paired KD loss: GKD from 20.17 to 22.51, KLD from 18.10 to 19.70, and SRKL from 21.44 to 22.94; the table note reports the same average-direction result for four omitted losses.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r4.avg",
+     "T1.r5.avg",
+     "T1.r6.avg",
+     "T1.r7.avg",
+     "T1.r8.avg",
+     "T1"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "For each displayed KD loss, Method M improved ROUGE-L on all five evaluation sets, so the improvement was consistent across the 15 shown loss-by-dataset comparisons, with GKD having the largest reported average gain at 2.33 points.",
+    "polarity": "positive",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8",
+     "T1.r4.avg.spread"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "The strongest displayed student by average score, SRKL with Method M, remained 0.50 ROUGE-L below the teacher overall, although it exceeded the teacher on VicunaEval and S-NI and remained below it on the other three sets.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r8"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "In the KLD ablation, full Method M achieved the highest ROUGE-L on every evaluation set among plain KLD and all ablated variants.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "The easy-to-hard curriculum ordering alone, with both adaptive schedules removed, did not improve KLD consistently: it scored lower than plain KLD on four of five sets and only 0.09 points higher on SelfInst.",
+    "polarity": "negative",
+    "kind": "negative_or_null",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2"
+    ]
+   },
+   {
+    "finding_id": "F6",
+    "description": "The component results identify the rising temperature schedule as the main driver and the supervised-ratio schedule as an additional contributor: removing temperature produced scores below plain KLD on all five sets, retaining temperature but removing the ratio schedule improved all five, and restoring the ratio schedule increased all five again.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5"
+    ]
+   },
+   {
+    "finding_id": "F7",
+    "description": "The evidence is limited to the included GPT-2 results and descriptive seed means: no standard deviations or significance tests are reported, the number of independent training runs is unstated, and the analogous OPT table is not included.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "Average ROUGE-L of GKD with Method M.",
+    "expression": "T1.r4.avg",
+    "value": 22.51,
+    "unit": "ROUGE-L points",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N2",
+    "description": "Reported average gain from adding Method M to GKD.",
+    "expression": "T1.r4.avg.spread",
+    "value": 2.33,
+    "unit": "ROUGE-L points",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Reported average gain from adding Method M to KLD.",
+    "expression": "T1.r6.avg.spread",
+    "value": 1.6,
+    "unit": "ROUGE-L points",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Reported average gain from adding Method M to SRKL.",
+    "expression": "T1.r8.avg.spread",
+    "value": 1.51,
+    "unit": "ROUGE-L points",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N5",
+    "description": "Average-score gap between the teacher and the best displayed student, SRKL with Method M.",
+    "expression": "T1.r1.avg - T1.r8.avg",
+    "value": 0.5,
+    "unit": "ROUGE-L points",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N6",
+    "description": "Mean five-set improvement of full Method M over plain KLD in the ablation table.",
+    "expression": "mean(T2.r5.dolly,T2.r5.selfinst,T2.r5.vicuna,T2.r5.sni,T2.r5.unni) - mean(T2.r1.dolly,T2.r1.selfinst,T2.r1.vicuna,T2.r1.sni,T2.r1.unni)",
+    "value": 1.6,
+    "unit": "ROUGE-L points",
+    "finding_id": "F4"
+   },
+   {
+    "fact_id": "N7",
+    "description": "Mean five-set deficit of the no-temperature variant relative to plain KLD.",
+    "expression": "mean(T2.r3.dolly,T2.r3.selfinst,T2.r3.vicuna,T2.r3.sni,T2.r3.unni) - mean(T2.r1.dolly,T2.r1.selfinst,T2.r1.vicuna,T2.r1.sni,T2.r1.unni)",
+    "value": -0.684,
+    "unit": "ROUGE-L points",
+    "finding_id": "F6"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Mean five-set increment from restoring the supervised-ratio schedule to the variant that already retains the temperature schedule.",
+    "expression": "mean(T2.r5.dolly,T2.r5.selfinst,T2.r5.vicuna,T2.r5.sni,T2.r5.unni) - mean(T2.r4.dolly,T2.r4.selfinst,T2.r4.vicuna,T2.r4.sni,T2.r4.unni)",
+    "value": 0.416,
+    "unit": "ROUGE-L points",
+    "finding_id": "F6"
+   }
+  ]
+ }
+}

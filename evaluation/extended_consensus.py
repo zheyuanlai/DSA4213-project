@@ -1,0 +1,326 @@
+"""Disagreement detection, blind adjudication and consensus freezing (protocol §4 stages 6–7, §7).
+
+Readings are shown to the adjudicator as "Reading 1/2" in a seeded random order, so it cannot tell which
+judge (model family) wrote which. Agreed fields are final; only disputed fields are taken from the
+adjudicator. Numeric verdicts always come from the deterministic checker.
+"""
+from __future__ import annotations
+
+import hashlib
+import json
+import random
+from pathlib import Path
+from typing import Any
+
+from evaluation import atomic_claims as ac
+from evaluation.extended_data import FamilyData
+from evaluation.extended_pipeline import (
+    EXT, _dump_jsonl, _parallel, data_segments, forbidden_texts, load_jsonl, passages_block,
+)
+from evaluation.judges import ADJUDICATOR, call_judge, fill, load_prompt
+from evaluation.numeric_fidelity import EvidenceValues
+
+
+def _order(key: str) -> dict[str, str]:
+    """Seeded random assignment of judges A/B to 'Reading 1/2'."""
+    r = random.Random(int(hashlib.sha256(f"adj|{key}".encode()).hexdigest()[:12], 16))
+    return {"1": "A", "2": "B"} if r.random() < 0.5 else {"1": "B", "2": "A"}
+
+
+def _ev(data: FamilyData, alias: str) -> EvidenceValues:
+    inv = {v: k for k, v in data.aliases.items()}
+    return EvidenceValues.from_package(data.cases[inv[alias]].package)
+
+
+def _readings(fam: str, kind: str, judge: str) -> list[dict[str, Any]]:
+    return load_jsonl(EXT / "readings" / f"{fam}_{kind}_{judge}.jsonl")
+
+
+# ----------------------------------------------------------------------------- claims
+def claim_dispute_table(data: FamilyData) -> tuple[list[dict[str, Any]], dict, dict, dict]:
+    fam = data.family.name
+    claims = load_jsonl(EXT / "claims" / f"{fam}.jsonl")
+    ra = {r["claim_id"]: r for r in _readings(fam, "verify", "A")}
+    rb = {r["claim_id"]: r for r in _readings(fam, "verify", "B")}
+    evs = {a: _ev(data, a) for a in {c["alias"] for c in claims}}
+    rows = []
+    for c in claims:
+        if c["claim_id"] not in ra or c["claim_id"] not in rb:
+            raise ValueError(f"{c['claim_id']}: missing reading")
+        d = ac.claim_disputes(c, ra[c["claim_id"]], rb[c["claim_id"]], evs[c["alias"]])
+        fields = list(d.fields)
+        # label/entailment cannot change any metric when agreed numeric verdicts already make it a NUMERIC_ERROR
+        agreed_num_error = any(ac.check_number(n, ra[c["claim_id"]]["numbers"][n["number_id"]], evs[c["alias"]]).is_error
+                               for n in c["numbers"] if n["number_id"] not in d.numbers)
+        skipped = []
+        if agreed_num_error:
+            skipped = [f for f in fields if f in ("label", "entailment")]
+            fields = [f for f in fields if f not in ("label", "entailment")]
+        if fields or d.numbers or skipped:
+            rows.append({"claim_id": c["claim_id"], "alias": c["alias"], "fields": fields, "numbers": d.numbers,
+                         "skipped_fields_numeric_error": skipped})
+    return rows, {c["claim_id"]: c for c in claims}, ra, rb
+
+
+def _fmt_mapping(m: dict[str, Any]) -> str:
+    if m is None:
+        return "(no mapping)"
+    if m["source_type"] in ("cell", "test"):
+        return f"{m['source_type']}: {m['expression']} (scale {m['scale']:g})"
+    if m["source_type"] == "text":
+        return f"text quote: \"{m['quote']}\" (scale {m['scale']:g})"
+    return "none (no referenced source in the package)"
+
+
+def run_claim_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> list[dict[str, Any]]:
+    fam = data.family.name
+    rows, claims, ra, rb = claim_dispute_table(data)
+    tmpl, _ = load_prompt("adjudicate_claims")
+    inv = {v: k for k, v in data.aliases.items()}
+    by_alias: dict[str, list[dict[str, Any]]] = {}
+    for r in rows:
+        if r["fields"] or r["numbers"]:
+            by_alias.setdefault(r["alias"], []).append(r)
+
+    def job(alias: str) -> list[dict[str, Any]]:
+        pk, ev = packets[alias], _ev(data, alias)
+        blocks, maps, segs = [], {}, []
+        for r in by_alias[alias]:
+            c = claims[r["claim_id"]]
+            order = _order(c["claim_id"])
+            maps[c["claim_id"]] = order
+            reading = {"A": ra[c["claim_id"]], "B": rb[c["claim_id"]]}
+            lines = [f"### Item {c['claim_id']}",
+                     f"Sentence [{c['unit_id']}]: \"{pk['units'][c['unit_id']]}\"",
+                     f"Claim: {c['proposition']}  [span: \"{c['span']}\"]",
+                     f"Disputed fields: {', '.join(r['fields'] + (['numbers ' + ', '.join(r['numbers'])] if r['numbers'] else []))}"]
+            agreed = [f for f in ("label", "entailment") if f not in r["fields"]]
+            if agreed:
+                lines.append("Agreed (final): " + ", ".join(f"{f}={reading['A'][f]}" for f in agreed))
+            for slot in ("1", "2"):
+                x = reading[order[slot]]
+                lines.append(f"Reading {slot}: label {x['label']}, entailment {x['entailment']}, extraction {x['extraction_flag']}; "
+                             f"evidence {', '.join(x['evidence_ids']) or '-'}; \"{x['justification']}\"")
+                for nid in r["numbers"]:
+                    n = next(q for q in c["numbers"] if q["number_id"] == nid)
+                    v = ac.check_number(n, x["numbers"].get(nid), ev)
+                    res = v.status + (f" (expected {v.expected:g})" if v.expected is not None else "") + \
+                        (f"; {v.note}" if v.note else "")
+                    lines.append(f"   number {nid} \"{n['as_written']}\": {_fmt_mapping(x['numbers'].get(nid))} -> program: {res}")
+                segs += [x["justification"], *x["evidence_ids"]]
+                segs += [str((x["numbers"].get(nid) or {}).get(k) or "") for nid in r["numbers"] for k in ("expression", "quote")]
+            blocks.append("\n".join(lines))
+            segs += [c["proposition"], c["span"], pk["units"][c["unit_id"]]]
+        prompt = fill(tmpl, PACKAGE=pk["package_markdown"], ITEMS="\n\n".join(blocks))
+        want = {r["claim_id"]: r for r in by_alias[alias]}
+
+        def validator(p):
+            got = {d["item_id"]: d for d in p["decisions"]}
+            if set(got) != set(want):
+                return [f"item ids mismatch {sorted(set(want) ^ set(got))[:4]}"]
+            probs = []
+            for cid, r in want.items():
+                if sorted(n["number_id"] for n in got[cid]["numbers"]) != sorted(r["numbers"]):
+                    probs.append(f"{cid}: numbers mismatch")
+            return probs
+
+        res = call_judge(ADJUDICATOR, "adjudicate_claims", f"{fam}_{alias}", "adjudicate_claims", prompt,
+                         data_segments=data_segments(pk, [claims[r["claim_id"]] for r in by_alias[alias]]) + segs,
+                         forbidden_texts=forbidden_texts(fam, inv[alias]), validator=validator)
+        return [{**d, "_reading_map": maps[d["item_id"]], "disputed_fields": want[d["item_id"]]["fields"],
+                 "disputed_numbers": want[d["item_id"]]["numbers"]} for d in res.parsed["decisions"]]
+
+    res = _parallel([(a, (lambda a=a: job(a))) for a in sorted(by_alias)], workers) if by_alias else {}
+    out = [d for a in sorted(res) for d in res[a]]
+    _dump_jsonl(EXT / "adjudication" / f"{fam}_claims.jsonl", out)
+    _dump_jsonl(EXT / "adjudication" / f"{fam}_claims_disputes.jsonl", rows)
+    return out
+
+
+# ----------------------------------------------------------------------------- coverage
+def run_coverage_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> list[dict[str, Any]]:
+    fam = data.family.name
+    if fam == "synthetic":
+        return []
+    A = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "A")}
+    B = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "B")}
+    if set(A) != set(B):
+        raise ValueError("coverage readings cover different items")
+    checklists = json.loads((EXT / "checklists" / f"{fam}.json").read_text())["checklists"]
+    from evaluation.extended_pipeline import coverage_items
+    tmpl, _ = load_prompt("adjudicate_coverage")
+    inv = {v: k for k, v in data.aliases.items()}
+    disputes: dict[str, list[tuple[str, str]]] = {}
+    for k in sorted(A):
+        if A[k]["status"] != B[k]["status"]:
+            disputes.setdefault(A[k]["alias"], []).append(k)
+
+    def job(alias: str) -> list[dict[str, Any]]:
+        pk = packets[alias]
+        items = {i["item_id"]: i for i in coverage_items(data, alias, checklists[alias])}
+        tid2lab = {p["text_id"]: p["label"] for p in pk["passages"]}
+        blocks, maps, segs = [], {}, []
+        for tid, iid in disputes[alias]:
+            key = f"{tid2lab[tid]}::{iid}"
+            order = _order(f"{fam}|{tid}|{iid}")
+            maps[key] = order
+            rd = {"A": A[(tid, iid)], "B": B[(tid, iid)]}
+            blocks.append(f"### Item {key}\nFinding {iid} ({items[iid]['polarity']}): {items[iid]['description']}\n"
+                          f"Passage {tid2lab[tid]}:\n" + passages_block(pk, {tid2lab[tid]}).split("\n", 1)[1] + "\n" +
+                          "\n".join(f"Reading {s}: {rd[order[s]]['status']} - \"{rd[order[s]]['justification']}\"" for s in ("1", "2")))
+            segs += [items[iid]["description"], rd["A"]["justification"], rd["B"]["justification"]]
+        prompt = fill(tmpl, PACKAGE=pk["package_markdown"], ITEMS="\n\n".join(blocks))
+        want = set(maps)
+        res = call_judge(ADJUDICATOR, "adjudicate_coverage", f"{fam}_{alias}", "adjudicate_coverage", prompt,
+                         data_segments=data_segments(pk) + segs, forbidden_texts=forbidden_texts(fam, inv[alias]),
+                         validator=lambda p: [] if {d["item_id"] for d in p["decisions"]} == want else ["item ids mismatch"])
+        lab2tid = {v: k for k, v in tid2lab.items()}
+        return [{"text_id": lab2tid[d["item_id"].split("::")[0]], "item_id": d["item_id"].split("::")[1],
+                 "status": d["status"], "rationale": d["rationale"], "_reading_map": maps[d["item_id"]]}
+                for d in res.parsed["decisions"]]
+
+    res = _parallel([(a, (lambda a=a: job(a))) for a in sorted(disputes)], workers) if disputes else {}
+    out = [d for a in sorted(res) for d in res[a]]
+    _dump_jsonl(EXT / "adjudication" / f"{fam}_coverage.jsonl", out)
+    return out
+
+
+# ----------------------------------------------------------------------------- alignment
+def alignment_disputes(xa: dict[str, Any], xb: dict[str, Any]) -> bool:
+    if xa["relation"] != xb["relation"]:
+        return True
+    if xa["relation"] == "MODIFIED" and xa["direction"] != xb["direction"]:
+        return True
+    return xa["relation"] != "DELETED" and set(xa["matched_y"]) != set(xb["matched_y"])
+
+
+def run_alignment_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> list[dict[str, Any]]:
+    fam = data.family.name
+    A = {r["pair_id"]: r for r in _readings(fam, "align", "A")}
+    B = {r["pair_id"]: r for r in _readings(fam, "align", "B")}
+    claims = {c["claim_id"]: c for c in load_jsonl(EXT / "claims" / f"{fam}.jsonl")}
+    tmpl, _ = load_prompt("adjudicate_align")
+    inv = {v: k for k, v in data.aliases.items()}
+    disputes: dict[str, list[tuple[str, str]]] = {}
+    for pid, pa in A.items():
+        if pa["judge"] == "deterministic":
+            continue
+        xb = {x["claim_id"]: x for x in B[pid]["x_claims"]}
+        for x in pa["x_claims"]:
+            if alignment_disputes(x, xb[x["claim_id"]]):
+                disputes.setdefault(pa["alias"], []).append((pid, x["claim_id"]))
+
+    def job(alias: str) -> list[dict[str, Any]]:
+        pk = packets[alias]
+        blocks, maps, segs = [], {}, []
+        for pid, cid in disputes[alias]:
+            key = f"{pid}::{cid}"
+            order = _order(key)
+            maps[key] = order
+            xa = next(x for x in A[pid]["x_claims"] if x["claim_id"] == cid)
+            xb = next(x for x in B[pid]["x_claims"] if x["claim_id"] == cid)
+            rd = {"A": xa, "B": xb}
+            ys = A[pid]["y_claims"]
+            blocks.append(f"### Item {key}\nVersion X claim {cid}: {claims[cid]['proposition']}\nVersion Y claims:\n" +
+                          "\n".join(f"  - {y}: {claims[y]['proposition']}" for y in ys) + "\n" +
+                          "\n".join(f"Reading {s}: relation {rd[order[s]]['relation']}, direction {rd[order[s]]['direction']}, "
+                                    f"matched_y {rd[order[s]]['matched_y']}" for s in ("1", "2")))
+            segs += [claims[cid]["proposition"]] + [claims[y]["proposition"] for y in ys]
+        prompt = fill(tmpl, ITEMS="\n\n".join(blocks))
+        want = set(maps)
+        res = call_judge(ADJUDICATOR, "adjudicate_align", f"{fam}_{alias}", "adjudicate_align", prompt,
+                         data_segments=data_segments(pk) + segs, forbidden_texts=forbidden_texts(fam, inv[alias]),
+                         validator=lambda p: [] if {d["item_id"] for d in p["decisions"]} == want else ["item ids mismatch"])
+        return [{"pair_id": d["item_id"].split("::")[0], "claim_id": d["item_id"].split("::")[1],
+                 **{k: d[k] for k in ("relation", "direction", "matched_y", "rationale")}, "_reading_map": maps[d["item_id"]]}
+                for d in res.parsed["decisions"]]
+
+    res = _parallel([(a, (lambda a=a: job(a))) for a in sorted(disputes)], workers) if disputes else {}
+    out = [d for a in sorted(res) for d in res[a]]
+    _dump_jsonl(EXT / "adjudication" / f"{fam}_align.jsonl", out)
+    return out
+
+
+def run_adjudication(data: FamilyData, packets: dict[str, Any], workers: int = 3) -> None:
+    run_claim_adjudication(data, packets, workers)
+    run_coverage_adjudication(data, packets, workers)
+    run_alignment_adjudication(data, packets, workers)
+
+
+# ----------------------------------------------------------------------------- consensus
+def build_consensus(data: FamilyData, packets: dict[str, Any], workers: int = 0) -> dict[str, Path]:
+    fam = data.family.name
+    rows, claims, ra, rb = claim_dispute_table(data)
+    adj = {d["item_id"]: d for d in load_jsonl(EXT / "adjudication" / f"{fam}_claims.jsonl")} \
+        if (EXT / "adjudication" / f"{fam}_claims.jsonl").exists() else {}
+    skipped = {r["claim_id"]: r["skipped_fields_numeric_error"] for r in rows}
+    evs: dict[str, EvidenceValues] = {}
+    final = []
+    for cid, c in claims.items():
+        ev = evs.setdefault(c["alias"], _ev(data, c["alias"]))
+        a, b = ra[cid], rb[cid]
+        d = adj.get(cid)
+        if skipped.get(cid):  # disputed label/entailment that cannot change a NUMERIC_ERROR claim: keep A's value, mark it
+            d = dict(d or {"numbers": [], "extraction_valid": True, "evidence_ids": [], "_reading_map": {"1": "A", "2": "B"}})
+            for f in skipped[cid]:
+                d[f] = a[f]
+        rec = ac.finalize_claim(c, a, b, ev, d)
+        rec["label_from_numeric_error_rule"] = skipped.get(cid, [])
+        rec["readings"] = {"A": {k: a[k] for k in ("label", "entailment", "extraction_flag", "confidence")},
+                           "B": {k: b[k] for k in ("label", "entailment", "extraction_flag", "confidence")}}
+        if d and cid in adj:
+            rec["adjudication"] = {"rationale": d.get("rationale"), "reading_map": d.get("_reading_map"),
+                                   "label": d.get("label"), "entailment": d.get("entailment"),
+                                   "extraction_valid": d.get("extraction_valid")}
+        final.append(rec)
+    out = {"claims": EXT / "consensus" / f"{fam}_claims.jsonl"}
+    _dump_jsonl(out["claims"], final)
+    if fam != "synthetic":
+        A = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "A")}
+        B = {(r["text_id"], r["item_id"]): r for r in _readings(fam, "coverage", "B")}
+        cadj = {(d["text_id"], d["item_id"]): d for d in load_jsonl(EXT / "adjudication" / f"{fam}_coverage.jsonl")} \
+            if (EXT / "adjudication" / f"{fam}_coverage.jsonl").exists() else {}
+        cov = []
+        for k in sorted(A):
+            if A[k]["status"] == B[k]["status"]:
+                st, src = A[k]["status"], "agreed"
+            else:
+                if k not in cadj:
+                    raise ValueError(f"coverage dispute {k} not adjudicated")
+                st, src = cadj[k]["status"], "adjudicated"
+            cov.append({"text_id": k[0], "item_id": k[1], "alias": A[k]["alias"], "status": st, "source": src,
+                        "readings": {"A": A[k]["status"], "B": B[k]["status"]},
+                        "adjudication_rationale": cadj.get(k, {}).get("rationale")})
+        out["coverage"] = EXT / "consensus" / f"{fam}_coverage.jsonl"
+        _dump_jsonl(out["coverage"], cov)
+    A = {r["pair_id"]: r for r in _readings(fam, "align", "A")}
+    B = {r["pair_id"]: r for r in _readings(fam, "align", "B")}
+    aadj = {(d["pair_id"], d["claim_id"]): d for d in load_jsonl(EXT / "adjudication" / f"{fam}_align.jsonl")} \
+        if (EXT / "adjudication" / f"{fam}_align.jsonl").exists() else {}
+    aligned = []
+    for pid, pa in sorted(A.items()):
+        xs = []
+        xb = {x["claim_id"]: x for x in B[pid]["x_claims"]}
+        for x in pa["x_claims"]:
+            if pa["judge"] == "deterministic" or not alignment_disputes(x, xb[x["claim_id"]]):
+                xs.append({**x, "source": "agreed" if pa["judge"] != "deterministic" else "deterministic"})
+            else:
+                dd = aadj.get((pid, x["claim_id"]))
+                if dd is None:
+                    raise ValueError(f"alignment dispute {pid}/{x['claim_id']} not adjudicated")
+                xs.append({"claim_id": x["claim_id"], "relation": dd["relation"], "direction": dd["direction"],
+                           "matched_y": dd["matched_y"], "source": "adjudicated"})
+        matched = {y for x in xs for y in x["matched_y"]}
+        added = [y for y in pa["y_claims"] if y not in matched]
+        aligned.append({k: pa[k] for k in ("pair_id", "alias", "draft_text_id", "final_text_id", "y_claims")} |
+                       {"x_claims": xs, "added_y": added})
+    out["alignment"] = EXT / "consensus" / f"{fam}_alignment.jsonl"
+    _dump_jsonl(out["alignment"], aligned)
+    manifest = EXT / "consensus" / f"MANIFEST_{fam}.json"
+    manifest.write_text(json.dumps({k: {"path": str(p.relative_to(EXT.parent.parent)),
+                                        "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for k, p in out.items()},
+                                   indent=1))
+    print(f"  consensus {fam}: {len(final)} claims, "
+          f"{sum(r['final_label'] == 'UNRESOLVED' for r in final)} unresolved, "
+          f"{sum(r['final_label'] == 'EXCLUDED' for r in final)} excluded")
+    return out

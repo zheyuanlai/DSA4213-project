@@ -1,0 +1,182 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "real_RP-07",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "933243ea4063b58faa73857ca95c3cc2dbf9db0ce2a0153eee6f4cf5dccb1b69",
+ "cache_key": "b1cfd599ac6654d34805cf3c416d4eeeeeba92c3a7bc46fdfff1097ed17ab11d",
+ "started_at": "2026-10-18T10:18:36Z",
+ "finished_at": "2026-10-18T10:19:02Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"With the RankT5 backbone, Method M achieved the highest Recall@5 on all three datasets, exceeding the best baseline on HotpotQA, Musique, and 2WikiHop.\",\"polarity\":\"positive\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\",\"T1.r4\",\"T1.r5\"]},{\"finding_id\":\"F2\",\"description\":\"With the BGE-Base backbone, Method M's Recall@5 result was mixed: it was highest on 2WikiHop but below the best baseline on HotpotQA and Musique.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\",\"T1.r4\",\"T1.r5\"]},{\"finding_id\":\"F3\",\"description\":\"In answer generation with RankT5 rerankers, Method M produced the highest exact-match score on each dataset, although its gains over the best baselines were only 0.2–0.4 points.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\"]},{\"finding_id\":\"F4\",\"description\":\"In answer generation with BGE-Base rerankers, Method M was best on Musique, tied for best on HotpotQA, and trailed LOOP on 2WikiHop.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r1\",\"T2.r2\",\"T2.r3\",\"T2.r4\",\"T2.r5\"]},{\"finding_id\":\"F5\",\"description\":\"Overall, Method M did not consistently outperform the LLM-supervised objectives across every dataset and reranker backbone, because the BGE-Base results included losses and a tie despite uniformly positive RankT5 comparisons.\",\"polarity\":\"mixed\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T1\",\"T2\"]},{\"finding_id\":\"F6\",\"description\":\"The comparisons are based on one run per configuration and include neither variance estimates nor significance tests, so the reliability of the observed differences is unquantified.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"supporting\",\"evidence_ids\":[\"T1\",\"T2\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"The smallest Recall@5 advantage of Method M over the best baseline across the three RankT5 datasets was 2.9 points.\",\"expression\":\"min(T1.r5.hq_t5-max(T1.r1.hq_t5,T1.r2.hq_t5,T1.r3.hq_t5,T1.r4.hq_t5),T1.r5.mu_t5-max(T1.r1.mu_t5,T1.r2.mu_t5,T1.r3.mu_t5,T1.r4.mu_t5),T1.r5.wk_t5-max(T1.r1.wk_t5,T1.r2.wk_t5,T1.r3.wk_t5,T1.r4.wk_t5))\",\"value\":2.9,\"unit\":\"Recall@5 points\",\"finding_id\":\"F1\"},{\"fact_id\":\"N2\",\"description\":\"The largest Recall@5 advantage of Method M over the best baseline across the three RankT5 datasets was 5.7 points.\",\"expression\":\"max(T1.r5.hq_t5-max(T1.r1.hq_t5,T1.r2.hq_t5,T1.r3.hq_t5,T1.r4.hq_t5),T1.r5.mu_t5-max(T1.r1.mu_t5,T1.r2.mu_t5,T1.r3.mu_t5,T1.r4.mu_t5),T1.r5.wk_t5-max(T1.r1.wk_t5,T1.r2.wk_t5,T1.r3.wk_t5,T1.r4.wk_t5))\",\"value\":5.7,\"unit\":\"Recall@5 points\",\"finding_id\":\"F1\"},{\"fact_id\":\"N3\",\"description\":\"Across the BGE-Base Recall@5 comparisons, Method M's worst difference from the best baseline was −0.7 points.\",\"expression\":\"min(T1.r5.hq_bge-max(T1.r1.hq_bge,T1.r2.hq_bge,T1.r3.hq_bge,T1.r4.hq_bge),T1.r5.mu_bge-max(T1.r1.mu_bge,T1.r2.mu_bge,T1.r3.mu_bge,T1.r4.mu_bge),T1.r5.wk_bge-max(T1.r1.wk_bge,T1.r2.wk_bge,T1.r3.wk_bge,T1.r4.wk_bge))\",\"value\":-0.7,\"unit\":\"Recall@5 points\",\"finding_id\":\"F2\"},{\"fact_id\":\"N4\",\"description\":\"Across the BGE-Base Recall@5 comparisons, Method M's best difference from the best baseline was 0.9 points.\",\"expression\":\"max(T1.r5.hq_bge-max(T1.r1.hq_bge,T1.r2.hq_bge,T1.r3.hq_bge,T1.r4.hq_bge),T1.r5.mu_bge-max(T1.r1.mu_bge,T1.r2.mu_bge,T1.r3.mu_bge,T1.r4.mu_bge),T1.r5.wk_bge-max(T1.r1.wk_bge,T1.r2.wk_bge,T1.r3.wk_bge,T1.r4.wk_bge))\",\"value\":0.9,\"unit\":\"Recall@5 points\",\"finding_id\":\"F2\"},{\"fact_id\":\"N5\",\"description\":\"The smallest exact-match advantage of Method M over the best baseline across the RankT5 datasets was 0.2 points.\",\"expression\":\"min(T2.r5.hq_t5-max(T2.r1.hq_t5,T2.r2.hq_t5,T2.r3.hq_t5,T2.r4.hq_t5),T2.r5.mu_t5-max(T2.r1.mu_t5,T2.r2.mu_t5,T2.r3.mu_t5,T2.r4.mu_t5),T2.r5.wk_t5-max(T2.r1.wk_t5,T2.r2.wk_t5,T2.r3.wk_t5,T2.r4.wk_t5))\",\"value\":0.2,\"unit\":\"EM points\",\"finding_id\":\"F3\"},{\"fact_id\":\"N6\",\"description\":\"The largest exact-match advantage of Method M over the best baseline across the RankT5 datasets was 0.4 points.\",\"expression\":\"max(T2.r5.hq_t5-max(T2.r1.hq_t5,T2.r2.hq_t5,T2.r3.hq_t5,T2.r4.hq_t5),T2.r5.mu_t5-max(T2.r1.mu_t5,T2.r2.mu_t5,T2.r3.mu_t5,T2.r4.mu_t5),T2.r5.wk_t5-max(T2.r1.wk_t5,T2.r2.wk_t5,T2.r3.wk_t5,T2.r4.wk_t5))\",\"value\":0.4,\"unit\":\"EM points\",\"finding_id\":\"F3\"},{\"fact_id\":\"N7\",\"description\":\"Across the BGE-Base exact-match comparisons, Method M's worst difference from the best baseline was −0.3 points.\",\"expression\":\"min(T2.r5.hq_bge-max(T2.r1.hq_bge,T2.r2.hq_bge,T2.r3.hq_bge,T2.r4.hq_bge),T2.r5.mu_bge-max(T2.r1.mu_bge,T2.r2.mu_bge,T2.r3.mu_bge,T2.r4.mu_bge),T2.r5.wk_bge-max(T2.r1.wk_bge,T2.r2.wk_bge,T2.r3.wk_bge,T2.r4.wk_bge))\",\"value\":-0.3,\"unit\":\"EM points\",\"finding_id\":\"F4\"},{\"fact_id\":\"N8\",\"description\":\"Across the BGE-Base exact-match comparisons, Method M's best difference from the best baseline was 0.2 points.\",\"expression\":\"max(T2.r5.hq_bge-max(T2.r1.hq_bge,T2.r2.hq_bge,T2.r3.hq_bge,T2.r4.hq_bge),T2.r5.mu_bge-max(T2.r1.mu_bge,T2.r2.mu_bge,T2.r3.mu_bge,T2.r4.mu_bge),T2.r5.wk_bge-max(T2.r1.wk_bge,T2.r2.wk_bge,T2.r3.wk_bge,T2.r4.wk_bge))\",\"value\":0.2,\"unit\":\"EM points\",\"finding_id\":\"F4\"}]}",
+ "usage": {
+  "input_tokens": 17959,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 3471,
+  "reasoning_output_tokens": 1524
+ },
+ "cost_usd": null,
+ "latency_s": 25.2,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "With the RankT5 backbone, Method M achieved the highest Recall@5 on all three datasets, exceeding the best baseline on HotpotQA, Musique, and 2WikiHop.",
+    "polarity": "positive",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3",
+     "T1.r4",
+     "T1.r5"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "With the BGE-Base backbone, Method M's Recall@5 result was mixed: it was highest on 2WikiHop but below the best baseline on HotpotQA and Musique.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3",
+     "T1.r4",
+     "T1.r5"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "In answer generation with RankT5 rerankers, Method M produced the highest exact-match score on each dataset, although its gains over the best baselines were only 0.2–0.4 points.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "In answer generation with BGE-Base rerankers, Method M was best on Musique, tied for best on HotpotQA, and trailed LOOP on 2WikiHop.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r1",
+     "T2.r2",
+     "T2.r3",
+     "T2.r4",
+     "T2.r5"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "Overall, Method M did not consistently outperform the LLM-supervised objectives across every dataset and reranker backbone, because the BGE-Base results included losses and a tie despite uniformly positive RankT5 comparisons.",
+    "polarity": "mixed",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   },
+   {
+    "finding_id": "F6",
+    "description": "The comparisons are based on one run per configuration and include neither variance estimates nor significance tests, so the reliability of the observed differences is unquantified.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "The smallest Recall@5 advantage of Method M over the best baseline across the three RankT5 datasets was 2.9 points.",
+    "expression": "min(T1.r5.hq_t5-max(T1.r1.hq_t5,T1.r2.hq_t5,T1.r3.hq_t5,T1.r4.hq_t5),T1.r5.mu_t5-max(T1.r1.mu_t5,T1.r2.mu_t5,T1.r3.mu_t5,T1.r4.mu_t5),T1.r5.wk_t5-max(T1.r1.wk_t5,T1.r2.wk_t5,T1.r3.wk_t5,T1.r4.wk_t5))",
+    "value": 2.9,
+    "unit": "Recall@5 points",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N2",
+    "description": "The largest Recall@5 advantage of Method M over the best baseline across the three RankT5 datasets was 5.7 points.",
+    "expression": "max(T1.r5.hq_t5-max(T1.r1.hq_t5,T1.r2.hq_t5,T1.r3.hq_t5,T1.r4.hq_t5),T1.r5.mu_t5-max(T1.r1.mu_t5,T1.r2.mu_t5,T1.r3.mu_t5,T1.r4.mu_t5),T1.r5.wk_t5-max(T1.r1.wk_t5,T1.r2.wk_t5,T1.r3.wk_t5,T1.r4.wk_t5))",
+    "value": 5.7,
+    "unit": "Recall@5 points",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Across the BGE-Base Recall@5 comparisons, Method M's worst difference from the best baseline was −0.7 points.",
+    "expression": "min(T1.r5.hq_bge-max(T1.r1.hq_bge,T1.r2.hq_bge,T1.r3.hq_bge,T1.r4.hq_bge),T1.r5.mu_bge-max(T1.r1.mu_bge,T1.r2.mu_bge,T1.r3.mu_bge,T1.r4.mu_bge),T1.r5.wk_bge-max(T1.r1.wk_bge,T1.r2.wk_bge,T1.r3.wk_bge,T1.r4.wk_bge))",
+    "value": -0.7,
+    "unit": "Recall@5 points",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Across the BGE-Base Recall@5 comparisons, Method M's best difference from the best baseline was 0.9 points.",
+    "expression": "max(T1.r5.hq_bge-max(T1.r1.hq_bge,T1.r2.hq_bge,T1.r3.hq_bge,T1.r4.hq_bge),T1.r5.mu_bge-max(T1.r1.mu_bge,T1.r2.mu_bge,T1.r3.mu_bge,T1.r4.mu_bge),T1.r5.wk_bge-max(T1.r1.wk_bge,T1.r2.wk_bge,T1.r3.wk_bge,T1.r4.wk_bge))",
+    "value": 0.9,
+    "unit": "Recall@5 points",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N5",
+    "description": "The smallest exact-match advantage of Method M over the best baseline across the RankT5 datasets was 0.2 points.",
+    "expression": "min(T2.r5.hq_t5-max(T2.r1.hq_t5,T2.r2.hq_t5,T2.r3.hq_t5,T2.r4.hq_t5),T2.r5.mu_t5-max(T2.r1.mu_t5,T2.r2.mu_t5,T2.r3.mu_t5,T2.r4.mu_t5),T2.r5.wk_t5-max(T2.r1.wk_t5,T2.r2.wk_t5,T2.r3.wk_t5,T2.r4.wk_t5))",
+    "value": 0.2,
+    "unit": "EM points",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N6",
+    "description": "The largest exact-match advantage of Method M over the best baseline across the RankT5 datasets was 0.4 points.",
+    "expression": "max(T2.r5.hq_t5-max(T2.r1.hq_t5,T2.r2.hq_t5,T2.r3.hq_t5,T2.r4.hq_t5),T2.r5.mu_t5-max(T2.r1.mu_t5,T2.r2.mu_t5,T2.r3.mu_t5,T2.r4.mu_t5),T2.r5.wk_t5-max(T2.r1.wk_t5,T2.r2.wk_t5,T2.r3.wk_t5,T2.r4.wk_t5))",
+    "value": 0.4,
+    "unit": "EM points",
+    "finding_id": "F3"
+   },
+   {
+    "fact_id": "N7",
+    "description": "Across the BGE-Base exact-match comparisons, Method M's worst difference from the best baseline was −0.3 points.",
+    "expression": "min(T2.r5.hq_bge-max(T2.r1.hq_bge,T2.r2.hq_bge,T2.r3.hq_bge,T2.r4.hq_bge),T2.r5.mu_bge-max(T2.r1.mu_bge,T2.r2.mu_bge,T2.r3.mu_bge,T2.r4.mu_bge),T2.r5.wk_bge-max(T2.r1.wk_bge,T2.r2.wk_bge,T2.r3.wk_bge,T2.r4.wk_bge))",
+    "value": -0.3,
+    "unit": "EM points",
+    "finding_id": "F4"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Across the BGE-Base exact-match comparisons, Method M's best difference from the best baseline was 0.2 points.",
+    "expression": "max(T2.r5.hq_bge-max(T2.r1.hq_bge,T2.r2.hq_bge,T2.r3.hq_bge,T2.r4.hq_bge),T2.r5.mu_bge-max(T2.r1.mu_bge,T2.r2.mu_bge,T2.r3.mu_bge,T2.r4.mu_bge),T2.r5.wk_bge-max(T2.r1.wk_bge,T2.r2.wk_bge,T2.r3.wk_bge,T2.r4.wk_bge))",
+    "value": 0.2,
+    "unit": "EM points",
+    "finding_id": "F4"
+   }
+  ]
+ }
+}

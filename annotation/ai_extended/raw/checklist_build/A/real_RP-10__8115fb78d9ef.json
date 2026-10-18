@@ -1,0 +1,186 @@
+{
+ "status": "ok",
+ "stage": "checklist_build",
+ "item_key": "real_RP-10",
+ "judge": "A",
+ "backend": "codex",
+ "model_requested": "gpt-5.6-sol",
+ "settings": {
+  "model_reasoning_effort": "high"
+ },
+ "prompt_name": "checklist_build",
+ "prompt_template_sha256": "241fed407acdc2efd020baa3124ee31b3b19af8f40bce5e95b27cbefd2a256fc",
+ "system_prompt_sha256": "85b419d52e681eea66984372295c6779802711eb55cbfc3d71f89aa718b41537",
+ "prompt_sha256": "f528fe985d5bbf4c77255e9341e5b21ffc83eea4860c54f2cf888a06c65357a4",
+ "cache_key": "8115fb78d9ef3eca2fb75540979face81f16b7523824a0b1810aef7a53eb8190",
+ "started_at": "2026-10-18T10:19:10Z",
+ "finished_at": "2026-10-18T10:19:40Z",
+ "attempt": 1,
+ "failed_attempts": [],
+ "raw_response": "{\"findings\":[{\"finding_id\":\"F1\",\"description\":\"Averaged across five models on GSM8K, Method M reduced relative output length to 64.25% of the zero-shot baseline but also reduced relative accuracy to 97.00%, so the shorter reasoning did not fully preserve average accuracy.\",\"polarity\":\"mixed\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r7\"]},{\"finding_id\":\"F2\",\"description\":\"Averaged across five models on MATH500, Method M reduced relative output length to 76.30% while achieving 102.56% relative accuracy, indicating shorter reasoning without an average accuracy loss on this dataset.\",\"polarity\":\"positive\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r7\"]},{\"finding_id\":\"F3\",\"description\":\"Method M had the lowest relative reasoning length among all approaches listed in T1 on both GSM8K and MATH500, although its GSM8K accuracy trade-off prevents a uniformly positive accuracy-preservation conclusion.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"core\",\"evidence_ids\":[\"T1.r1\",\"T1.r2\",\"T1.r3\",\"T1.r4\",\"T1.r5\",\"T1.r6\",\"T1.r7\",\"T1.r8\"]},{\"finding_id\":\"F4\",\"description\":\"Compared with budget-matched Method M, full-budget Method M produced shorter outputs on both datasets, with slightly lower relative accuracy on GSM8K but slightly higher relative accuracy on MATH500.\",\"polarity\":\"mixed\",\"kind\":\"comparison\",\"importance\":\"supporting\",\"evidence_ids\":[\"T1.r7\",\"T1.r8\"]},{\"finding_id\":\"F5\",\"description\":\"The shortening effect transferred across datasets but weakened out of domain: GSM8K-trained models tested on MATH had 99.21% relative accuracy and 88.34% relative length, while MATH-trained models tested on GSM8K had 98.53% relative accuracy and 90.36% relative length.\",\"polarity\":\"mixed\",\"kind\":\"main_result\",\"importance\":\"core\",\"evidence_ids\":[\"T2.r2\",\"T2.r4\"]},{\"finding_id\":\"F6\",\"description\":\"No significance tests were reported, so the observed average accuracy differences cannot be interpreted as statistically established preservation, improvement, or degradation.\",\"polarity\":\"neutral\",\"kind\":\"scope_limitation\",\"importance\":\"core\",\"evidence_ids\":[\"T1\",\"T2\"]},{\"finding_id\":\"F7\",\"description\":\"Reasoning length was measured as mean output tokens over all outputs, including incorrect ones, so the reported reductions reflect total generation cost rather than the length of correct solutions alone.\",\"polarity\":\"neutral\",\"kind\":\"other\",\"importance\":\"supporting\",\"evidence_ids\":[\"P1\"]}],\"numeric_facts\":[{\"fact_id\":\"N1\",\"description\":\"Method M relative accuracy on GSM8K\",\"expression\":\"T1.r7.gsm_racc\",\"value\":97,\"unit\":\"%\",\"finding_id\":\"F1\"},{\"fact_id\":\"N2\",\"description\":\"Reduction in Method M relative length from the GSM8K zero-shot baseline\",\"expression\":\"T1.r1.gsm_rlen - T1.r7.gsm_rlen\",\"value\":35.75,\"unit\":\"percentage points\",\"finding_id\":\"F1\"},{\"fact_id\":\"N3\",\"description\":\"Method M relative accuracy on MATH500\",\"expression\":\"T1.r7.math_racc\",\"value\":102.56,\"unit\":\"%\",\"finding_id\":\"F2\"},{\"fact_id\":\"N4\",\"description\":\"Reduction in Method M relative length from the MATH500 zero-shot baseline\",\"expression\":\"T1.r1.math_rlen - T1.r7.math_rlen\",\"value\":23.7,\"unit\":\"percentage points\",\"finding_id\":\"F2\"},{\"fact_id\":\"N5\",\"description\":\"Mean out-of-domain relative accuracy across the two transfer directions\",\"expression\":\"mean(T2.r2.racc, T2.r4.racc)\",\"value\":98.87,\"unit\":\"%\",\"finding_id\":\"F5\"},{\"fact_id\":\"N6\",\"description\":\"Mean out-of-domain relative length across the two transfer directions\",\"expression\":\"mean(T2.r2.rlen, T2.r4.rlen)\",\"value\":89.35,\"unit\":\"%\",\"finding_id\":\"F5\"},{\"fact_id\":\"N7\",\"description\":\"Additional GSM8K relative-length reduction from full-budget Method M versus its budget-matched variant\",\"expression\":\"T1.r8.gsm_rlen - T1.r7.gsm_rlen\",\"value\":2.9,\"unit\":\"percentage points\",\"finding_id\":\"F4\"},{\"fact_id\":\"N8\",\"description\":\"Additional MATH500 relative-length reduction from full-budget Method M versus its budget-matched variant\",\"expression\":\"T1.r8.math_rlen - T1.r7.math_rlen\",\"value\":4.13,\"unit\":\"percentage points\",\"finding_id\":\"F4\"}]}",
+ "usage": {
+  "input_tokens": 18216,
+  "cached_input_tokens": 14848,
+  "cache_write_input_tokens": 0,
+  "output_tokens": 3550,
+  "reasoning_output_tokens": 2512
+ },
+ "cost_usd": null,
+ "latency_s": 29.5,
+ "model_reported": "gpt-5.6-sol",
+ "model_report_source": "requested via -m (codex exec does not echo it)",
+ "tool_use_detected": [],
+ "cli_version": "codex-cli 0.153.4",
+ "parsed": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "description": "Averaged across five models on GSM8K, Method M reduced relative output length to 64.25% of the zero-shot baseline but also reduced relative accuracy to 97.00%, so the shorter reasoning did not fully preserve average accuracy.",
+    "polarity": "mixed",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r7"
+    ]
+   },
+   {
+    "finding_id": "F2",
+    "description": "Averaged across five models on MATH500, Method M reduced relative output length to 76.30% while achieving 102.56% relative accuracy, indicating shorter reasoning without an average accuracy loss on this dataset.",
+    "polarity": "positive",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r7"
+    ]
+   },
+   {
+    "finding_id": "F3",
+    "description": "Method M had the lowest relative reasoning length among all approaches listed in T1 on both GSM8K and MATH500, although its GSM8K accuracy trade-off prevents a uniformly positive accuracy-preservation conclusion.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "core",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3",
+     "T1.r4",
+     "T1.r5",
+     "T1.r6",
+     "T1.r7",
+     "T1.r8"
+    ]
+   },
+   {
+    "finding_id": "F4",
+    "description": "Compared with budget-matched Method M, full-budget Method M produced shorter outputs on both datasets, with slightly lower relative accuracy on GSM8K but slightly higher relative accuracy on MATH500.",
+    "polarity": "mixed",
+    "kind": "comparison",
+    "importance": "supporting",
+    "evidence_ids": [
+     "T1.r7",
+     "T1.r8"
+    ]
+   },
+   {
+    "finding_id": "F5",
+    "description": "The shortening effect transferred across datasets but weakened out of domain: GSM8K-trained models tested on MATH had 99.21% relative accuracy and 88.34% relative length, while MATH-trained models tested on GSM8K had 98.53% relative accuracy and 90.36% relative length.",
+    "polarity": "mixed",
+    "kind": "main_result",
+    "importance": "core",
+    "evidence_ids": [
+     "T2.r2",
+     "T2.r4"
+    ]
+   },
+   {
+    "finding_id": "F6",
+    "description": "No significance tests were reported, so the observed average accuracy differences cannot be interpreted as statistically established preservation, improvement, or degradation.",
+    "polarity": "neutral",
+    "kind": "scope_limitation",
+    "importance": "core",
+    "evidence_ids": [
+     "T1",
+     "T2"
+    ]
+   },
+   {
+    "finding_id": "F7",
+    "description": "Reasoning length was measured as mean output tokens over all outputs, including incorrect ones, so the reported reductions reflect total generation cost rather than the length of correct solutions alone.",
+    "polarity": "neutral",
+    "kind": "other",
+    "importance": "supporting",
+    "evidence_ids": [
+     "P1"
+    ]
+   }
+  ],
+  "numeric_facts": [
+   {
+    "fact_id": "N1",
+    "description": "Method M relative accuracy on GSM8K",
+    "expression": "T1.r7.gsm_racc",
+    "value": 97,
+    "unit": "%",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N2",
+    "description": "Reduction in Method M relative length from the GSM8K zero-shot baseline",
+    "expression": "T1.r1.gsm_rlen - T1.r7.gsm_rlen",
+    "value": 35.75,
+    "unit": "percentage points",
+    "finding_id": "F1"
+   },
+   {
+    "fact_id": "N3",
+    "description": "Method M relative accuracy on MATH500",
+    "expression": "T1.r7.math_racc",
+    "value": 102.56,
+    "unit": "%",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N4",
+    "description": "Reduction in Method M relative length from the MATH500 zero-shot baseline",
+    "expression": "T1.r1.math_rlen - T1.r7.math_rlen",
+    "value": 23.7,
+    "unit": "percentage points",
+    "finding_id": "F2"
+   },
+   {
+    "fact_id": "N5",
+    "description": "Mean out-of-domain relative accuracy across the two transfer directions",
+    "expression": "mean(T2.r2.racc, T2.r4.racc)",
+    "value": 98.87,
+    "unit": "%",
+    "finding_id": "F5"
+   },
+   {
+    "fact_id": "N6",
+    "description": "Mean out-of-domain relative length across the two transfer directions",
+    "expression": "mean(T2.r2.rlen, T2.r4.rlen)",
+    "value": 89.35,
+    "unit": "%",
+    "finding_id": "F5"
+   },
+   {
+    "fact_id": "N7",
+    "description": "Additional GSM8K relative-length reduction from full-budget Method M versus its budget-matched variant",
+    "expression": "T1.r8.gsm_rlen - T1.r7.gsm_rlen",
+    "value": 2.9,
+    "unit": "percentage points",
+    "finding_id": "F4"
+   },
+   {
+    "fact_id": "N8",
+    "description": "Additional MATH500 relative-length reduction from full-budget Method M versus its budget-matched variant",
+    "expression": "T1.r8.math_rlen - T1.r7.math_rlen",
+    "value": 4.13,
+    "unit": "percentage points",
+    "finding_id": "F4"
+   }
+  ]
+ }
+}
