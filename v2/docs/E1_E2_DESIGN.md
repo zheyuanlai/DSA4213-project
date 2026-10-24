@@ -1,6 +1,6 @@
 # E1/E2: isolating the verifier's decision stage (DEV only, exploratory)
 
-**Status: DRAFT for student review. Nothing has been implemented or run.**
+**Status: design reviewed; implemented and offline-tested; the paid run has not been made.**
 
 ## 1. Questions
 
@@ -47,10 +47,22 @@ schema. The system-prompt prefix, the evidence block, the user message and the t
 
 ### 4.1 D0-oracle (shared prefix of every oracle condition)
 
-The system prompt is `prompts/common_reporting.md` (unchanged) plus the V1 adaptive verifier prompt with three edits
-only: the tool *Procedure* paragraph is replaced by the first sentence below, "tool observations" becomes "the research
-package", and `citable_ids` becomes package IDs. The check-list, the consistency rule and the decision definitions are V1
-verbatim.
+The system prompt is `prompts/common_reporting.md` (unchanged) plus `v2/prompts/verifier_oracle_d0.md`. The latter is the V1
+adaptive verifier prompt with **only** the edits needed to remove tools (checked line by line with `diff`):
+
+1. Title "Claim verifier (adaptive)" becomes "Claim verifier".
+2. "…against the research evidence, using tools. You cannot see table values … except through tool calls." becomes
+   "…against the research evidence. The complete research package … is given in the user message; no tools are needed."
+3. The tool *Procedure* paragraph (one tool per turn, call budget, no repeats, then `submit_decision`) is deleted.
+4. In the check-list, "does the **retrieved** passage state it?" becomes "does the **quoted** passage state it?".
+5. "Base the decision only on the tool observations for this claim, and cite their `citable_ids` (including `absent:...`
+   ids)" becomes "Base the decision only on the research package, and cite the package IDs … in `evidence_ids`".
+6. "do not add content you have not verified" becomes "do not add content that the package does not support".
+7. "may be accepted without tool calls" becomes "may be accepted", and a closing line "Call `submit_decision` with your
+   decision." is added.
+
+The rest of the check-list, the consistency rule ("Your decision must agree with your rationale…") and the decision
+definitions (`src/prompts.py` `DECISION_DEFS`) are V1 verbatim.
 
 ```
 ## Role: Claim verifier
@@ -223,18 +235,26 @@ statements are made after reading the failure-stage distribution (section 6) and
 These probes are DEV data. If prompts are revised after this run, each revision and its re-run are logged in a dated
 results document. The held-out V2 cases are separate, written later, and never used for tuning.
 
-## 8. Implementation footprint (after approval)
+## 8. Implementation (built 2026-10-24; offline-tested, not yet run against the API)
 
-* `v2/verifier_oracle.py`: oracle verification loop. It reuses V1's renderer, evidence store, decision definitions and
-  validator logic read-only.
-* `v2/prompts/`: the D0/D1/D2 prompt files exactly as in section 4, with hashes recorded in every run record.
-* `v2/scripts/run_e1_e2.py`: runs the four conditions. D0-tools calls V1's unchanged `src.verifier.verify_draft`, as the V1
-  H2 diagnostic did.
-* `v2/scripts/analyze_e1_e2.py`: measures, rule checks and the human-review sheet.
-* `v2/tests/`: offline tests with the mock client.
+* `v2/verifier_oracle.py`: the oracle verification loop. It reuses V1's renderer, evidence store, decision definitions,
+  `submit_decision` schema, claim message format and validator read-only. The evidence block is
+  `render_package(pkg)` without its trailing "## Task" section (the writer's instruction). Every package ID is citable.
+* `v2/prompts/`: the D0 prompt and the D1/D2 addenda, exactly as in section 4. Their hashes are stored in each run's
+  `run_meta.json`.
+* `v2/scripts/run_e1_e2.py`: runs the four conditions. D0-tools calls V1's unchanged `src.verifier.verify_draft` with the
+  C4 configuration, as the V1 H2 diagnostic did. A paid run needs the explicit `--real` flag. The script resumes, and it
+  refuses to reuse a run directory created under different code, prompts or probes. A failed job (API errors after
+  retries) is written to `_failed/` and retried on the next invocation.
+* `v2/scripts/analyze_e1_e2.py`: produces `summary.json`, `TABLES.md`, the rule checks, `failure_coding.csv` (with
+  keyword-based *suggested* stages F0–F3; F0 = decisive evidence not retrieved, D0-tools only) and
+  `revision_review.csv`.
+* `v2/mock_responder.py`, `v2/tests/`: offline tests with the mock client (`python -m pytest v2/tests`). The V1 suite
+  (`python -m pytest`) is unaffected.
 * Outputs and a **separate** cost ledger go under `v2/outputs/`, so the reconciled V1 ledger is untouched.
 
 ## 9. Budget
 
-Estimate: about 470 oracle calls and about 117 tool-loop verifications, roughly $0.25–0.35 at V1 prices. Hard cap for
-this step: **$1.00**, enforced by V1's CostGuard class pointed at the V2 ledger.
+Estimate: about 470 oracle calls and about 117 tool-loop verifications. From the measured prompt sizes the oracle calls
+come to about $0.15, and from the V1 H2 diagnostic's cost per verification the D0-tools runs come to about $0.06, so
+**about $0.20 in total**. Hard cap for this step: **$1.00**, enforced by V1's CostGuard class pointed at the V2 ledger.
