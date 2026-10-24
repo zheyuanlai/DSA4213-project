@@ -46,4 +46,4 @@ remain. On Linux CI the check passes unchanged.
 
 1. Phase 1 diagnosis (done, reported in conversation).
 2. Phase 2, E1/E2 decision-stage experiments: design in [`docs/E1_E2_DESIGN.md`](docs/E1_E2_DESIGN.md).
-   **Status: implemented and offline-tested; paid run pending approval.**
+   **Status: run `e1e2_v1` done; results in [`docs/E1_E2_RESULTS.md`](docs/E1_E2_RESULTS.md) (student checks pending).**

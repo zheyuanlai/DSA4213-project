@@ -1,0 +1,125 @@
+{
+ "run_id": "e1e2_v1:D0-tools:P-CIT-Z-partner:r2",
+ "probe_id": "P-CIT-Z-partner",
+ "case_id": "CIT-p1a",
+ "condition": "D0-tools",
+ "repeat": 2,
+ "draft_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:52:21Z",
+ "decision": "ACCEPT",
+ "revised_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+ "rationale": "The P1 passage describes the salience pre-filtering procedure (classifier, threshold 0.35, ordering) but contains no quantitative claim about how much the filter reduces hallucinations. The claim accurately states this.",
+ "evidence_ids": [
+  "P1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1"
+ ],
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+  "actions": [
+   {
+    "call_id": "call_22e7906775094d7b96678b02",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_22e7906775094d7b96678b02",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+   "revised_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+   "evidence_ids": [
+    "P1"
+   ],
+   "rationale": "The P1 passage describes the salience pre-filtering procedure (classifier, threshold 0.35, ordering) but contains no quantitative claim about how much the filter reduces hallucinations. The claim accurately states this.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 2,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-CIT-Z-partner:D0-tools:verify_adaptive:8ae88aab71",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842741-tJcg1r0Q9qok1FQGs6yh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2604,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 2.424e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.1,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-Z-partner:D0-tools:verify_adaptive:52b435ffd8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842742-57rH6vOvmI45lFvumO3J",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2816,
+   "completion_tokens": 140,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.6656e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.184,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 9.09e-05,
+ "prompt_tokens": 5420,
+ "completion_tokens": 190,
+ "finished_at": "2026-10-24T11:52:26Z",
+ "status": "completed"
+}

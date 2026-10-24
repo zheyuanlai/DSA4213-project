@@ -1,0 +1,159 @@
+{
+ "run_id": "e1e2_v1:D0-tools:P-EFF-U-partner:r2",
+ "probe_id": "P-EFF-U-partner",
+ "case_id": "EFF-p1b",
+ "condition": "D0-tools",
+ "repeat": 2,
+ "draft_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:48:00Z",
+ "decision": "ACCEPT",
+ "revised_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+ "rationale": "Table T1 shows Brisling passes=4.0 and Talmar passes=37.6 on the Brindle-Voice test set. The claim's numbers match exactly and the comparison is accurate.",
+ "evidence_ids": [
+  "T1.r1.passes",
+  "T1.r2.passes"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1",
+    "column": "passes"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.passes",
+  "T1.r2.passes",
+  "T1.r3.passes"
+ ],
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+  "actions": [
+   {
+    "call_id": "call_422246766d5e43e596239228",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1",
+     "column": "passes"
+    },
+    "policy": "adaptive",
+    "step": 1
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_422246766d5e43e596239228",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+     "notes": "Talmar latency is the value reported by Ruiz-Hale et al. (2023) on Corvex A1 (fp32, batch size 1); all other latencies were measured by us on Corvex A2 (fp16, batch size 1).",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.passes",
+       "row": "Brisling (ours)",
+       "column": "Decoder passes per utterance",
+       "text": "4.0",
+       "value": 4.0,
+       "unit": null,
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r2.passes",
+       "row": "Talmar",
+       "column": "Decoder passes per utterance",
+       "text": "37.6",
+       "value": 37.6,
+       "unit": null,
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r3.passes",
+       "row": "Greedy-CTC",
+       "column": "Decoder passes per utterance",
+       "text": "—",
+       "value": null,
+       "unit": null,
+       "higher_is_better": false
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.passes",
+     "T1.r2.passes",
+     "T1.r3.passes"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+   "revised_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+   "evidence_ids": [
+    "T1.r1.passes",
+    "T1.r2.passes"
+   ],
+   "rationale": "Table T1 shows Brisling passes=4.0 and Talmar passes=37.6 on the Brindle-Voice test set. The claim's numbers match exactly and the comparison is accurate.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 2,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-EFF-U-partner:D0-tools:verify_adaptive:5dc9f47eb4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842480-Kckci7bQmV3HiYvqtk3j",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2732,
+   "completion_tokens": 64,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.92e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.369,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-EFF-U-partner:D0-tools:verify_adaptive:e660049d57",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842481-tCYD5xGfx7MKOVp0X5Wy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3117,
+   "completion_tokens": 149,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.18976e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.39,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 9.11e-05,
+ "prompt_tokens": 5849,
+ "completion_tokens": 213,
+ "finished_at": "2026-10-24T11:48:04Z",
+ "status": "completed"
+}

@@ -1,0 +1,276 @@
+{
+ "run_id": "e1e2_v1:D0-tools:P-CIT-U-partner:r3",
+ "probe_id": "P-CIT-U-partner",
+ "case_id": "CIT-p1a",
+ "condition": "D0-tools",
+ "repeat": 3,
+ "draft_text": "Varga & Sandoval (2021) reported that salience pre-filtering reduced unsupported-entity hallucinations in news summarization.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:58:41Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "The only supplied passage from Varga & Sandoval (P1) describes the salience pre-filtering method (sentence scoring and removal) but contains no reported result about reducing unsupported-entity hallucinations. No passage supports the claimed finding; the attribution is unsupported.",
+ "evidence_ids": [
+  "P1",
+  "absent:passage"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "Varga Sandoval hallucination unsupported entity reduced"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1 reduced hallucinations 30%"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1 unsupported entity hallucination reduction result"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1",
+  "P2",
+  "absent:passage"
+ ],
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Varga & Sandoval (2021) reported that salience pre-filtering reduced unsupported-entity hallucinations in news summarization.",
+  "actions": [
+   {
+    "call_id": "call_109bb2d427e34a88ab264e06",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_815822a28d2945a29282396a",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "Varga Sandoval hallucination unsupported entity reduced"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_75acb14acfdb4bb3a250ffa9",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1 reduced hallucinations 30%"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_e0e252740d794747af07e002",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1 unsupported entity hallucination reduction result"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_109bb2d427e34a88ab264e06",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   },
+   {
+    "call_id": "call_815822a28d2945a29282396a",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   },
+   {
+    "call_id": "call_75acb14acfdb4bb3a250ffa9",
+    "tool": "retrieve_passage",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [
+     "absent:passage"
+    ],
+    "message": "No supplied passage matches this query. Available: P1 (Varga & Sandoval (2021)); P2 (Achterberg & Moyo (2022))",
+    "provenance": ""
+   },
+   {
+    "call_id": "call_e0e252740d794747af07e002",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P2",
+       "citation_key": "Achterberg & Moyo (2022)",
+       "source_title": "Counting What Is Not There: An Annotation Protocol for Entity Hallucination",
+       "text": "We define an unsupported entity as a named entity in a generated summary that neither appears in nor can be inferred from the source document. Each summary is labelled independently by two annotators, with disagreements resolved by a third; inter-annotator agreement on our pilot set was κ = 0.81."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P2"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Varga & Sandoval (2021) reported that salience pre-filtering reduced unsupported-entity hallucinations in news summarization.",
+   "revised_text": "",
+   "evidence_ids": [
+    "P1",
+    "absent:passage"
+   ],
+   "rationale": "The only supplied passage from Varga & Sandoval (P1) describes the salience pre-filtering method (sentence scoring and removal) but contains no reported result about reducing unsupported-entity hallucinations. No passage supports the claimed finding; the attribution is unsupported.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-CIT-U-partner:D0-tools:verify_adaptive:e13687da68",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792843121-g6VVMr3YOJMdnMAD2ZXO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2592,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 2.3184e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.154,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U-partner:D0-tools:verify_adaptive:63a97b93cd",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792843122-uyStaTDC56aI7hzblMz4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2804,
+   "completion_tokens": 58,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.3952e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.33,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U-partner:D0-tools:verify_adaptive:5f1caa8caa",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792843126-53NpiU9JShevXa0JAxhT",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3024,
+   "completion_tokens": 55,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.07088e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.573,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U-partner:D0-tools:verify_adaptive:aa8d95fb7e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1792843127-S2LMCdo2XgbZAElwhpjt",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3152,
+   "completion_tokens": 57,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00045724,
+   "cost_is_estimate": false,
+   "latency_s": 13.887,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U-partner:D0-tools:verify_adaptive:d3028773d4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792843141-vL7m9OOvZ6qTXl4NH85r",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3350,
+   "completion_tokens": 158,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.47776e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.832,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00063986,
+ "prompt_tokens": 14922,
+ "completion_tokens": 378,
+ "finished_at": "2026-10-24T11:59:04Z",
+ "status": "completed"
+}

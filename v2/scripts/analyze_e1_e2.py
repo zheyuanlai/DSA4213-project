@@ -58,9 +58,15 @@ def mentions(text: str, pair: str) -> bool:
     return any(m.lower() in t for m in DECISIVE_MARKERS[pair])
 
 
+def decisive_retrieved(run: dict[str, Any], probe: dict[str, Any]) -> bool:
+    """True if a tool returned a decisive ID or anything inside it (a row ID such as T1.r3 matches cell T1.r3.wren)."""
+    got = run.get("returned_ids", [])
+    return any(g == d or g.startswith(d + ".") for d in probe["decisive_evidence_ids"] for g in got)
+
+
 def suggest_stage(run: dict[str, Any], probe: dict[str, Any]) -> str:
     cond = run["condition"]
-    if cond == "D0-tools" and not set(probe["decisive_evidence_ids"]) & set(run.get("returned_ids", [])):
+    if cond == "D0-tools" and not decisive_retrieved(run, probe):
         return "F0"
     j = run.get("judgement") or {}
     if cond in ("D1-oracle", "D2-oracle"):
@@ -210,8 +216,7 @@ def write_sheets(runs: list[dict[str, Any]], probes: list[dict[str, Any]], out: 
                     or r["decision"] == "STRENGTHEN":
                 continue
             j = r.get("judgement") or {}
-            retrieved = (bool(set(p["decisive_evidence_ids"]) & set(r.get("returned_ids", [])))
-                         if r["condition"] == "D0-tools" else "")
+            retrieved = decisive_retrieved(r, p) if r["condition"] == "D0-tools" else ""
             w.writerow([r["condition"], r["probe_id"], r["repeat"], r["decision"], j.get("support_relation", ""),
                         j.get("strongest_supported", ""), r.get("rationale", ""), p["decisive_fact"], retrieved,
                         suggest_stage(r, p), "", "", "", ""])

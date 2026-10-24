@@ -1,0 +1,223 @@
+{
+ "run_id": "e1e2_v1:D0-tools:P-CIT-S-partner:r2",
+ "probe_id": "P-CIT-S-partner",
+ "case_id": "CIT-p1a",
+ "condition": "D0-tools",
+ "repeat": 2,
+ "draft_text": "Varga & Sandoval (2021) reported that salience pre-filtering reduced the share of news summaries containing an unsupported entity by 31% relative to an unfiltered summarizer, across three news summarization benchmarks.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:52:11Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "The only supplied passage from Varga & Sandoval (2021) (P1) describes the salience pre-filtering method (classifier threshold, training data) but contains no reported reduction percentage (31%) and no mention of three benchmarks or any hallucination-rate result. The claim's quantitative and scope content is unsupported by the supplied evidence.",
+ "evidence_ids": [
+  "P1",
+  "absent:passage"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "31%"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "three news summarization benchmarks"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1",
+  "absent:passage"
+ ],
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Varga & Sandoval (2021) reported that salience pre-filtering reduced the share of news summaries containing an unsupported entity by 31% relative to an unfiltered summarizer, across three news summarization benchmarks.",
+  "actions": [
+   {
+    "call_id": "call_177e9a59da1d4110a7129ed3",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_ebd0a3de374d4ae9ac64b372",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "31%"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_0769306e5add49efb060937a",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "three news summarization benchmarks"
+    },
+    "policy": "adaptive",
+    "step": 3
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_177e9a59da1d4110a7129ed3",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   },
+   {
+    "call_id": "call_ebd0a3de374d4ae9ac64b372",
+    "tool": "retrieve_passage",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [
+     "absent:passage"
+    ],
+    "message": "No supplied passage matches this query. Available: P1 (Varga & Sandoval (2021)); P2 (Achterberg & Moyo (2022))",
+    "provenance": ""
+   },
+   {
+    "call_id": "call_0769306e5add49efb060937a",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Varga & Sandoval (2021) reported that salience pre-filtering reduced the share of news summaries containing an unsupported entity by 31% relative to an unfiltered summarizer, across three news summarization benchmarks.",
+   "revised_text": "",
+   "evidence_ids": [
+    "P1",
+    "absent:passage"
+   ],
+   "rationale": "The only supplied passage from Varga & Sandoval (2021) (P1) describes the salience pre-filtering method (classifier threshold, training data) but contains no reported reduction percentage (31%) and no mention of three benchmarks or any hallucination-rate result. The claim's quantitative and scope content is unsupported by the supplied evidence.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 4,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-CIT-S-partner:D0-tools:verify_adaptive:8041aff6a0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842731-FfnP91zexqjIoxm6cF2i",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2632,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 2.6704e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.363,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-S-partner:D0-tools:verify_adaptive:746982ad1b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842732-d1Kea4DVzt6iQSOlMdSZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2844,
+   "completion_tokens": 89,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.38448e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.605,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-S-partner:D0-tools:verify_adaptive:6922e47bad",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842734-O9rCRDb8TlAPBl7vHMDL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3048,
+   "completion_tokens": 53,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.22928e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.621,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-S-partner:D0-tools:verify_adaptive:1663b42a21",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842736-yc2V6k4v5Z4mSaca1x81",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3263,
+   "completion_tokens": 174,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.13456e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.812,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00017419,
+ "prompt_tokens": 11787,
+ "completion_tokens": 366,
+ "finished_at": "2026-10-24T11:52:20Z",
+ "status": "completed"
+}
