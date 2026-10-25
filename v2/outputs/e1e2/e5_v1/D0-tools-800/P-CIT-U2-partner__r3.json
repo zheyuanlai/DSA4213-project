@@ -1,0 +1,126 @@
+{
+ "run_id": "e5_v1:D0-tools-800:P-CIT-U2-partner:r3",
+ "probe_id": "P-CIT-U2-partner",
+ "case_id": "CIT-p1a",
+ "condition": "D0-tools-800",
+ "repeat": 3,
+ "draft_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:25:14Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "The P1 passage describes the salience pre-filtering method (scoring, threshold, training) but contains no statement that it reduces unsupported entities in summaries. The claim attributes a suggestion to Varga & Sandoval that the supplied passage does not state.",
+ "evidence_ids": [
+  "P1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+  "actions": [
+   {
+    "call_id": "call_f5155b7cfff44de8bf14017a",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_f5155b7cfff44de8bf14017a",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+   "revised_text": "",
+   "evidence_ids": [
+    "P1"
+   ],
+   "rationale": "The P1 passage describes the salience pre-filtering method (scoring, threshold, training) but contains no statement that it reduces unsupported entities in summaries. The claim attributes a suggestion to Varga & Sandoval that the supplied passage does not state.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 2,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-CIT-U2-partner:D0-tools-800:verify_adaptive:341103142f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792913114-kPj4dwqV5PL7s7PDACW1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2588,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 2.2832e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.174,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U2-partner:D0-tools-800:verify_adaptive:671e6e445d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792913116-tZq2GdGw9ZQWJH7k9j0t",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2800,
+   "completion_tokens": 149,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.7624e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.989,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 9.046e-05,
+ "prompt_tokens": 5388,
+ "completion_tokens": 199,
+ "finished_at": "2026-10-25T07:25:19Z",
+ "status": "completed"
+}

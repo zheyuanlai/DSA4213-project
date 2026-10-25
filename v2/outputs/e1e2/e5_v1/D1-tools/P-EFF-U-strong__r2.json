@@ -1,0 +1,287 @@
+{
+ "run_id": "e5_v1:D1-tools:P-EFF-U-strong:r2",
+ "probe_id": "P-EFF-U-strong",
+ "case_id": "EFF-p1a",
+ "condition": "D1-tools",
+ "repeat": 2,
+ "draft_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:10:58Z",
+ "decision": "ACCEPT",
+ "revised_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+ "rationale": "Table T1 reports Brisling passes=4.0 and Talmar passes=37.6, both matching the claim exactly. The \"far fewer\" characterization is supported by the large ratio. Scope (Brindle-Voice test set) matches.",
+ "evidence_ids": [
+  "T1.r1.passes",
+  "T1.r2.passes"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Brisling needs far fewer decoder passes per utterance than Talmar on Brindle-Voice",
+  "expressed_strength": "\"far fewer decoder passes per utterance\" with specific numbers 4.0 vs 37.6",
+  "strongest_supported": "On the Brindle-Voice test set, Brisling needs 4.0 decoder passes per utterance versus 37.6 for Talmar.",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1",
+    "column": "passes"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 4.0,
+    "evidence_id": "T1.r1.passes"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 37.6,
+    "evidence_id": "T1.r2.passes"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.passes",
+  "T1.r2.passes",
+  "T1.r3.passes"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+  "actions": [
+   {
+    "call_id": "call_d94682464fdc462fab5c6036",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1",
+     "column": "passes"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_e033bdc2107c42cda9c589b6",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 4.0,
+     "evidence_id": "T1.r1.passes"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_57f0b0706dab4e9ebcb0c1a0",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 37.6,
+     "evidence_id": "T1.r2.passes"
+    },
+    "policy": "adaptive",
+    "step": 3
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_d94682464fdc462fab5c6036",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+     "notes": "All latencies measured by us on Corvex A2 (fp16, batch size 1, Lumen 3.1).",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.passes",
+       "row": "Brisling (ours)",
+       "column": "Decoder passes per utterance",
+       "text": "4.0",
+       "value": 4.0,
+       "unit": null,
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r2.passes",
+       "row": "Talmar",
+       "column": "Decoder passes per utterance",
+       "text": "37.6",
+       "value": 37.6,
+       "unit": null,
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r3.passes",
+       "row": "Greedy-CTC",
+       "column": "Decoder passes per utterance",
+       "text": "—",
+       "value": null,
+       "unit": null,
+       "higher_is_better": false
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.passes",
+     "T1.r2.passes",
+     "T1.r3.passes"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_e033bdc2107c42cda9c589b6",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 4.0,
+     "actual": 4.0,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r1.passes",
+      "row": "Brisling (ours)",
+      "column": "Decoder passes per utterance",
+      "text": "4.0",
+      "value": 4.0,
+      "unit": null,
+      "higher_is_better": false
+     }
+    },
+    "returned_ids": [
+     "T1.r1.passes"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   },
+   {
+    "call_id": "call_57f0b0706dab4e9ebcb0c1a0",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 37.6,
+     "actual": 37.6,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r2.passes",
+      "row": "Talmar",
+      "column": "Decoder passes per utterance",
+      "text": "37.6",
+      "value": 37.6,
+      "unit": null,
+      "higher_is_better": false
+     }
+    },
+    "returned_ids": [
+     "T1.r2.passes"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+   "revised_text": "On the Brindle-Voice test set, Brisling needs far fewer decoder passes per utterance than Talmar (4.0 vs 37.6).",
+   "evidence_ids": [
+    "T1.r1.passes",
+    "T1.r2.passes"
+   ],
+   "rationale": "Table T1 reports Brisling passes=4.0 and Talmar passes=37.6, both matching the claim exactly. The \"far fewer\" characterization is supported by the large ratio. Scope (Brindle-Voice test set) matches.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 4,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-EFF-U-strong:D1-tools:verify_adaptive_D1:5e293aec3f",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912258-doD7GFyjpeq4IAWXfzWR",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3132,
+   "completion_tokens": 64,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000292512,
+   "cost_is_estimate": false,
+   "latency_s": 1.803,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-EFF-U-strong:D1-tools:verify_adaptive_D1:850c7be1c4",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912259-TNdrPJWUtS8qNdKxbsnd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3490,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.75936e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.765,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-EFF-U-strong:D1-tools:verify_adaptive_D1:c5c2ee24af",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912261-AMqMXa2Zw3QVmQrGLM7j",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3800,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.88064e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.43,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-EFF-U-strong:D1-tools:verify_adaptive_D1:0e64564352",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912263-RNO8ycGT6P8UwA702gs9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4007,
+   "completion_tokens": 297,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001256672,
+   "cost_is_estimate": false,
+   "latency_s": 4.838,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00056458,
+ "prompt_tokens": 14429,
+ "completion_tokens": 551,
+ "finished_at": "2026-10-25T07:11:08Z",
+ "status": "completed"
+}

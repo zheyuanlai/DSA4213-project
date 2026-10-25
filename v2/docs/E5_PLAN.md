@@ -1,6 +1,6 @@
 # E5 plan: the selected D1 verifier inside the adaptive tool loop (DEV only, exploratory)
 
-**Status: implemented and offline-tested (2026-10-25); the paid run awaits approval.** It follows E2b, which kept **D1**
+**Status: run `e5_v1` done (2026-10-25); results in [`E5_RESULTS.md`](E5_RESULTS.md).** It follows E2b, which kept **D1**
 (D1c showed no clear benefit).
 All three conditions run in **one interleaved batch**, because E2b found large batch-to-batch variation.
 

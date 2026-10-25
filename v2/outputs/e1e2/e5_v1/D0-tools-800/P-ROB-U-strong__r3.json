@@ -1,0 +1,199 @@
+{
+ "run_id": "e5_v1:D0-tools-800:P-ROB-U-strong:r3",
+ "probe_id": "P-ROB-U-strong",
+ "case_id": "ROB-p1a",
+ "condition": "D0-tools-800",
+ "repeat": 3,
+ "draft_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:22:31Z",
+ "decision": "ACCEPT",
+ "revised_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+ "rationale": "T2.r1.th_drop reports Thornbill-NER's drop at 10% noise as 0.6 points, matching the claim. The robustness criterion (≤2.0 points) is pre-specified in the setup, and 0.6 ≤ 2.0, so the claim is supported as stated.",
+ "evidence_ids": [
+  "T2.r1.th_drop"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T2",
+    "row_id": "r1",
+    "column": "th_drop"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 0.6,
+    "evidence_id": "T2.r1.th_drop"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T2",
+  "T2.r1.th_drop"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+  "actions": [
+   {
+    "call_id": "call_af9e354ce3f940c9a71d7c65",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T2",
+     "row_id": "r1",
+     "column": "th_drop"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_33f225bfa0984e029da8710e",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 0.6,
+     "evidence_id": "T2.r1.th_drop"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_af9e354ce3f940c9a71d7c65",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T2",
+     "caption": "Mean entity-level F1 (%) over 5 seeds when trained with corrupted labels; drop = original-label F1 minus F1 at that noise rate (points).",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T2.r1.th_drop",
+       "row": "10% label noise",
+       "column": "Thornbill-NER drop",
+       "text": "0.6",
+       "value": 0.6,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     ]
+    },
+    "returned_ids": [
+     "T2",
+     "T2.r1.th_drop"
+    ],
+    "message": "",
+    "provenance": "table T2"
+   },
+   {
+    "call_id": "call_33f225bfa0984e029da8710e",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 0.6,
+     "actual": 0.6,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T2.r1.th_drop",
+      "row": "10% label noise",
+      "column": "Thornbill-NER drop",
+      "text": "0.6",
+      "value": 0.6,
+      "unit": "points",
+      "higher_is_better": false
+     }
+    },
+    "returned_ids": [
+     "T2.r1.th_drop"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+   "revised_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+   "evidence_ids": [
+    "T2.r1.th_drop"
+   ],
+   "rationale": "T2.r1.th_drop reports Thornbill-NER's drop at 10% noise as 0.6 points, matching the claim. The robustness criterion (≤2.0 points) is pre-specified in the setup, and 0.6 ≤ 2.0, so the claim is supported as stated.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-ROB-U-strong:D0-tools-800:verify_adaptive:c294d52bc9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912951-FYK0hqNEfsWXXgXrcxrv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2819,
+   "completion_tokens": 83,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000269984,
+   "cost_is_estimate": false,
+   "latency_s": 2.036,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-U-strong:D0-tools-800:verify_adaptive:d349a36254",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912953-ZOG0u3fNLjV3gAT4vBA1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3058,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.73968e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.244,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-U-strong:D0-tools-800:verify_adaptive:d87b8e5def",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912954-7IR7az3fx3TeDEJxgdMx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3273,
+   "completion_tokens": 169,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.27168e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.801,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.0004101,
+ "prompt_tokens": 9150,
+ "completion_tokens": 321,
+ "finished_at": "2026-10-25T07:22:37Z",
+ "status": "completed"
+}

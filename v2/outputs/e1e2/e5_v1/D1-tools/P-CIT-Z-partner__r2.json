@@ -1,0 +1,131 @@
+{
+ "run_id": "e5_v1:D1-tools:P-CIT-Z-partner:r2",
+ "probe_id": "P-CIT-Z-partner",
+ "case_id": "CIT-p1a",
+ "condition": "D1-tools",
+ "repeat": 2,
+ "draft_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:16:55Z",
+ "decision": "ACCEPT",
+ "revised_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+ "rationale": "P1 describes the salience pre-filtering procedure (scoring, threshold 0.35, removal, training data) but contains no quantitative claim about hallucination reduction. The claim accurately states both the citation purpose and the absence of a reduction figure.",
+ "evidence_ids": [
+  "P1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "P1 is cited for the salience pre-filtering procedure and does not report how much the filter reduces hallucinations.",
+  "expressed_strength": "\"does not report how much the filter reduces hallucinations\" — a negative claim about the excerpt's content.",
+  "strongest_supported": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt describes the filtering procedure but does not report how much the filter reduces hallucinations.",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+  "actions": [
+   {
+    "call_id": "call_558df669695f4816a4f3378d",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_558df669695f4816a4f3378d",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+   "revised_text": "Varga & Sandoval (2021) is cited for the salience pre-filtering procedure; the quoted excerpt does not report how much the filter reduces hallucinations.",
+   "evidence_ids": [
+    "P1"
+   ],
+   "rationale": "P1 describes the salience pre-filtering procedure (scoring, threshold 0.35, removal, training data) but contains no quantitative claim about hallucination reduction. The claim accurately states both the citation purpose and the absence of a reduction figure.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 2,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-CIT-Z-partner:D1-tools:verify_adaptive_D1:131e43e9c5",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912615-arYCYJDaT28mhCDvlL1h",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3087,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 2.31216e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.792,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-Z-partner:D1-tools:verify_adaptive_D1:81ef87085f",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912619-29ibOr19Yl56AQGfQCmm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3299,
+   "completion_tokens": 299,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001075136,
+   "cost_is_estimate": false,
+   "latency_s": 4.129,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00013064,
+ "prompt_tokens": 6386,
+ "completion_tokens": 349,
+ "finished_at": "2026-10-25T07:17:03Z",
+ "status": "completed"
+}

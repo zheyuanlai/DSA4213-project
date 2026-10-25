@@ -1,0 +1,295 @@
+{
+ "run_id": "e5_v1:D1-tools:P-CIT-U2-partner:r2",
+ "probe_id": "P-CIT-U2-partner",
+ "case_id": "CIT-p1a",
+ "condition": "D1-tools",
+ "repeat": 2,
+ "draft_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:16:16Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "P1 describes the pre-filtering mechanism (sentence scoring, threshold 0.35, training data) but contains no claim about reducing unsupported entities or hallucinations. The attribution is unsupported by the supplied passage.",
+ "evidence_ids": [
+  "P1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Varga & Sandoval (2021) suggest salience pre-filtering may help reduce unsupported entities in summaries.",
+  "expressed_strength": "\"suggest that ... may help reduce\" — hedged attribution of a potential benefit",
+  "strongest_supported": "The supplied passage from Varga & Sandoval (2021) describes the salience pre-filtering method but does not state that it reduces unsupported entities in summaries.",
+  "support_relation": "NOT_SUPPORTED"
+ },
+ "tools": [
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "Varga Sandoval unsupported entities hallucination"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "reduce unsupported entities"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "salience pre-filtering reduce unsupported entity hallucination 30%"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1",
+  "P2"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+  "actions": [
+   {
+    "call_id": "call_6f55ce93a1574299a655a707",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_506e6b9ad8d444ebbf382887",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "Varga Sandoval unsupported entities hallucination"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_41e933ce5fc8408b8de3c3d0",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "reduce unsupported entities"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_ee8da03d97c44b2098f630df",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "salience pre-filtering reduce unsupported entity hallucination 30%"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_6f55ce93a1574299a655a707",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   },
+   {
+    "call_id": "call_506e6b9ad8d444ebbf382887",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   },
+   {
+    "call_id": "call_41e933ce5fc8408b8de3c3d0",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P2",
+       "citation_key": "Achterberg & Moyo (2022)",
+       "source_title": "Counting What Is Not There: An Annotation Protocol for Entity Hallucination",
+       "text": "We define an unsupported entity as a named entity in a generated summary that neither appears in nor can be inferred from the source document. Each summary is labelled independently by two annotators, with disagreements resolved by a third; inter-annotator agreement on our pilot set was κ = 0.81."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P2"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   },
+   {
+    "call_id": "call_ee8da03d97c44b2098f630df",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P2",
+       "citation_key": "Achterberg & Moyo (2022)",
+       "source_title": "Counting What Is Not There: An Annotation Protocol for Entity Hallucination",
+       "text": "We define an unsupported entity as a named entity in a generated summary that neither appears in nor can be inferred from the source document. Each summary is labelled independently by two annotators, with disagreements resolved by a third; inter-annotator agreement on our pilot set was κ = 0.81."
+      },
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P2",
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+   "revised_text": "",
+   "evidence_ids": [
+    "P1"
+   ],
+   "rationale": "P1 describes the pre-filtering mechanism (sentence scoring, threshold 0.35, training data) but contains no claim about reducing unsupported entities or hallucinations. The attribution is unsupported by the supplied passage.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-CIT-U2-partner:D1-tools:verify_adaptive_D1:e55b926f56",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912576-yyj7TVoKqwVf2dD2Qltx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3071,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.35248e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.679,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U2-partner:D1-tools:verify_adaptive_D1:112d2900f9",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912579-2a5Doc5jsey7qmFGrpv3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3283,
+   "completion_tokens": 57,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.22176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.165,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U2-partner:D1-tools:verify_adaptive_D1:934b494e11",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912583-iyjagrAfxgOWD8Z5QGtZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3502,
+   "completion_tokens": 52,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.01696e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.104,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U2-partner:D1-tools:verify_adaptive_D1:35f8f95492",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912585-zK3GuQnv4ABQOUczVKUw",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3699,
+   "completion_tokens": 62,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.83344e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.008,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U2-partner:D1-tools:verify_adaptive_D1:5354380c8a",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912587-B8MV4zGJLgy8y2GtA8yg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4037,
+   "completion_tokens": 287,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001256672,
+   "cost_is_estimate": false,
+   "latency_s": 4.82,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00032991,
+ "prompt_tokens": 17592,
+ "completion_tokens": 508,
+ "finished_at": "2026-10-25T07:16:32Z",
+ "status": "completed"
+}

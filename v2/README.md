@@ -51,4 +51,5 @@ remain. On Linux CI the check passes unchanged.
 3. E2b, comparability addition D1c: [`docs/E2b_COMPARABILITY.md`](docs/E2b_COMPARABILITY.md). Run `e2b_v1` done; **D1 kept**.
    Targeted student review sheet: [`review/E2_REVIEW_SHEET.md`](review/E2_REVIEW_SHEET.md).
 4. Reproducibility audit of the D1 batch-to-batch variation: [`docs/REPRODUCIBILITY_AUDIT.md`](docs/REPRODUCIBILITY_AUDIT.md).
-5. E5, D1 inside the tool loop: [`docs/E5_PLAN.md`](docs/E5_PLAN.md). Implemented and offline-tested; **paid run awaits approval.**
+5. E5, D1 inside the tool loop: [`docs/E5_PLAN.md`](docs/E5_PLAN.md). Run `e5_v1` done; results in
+   [`docs/E5_RESULTS.md`](docs/E5_RESULTS.md) (student checks pending).
