@@ -68,6 +68,33 @@ def build_claims(texts: dict[str, str]) -> tuple[dict, list[dict]]:
     return {"units": units}, claims
 
 
+def schema_suffix(schema: dict) -> str:
+    """V1's Claude backend (evaluation/judges.py::_claude_call) appends the output schema to the prompt; do the same."""
+    return ("\n\n## Output format\nReturn exactly one JSON object, with no text before or after it, "
+            "that validates against this JSON Schema:\n" + json.dumps(schema, separators=(",", ":")))
+
+
+def call_validated(model: str, item_key: str, system: str, prompt: str, schema: dict, max_tokens: int) -> tuple[dict, list]:
+    """Call with the schema appended; on a schema violation, one repair turn (deviation D1, PHASE4_DEVIATIONS.md)."""
+    full = prompt + schema_suffix(schema)
+    call = or_judge.call_json(model, "p4_judge", item_key, system, full, max_tokens=max_tokens)
+    calls = [{"raw": call.raw_path, "cost_usd": call.cost_usd}]
+    try:
+        out = or_judge.parse_json(call.content)
+        jsonschema.validate(out, schema)
+        return out, calls
+    except (ValueError, jsonschema.ValidationError) as e:
+        msg = str(e).splitlines()[0][:400]
+    history = [{"role": "user", "content": full}, {"role": "assistant", "content": call.content}]
+    fix = f"Your JSON does not validate against the schema ({msg}). Return the corrected JSON object only."
+    call2 = or_judge.call_json(model, "p4_judge", item_key + ":repair", system, fix, max_tokens=max_tokens,
+                               history=history)
+    calls.append({"raw": call2.raw_path, "cost_usd": call2.cost_usd})
+    out = or_judge.parse_json(call2.content)
+    jsonschema.validate(out, schema)
+    return out, calls
+
+
 def verify_call(model: str, case_id: str, pkg, texts: dict[str, str], tag: str) -> tuple[dict, list[dict], dict]:
     pk, claims = build_claims(texts)
     package = oracle_evidence(pkg)
@@ -77,10 +104,8 @@ def verify_call(model: str, case_id: str, pkg, texts: dict[str, str], tag: str) 
               .replace("{{PASSAGES}}", passages).replace("{{CLAIMS}}", cblock))
     check_leakage(prompt, [package, passages, cblock], [])
     system = (V1P / "system.md").read_text(encoding="utf-8").strip()
-    call = or_judge.call_json(model, "p4_judge", f"{tag}:{case_id}:{model}", system, prompt, max_tokens=6000)
-    out = or_judge.parse_json(call.content)
-    jsonschema.validate(out, SCHEMAS["verify"])
-    return {c["claim_id"]: c for c in out["claims"]}, claims, {"raw": call.raw_path, "cost_usd": call.cost_usd}
+    out, calls = call_validated(model, f"{tag}:{case_id}:{model}", system, prompt, SCHEMAS["verify"], 6000)
+    return {c["claim_id"]: c for c in out["claims"]}, claims, {"calls": calls}
 
 
 def numeric_status(claim: dict, reading: dict, ev: EvidenceValues) -> list[str]:
@@ -113,10 +138,8 @@ def adjudicate(case_id: str, pkg, disputes: list[dict], tag: str) -> dict[str, d
                                                     for r in (d["A"], d["B"])]
     check_leakage(prompt, [package, "\n".join(lines)] + model_text, [])
     system = (V1P / "system.md").read_text(encoding="utf-8").strip()
-    call = or_judge.call_json(or_judge.JUDGE_A_MODEL, "p4_judge", f"{tag}:{case_id}:adj", system, prompt,
-                              max_tokens=4000)
-    out = or_judge.parse_json(call.content)
-    jsonschema.validate(out, SCHEMAS["adjudicate_claims"])
+    out, _ = call_validated(or_judge.JUDGE_A_MODEL, f"{tag}:{case_id}:adj", system, prompt,
+                            SCHEMAS["adjudicate_claims"], 4000)
     return {d["item_id"]: d for d in out["decisions"]}
 
 

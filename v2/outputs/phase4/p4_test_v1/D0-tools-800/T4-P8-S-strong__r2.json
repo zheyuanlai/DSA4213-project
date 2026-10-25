@@ -1,0 +1,342 @@
+{
+ "run_id": "p4_test_v1:D0-tools-800:T4-P8-S-strong:r2",
+ "probe_id": "T4-P8-S-strong",
+ "case_id": "T4-P8-strong",
+ "condition": "D0-tools-800",
+ "repeat": 2,
+ "draft_text": "Asterion's 2.4-point gain over RuneSpan was smaller than the 3.1-point Meridian-QA gain Darsen and Ko reported for Patchwise Replay.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:37:55Z",
+ "decision": "ACCEPT",
+ "revised_text": "Asterion's 2.4-point gain over RuneSpan was smaller than the 3.1-point Meridian-QA gain Darsen and Ko reported for Patchwise Replay.",
+ "rationale": "Asterion's gain over RuneSpan is 2.4 pp (80.4-78.0, T1), matching the claim. P1 states Darsen and Ko reported a 3.1 pp Meridian-QA gain for Patchwise Replay. 2.4 < 3.1, so the comparison is accurate and correctly attributed.",
+ "evidence_ids": [
+  "T1.r1.em",
+  "T1.r2.em",
+  "P1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 2.4,
+    "evidence_id": "T1.r1.em",
+    "mode": "difference",
+    "reference_evidence_id": "T1.r2.em"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 3.1,
+    "evidence_id": "T1.r1.em",
+    "mode": "value"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1",
+  "T1",
+  "T1.r1.em",
+  "T1.r2.em"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": true,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Asterion's 2.4-point gain over RuneSpan was smaller than the 3.1-point Meridian-QA gain Darsen and Ko reported for Patchwise Replay.",
+  "actions": [
+   {
+    "call_id": "call_207456a2683c465580355806",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_4f849fbfaffe473fa19e2c4b",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_5734cf9364d6414e8f770805",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 2.4,
+     "evidence_id": "T1.r1.em",
+     "mode": "difference",
+     "reference_evidence_id": "T1.r2.em"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_169df40f3c2d4fb392f3461a",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 3.1,
+     "evidence_id": "T1.r1.em",
+     "mode": "value"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_207456a2683c465580355806",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on Meridian-QA test, mean ± SD over 8 seeds.",
+     "notes": "The mean Asterion−RuneSpan gain is 2.4 percentage points.",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.em",
+       "row": "Asterion (ours)",
+       "column": "Exact match (%)",
+       "text": "80.4 ± 0.8",
+       "value": 80.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.em",
+       "row": "RuneSpan",
+       "column": "Exact match (%)",
+       "text": "78.0 ± 0.9",
+       "value": 78.0,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.em",
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_4f849fbfaffe473fa19e2c4b",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Darsen and Ko (2023)",
+       "source_title": "Replay schedules for extractive readers",
+       "text": "In a preliminary experiment, we apply Patchwise Replay by revisiting high-loss training passages after each epoch. On Meridian-QA, Patchwise Replay increased exact-match accuracy from 76.8% to 79.9%, a gain of 3.1 percentage points, averaged over five runs."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   },
+   {
+    "call_id": "call_5734cf9364d6414e8f770805",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "difference",
+     "claimed": 2.4,
+     "actual": 2.4,
+     "abs_error": 0.0,
+     "tolerance": 0.1,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r1.em",
+      "row": "Asterion (ours)",
+      "column": "Exact match (%)",
+      "text": "80.4 ± 0.8",
+      "value": 80.4,
+      "unit": "%",
+      "higher_is_better": true
+     },
+     "reference": {
+      "evidence_id": "T1.r2.em",
+      "row": "RuneSpan",
+      "column": "Exact match (%)",
+      "text": "78.0 ± 0.9",
+      "value": 78.0,
+      "unit": "%",
+      "higher_is_better": true
+     },
+     "better_entry": "T1.r1.em"
+    },
+    "returned_ids": [
+     "T1.r1.em",
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   },
+   {
+    "call_id": "call_169df40f3c2d4fb392f3461a",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 3.1,
+     "actual": 80.4,
+     "abs_error": 77.3,
+     "tolerance": 0.05,
+     "match": false,
+     "evidence": {
+      "evidence_id": "T1.r1.em",
+      "row": "Asterion (ours)",
+      "column": "Exact match (%)",
+      "text": "80.4 ± 0.8",
+      "value": 80.4,
+      "unit": "%",
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r1.em"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Asterion's 2.4-point gain over RuneSpan was smaller than the 3.1-point Meridian-QA gain Darsen and Ko reported for Patchwise Replay.",
+   "revised_text": "Asterion's 2.4-point gain over RuneSpan was smaller than the 3.1-point Meridian-QA gain Darsen and Ko reported for Patchwise Replay.",
+   "evidence_ids": [
+    "T1.r1.em",
+    "T1.r2.em",
+    "P1"
+   ],
+   "rationale": "Asterion's gain over RuneSpan is 2.4 pp (80.4-78.0, T1), matching the claim. P1 states Darsen and Ko reported a 3.1 pp Meridian-QA gain for Patchwise Replay. 2.4 < 3.1, so the comparison is accurate and correctly attributed.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 2,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P8-S-strong:D0-tools-800:verify_adaptive:ceab50eca4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921075-NiHU1bZsLfGEPklHk4IO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2445,
+   "completion_tokens": 83,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.43936e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.531,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P8-S-strong:D0-tools-800:verify_adaptive:ed4120e040",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921079-bm2NyAlj2kdIHKF5rpbf",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2801,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.33872e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.308,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P8-S-strong:D0-tools-800:verify_adaptive:5049ccbd2a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921080-0hRible14u5lEhSVjesb",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2990,
+   "completion_tokens": 175,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.1208e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.209,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P8-S-strong:D0-tools-800:verify_adaptive:126bde59bb",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921083-v8hW4nnwa3dy4RZU01Oc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3439,
+   "completion_tokens": 83,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.46208e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.294,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P8-S-strong:D0-tools-800:verify_adaptive:0560df25d5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921086-3hu8TpPgmzDhU2Luzqw0",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3667,
+   "completion_tokens": 187,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.85184e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.157,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00041213,
+ "prompt_tokens": 15342,
+ "completion_tokens": 578,
+ "finished_at": "2026-10-25T09:38:09Z",
+ "status": "completed"
+}

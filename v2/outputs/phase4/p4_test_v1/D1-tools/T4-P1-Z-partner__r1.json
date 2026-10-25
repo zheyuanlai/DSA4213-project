@@ -1,0 +1,229 @@
+{
+ "run_id": "p4_test_v1:D1-tools:T4-P1-Z-partner:r1",
+ "probe_id": "T4-P1-Z-partner",
+ "case_id": "T4-P1-partner",
+ "condition": "D1-tools",
+ "repeat": 1,
+ "draft_text": "Mirevant's superiority over RookReader is not established because the confidence interval for the paired difference includes zero.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:18:54Z",
+ "decision": "ACCEPT",
+ "revised_text": "Mirevant's superiority over RookReader is not established because the confidence interval for the paired difference includes zero.",
+ "rationale": "The reported paired 95% CI is [-0.12, 1.92], which includes zero. The claim that superiority is not established because the CI includes zero is directly supported by test S1. No p-value was reported, consistent with the claim's framing.",
+ "evidence_ids": [
+  "S1",
+  "T1.r1.em",
+  "T1.r2.em"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Mirevant's superiority over RookReader is not established because the CI for the paired difference includes zero.",
+  "expressed_strength": "\"not established because the confidence interval for the paired difference includes zero\"",
+  "strongest_supported": "The 95% paired-difference CI for Mirevant − RookReader is [-0.12, 1.92], which includes zero, so superiority is not established at the 0.05 level.",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "S1",
+  "T1",
+  "T1.r1.em",
+  "T1.r2.em"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": true,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Mirevant's superiority over RookReader is not established because the confidence interval for the paired difference includes zero.",
+  "actions": [
+   {
+    "call_id": "call_17cb3408126747019751ecbb",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_4b436af4f23444aebba3f507",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_17cb3408126747019751ecbb",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on Norlake-QA test, mean ± SD over 12 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.em",
+       "row": "Mirevant (ours)",
+       "column": "Exact match (%)",
+       "text": "74.6 ± 0.8",
+       "value": 74.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.em",
+       "row": "RookReader",
+       "column": "Exact match (%)",
+       "text": "73.7 ± 0.9",
+       "value": 73.7,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.em",
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_4b436af4f23444aebba3f507",
+    "tool": "get_test_metadata",
+    "status": "FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Mirevant vs RookReader, exact-match accuracy, Norlake-QA test",
+     "tests": [
+      {
+       "test_id": "S1",
+       "experiment_id": "exp1",
+       "comparison_id": "cmp1",
+       "test_name": "paired mean-difference confidence interval",
+       "sidedness": "two-sided",
+       "paired": true,
+       "n": 12,
+       "n_unit": "random seeds",
+       "statistic_name": null,
+       "statistic": null,
+       "df": 11.0,
+       "p_value": null,
+       "p_value_text": null,
+       "alpha": 0.05,
+       "ci_level": 0.95,
+       "ci_low": -0.12,
+       "ci_high": 1.92,
+       "effect_description": "mean paired difference in exact match (Mirevant − RookReader), percentage points",
+       "multiple_comparison_adjustment": null,
+       "notes": "No p-value was reported for this comparison.",
+       "summary": "paired mean-difference confidence interval; two-sided; paired; n=12 random seeds; 95% CI [-0.12, 1.92] for mean paired difference in exact match (Mirevant − RookReader), percentage points; alpha=0.05; note: No p-value was reported for this comparison."
+      }
+     ]
+    },
+    "returned_ids": [
+     "S1"
+    ],
+    "message": "",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Mirevant's superiority over RookReader is not established because the confidence interval for the paired difference includes zero.",
+   "revised_text": "Mirevant's superiority over RookReader is not established because the confidence interval for the paired difference includes zero.",
+   "evidence_ids": [
+    "S1",
+    "T1.r1.em",
+    "T1.r2.em"
+   ],
+   "rationale": "The reported paired 95% CI is [-0.12, 1.92], which includes zero. The claim that superiority is not established because the CI includes zero is directly supported by test S1. No p-value was reported, consistent with the claim's framing.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P1-Z-partner:D1-tools:verify_adaptive_D1:cdc48fc2cf",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792919934-SeDjDClAnxH4W450LKzc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2851,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.944e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.775,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-Z-partner:D1-tools:verify_adaptive_D1:03bdd5d0d7",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792919937-fU6O4E38cYEflHYXymt4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3210,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.05088e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.95,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-Z-partner:D1-tools:verify_adaptive_D1:def640d949",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792919939-L94hhtQTMKNJOD6HZM4b",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3605,
+   "completion_tokens": 318,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001394576,
+   "cost_is_estimate": false,
+   "latency_s": 5.031,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00025941,
+ "prompt_tokens": 9666,
+ "completion_tokens": 487,
+ "finished_at": "2026-10-25T09:19:04Z",
+ "status": "completed"
+}

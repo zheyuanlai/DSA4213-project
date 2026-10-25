@@ -1,0 +1,204 @@
+{
+ "run_id": "p4_test_v1:D1-tools-C5:T4-P5-U-partner:r3",
+ "probe_id": "T4-P5-U-partner",
+ "case_id": "T4-P5-partner",
+ "condition": "D1-tools-C5",
+ "repeat": 3,
+ "draft_text": "Nimbrake seems to offer somewhat higher throughput than Caskline on Driftbay-Serve, although this is only a tentative reading of the 142 versus 119 requests-per-second measurements.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:49:30Z",
+ "decision": "WEAKEN",
+ "revised_text": "Nimbrake measured 142 requests per second and Caskline 119 requests per second on Driftbay-Serve, though the figures are not directly comparable because the systems used different batch sizes (32 vs 16).",
+ "rationale": "Numbers 142 and 119 match T1. However, the table note states the figures are not directly comparable due to different batch sizes (32 vs 16), so asserting \"somewhat higher throughput\" overstates comparability. No statistical test reported.",
+ "evidence_ids": [
+  "T1.r1.rps",
+  "T1.r2.rps",
+  "absent:test:exp1/cmp1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Nimbrake offers somewhat higher throughput than Caskline on Driftbay-Serve",
+  "expressed_strength": "\"seems to offer somewhat higher throughput\" and \"only a tentative reading\" — hedged, tentative",
+  "strongest_supported": "Nimbrake measured 142 rps and Caskline 119 rps on Driftbay-Serve, but the figures are not directly comparable because the systems used different batch sizes (32 vs 16).",
+  "support_relation": "WEAKER_SUPPORTED"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.rps",
+  "T1.r2.rps",
+  "absent:test:exp1/cmp1"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": false,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Nimbrake seems to offer somewhat higher throughput than Caskline on Driftbay-Serve, although this is only a tentative reading of the 142 versus 119 requests-per-second measurements.",
+  "actions": [
+   {
+    "call_id": "call_c74e6321d34a46228f22f9a9",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_25c633de6c494aebb3ebe49c",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_c74e6321d34a46228f22f9a9",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Request throughput on Driftbay-Serve.",
+     "notes": "Both systems were measured on the same Orison AX7 accelerator, but Nimbrake used batch size 32 and Caskline used batch size 16, so the throughput figures are not directly comparable.",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.rps",
+       "row": "Nimbrake (ours)",
+       "column": "Throughput",
+       "text": "142",
+       "value": 142.0,
+       "unit": "requests per second",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.rps",
+       "row": "Caskline",
+       "column": "Throughput",
+       "text": "119",
+       "value": 119.0,
+       "unit": "requests per second",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.rps",
+     "T1.r2.rps"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_25c633de6c494aebb3ebe49c",
+    "tool": "get_test_metadata",
+    "status": "NOT_FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Nimbrake vs Caskline, request throughput, Driftbay-Serve"
+    },
+    "returned_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "WEAKEN",
+   "original_text": "Nimbrake seems to offer somewhat higher throughput than Caskline on Driftbay-Serve, although this is only a tentative reading of the 142 versus 119 requests-per-second measurements.",
+   "revised_text": "Nimbrake measured 142 requests per second and Caskline 119 requests per second on Driftbay-Serve, though the figures are not directly comparable because the systems used different batch sizes (32 vs 16).",
+   "evidence_ids": [
+    "T1.r1.rps",
+    "T1.r2.rps",
+    "absent:test:exp1/cmp1"
+   ],
+   "rationale": "Numbers 142 and 119 match T1. However, the table note states the figures are not directly comparable due to different batch sizes (32 vs 16), so asserting \"somewhat higher throughput\" overstates comparability. No statistical test reported.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P5-U-partner:D1-tools-C5:verify_adaptive_D1-C5:e5bd1e84ce",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921770-gf2BPlPTMzcNijAFTXxv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2878,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.00048e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.5,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P5-U-partner:D1-tools-C5:verify_adaptive_D1-C5:bd83543149",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921773-uKXBf9fOMJzs437L0B3D",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3258,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.29216e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.485,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P5-U-partner:D1-tools-C5:verify_adaptive_D1-C5:ef43731070",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921774-xHJJ6TGuPjTIchjU2V5T",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3434,
+   "completion_tokens": 378,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001184384,
+   "cost_is_estimate": false,
+   "latency_s": 5.398,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00020136,
+ "prompt_tokens": 9570,
+ "completion_tokens": 547,
+ "finished_at": "2026-10-25T09:49:40Z",
+ "status": "completed"
+}

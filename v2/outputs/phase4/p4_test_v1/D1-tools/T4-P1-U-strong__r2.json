@@ -1,0 +1,351 @@
+{
+ "run_id": "p4_test_v1:D1-tools:T4-P1-U-strong:r2",
+ "probe_id": "T4-P1-U-strong",
+ "case_id": "T4-P1-strong",
+ "condition": "D1-tools",
+ "repeat": 2,
+ "draft_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:31:13Z",
+ "decision": "ACCEPT",
+ "revised_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+ "rationale": "Table T1 shows Mirevant mean 74.6% vs RookReader 73.7%, both values matching the claim exactly. The sentence is explicitly descriptive and hedged, not claiming significance or superiority. The CI [0.24,1.56] excludes 0 but no p-value was reported, so the claim's caution is appropriate.",
+ "evidence_ids": [
+  "T1.r1.em",
+  "T1.r2.em",
+  "S1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA",
+  "expressed_strength": "\"Descriptively... higher observed mean... without implying established superiority\" — hedged, descriptive only",
+  "strongest_supported": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%).",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "experiment_id": "exp1",
+    "comparison_id": "cmp1"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 74.6,
+    "evidence_id": "T1.r1.em"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 73.7,
+    "evidence_id": "T1.r2.em"
+   }
+  }
+ ],
+ "returned_ids": [
+  "S1",
+  "T1",
+  "T1.r1.em",
+  "T1.r2.em"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": true,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+  "actions": [
+   {
+    "call_id": "call_273867a758794cd1ba26bf78",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_984d3b8d0a7f4d8c88e2f2de",
+    "tool": "get_test_metadata",
+    "args": {
+     "experiment_id": "exp1",
+     "comparison_id": "cmp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_7888ca6b32c64f91802e0d0d",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 74.6,
+     "evidence_id": "T1.r1.em"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_eb825bbc01484bbcaa5c3207",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 73.7,
+     "evidence_id": "T1.r2.em"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_273867a758794cd1ba26bf78",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on Norlake-QA test, mean ± SD over 12 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.em",
+       "row": "Mirevant (ours)",
+       "column": "Exact match (%)",
+       "text": "74.6 ± 0.8",
+       "value": 74.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.em",
+       "row": "RookReader",
+       "column": "Exact match (%)",
+       "text": "73.7 ± 0.9",
+       "value": 73.7,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.em",
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_984d3b8d0a7f4d8c88e2f2de",
+    "tool": "get_test_metadata",
+    "status": "FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Mirevant vs RookReader, exact-match accuracy, Norlake-QA test",
+     "tests": [
+      {
+       "test_id": "S1",
+       "experiment_id": "exp1",
+       "comparison_id": "cmp1",
+       "test_name": "paired mean-difference confidence interval",
+       "sidedness": "two-sided",
+       "paired": true,
+       "n": 12,
+       "n_unit": "random seeds",
+       "statistic_name": null,
+       "statistic": null,
+       "df": 11.0,
+       "p_value": null,
+       "p_value_text": null,
+       "alpha": 0.05,
+       "ci_level": 0.95,
+       "ci_low": 0.24,
+       "ci_high": 1.56,
+       "effect_description": "mean paired difference in exact match (Mirevant − RookReader), percentage points",
+       "multiple_comparison_adjustment": null,
+       "notes": "No p-value was reported for this comparison.",
+       "summary": "paired mean-difference confidence interval; two-sided; paired; n=12 random seeds; 95% CI [0.24, 1.56] for mean paired difference in exact match (Mirevant − RookReader), percentage points; alpha=0.05; note: No p-value was reported for this comparison."
+      }
+     ]
+    },
+    "returned_ids": [
+     "S1"
+    ],
+    "message": "",
+    "provenance": "comparison exp1/cmp1"
+   },
+   {
+    "call_id": "call_7888ca6b32c64f91802e0d0d",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 74.6,
+     "actual": 74.6,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r1.em",
+      "row": "Mirevant (ours)",
+      "column": "Exact match (%)",
+      "text": "74.6 ± 0.8",
+      "value": 74.6,
+      "unit": "%",
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r1.em"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   },
+   {
+    "call_id": "call_eb825bbc01484bbcaa5c3207",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 73.7,
+     "actual": 73.7,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r2.em",
+      "row": "RookReader",
+      "column": "Exact match (%)",
+      "text": "73.7 ± 0.9",
+      "value": 73.7,
+      "unit": "%",
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+   "revised_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+   "evidence_ids": [
+    "T1.r1.em",
+    "T1.r2.em",
+    "S1"
+   ],
+   "rationale": "Table T1 shows Mirevant mean 74.6% vs RookReader 73.7%, both values matching the claim exactly. The sentence is explicitly descriptive and hedged, not claiming significance or superiority. The CI [0.24,1.56] excludes 0 but no p-value was reported, so the claim's caution is appropriate.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P1-U-strong:D1-tools:verify_adaptive_D1:35f67ccd4c",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920672-atr8M3NjL7LZvsiS9y2M",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2885,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000266288,
+   "cost_is_estimate": false,
+   "latency_s": 1.452,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-U-strong:D1-tools:verify_adaptive_D1:106a32ad49",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920674-Cbbh7EfbhCi8rqRYgRjm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3144,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.83232e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.835,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-U-strong:D1-tools:verify_adaptive_D1:03d66cb3b9",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920676-3ONmv6Sn0IkNZOCBCBem",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3539,
+   "completion_tokens": 120,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.13776e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.994,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-U-strong:D1-tools:verify_adaptive_D1:8c9c04c114",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920678-s2xTAussOflDBAQ2DVTj",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3851,
+   "completion_tokens": 67,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.30304e-05,
+   "cost_is_estimate": false,
+   "latency_s": 10.489,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-U-strong:D1-tools:verify_adaptive_D1:c7d1c7f49c",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920689-X8V2SRWr6Ma0Oarted48",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4061,
+   "completion_tokens": 332,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000117848,
+   "cost_is_estimate": false,
+   "latency_s": 5.578,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00063687,
+ "prompt_tokens": 17480,
+ "completion_tokens": 634,
+ "finished_at": "2026-10-25T09:31:34Z",
+ "status": "completed"
+}
