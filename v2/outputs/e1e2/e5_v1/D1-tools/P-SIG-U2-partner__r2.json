@@ -1,0 +1,369 @@
+{
+ "run_id": "e5_v1:D1-tools:P-SIG-U2-partner:r2",
+ "probe_id": "P-SIG-U2-partner",
+ "case_id": "SIG-p1b",
+ "condition": "D1-tools",
+ "repeat": 2,
+ "draft_text": "Tessaline appears to slightly outperform Varrow-NMT in BLEU on the Halvard-Parl English→Estonian test set (28.4 vs 27.6 over 8 seeds).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:08:51Z",
+ "decision": "ACCEPT",
+ "revised_text": "Tessaline appears to slightly outperform Varrow-NMT in BLEU on the Halvard-Parl English→Estonian test set (28.4 vs 27.6 over 8 seeds).",
+ "rationale": "Both BLEU values match the table exactly (28.4, 27.6). The sentence is hedged (\"appears to slightly outperform\") and does not claim significance. No test was reported, so the hedged wording is appropriate and not overstated.",
+ "evidence_ids": [
+  "T1.r1.bleu",
+  "T1.r2.bleu",
+  "absent:test:exp1/cmp1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Tessaline slightly outperforms Varrow-NMT in BLEU on Halvard-Parl test set",
+  "expressed_strength": "\"appears to slightly outperform\" — hedged, no significance claim; reports 28.4 vs 27.6 over 8 seeds",
+  "strongest_supported": "Tessaline achieves a higher mean BLEU than Varrow-NMT on the Halvard-Parl English→Estonian test set (28.4 vs 27.6 over 8 seeds), with no statistical test reported for this comparison.",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": "28.4",
+    "evidence_id": "T1.r1.bleu"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 27.6,
+    "evidence_id": "T1.r2.bleu"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.bleu",
+  "T1.r1.chrf",
+  "T1.r2.bleu",
+  "T1.r2.chrf",
+  "T1.r3.bleu",
+  "T1.r3.chrf",
+  "absent:test:exp1/cmp1"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Tessaline appears to slightly outperform Varrow-NMT in BLEU on the Halvard-Parl English→Estonian test set (28.4 vs 27.6 over 8 seeds).",
+  "actions": [
+   {
+    "call_id": "call_9235cc7562c6428588518197",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_2885b10051c6490cadecf1c4",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_432d386f460847ab83486841",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": "28.4",
+     "evidence_id": "T1.r1.bleu"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_fec7116aba3e4e81a8ec4ba5",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 27.6,
+     "evidence_id": "T1.r2.bleu"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_9235cc7562c6428588518197",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "BLEU and chrF on the Halvard-Parl English→Estonian test set, mean ± SD over 8 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.bleu",
+       "row": "Tessaline (ours)",
+       "column": "BLEU",
+       "text": "28.4 ± 0.6",
+       "value": 28.4,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.chrf",
+       "row": "Tessaline (ours)",
+       "column": "chrF",
+       "text": "58.1 ± 0.8",
+       "value": 58.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.bleu",
+       "row": "Varrow-NMT",
+       "column": "BLEU",
+       "text": "27.6 ± 0.8",
+       "value": 27.6,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.chrf",
+       "row": "Varrow-NMT",
+       "column": "chrF",
+       "text": "57.7 ± 0.5",
+       "value": 57.7,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r3.bleu",
+       "row": "PhraseGrid",
+       "column": "BLEU",
+       "text": "22.1 ± 0.8",
+       "value": 22.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r3.chrf",
+       "row": "PhraseGrid",
+       "column": "chrF",
+       "text": "52.4 ± 0.5",
+       "value": 52.4,
+       "unit": null,
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.bleu",
+     "T1.r1.chrf",
+     "T1.r2.bleu",
+     "T1.r2.chrf",
+     "T1.r3.bleu",
+     "T1.r3.chrf"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_2885b10051c6490cadecf1c4",
+    "tool": "get_test_metadata",
+    "status": "NOT_FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Tessaline vs Varrow-NMT, BLEU, Halvard-Parl test set"
+    },
+    "returned_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+    "provenance": "comparison exp1/cmp1"
+   },
+   {
+    "call_id": "call_432d386f460847ab83486841",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 28.4,
+     "actual": 28.4,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r1.bleu",
+      "row": "Tessaline (ours)",
+      "column": "BLEU",
+      "text": "28.4 ± 0.6",
+      "value": 28.4,
+      "unit": null,
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r1.bleu"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   },
+   {
+    "call_id": "call_fec7116aba3e4e81a8ec4ba5",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 27.6,
+     "actual": 27.6,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r2.bleu",
+      "row": "Varrow-NMT",
+      "column": "BLEU",
+      "text": "27.6 ± 0.8",
+      "value": 27.6,
+      "unit": null,
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r2.bleu"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Tessaline appears to slightly outperform Varrow-NMT in BLEU on the Halvard-Parl English→Estonian test set (28.4 vs 27.6 over 8 seeds).",
+   "revised_text": "Tessaline appears to slightly outperform Varrow-NMT in BLEU on the Halvard-Parl English→Estonian test set (28.4 vs 27.6 over 8 seeds).",
+   "evidence_ids": [
+    "T1.r1.bleu",
+    "T1.r2.bleu",
+    "absent:test:exp1/cmp1"
+   ],
+   "rationale": "Both BLEU values match the table exactly (28.4, 27.6). The sentence is hedged (\"appears to slightly outperform\") and does not claim significance. No test was reported, so the hedged wording is appropriate and not overstated.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 2,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-SIG-U2-partner:D1-tools:verify_adaptive_D1:42bf189cdf",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912131-43CXCL6KpGETje6j3ZGN",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3027,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.31168e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.729,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-SIG-U2-partner:D1-tools:verify_adaptive_D1:1746507352",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912132-YQ8c8KtS51lZiJ4sOF4G",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3678,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.62592e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.662,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-SIG-U2-partner:D1-tools:verify_adaptive_D1:dca859aaea",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912134-SmqQ5VF3pHIncjAuEGgo",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3856,
+   "completion_tokens": 124,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.67072e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.808,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-SIG-U2-partner:D1-tools:verify_adaptive_D1:7c4b575ed1",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912136-NiFd21mh8CtDdEpWnNST",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4173,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.8272e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.302,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-SIG-U2-partner:D1-tools:verify_adaptive_D1:b127ae300f",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912137-T99nMgv89AW5mL1yJNE4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4388,
+   "completion_tokens": 347,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001287728,
+   "cost_is_estimate": false,
+   "latency_s": 4.832,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00034313,
+ "prompt_tokens": 19122,
+ "completion_tokens": 709,
+ "finished_at": "2026-10-25T07:09:02Z",
+ "status": "completed"
+}

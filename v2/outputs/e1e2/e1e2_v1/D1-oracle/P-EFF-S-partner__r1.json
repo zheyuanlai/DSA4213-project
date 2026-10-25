@@ -1,0 +1,71 @@
+{
+ "run_id": "e1e2_v1:D1-oracle:P-EFF-S-partner:r1",
+ "probe_id": "P-EFF-S-partner",
+ "case_id": "EFF-p1b",
+ "condition": "D1-oracle",
+ "repeat": 1,
+ "draft_text": "On the Brindle-Voice test set, Brisling decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:41:31Z",
+ "decision": "WEAKEN",
+ "revised_text": "On the Brindle-Voice test set, Brisling reports a lower median latency than Talmar (41 vs 118 ms per utterance), though Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency is the value reported by Ruiz-Hale et al. (2023) on a Corvex A1 accelerator in fp32.",
+ "rationale": "Numbers match T1 (41 vs 118 ms). However, the claim implies a direct speed comparison, but the latencies were measured on different hardware/precision (A2 fp16 vs A1 fp32), and Talmar was not re-timed. The claim should note this scope limitation.",
+ "evidence_ids": [
+  "T1.r1.lat",
+  "T1.r2.lat",
+  "T1.r1.src",
+  "T1.r2.src"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Brisling decodes faster than Talmar on Brindle-Voice (41 vs 118 ms median latency)",
+  "expressed_strength": "\"decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance\"",
+  "strongest_supported": "On the Brindle-Voice test set, Brisling has a lower median latency than Talmar (41 vs 118 ms per utterance), though the two latencies were measured on different accelerators and precisions (Brisling on Corvex A2 fp16; Talmar on Corvex A1 fp32 from Ruiz-Hale et al., 2023).",
+  "support_relation": "WEAKER_SUPPORTED"
+ },
+ "raw_arguments": [
+  {
+   "proposition": "Brisling decodes faster than Talmar on Brindle-Voice (41 vs 118 ms median latency)",
+   "expressed_strength": "\"decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance\"",
+   "strongest_supported": "On the Brindle-Voice test set, Brisling has a lower median latency than Talmar (41 vs 118 ms per utterance), though the two latencies were measured on different accelerators and precisions (Brisling on Corvex A2 fp16; Talmar on Corvex A1 fp32 from Ruiz-Hale et al., 2023).",
+   "support_relation": "WEAKER_SUPPORTED",
+   "rationale": "Numbers match T1 (41 vs 118 ms). However, the claim implies a direct speed comparison, but the latencies were measured on different hardware/precision (A2 fp16 vs A1 fp32), and Talmar was not re-timed. The claim should note this scope limitation.",
+   "decision": "WEAKEN",
+   "revised_text": "On the Brindle-Voice test set, Brisling reports a lower median latency than Talmar (41 vs 118 ms per utterance), though Brisling was measured on a Corvex A2 accelerator in fp16 while Talmar's latency is the value reported by Ruiz-Hale et al. (2023) on a Corvex A1 accelerator in fp32.",
+   "evidence_ids": [
+    "T1.r1.lat",
+    "T1.r2.lat",
+    "T1.r1.src",
+    "T1.r2.src"
+   ]
+  }
+ ],
+ "protocol_errors": [],
+ "model_calls": 1,
+ "calls": [
+  {
+   "call_id": "P-EFF-S-partner:D1-oracle:verify_oracle_D1:95f359ecd5",
+   "role": "verify_oracle_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842091-y8e65ya4tNGA261EFsBO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2583,
+   "completion_tokens": 452,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001939536,
+   "cost_is_estimate": false,
+   "latency_s": 7.275,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00019395,
+ "prompt_tokens": 2583,
+ "completion_tokens": 452,
+ "finished_at": "2026-10-24T11:41:38Z",
+ "status": "completed"
+}

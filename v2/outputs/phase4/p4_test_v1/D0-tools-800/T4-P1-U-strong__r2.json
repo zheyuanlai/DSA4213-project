@@ -1,0 +1,270 @@
+{
+ "run_id": "p4_test_v1:D0-tools-800:T4-P1-U-strong:r2",
+ "probe_id": "T4-P1-U-strong",
+ "case_id": "T4-P1-strong",
+ "condition": "D0-tools-800",
+ "repeat": 2,
+ "draft_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:31:11Z",
+ "decision": "ACCEPT",
+ "revised_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+ "rationale": "Both values match the table exactly (74.6% vs 73.7%), Mirevant higher. The claim is explicitly descriptive and disclaims established superiority, matching the evidence scope.",
+ "evidence_ids": [
+  "T1.r1.em",
+  "T1.r2.em"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 74.6,
+    "evidence_id": "T1.r1.em"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 73.7,
+    "evidence_id": "T1.r2.em"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.em",
+  "T1.r2.em"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": true,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+  "actions": [
+   {
+    "call_id": "call_85a69ae257514a05823f84f9",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_1e5da52617b74811af955e6c",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 74.6,
+     "evidence_id": "T1.r1.em"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_cc95bf5fc63243b097f0c8f1",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 73.7,
+     "evidence_id": "T1.r2.em"
+    },
+    "policy": "adaptive",
+    "step": 3
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_85a69ae257514a05823f84f9",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on Norlake-QA test, mean ± SD over 12 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.em",
+       "row": "Mirevant (ours)",
+       "column": "Exact match (%)",
+       "text": "74.6 ± 0.8",
+       "value": 74.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.em",
+       "row": "RookReader",
+       "column": "Exact match (%)",
+       "text": "73.7 ± 0.9",
+       "value": 73.7,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.em",
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_1e5da52617b74811af955e6c",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 74.6,
+     "actual": 74.6,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r1.em",
+      "row": "Mirevant (ours)",
+      "column": "Exact match (%)",
+      "text": "74.6 ± 0.8",
+      "value": 74.6,
+      "unit": "%",
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r1.em"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   },
+   {
+    "call_id": "call_cc95bf5fc63243b097f0c8f1",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 73.7,
+     "actual": 73.7,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r2.em",
+      "row": "RookReader",
+      "column": "Exact match (%)",
+      "text": "73.7 ± 0.9",
+      "value": 73.7,
+      "unit": "%",
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+   "revised_text": "Descriptively, Mirevant had a higher observed mean exact-match accuracy than RookReader on Norlake-QA (74.6% vs 73.7%), without implying established superiority.",
+   "evidence_ids": [
+    "T1.r1.em",
+    "T1.r2.em"
+   ],
+   "rationale": "Both values match the table exactly (74.6% vs 73.7%), Mirevant higher. The claim is explicitly descriptive and disclaims established superiority, matching the evidence scope.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 4,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P1-U-strong:D0-tools-800:verify_adaptive:8d82cb3af0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920671-CtjUj3Ijp6hOtRN9U1CH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2402,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000223784,
+   "cost_is_estimate": false,
+   "latency_s": 1.526,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-U-strong:D0-tools-800:verify_adaptive:315529d5e7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920673-ivmhyfIasj8WzRnP44mV",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2661,
+   "completion_tokens": 120,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.95472e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.769,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-U-strong:D0-tools-800:verify_adaptive:a03911d8f1",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920675-62MkD8ujOAKZo18tvCr3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2973,
+   "completion_tokens": 67,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.12e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.674,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-U-strong:D0-tools-800:verify_adaptive:46df3cc50b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920676-zvPY2UdtqfyvgULo9cVB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3183,
+   "completion_tokens": 146,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.87248e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.698,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00043326,
+ "prompt_tokens": 11219,
+ "completion_tokens": 380,
+ "finished_at": "2026-10-25T09:31:19Z",
+ "status": "completed"
+}

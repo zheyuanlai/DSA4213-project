@@ -1,0 +1,330 @@
+{
+ "run_id": "e5_v1:D0-tools-800:P-ROB-S-partner:r2",
+ "probe_id": "P-ROB-S-partner",
+ "case_id": "ROB-p1b",
+ "condition": "D0-tools-800",
+ "repeat": 2,
+ "draft_text": "Thornbill-NER is robust to label noise: its F1 drop stayed within the pre-specified criterion at 10%, 20% and 30% noise (0.6, 1.3 and 1.8 points).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:14:57Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "The claim concerns label-noise robustness at 10%, 20%, 30% noise with F1 drops of 0.6, 1.3, 1.8 points. The supplied package contains only Table T1 (original labels) and exp1 comparisons; no noise-perturbation experiments or tables (T2) exist. The claimed numbers and robustness findings are entirely unsupported by the available evidence.",
+ "evidence_ids": [
+  "absent:test:exp1/cmp1",
+  "absent:test:exp1/cmp2"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T2"
+   }
+  },
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "experiment_id": "exp1",
+    "comparison_id": "cmp1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp2",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.f1",
+  "T1.r1.range",
+  "T1.r1.worst",
+  "T1.r2.f1",
+  "T1.r2.range",
+  "T1.r2.worst",
+  "absent:test:exp1/cmp1",
+  "absent:test:exp1/cmp2"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Thornbill-NER is robust to label noise: its F1 drop stayed within the pre-specified criterion at 10%, 20% and 30% noise (0.6, 1.3 and 1.8 points).",
+  "actions": [
+   {
+    "call_id": "call_4513012c42174348b32ed252",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T2"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_ee035baf29b546918bca0221",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_e121618598d44857b9843f3c",
+    "tool": "get_test_metadata",
+    "args": {
+     "experiment_id": "exp1",
+     "comparison_id": "cmp1"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_8585cdd67a324d2cb903f4c9",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp2",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_4513012c42174348b32ed252",
+    "tool": "lookup_table",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [],
+    "message": "No table 'T2'. Available tables: ['T1']",
+    "provenance": ""
+   },
+   {
+    "call_id": "call_ee035baf29b546918bca0221",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Entity-level F1 (%) on the Corvane-News NER test set, original training labels, 5 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.f1",
+       "row": "Thornbill-NER",
+       "column": "F1 (mean ± SD)",
+       "text": "91.4 ± 0.4",
+       "value": 91.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.worst",
+       "row": "Thornbill-NER",
+       "column": "Worst-seed F1",
+       "text": "90.9",
+       "value": 90.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.range",
+       "row": "Thornbill-NER",
+       "column": "Seed range (max − min)",
+       "text": "0.9",
+       "value": 0.9,
+       "unit": "points",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r2.f1",
+       "row": "Lindgren-Tagger",
+       "column": "F1 (mean ± SD)",
+       "text": "90.8 ± 0.5",
+       "value": 90.8,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.worst",
+       "row": "Lindgren-Tagger",
+       "column": "Worst-seed F1",
+       "text": "90.1",
+       "value": 90.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.range",
+       "row": "Lindgren-Tagger",
+       "column": "Seed range (max − min)",
+       "text": "1.2",
+       "value": 1.2,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.f1",
+     "T1.r1.worst",
+     "T1.r1.range",
+     "T1.r2.f1",
+     "T1.r2.worst",
+     "T1.r2.range"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_e121618598d44857b9843f3c",
+    "tool": "get_test_metadata",
+    "status": "NOT_FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Thornbill-NER vs Lindgren-Tagger, mean test F1, original labels"
+    },
+    "returned_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+    "provenance": "comparison exp1/cmp1"
+   },
+   {
+    "call_id": "call_8585cdd67a324d2cb903f4c9",
+    "tool": "get_test_metadata",
+    "status": "NOT_FOUND",
+    "data": {
+     "comparison": "exp1/cmp2",
+     "description": "Seed-to-seed spread of test F1 for each model, original labels"
+    },
+    "returned_ids": [
+     "absent:test:exp1/cmp2"
+    ],
+    "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+    "provenance": "comparison exp1/cmp2"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Thornbill-NER is robust to label noise: its F1 drop stayed within the pre-specified criterion at 10%, 20% and 30% noise (0.6, 1.3 and 1.8 points).",
+   "revised_text": "",
+   "evidence_ids": [
+    "absent:test:exp1/cmp1",
+    "absent:test:exp1/cmp2"
+   ],
+   "rationale": "The claim concerns label-noise robustness at 10%, 20%, 30% noise with F1 drops of 0.6, 1.3, 1.8 points. The supplied package contains only Table T1 (original labels) and exp1 comparisons; no noise-perturbation experiments or tables (T2) exist. The claimed numbers and robustness findings are entirely unsupported by the available evidence.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-ROB-S-partner:D0-tools-800:verify_adaptive:5f33fb2424",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912497-eoY3inZOEYpoKDVvB7TB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2606,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.54352e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.276,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-S-partner:D0-tools-800:verify_adaptive:d1e7157af2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912499-xZwpzbSOf025LxLVjc1e",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2696,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.1544e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.157,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-S-partner:D0-tools-800:verify_adaptive:8c8406fac0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912500-iW06152HisfGb5oAzUeu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3248,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.992e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.919,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-S-partner:D0-tools-800:verify_adaptive:93488c81fa",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1792912502-YqdbYqj7mlaCE82FfJA0",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3529,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0005131,
+   "cost_is_estimate": false,
+   "latency_s": 13.89,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-S-partner:D0-tools-800:verify_adaptive:d61a6ed1f2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912516-ZnSPDzlvFQOpI8iGFRYo",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3699,
+   "completion_tokens": 200,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001165776,
+   "cost_is_estimate": false,
+   "latency_s": 3.216,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00080658,
+ "prompt_tokens": 15778,
+ "completion_tokens": 484,
+ "finished_at": "2026-10-25T07:15:19Z",
+ "status": "completed"
+}

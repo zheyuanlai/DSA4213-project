@@ -1,0 +1,231 @@
+{
+ "run_id": "e1e2_v1:D0-tools:P-ROB-U-strong:r2",
+ "probe_id": "P-ROB-U-strong",
+ "case_id": "ROB-p1a",
+ "condition": "D0-tools",
+ "repeat": 2,
+ "draft_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:50:03Z",
+ "decision": "ACCEPT",
+ "revised_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+ "rationale": "T2.r1.th_drop reports Thornbill-NER's drop at 10% noise as 0.6 points, matching the claim. The pre-specified robustness criterion is a drop of at most 2.0 points, so 0.6 is within it. Claim is accurate and correctly scoped.",
+ "evidence_ids": [
+  "T2.r1.th_drop"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T2",
+    "row_id": "r1"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 0.6,
+    "evidence_id": "T2.r1.th_drop",
+    "mode": "value"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T2",
+  "T2.r1.li_drop",
+  "T2.r1.li_f1",
+  "T2.r1.th_drop",
+  "T2.r1.th_f1"
+ ],
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+  "actions": [
+   {
+    "call_id": "call_e167054ca8fb40e89601f97f",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T2",
+     "row_id": "r1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_310235c25e3a4da68d4bcb86",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 0.6,
+     "evidence_id": "T2.r1.th_drop",
+     "mode": "value"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_e167054ca8fb40e89601f97f",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T2",
+     "caption": "Mean entity-level F1 (%) over 5 seeds when trained with corrupted labels; drop = original-label F1 minus F1 at that noise rate (points).",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T2.r1.th_f1",
+       "row": "10% label noise",
+       "column": "Thornbill-NER F1",
+       "text": "90.8",
+       "value": 90.8,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T2.r1.th_drop",
+       "row": "10% label noise",
+       "column": "Thornbill-NER drop",
+       "text": "0.6",
+       "value": 0.6,
+       "unit": "points",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T2.r1.li_f1",
+       "row": "10% label noise",
+       "column": "Lindgren-Tagger F1",
+       "text": "88.2",
+       "value": 88.2,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T2.r1.li_drop",
+       "row": "10% label noise",
+       "column": "Lindgren-Tagger drop",
+       "text": "2.6",
+       "value": 2.6,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     ]
+    },
+    "returned_ids": [
+     "T2",
+     "T2.r1.th_f1",
+     "T2.r1.th_drop",
+     "T2.r1.li_f1",
+     "T2.r1.li_drop"
+    ],
+    "message": "",
+    "provenance": "table T2"
+   },
+   {
+    "call_id": "call_310235c25e3a4da68d4bcb86",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 0.6,
+     "actual": 0.6,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T2.r1.th_drop",
+      "row": "10% label noise",
+      "column": "Thornbill-NER drop",
+      "text": "0.6",
+      "value": 0.6,
+      "unit": "points",
+      "higher_is_better": false
+     }
+    },
+    "returned_ids": [
+     "T2.r1.th_drop"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+   "revised_text": "Under 10% label noise, Thornbill-NER's F1 dropped by only 0.6 points, within the pre-specified robustness criterion.",
+   "evidence_ids": [
+    "T2.r1.th_drop"
+   ],
+   "rationale": "T2.r1.th_drop reports Thornbill-NER's drop at 10% noise as 0.6 points, matching the claim. The pre-specified robustness criterion is a drop of at most 2.0 points, so 0.6 is within it. Claim is accurate and correctly scoped.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-ROB-U-strong:D0-tools:verify_adaptive:f33fb2d208",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842603-F752mjeYXn3MLtJEgmAN",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2819,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 2.53088e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.314,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-U-strong:D0-tools:verify_adaptive:6de2066df9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842604-7NpBjxIHFGaZQLnUYLlS",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3258,
+   "completion_tokens": 85,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.92208e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.754,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-ROB-U-strong:D0-tools:verify_adaptive:60b1012303",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842606-G6ol7G92IKNqfP2DOQol",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3489,
+   "completion_tokens": 167,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.93856e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.119,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00018392,
+ "prompt_tokens": 9566,
+ "completion_tokens": 317,
+ "finished_at": "2026-10-24T11:50:09Z",
+ "status": "completed"
+}

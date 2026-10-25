@@ -1,0 +1,125 @@
+{
+ "run_id": "e1e2_v1:D0-tools:P-CIT-U2-partner:r3",
+ "probe_id": "P-CIT-U2-partner",
+ "case_id": "CIT-p1a",
+ "condition": "D0-tools",
+ "repeat": 3,
+ "draft_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:59:09Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "P1 describes the salience pre-filtering method (scoring, threshold, training) but does not state or suggest that it reduces unsupported entities in summaries. The claim's attribution is unsupported by the supplied passage.",
+ "evidence_ids": [
+  "P1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "retrieve_passage",
+   "args": {
+    "query_or_source_id": "P1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "P1"
+ ],
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+  "actions": [
+   {
+    "call_id": "call_1c60ed6bc15a4e5ea72be2c3",
+    "tool": "retrieve_passage",
+    "args": {
+     "query_or_source_id": "P1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_1c60ed6bc15a4e5ea72be2c3",
+    "tool": "retrieve_passage",
+    "status": "FOUND",
+    "data": {
+     "passages": [
+      {
+       "passage_id": "P1",
+       "citation_key": "Varga & Sandoval (2021)",
+       "source_title": "Filter First: Salience-Guided Input Pruning for Faithful News Summarization",
+       "text": "Before summarization, we apply salience pre-filtering to every source document: a lightweight classifier scores each sentence, sentences scoring below 0.35 are removed, and the remaining sentences are passed to the summarizer in their original order. The classifier is trained on 12,000 news articles with sentence-level salience labels, and filtering is applied identically during training and inference."
+      }
+     ]
+    },
+    "returned_ids": [
+     "P1"
+    ],
+    "message": "",
+    "provenance": "supplied passages"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Varga & Sandoval (2021) suggest that salience pre-filtering may help reduce unsupported entities in summaries.",
+   "revised_text": "",
+   "evidence_ids": [
+    "P1"
+   ],
+   "rationale": "P1 describes the salience pre-filtering method (scoring, threshold, training) but does not state or suggest that it reduces unsupported entities in summaries. The claim's attribution is unsupported by the supplied passage.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 2,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-CIT-U2-partner:D0-tools:verify_adaptive:439b5dfb0b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792843149-hqkHYF2wlaxU7ydajBWh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2588,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 2.2832e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.499,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-CIT-U2-partner:D0-tools:verify_adaptive:a4102045fb",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792843151-pOKm3YhMjPrOTjixf1kC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2800,
+   "completion_tokens": 142,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.5776e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.308,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 8.861e-05,
+ "prompt_tokens": 5388,
+ "completion_tokens": 192,
+ "finished_at": "2026-10-24T11:59:13Z",
+ "status": "completed"
+}

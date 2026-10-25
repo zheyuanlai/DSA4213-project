@@ -1,0 +1,229 @@
+{
+ "run_id": "p4_test_v1:D1-tools:T4-P1-S-partner:r3",
+ "probe_id": "T4-P1-S-partner",
+ "case_id": "T4-P1-partner",
+ "condition": "D1-tools",
+ "repeat": 3,
+ "draft_text": "Mirevant outperforms RookReader in exact-match accuracy on the Norlake-QA test set.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:44:39Z",
+ "decision": "ACCEPT",
+ "revised_text": "Mirevant outperforms RookReader in exact-match accuracy on the Norlake-QA test set.",
+ "rationale": "Mean EM: Mirevant 74.6% vs RookReader 73.7%, higher is better, so Mirevant's mean is higher. The claim \"outperforms\" is supported at the level of the observed means. No p-value was reported, so no significance claim is made; the sentence does not claim significance. CI includes 0, but the sentence only asserts the observed mean difference, which is supported.",
+ "evidence_ids": [
+  "T1.r1.em",
+  "T1.r2.em",
+  "S1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Mirevant outperforms RookReader in exact-match accuracy on Norlake-QA test",
+  "expressed_strength": "\"outperforms\" — asserts Mirevant is better than RookReader",
+  "strongest_supported": "Mirevant achieves higher mean exact-match accuracy than RookReader on the Norlake-QA test set (74.6% vs 73.7%), with a paired 95% CI for the difference of [-0.12, 1.92] percentage points.",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "S1",
+  "T1",
+  "T1.r1.em",
+  "T1.r2.em"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": true,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Mirevant outperforms RookReader in exact-match accuracy on the Norlake-QA test set.",
+  "actions": [
+   {
+    "call_id": "call_39c4f61b0b78426ebdd2ee93",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_8be0fbfce49c439a890a95e5",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_39c4f61b0b78426ebdd2ee93",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on Norlake-QA test, mean ± SD over 12 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.em",
+       "row": "Mirevant (ours)",
+       "column": "Exact match (%)",
+       "text": "74.6 ± 0.8",
+       "value": 74.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.em",
+       "row": "RookReader",
+       "column": "Exact match (%)",
+       "text": "73.7 ± 0.9",
+       "value": 73.7,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.em",
+     "T1.r2.em"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_8be0fbfce49c439a890a95e5",
+    "tool": "get_test_metadata",
+    "status": "FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Mirevant vs RookReader, exact-match accuracy, Norlake-QA test",
+     "tests": [
+      {
+       "test_id": "S1",
+       "experiment_id": "exp1",
+       "comparison_id": "cmp1",
+       "test_name": "paired mean-difference confidence interval",
+       "sidedness": "two-sided",
+       "paired": true,
+       "n": 12,
+       "n_unit": "random seeds",
+       "statistic_name": null,
+       "statistic": null,
+       "df": 11.0,
+       "p_value": null,
+       "p_value_text": null,
+       "alpha": 0.05,
+       "ci_level": 0.95,
+       "ci_low": -0.12,
+       "ci_high": 1.92,
+       "effect_description": "mean paired difference in exact match (Mirevant − RookReader), percentage points",
+       "multiple_comparison_adjustment": null,
+       "notes": "No p-value was reported for this comparison.",
+       "summary": "paired mean-difference confidence interval; two-sided; paired; n=12 random seeds; 95% CI [-0.12, 1.92] for mean paired difference in exact match (Mirevant − RookReader), percentage points; alpha=0.05; note: No p-value was reported for this comparison."
+      }
+     ]
+    },
+    "returned_ids": [
+     "S1"
+    ],
+    "message": "",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Mirevant outperforms RookReader in exact-match accuracy on the Norlake-QA test set.",
+   "revised_text": "Mirevant outperforms RookReader in exact-match accuracy on the Norlake-QA test set.",
+   "evidence_ids": [
+    "T1.r1.em",
+    "T1.r2.em",
+    "S1"
+   ],
+   "rationale": "Mean EM: Mirevant 74.6% vs RookReader 73.7%, higher is better, so Mirevant's mean is higher. The claim \"outperforms\" is supported at the level of the observed means. No p-value was reported, so no significance claim is made; the sentence does not claim significance. CI includes 0, but the sentence only asserts the observed mean difference, which is supported.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P1-S-partner:D1-tools:verify_adaptive_D1:71f737878a",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921479-D9F5JA1BL1WJpdExiO1e",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2851,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.76288e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.346,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-S-partner:D1-tools:verify_adaptive_D1:b5895307bc",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921481-Azdrge0dgOwhAn3tUDm7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3210,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.86976e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.269,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P1-S-partner:D1-tools:verify_adaptive_D1:d3ed2873a0",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921484-RrL1L5sKFm8aTIFl051j",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3605,
+   "completion_tokens": 366,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001521296,
+   "cost_is_estimate": false,
+   "latency_s": 5.401,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00022846,
+ "prompt_tokens": 9666,
+ "completion_tokens": 535,
+ "finished_at": "2026-10-25T09:44:49Z",
+ "status": "completed"
+}

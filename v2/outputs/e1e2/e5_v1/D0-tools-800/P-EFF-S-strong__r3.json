@@ -1,0 +1,282 @@
+{
+ "run_id": "e5_v1:D0-tools-800:P-EFF-S-strong:r3",
+ "probe_id": "P-EFF-S-strong",
+ "case_id": "EFF-p1a",
+ "condition": "D0-tools-800",
+ "repeat": 3,
+ "draft_text": "On the Brindle-Voice test set, Brisling decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:20:26Z",
+ "decision": "ACCEPT",
+ "revised_text": "On the Brindle-Voice test set, Brisling decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance.",
+ "rationale": "Both latency values match the table exactly (41 ms Brisling, 118 ms Talmar, lower is better). Brisling is faster. The claim is scoped to the Brindle-Voice test set and states median latency, matching the reported metric.",
+ "evidence_ids": [
+  "T1.r1.lat",
+  "T1.r2.lat"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1",
+    "column": "lat"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 41,
+    "evidence_id": "T1.r1.lat"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 118,
+    "evidence_id": "T1.r2.lat"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.lat",
+  "T1.r2.lat",
+  "T1.r3.lat"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "On the Brindle-Voice test set, Brisling decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance.",
+  "actions": [
+   {
+    "call_id": "call_e96029251fde45769de8e846",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1",
+     "column": "lat"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_71cbad38e98343dabb1c7e9b",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 41,
+     "evidence_id": "T1.r1.lat"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_de6ed40611164e8c8a319858",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 118,
+     "evidence_id": "T1.r2.lat"
+    },
+    "policy": "adaptive",
+    "step": 3
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_e96029251fde45769de8e846",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Decoding cost and accuracy on the Brindle-Voice test set (batch size 1).",
+     "notes": "All latencies measured by us on Corvex A2 (fp16, batch size 1, Lumen 3.1).",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.lat",
+       "row": "Brisling (ours)",
+       "column": "Median latency (ms/utterance)",
+       "text": "41",
+       "value": 41.0,
+       "unit": "ms",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r2.lat",
+       "row": "Talmar",
+       "column": "Median latency (ms/utterance)",
+       "text": "118",
+       "value": 118.0,
+       "unit": "ms",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r3.lat",
+       "row": "Greedy-CTC",
+       "column": "Median latency (ms/utterance)",
+       "text": "22",
+       "value": 22.0,
+       "unit": "ms",
+       "higher_is_better": false
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.lat",
+     "T1.r2.lat",
+     "T1.r3.lat"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_71cbad38e98343dabb1c7e9b",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 41.0,
+     "actual": 41.0,
+     "abs_error": 0.0,
+     "tolerance": 0.5,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r1.lat",
+      "row": "Brisling (ours)",
+      "column": "Median latency (ms/utterance)",
+      "text": "41",
+      "value": 41.0,
+      "unit": "ms",
+      "higher_is_better": false
+     }
+    },
+    "returned_ids": [
+     "T1.r1.lat"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   },
+   {
+    "call_id": "call_de6ed40611164e8c8a319858",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 118.0,
+     "actual": 118.0,
+     "abs_error": 0.0,
+     "tolerance": 0.5,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r2.lat",
+      "row": "Talmar",
+      "column": "Median latency (ms/utterance)",
+      "text": "118",
+      "value": 118.0,
+      "unit": "ms",
+      "higher_is_better": false
+     }
+    },
+    "returned_ids": [
+     "T1.r2.lat"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "On the Brindle-Voice test set, Brisling decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance.",
+   "revised_text": "On the Brindle-Voice test set, Brisling decodes faster than Talmar, with a median latency of 41 vs 118 ms per utterance.",
+   "evidence_ids": [
+    "T1.r1.lat",
+    "T1.r2.lat"
+   ],
+   "rationale": "Both latency values match the table exactly (41 ms Brisling, 118 ms Talmar, lower is better). Brisling is faster. The claim is scoped to the Brindle-Voice test set and states median latency, matching the reported metric.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 4,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-EFF-S-strong:D0-tools-800:verify_adaptive:43b4923c58",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912825-2XO5syUaKZ7AEM91QDin",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2650,
+   "completion_tokens": 63,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000249832,
+   "cost_is_estimate": false,
+   "latency_s": 1.7,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-EFF-S-strong:D0-tools-800:verify_adaptive:efaf02cca5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912827-fdkB7mDYj8xVY5aMhLp7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3018,
+   "completion_tokens": 118,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.8624e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.834,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-EFF-S-strong:D0-tools-800:verify_adaptive:30775fb2e4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912829-OzN2i6AuzFUMa52Us1nJ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3326,
+   "completion_tokens": 66,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.01888e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.336,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-EFF-S-strong:D0-tools-800:verify_adaptive:b986456e0a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912831-nGMb3Mqk4ic4JwWLEOCL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3533,
+   "completion_tokens": 160,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.14096e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.279,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00049005,
+ "prompt_tokens": 12527,
+ "completion_tokens": 407,
+ "finished_at": "2026-10-25T07:20:34Z",
+ "status": "completed"
+}

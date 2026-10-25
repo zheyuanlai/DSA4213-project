@@ -1,0 +1,85 @@
+{
+ "description": "Per-pair authoring specification for the V2 Phase 4 held-out benchmark. Written by the coordinating agent from the categories in v2/docs/PHASE4_DESIGN.md; shown to the case author together with v2/prompts/phase4_author.md. Contains no verifier prompt, DEV probe or experimental result.",
+ "pairs": [
+  {
+   "pair_id": "P1",
+   "proposition_type": "superiority established by a confidence interval only",
+   "strong_member": "A paired comparison of method A vs baseline B on one metric, with a reported 95% confidence interval for the mean paired difference that excludes 0. Report no p-value for this comparison (the interval is the only inferential evidence).",
+   "partner_member": "Identical, except the 95% confidence interval for the mean paired difference includes 0.",
+   "partner_level": 0,
+   "U_pattern": "a purely descriptive comparison of means (e.g. 'had a higher mean ... (x vs y)') with no inferential language",
+   "U2_pattern": "'a trend toward' a higher score",
+   "needs_test": true
+  },
+  {
+   "pair_id": "P2",
+   "proposition_type": "superiority after a multiple-comparison correction",
+   "strong_member": "Method A vs B on one of several pre-specified comparisons (e.g. 4 metrics or 4 datasets), with a test whose p-value remains below alpha after the stated correction (e.g. Holm or Bonferroni); report raw and adjusted p.",
+   "partner_member": "Identical design, but the raw p is below alpha and the adjusted p is not.",
+   "partner_level": 1,
+   "U_pattern": "'tentatively' outperforms / improves",
+   "U2_pattern": "'appears to' improve",
+   "needs_test": true
+  },
+  {
+   "pair_id": "P3",
+   "proposition_type": "consistency across tasks when ties are possible",
+   "strong_member": "A is strictly better than B on every one of 5 tasks (reported to one decimal).",
+   "partner_member": "Identical, except A and B are exactly tied on one task (strictly better on the other 4).",
+   "partner_level": 1,
+   "U_pattern": "better 'in several of the tasks'",
+   "U2_pattern": "'comparable or better' on every task",
+   "needs_test": false
+  },
+  {
+   "pair_id": "P4",
+   "proposition_type": "directly measured memory advantage",
+   "strong_member": "Peak GPU memory during inference measured for A and B under the same hardware, batch size and precision; A uses less.",
+   "partner_member": "Identical table structure, but peak memory was measured only for A; for B only the parameter count (copied from its paper) is available, so the memory comparison rests on parameter counts.",
+   "partner_level": 1,
+   "U_pattern": "'may' use less memory",
+   "U2_pattern": "'preliminary evidence suggests' lower memory use",
+   "needs_test": false
+  },
+  {
+   "pair_id": "P5",
+   "proposition_type": "throughput comparison under comparable conditions",
+   "strong_member": "Throughput (requests or tokens per second) of A and B measured on the same hardware at the same batch size; A is higher.",
+   "partner_member": "Identical, except A was measured at a larger batch size than B (stated in a table note), so the throughputs are not directly comparable.",
+   "partner_level": 1,
+   "U_pattern": "'seems to' offer somewhat higher throughput",
+   "U2_pattern": "a double hedge such as 'might possibly' achieve higher throughput",
+   "needs_test": false
+  },
+  {
+   "pair_id": "P6",
+   "proposition_type": "robustness across all tested severities",
+   "strong_member": "A pre-specified robustness criterion (e.g. accuracy drop of at most X points) is stated in the setup; A meets it at all 4 tested corruption severities.",
+   "partner_member": "Identical, except A fails the criterion at the highest severity (meets it at the other 3).",
+   "partner_level": 1,
+   "U_pattern": "robust 'to some extent'",
+   "U2_pattern": "'could be considered' robust",
+   "needs_test": false
+  },
+  {
+   "pair_id": "P7",
+   "proposition_type": "a negative result: the proposed method is worse",
+   "strong_member": "The proposed method A scores lower than baseline B, and a valid paired test for exactly this comparison is significant at the stated alpha.",
+   "partner_member": "Identical scores, but no statistical test is reported for this comparison.",
+   "partner_level": 1,
+   "U_pattern": "'may perform slightly worse'",
+   "U2_pattern": "'a trend toward' lower scores",
+   "needs_test": true
+  },
+  {
+   "pair_id": "P8",
+   "proposition_type": "attribution of a specific effect size to a cited work",
+   "strong_member": "The research question asks how method A's gain compares with what cited work W reported for technique T. The supplied passage from W directly reports T's gain with its magnitude and setting. The package itself does not restate or paraphrase W's result anywhere else.",
+   "partner_member": "Identical, except the supplied passage from W only describes how T is applied and reports no result.",
+   "partner_level": 0,
+   "U_pattern": "W 'reported that T reduces/improves ...' with direction but no magnitude",
+   "U2_pattern": "W 'found preliminary evidence that T may' reduce/improve ...",
+   "needs_test": false
+  }
+ ]
+}

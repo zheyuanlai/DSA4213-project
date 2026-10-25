@@ -1,0 +1,351 @@
+{
+ "run_id": "p4_test_v1:D1-tools-C5:T4-P7-S-strong:r1",
+ "probe_id": "T4-P7-S-strong",
+ "case_id": "T4-P7-strong",
+ "condition": "D1-tools-C5",
+ "repeat": 1,
+ "draft_text": "Nacre scores lower than RookLM on Vellum-QA in macro F1 (71.8% versus 72.5%; paired t(9) = -3.50, p = 0.0067).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:30:02Z",
+ "decision": "ACCEPT",
+ "revised_text": "Nacre scores lower than RookLM on Vellum-QA in macro F1 (71.8% versus 72.5%; paired t(9) = -3.50, p = 0.0067).",
+ "rationale": "Table T1 confirms Nacre 71.8% vs RookLM 72.5% (higher is better). Test S1 reports a paired t-test, two-sided, n=10, t=-3.5, df=9, p=0.0067, significant at alpha=0.05. All numbers and the significance claim match exactly.",
+ "evidence_ids": [
+  "T1.r1.f1",
+  "T1.r2.f1",
+  "S1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Nacre scores lower than RookLM on Vellum-QA in macro F1, with a significant paired t-test.",
+  "expressed_strength": "\"scores lower than RookLM\" with exact values and a reported significant paired t-test (t(9)=-3.50, p=0.0067)",
+  "strongest_supported": "Nacre scores lower than RookLM on Vellum-QA in macro F1 (71.8% versus 72.5%; paired t(9) = -3.50, p = 0.0067).",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 71.8,
+    "evidence_id": "T1.r1.f1"
+   }
+  },
+  {
+   "tool": "compare_numbers",
+   "args": {
+    "claimed": 72.5,
+    "evidence_id": "T1.r2.f1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "S1",
+  "T1",
+  "T1.r1.f1",
+  "T1.r2.f1"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": false,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Nacre scores lower than RookLM on Vellum-QA in macro F1 (71.8% versus 72.5%; paired t(9) = -3.50, p = 0.0067).",
+  "actions": [
+   {
+    "call_id": "call_0679c90702f443df8c662bdf",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_a743c75bf67444acb387ba96",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_6ca3034087754984902f12c1",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 71.8,
+     "evidence_id": "T1.r1.f1"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_f2e7a298ce8e4903b6a43a97",
+    "tool": "compare_numbers",
+    "args": {
+     "claimed": 72.5,
+     "evidence_id": "T1.r2.f1"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_0679c90702f443df8c662bdf",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Macro F1 (%) on Vellum-QA test, mean ± SD over 10 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.f1",
+       "row": "Nacre (ours)",
+       "column": "Macro F1 (%)",
+       "text": "71.8 ± 0.8",
+       "value": 71.8,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.f1",
+       "row": "RookLM",
+       "column": "Macro F1 (%)",
+       "text": "72.5 ± 0.7",
+       "value": 72.5,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.f1",
+     "T1.r2.f1"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_a743c75bf67444acb387ba96",
+    "tool": "get_test_metadata",
+    "status": "FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Nacre vs RookLM, macro F1, Vellum-QA test",
+     "tests": [
+      {
+       "test_id": "S1",
+       "experiment_id": "exp1",
+       "comparison_id": "cmp1",
+       "test_name": "paired t-test",
+       "sidedness": "two-sided",
+       "paired": true,
+       "n": 10,
+       "n_unit": "random seeds",
+       "statistic_name": "t",
+       "statistic": -3.5,
+       "df": 9.0,
+       "p_value": 0.0067,
+       "p_value_text": "p = 0.0067",
+       "alpha": 0.05,
+       "ci_level": 0.95,
+       "ci_low": -1.15,
+       "ci_high": -0.25,
+       "effect_description": "mean paired difference in macro F1 (Nacre − RookLM), percentage points",
+       "multiple_comparison_adjustment": null,
+       "notes": null,
+       "summary": "paired t-test; two-sided; paired; n=10 random seeds; t=-3.5 (df=9); p = 0.0067; 95% CI [-1.15, -0.25] for mean paired difference in macro F1 (Nacre − RookLM), percentage points; alpha=0.05"
+      }
+     ]
+    },
+    "returned_ids": [
+     "S1"
+    ],
+    "message": "",
+    "provenance": "comparison exp1/cmp1"
+   },
+   {
+    "call_id": "call_6ca3034087754984902f12c1",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 71.8,
+     "actual": 71.8,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r1.f1",
+      "row": "Nacre (ours)",
+      "column": "Macro F1 (%)",
+      "text": "71.8 ± 0.8",
+      "value": 71.8,
+      "unit": "%",
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r1.f1"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   },
+   {
+    "call_id": "call_f2e7a298ce8e4903b6a43a97",
+    "tool": "compare_numbers",
+    "status": "FOUND",
+    "data": {
+     "mode": "value",
+     "claimed": 72.5,
+     "actual": 72.5,
+     "abs_error": 0.0,
+     "tolerance": 0.05,
+     "match": true,
+     "evidence": {
+      "evidence_id": "T1.r2.f1",
+      "row": "RookLM",
+      "column": "Macro F1 (%)",
+      "text": "72.5 ± 0.7",
+      "value": 72.5,
+      "unit": "%",
+      "higher_is_better": true
+     }
+    },
+    "returned_ids": [
+     "T1.r2.f1"
+    ],
+    "message": "",
+    "provenance": "deterministic arithmetic on table cells"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Nacre scores lower than RookLM on Vellum-QA in macro F1 (71.8% versus 72.5%; paired t(9) = -3.50, p = 0.0067).",
+   "revised_text": "Nacre scores lower than RookLM on Vellum-QA in macro F1 (71.8% versus 72.5%; paired t(9) = -3.50, p = 0.0067).",
+   "evidence_ids": [
+    "T1.r1.f1",
+    "T1.r2.f1",
+    "S1"
+   ],
+   "rationale": "Table T1 confirms Nacre 71.8% vs RookLM 72.5% (higher is better). Test S1 reports a paired t-test, two-sided, n=10, t=-3.5, df=9, p=0.0067, significant at alpha=0.05. All numbers and the significance claim match exactly.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 2,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P7-S-strong:D1-tools-C5:verify_adaptive_D1-C5:d3c84f1819",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920602-USdvdlwVy0PDumgzoiFR",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2880,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.1992e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.603,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P7-S-strong:D1-tools-C5:verify_adaptive_D1-C5:483463d2ea",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920604-Y8uPD5BNEH3jC5RJgPSQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3243,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.34128e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.608,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P7-S-strong:D1-tools-C5:verify_adaptive_D1-C5:b086c3e29e",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920606-YnTS0UkwN042ubnkFHde",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3642,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.09696e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.298,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P7-S-strong:D1-tools-C5:verify_adaptive_D1-C5:05aed02cea",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920609-C9Ca96lUfF0fxK3SFQvk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3957,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.08112e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.23,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P7-S-strong:D1-tools-C5:verify_adaptive_D1-C5:057cdcffb6",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920611-Qys2dvYjrya524WbptDg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4171,
+   "completion_tokens": 365,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00013624,
+   "cost_is_estimate": false,
+   "latency_s": 6.736,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00041343,
+ "prompt_tokens": 17893,
+ "completion_tokens": 724,
+ "finished_at": "2026-10-25T09:30:18Z",
+ "status": "completed"
+}

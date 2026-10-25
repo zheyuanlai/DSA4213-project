@@ -1,0 +1,267 @@
+{
+ "run_id": "e5_v1:D0-tools-800:P-SIG-S-strong:r1",
+ "probe_id": "P-SIG-S-strong",
+ "case_id": "SIG-p1a",
+ "condition": "D0-tools-800",
+ "repeat": 1,
+ "draft_text": "On the Halvard-Parl English→Estonian test set, Tessaline significantly outperformed Varrow-NMT in BLEU (28.4 vs 27.6 over 8 seeds).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T06:59:12Z",
+ "decision": "ACCEPT",
+ "revised_text": "On the Halvard-Parl English→Estonian test set, Tessaline significantly outperformed Varrow-NMT in BLEU (28.4 vs 27.6 over 8 seeds).",
+ "rationale": "BLEU values match (28.4 vs 27.6). A paired t-test (n=8, t=3.13, p=0.017) is reported for exactly this comparison, supporting \"significantly outperformed.\" Scope (Halvard-Parl test set) is correct.",
+ "evidence_ids": [
+  "T1.r1.bleu",
+  "T1.r2.bleu",
+  "S2"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "S2",
+  "T1",
+  "T1.r1.bleu",
+  "T1.r1.chrf",
+  "T1.r2.bleu",
+  "T1.r2.chrf",
+  "T1.r3.bleu",
+  "T1.r3.chrf"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "On the Halvard-Parl English→Estonian test set, Tessaline significantly outperformed Varrow-NMT in BLEU (28.4 vs 27.6 over 8 seeds).",
+  "actions": [
+   {
+    "call_id": "call_2bb15e7aa7c341f49021c608",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_13687efdf00a46839f0dfc62",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_2bb15e7aa7c341f49021c608",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "BLEU and chrF on the Halvard-Parl English→Estonian test set, mean ± SD over 8 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.bleu",
+       "row": "Tessaline (ours)",
+       "column": "BLEU",
+       "text": "28.4 ± 0.6",
+       "value": 28.4,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.chrf",
+       "row": "Tessaline (ours)",
+       "column": "chrF",
+       "text": "58.1 ± 0.8",
+       "value": 58.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.bleu",
+       "row": "Varrow-NMT",
+       "column": "BLEU",
+       "text": "27.6 ± 0.8",
+       "value": 27.6,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.chrf",
+       "row": "Varrow-NMT",
+       "column": "chrF",
+       "text": "57.7 ± 0.5",
+       "value": 57.7,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r3.bleu",
+       "row": "PhraseGrid",
+       "column": "BLEU",
+       "text": "22.1 ± 0.8",
+       "value": 22.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r3.chrf",
+       "row": "PhraseGrid",
+       "column": "chrF",
+       "text": "52.4 ± 0.5",
+       "value": 52.4,
+       "unit": null,
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.bleu",
+     "T1.r1.chrf",
+     "T1.r2.bleu",
+     "T1.r2.chrf",
+     "T1.r3.bleu",
+     "T1.r3.chrf"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_13687efdf00a46839f0dfc62",
+    "tool": "get_test_metadata",
+    "status": "FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Tessaline vs Varrow-NMT, BLEU, Halvard-Parl test set",
+     "tests": [
+      {
+       "test_id": "S2",
+       "experiment_id": "exp1",
+       "comparison_id": "cmp1",
+       "test_name": "paired t-test",
+       "sidedness": "two-sided",
+       "paired": true,
+       "n": 8,
+       "n_unit": "random seeds (paired by seed)",
+       "statistic_name": "t",
+       "statistic": 3.13,
+       "df": 7.0,
+       "p_value": 0.017,
+       "p_value_text": "p = 0.017",
+       "alpha": 0.05,
+       "ci_level": 0.95,
+       "ci_low": 0.2,
+       "ci_high": 1.44,
+       "effect_description": "mean paired difference in BLEU (Tessaline − Varrow-NMT), BLEU points",
+       "multiple_comparison_adjustment": null,
+       "notes": null,
+       "summary": "paired t-test; two-sided; paired; n=8 random seeds (paired by seed); t=3.13 (df=7); p = 0.017; 95% CI [0.2, 1.44] for mean paired difference in BLEU (Tessaline − Varrow-NMT), BLEU points; alpha=0.05"
+      }
+     ]
+    },
+    "returned_ids": [
+     "S2"
+    ],
+    "message": "",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "On the Halvard-Parl English→Estonian test set, Tessaline significantly outperformed Varrow-NMT in BLEU (28.4 vs 27.6 over 8 seeds).",
+   "revised_text": "On the Halvard-Parl English→Estonian test set, Tessaline significantly outperformed Varrow-NMT in BLEU (28.4 vs 27.6 over 8 seeds).",
+   "evidence_ids": [
+    "T1.r1.bleu",
+    "T1.r2.bleu",
+    "S2"
+   ],
+   "rationale": "BLEU values match (28.4 vs 27.6). A paired t-test (n=8, t=3.13, p=0.017) is reported for exactly this comparison, supporting \"significantly outperformed.\" Scope (Halvard-Parl test set) is correct.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-SIG-S-strong:D0-tools-800:verify_adaptive:26d4445a7a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792911552-sCoQuEAXJrZpatOn8rqG",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2543,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.41472e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.88,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-SIG-S-strong:D0-tools-800:verify_adaptive:fc9e9cbe75",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792911554-fpZJg43voLmxcyhgAHIt",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3194,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001027232,
+   "cost_is_estimate": false,
+   "latency_s": 4.347,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-SIG-S-strong:D0-tools-800:verify_adaptive:ae24bd299f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792911558-7ElSNbuZ1NdVf2ofPCqE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3609,
+   "completion_tokens": 176,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001023216,
+   "cost_is_estimate": false,
+   "latency_s": 3.146,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00025919,
+ "prompt_tokens": 9346,
+ "completion_tokens": 345,
+ "finished_at": "2026-10-25T06:59:21Z",
+ "status": "completed"
+}

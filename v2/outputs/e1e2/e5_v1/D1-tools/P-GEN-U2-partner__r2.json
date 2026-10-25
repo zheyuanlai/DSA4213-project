@@ -1,0 +1,273 @@
+{
+ "run_id": "e5_v1:D1-tools:P-GEN-U2-partner:r2",
+ "probe_id": "P-GEN-U2-partner",
+ "case_id": "GEN-p1b",
+ "condition": "D1-tools",
+ "repeat": 2,
+ "draft_text": "Wrenfold's advantage over Fennick-Base may extend to customer-service domains not seen in training.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:13:00Z",
+ "decision": "WEAKEN",
+ "revised_text": "On the unseen test sets of the Banking and Travel domains, Wrenfold achieved higher macro-F1 than Fennick-Base (93.1% vs 91.6% on Banking; 92.4% vs 90.9% on Travel).",
+ "rationale": "Evidence only covers the unseen test sets of the two trained domains (Banking, Travel). No domain not seen in training was evaluated, so the claim that the advantage \"may extend to customer-service domains not seen in training\" is unsupported speculation beyond the evaluated scope.",
+ "evidence_ids": [
+  "T1.r1.wren",
+  "T1.r1.fenn",
+  "T1.r2.wren",
+  "T1.r2.fenn",
+  "absent:test:exp1/cmp1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Wrenfold's advantage over Fennick-Base may extend to customer-service domains not seen in training",
+  "expressed_strength": "\"may extend to customer-service domains not seen in training\" — hedged speculation about generalization beyond evaluated domains",
+  "strongest_supported": "On the unseen test sets of the Banking and Travel domains, Wrenfold achieved higher macro-F1 than Fennick-Base (93.1 vs 91.6 on Banking; 92.4 vs 90.9 on Travel).",
+  "support_relation": "WEAKER_SUPPORTED"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "experiment_id": "exp1",
+    "comparison_id": "cmp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.fenn",
+  "T1.r1.n",
+  "T1.r1.svm",
+  "T1.r1.wren",
+  "T1.r2.fenn",
+  "T1.r2.n",
+  "T1.r2.svm",
+  "T1.r2.wren",
+  "absent:test:exp1/cmp1"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Wrenfold's advantage over Fennick-Base may extend to customer-service domains not seen in training.",
+  "actions": [
+   {
+    "call_id": "call_095723e33f7547348cacc617",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_16fc5892393244348f28a3fe",
+    "tool": "get_test_metadata",
+    "args": {
+     "experiment_id": "exp1",
+     "comparison_id": "cmp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_095723e33f7547348cacc617",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Macro-F1 (%) by evaluation set, mean over 5 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.n",
+       "row": "Unseen test set – Banking",
+       "column": "Test utterances",
+       "text": "2,710",
+       "value": 2710.0,
+       "unit": null,
+       "higher_is_better": null
+      },
+      {
+       "evidence_id": "T1.r1.wren",
+       "row": "Unseen test set – Banking",
+       "column": "Wrenfold",
+       "text": "93.1",
+       "value": 93.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.fenn",
+       "row": "Unseen test set – Banking",
+       "column": "Fennick-Base",
+       "text": "91.6",
+       "value": 91.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.svm",
+       "row": "Unseen test set – Banking",
+       "column": "Keyword-SVM",
+       "text": "84.2",
+       "value": 84.2,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.n",
+       "row": "Unseen test set – Travel",
+       "column": "Test utterances",
+       "text": "2,760",
+       "value": 2760.0,
+       "unit": null,
+       "higher_is_better": null
+      },
+      {
+       "evidence_id": "T1.r2.wren",
+       "row": "Unseen test set – Travel",
+       "column": "Wrenfold",
+       "text": "92.4",
+       "value": 92.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.fenn",
+       "row": "Unseen test set – Travel",
+       "column": "Fennick-Base",
+       "text": "90.9",
+       "value": 90.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.svm",
+       "row": "Unseen test set – Travel",
+       "column": "Keyword-SVM",
+       "text": "83.5",
+       "value": 83.5,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.n",
+     "T1.r1.wren",
+     "T1.r1.fenn",
+     "T1.r1.svm",
+     "T1.r2.n",
+     "T1.r2.wren",
+     "T1.r2.fenn",
+     "T1.r2.svm"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_16fc5892393244348f28a3fe",
+    "tool": "get_test_metadata",
+    "status": "NOT_FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Wrenfold vs Fennick-Base, macro-F1, unseen test set"
+    },
+    "returned_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "WEAKEN",
+   "original_text": "Wrenfold's advantage over Fennick-Base may extend to customer-service domains not seen in training.",
+   "revised_text": "On the unseen test sets of the Banking and Travel domains, Wrenfold achieved higher macro-F1 than Fennick-Base (93.1% vs 91.6% on Banking; 92.4% vs 90.9% on Travel).",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn",
+    "absent:test:exp1/cmp1"
+   ],
+   "rationale": "Evidence only covers the unseen test sets of the two trained domains (Banking, Travel). No domain not seen in training was evaluated, so the claim that the advantage \"may extend to customer-service domains not seen in training\" is unsupported speculation beyond the evaluated scope.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 0,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-GEN-U2-partner:D1-tools:verify_adaptive_D1:44132148bf",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912380-cCp0sRv8S9PwoDoFNBYi",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2945,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.16448e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.205,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-U2-partner:D1-tools:verify_adaptive_D1:101739a97c",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912383-ZNCJ2x7F3rmJPT5CTL9N",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3602,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.50048e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.529,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-U2-partner:D1-tools:verify_adaptive_D1:7edcff2518",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912385-uXLA2NgXeZpD3LiR5DH2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3778,
+   "completion_tokens": 414,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001364032,
+   "cost_is_estimate": false,
+   "latency_s": 8.268,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00026305,
+ "prompt_tokens": 10325,
+ "completion_tokens": 529,
+ "finished_at": "2026-10-25T07:13:13Z",
+ "status": "completed"
+}

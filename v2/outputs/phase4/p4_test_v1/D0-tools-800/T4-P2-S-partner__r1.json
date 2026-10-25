@@ -1,0 +1,281 @@
+{
+ "run_id": "p4_test_v1:D0-tools-800:T4-P2-S-partner:r1",
+ "probe_id": "T4-P2-S-partner",
+ "case_id": "T4-P2-partner",
+ "condition": "D0-tools-800",
+ "repeat": 1,
+ "draft_text": "NacreFuse outperforms VellumRerank in exact-match accuracy on Kersey-QA, with 74.8% versus 73.9% and a Holm-adjusted p = 0.0336.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:28:49Z",
+ "decision": "WEAKEN",
+ "revised_text": "NacreFuse outperforms VellumRerank in exact-match accuracy on Kersey-QA, with 74.8% versus 73.9% and a Holm-adjusted p = 0.1292.",
+ "rationale": "Numbers match (74.8 vs 73.9), but the claim's Holm-adjusted p = 0.0336 is wrong: the reported Holm-adjusted p is 0.1292 (raw p = 0.0323). The claim misstates the adjusted p-value.",
+ "evidence_ids": [
+  "T1.r1.ker",
+  "T1.r2.ker",
+  "S1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1",
+    "row_id": "r1",
+    "column": "ker"
+   }
+  },
+  {
+   "tool": "lookup_table",
+   "args": {
+    "column": "ker",
+    "row_id": "r2",
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "S1",
+  "T1",
+  "T1.r1.ker",
+  "T1.r2.ker"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": true,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "NacreFuse outperforms VellumRerank in exact-match accuracy on Kersey-QA, with 74.8% versus 73.9% and a Holm-adjusted p = 0.0336.",
+  "actions": [
+   {
+    "call_id": "call_93525ff0eec94c1eaa4d33e5",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1",
+     "row_id": "r1",
+     "column": "ker"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_ee5fcea1360c4fd4a6841174",
+    "tool": "lookup_table",
+    "args": {
+     "column": "ker",
+     "row_id": "r2",
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_964d5908ec7e47f0976ea60d",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 3
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_93525ff0eec94c1eaa4d33e5",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on four test sets, mean ± SD over 12 seeds.",
+     "notes": "Holm correction was applied across the four pre-specified dataset comparisons.",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.ker",
+       "row": "NacreFuse (ours)",
+       "column": "Kersey-QA",
+       "text": "74.8 ± 1.2",
+       "value": 74.8,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.ker"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_ee5fcea1360c4fd4a6841174",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on four test sets, mean ± SD over 12 seeds.",
+     "notes": "Holm correction was applied across the four pre-specified dataset comparisons.",
+     "cells": [
+      {
+       "evidence_id": "T1.r2.ker",
+       "row": "VellumRerank",
+       "column": "Kersey-QA",
+       "text": "73.9 ± 1.1",
+       "value": 73.9,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r2.ker"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_964d5908ec7e47f0976ea60d",
+    "tool": "get_test_metadata",
+    "status": "FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "NacreFuse vs VellumRerank, exact-match accuracy, Kersey-QA test",
+     "tests": [
+      {
+       "test_id": "S1",
+       "experiment_id": "exp1",
+       "comparison_id": "cmp1",
+       "test_name": "paired t-test",
+       "sidedness": "two-sided",
+       "paired": true,
+       "n": 12,
+       "n_unit": "random seeds",
+       "statistic_name": "t",
+       "statistic": 2.45,
+       "df": 11.0,
+       "p_value": 0.0323,
+       "p_value_text": "raw p = 0.0323",
+       "alpha": 0.05,
+       "ci_level": 0.95,
+       "ci_low": 0.09,
+       "ci_high": 1.71,
+       "effect_description": "mean paired difference in exact match (NacreFuse − VellumRerank), percentage points",
+       "multiple_comparison_adjustment": "Holm correction across four pre-specified dataset comparisons; adjusted p = 0.1292",
+       "notes": "The confidence interval is unadjusted.",
+       "summary": "paired t-test; two-sided; paired; n=12 random seeds; t=2.45 (df=11); raw p = 0.0323; 95% CI [0.09, 1.71] for mean paired difference in exact match (NacreFuse − VellumRerank), percentage points; alpha=0.05; adjustment: Holm correction across four pre-specified dataset comparisons; adjusted p = 0.1292; note: The confidence interval is unadjusted."
+      }
+     ]
+    },
+    "returned_ids": [
+     "S1"
+    ],
+    "message": "",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "WEAKEN",
+   "original_text": "NacreFuse outperforms VellumRerank in exact-match accuracy on Kersey-QA, with 74.8% versus 73.9% and a Holm-adjusted p = 0.0336.",
+   "revised_text": "NacreFuse outperforms VellumRerank in exact-match accuracy on Kersey-QA, with 74.8% versus 73.9% and a Holm-adjusted p = 0.1292.",
+   "evidence_ids": [
+    "T1.r1.ker",
+    "T1.r2.ker",
+    "S1"
+   ],
+   "rationale": "Numbers match (74.8 vs 73.9), but the claim's Holm-adjusted p = 0.0336 is wrong: the reported Holm-adjusted p is 0.1292 (raw p = 0.0323). The claim misstates the adjusted p-value.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 4,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 3,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P2-S-partner:D0-tools-800:verify_adaptive:5ffd9d36d6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920529-XDazF3QIyh4VroRl7JWy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2643,
+   "completion_tokens": 202,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.78e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.662,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P2-S-partner:D0-tools-800:verify_adaptive:022dc974d5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920531-DmjzO7EYhBXJ3itrIAdI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3093,
+   "completion_tokens": 135,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.9712e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.843,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P2-S-partner:D0-tools-800:verify_adaptive:86a329e9e5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920534-Kc29VJNygK2nauRuunbW",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3429,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.79696e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.989,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P2-S-partner:D0-tools-800:verify_adaptive:473827406d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792920536-8W38C6MeYudrnSwX0TRE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3895,
+   "completion_tokens": 217,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001165024,
+   "cost_is_estimate": false,
+   "latency_s": 4.037,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00033198,
+ "prompt_tokens": 13060,
+ "completion_tokens": 622,
+ "finished_at": "2026-10-25T09:29:01Z",
+ "status": "completed"
+}

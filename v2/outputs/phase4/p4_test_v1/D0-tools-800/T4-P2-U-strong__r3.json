@@ -1,0 +1,290 @@
+{
+ "run_id": "p4_test_v1:D0-tools-800:T4-P2-U-strong:r3",
+ "probe_id": "T4-P2-U-strong",
+ "case_id": "T4-P2-strong",
+ "condition": "D0-tools-800",
+ "repeat": 3,
+ "draft_text": "NacreFuse tentatively outperforms VellumRerank on Kersey-QA, averaging 74.8% versus 73.9% exact-match accuracy.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:53:50Z",
+ "decision": "STRENGTHEN",
+ "revised_text": "NacreFuse significantly outperforms VellumRerank on Kersey-QA, averaging 74.8% versus 73.9% exact-match accuracy (paired t-test, t=3.2, df=11, Holm-adjusted p=0.0336).",
+ "rationale": "Numbers match (74.8 vs 73.9). A paired t-test is reported (t=3.2, df=11, raw p=0.0084, Holm-adjusted p=0.0336 < 0.05), so the difference is statistically significant. The hedge \"tentatively\" understates the supported claim.",
+ "evidence_ids": [
+  "T1.r1.ker",
+  "T1.r2.ker",
+  "S1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "S1",
+  "T1",
+  "T1.r1.ave",
+  "T1.r1.ker",
+  "T1.r1.nor",
+  "T1.r1.yar",
+  "T1.r2.ave",
+  "T1.r2.ker",
+  "T1.r2.nor",
+  "T1.r2.yar"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": true,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "NacreFuse tentatively outperforms VellumRerank on Kersey-QA, averaging 74.8% versus 73.9% exact-match accuracy.",
+  "actions": [
+   {
+    "call_id": "call_73d49a5dfcd644b9939029c5",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_438a3090b1fe432696b40bdd",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_73d49a5dfcd644b9939029c5",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Exact-match accuracy (%) on four test sets, mean ± SD over 12 seeds.",
+     "notes": "Holm correction was applied across the four pre-specified dataset comparisons.",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.ker",
+       "row": "NacreFuse (ours)",
+       "column": "Kersey-QA",
+       "text": "74.8 ± 1.2",
+       "value": 74.8,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.nor",
+       "row": "NacreFuse (ours)",
+       "column": "Norwick-QA",
+       "text": "69.6 ± 1.0",
+       "value": 69.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.ave",
+       "row": "NacreFuse (ours)",
+       "column": "Avenford-QA",
+       "text": "81.3 ± 0.8",
+       "value": 81.3,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.yar",
+       "row": "NacreFuse (ours)",
+       "column": "Yarrowby-QA",
+       "text": "77.1 ± 1.1",
+       "value": 77.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.ker",
+       "row": "VellumRerank",
+       "column": "Kersey-QA",
+       "text": "73.9 ± 1.1",
+       "value": 73.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.nor",
+       "row": "VellumRerank",
+       "column": "Norwick-QA",
+       "text": "69.2 ± 0.9",
+       "value": 69.2,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.ave",
+       "row": "VellumRerank",
+       "column": "Avenford-QA",
+       "text": "81.1 ± 0.9",
+       "value": 81.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.yar",
+       "row": "VellumRerank",
+       "column": "Yarrowby-QA",
+       "text": "77.0 ± 1.0",
+       "value": 77.0,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.ker",
+     "T1.r1.nor",
+     "T1.r1.ave",
+     "T1.r1.yar",
+     "T1.r2.ker",
+     "T1.r2.nor",
+     "T1.r2.ave",
+     "T1.r2.yar"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_438a3090b1fe432696b40bdd",
+    "tool": "get_test_metadata",
+    "status": "FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "NacreFuse vs VellumRerank, exact-match accuracy, Kersey-QA test",
+     "tests": [
+      {
+       "test_id": "S1",
+       "experiment_id": "exp1",
+       "comparison_id": "cmp1",
+       "test_name": "paired t-test",
+       "sidedness": "two-sided",
+       "paired": true,
+       "n": 12,
+       "n_unit": "random seeds",
+       "statistic_name": "t",
+       "statistic": 3.2,
+       "df": 11.0,
+       "p_value": 0.0084,
+       "p_value_text": "raw p = 0.0084",
+       "alpha": 0.05,
+       "ci_level": 0.95,
+       "ci_low": 0.28,
+       "ci_high": 1.52,
+       "effect_description": "mean paired difference in exact match (NacreFuse − VellumRerank), percentage points",
+       "multiple_comparison_adjustment": "Holm correction across four pre-specified dataset comparisons; adjusted p = 0.0336",
+       "notes": "The confidence interval is unadjusted.",
+       "summary": "paired t-test; two-sided; paired; n=12 random seeds; t=3.2 (df=11); raw p = 0.0084; 95% CI [0.28, 1.52] for mean paired difference in exact match (NacreFuse − VellumRerank), percentage points; alpha=0.05; adjustment: Holm correction across four pre-specified dataset comparisons; adjusted p = 0.0336; note: The confidence interval is unadjusted."
+      }
+     ]
+    },
+    "returned_ids": [
+     "S1"
+    ],
+    "message": "",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "STRENGTHEN",
+   "original_text": "NacreFuse tentatively outperforms VellumRerank on Kersey-QA, averaging 74.8% versus 73.9% exact-match accuracy.",
+   "revised_text": "NacreFuse significantly outperforms VellumRerank on Kersey-QA, averaging 74.8% versus 73.9% exact-match accuracy (paired t-test, t=3.2, df=11, Holm-adjusted p=0.0336).",
+   "evidence_ids": [
+    "T1.r1.ker",
+    "T1.r2.ker",
+    "S1"
+   ],
+   "rationale": "Numbers match (74.8 vs 73.9). A paired t-test is reported (t=3.2, df=11, raw p=0.0084, Holm-adjusted p=0.0336 < 0.05), so the difference is statistically significant. The hedge \"tentatively\" understates the supported claim.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P2-U-strong:D0-tools-800:verify_adaptive:ba3965753c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792922030-jweiiHP52Ww7BcSBxIy2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2623,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000257488,
+   "cost_is_estimate": false,
+   "latency_s": 1.846,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P2-U-strong:D0-tools-800:verify_adaptive:66947a76b0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792922032-uyYAO7bRK9mx93YTCEni",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3444,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000102912,
+   "cost_is_estimate": false,
+   "latency_s": 1.637,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P2-U-strong:D0-tools-800:verify_adaptive:fba852f056",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792922034-eruoNt4l2oJJOhWCjabc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3910,
+   "completion_tokens": 243,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001246864,
+   "cost_is_estimate": false,
+   "latency_s": 4.269,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00048509,
+ "prompt_tokens": 9977,
+ "completion_tokens": 412,
+ "finished_at": "2026-10-25T09:53:58Z",
+ "status": "completed"
+}

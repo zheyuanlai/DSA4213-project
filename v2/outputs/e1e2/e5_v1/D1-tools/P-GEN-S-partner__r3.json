@@ -1,0 +1,359 @@
+{
+ "run_id": "e5_v1:D1-tools:P-GEN-S-partner:r3",
+ "probe_id": "P-GEN-S-partner",
+ "case_id": "GEN-p1b",
+ "condition": "D1-tools",
+ "repeat": 3,
+ "draft_text": "Wrenfold's advantage over Fennick-Base transferred to all three held-out domains (macro-F1: Insurance 85.7 vs 81.2, Telecom 83.9 vs 80.4, Utilities 86.2 vs 82.0).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T07:22:04Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "Table T1 contains only Banking (r1) and Travel (r2) rows; rows r3–r5 (Insurance, Telecom, Utilities) do not exist. The claimed numbers and the \"all three held-out domains\" claim have no evidence. No statistical test is reported for exp1/cmp1 either.",
+ "evidence_ids": [
+  "T1.r1.wren",
+  "T1.r1.fenn",
+  "T1.r2.wren",
+  "T1.r2.fenn",
+  "absent:test:exp1/cmp1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Wrenfold's advantage over Fennick-Base transferred to all three held-out domains (Insurance, Telecom, Utilities) with specific macro-F1 values.",
+  "expressed_strength": "\"transferred to all three held-out domains\" with specific macro-F1 numbers (Insurance 85.7 vs 81.2, Telecom 83.9 vs 80.4, Utilities 86.2 vs 82.0)",
+  "strongest_supported": "The package only evaluates Banking and Travel unseen test sets (Wrenfold 93.1 vs 91.6, 92.4 vs 90.9); no Insurance/Telecom/Utilities data or test is supplied.",
+  "support_relation": "NOT_SUPPORTED"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "experiment_id": "exp1",
+    "comparison_id": "cmp1"
+   }
+  },
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1",
+    "row_id": "r3"
+   }
+  },
+  {
+   "tool": "lookup_table",
+   "args": {
+    "row_id": "r4",
+    "table_id": "T1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.fenn",
+  "T1.r1.n",
+  "T1.r1.svm",
+  "T1.r1.wren",
+  "T1.r2.fenn",
+  "T1.r2.n",
+  "T1.r2.svm",
+  "T1.r2.wren",
+  "absent:test:exp1/cmp1"
+ ],
+ "max_tokens_per_turn": 800,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Wrenfold's advantage over Fennick-Base transferred to all three held-out domains (macro-F1: Insurance 85.7 vs 81.2, Telecom 83.9 vs 80.4, Utilities 86.2 vs 82.0).",
+  "actions": [
+   {
+    "call_id": "call_f36910d4e0f3454fa6c72b0a",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_fb1c73097bdf44f5ad1d68eb",
+    "tool": "get_test_metadata",
+    "args": {
+     "experiment_id": "exp1",
+     "comparison_id": "cmp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_17c1bf0355b14786b2266109",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1",
+     "row_id": "r3"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_d92a593800b84d8c9306a489",
+    "tool": "lookup_table",
+    "args": {
+     "row_id": "r4",
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_f36910d4e0f3454fa6c72b0a",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Macro-F1 (%) by evaluation set, mean over 5 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.n",
+       "row": "Unseen test set – Banking",
+       "column": "Test utterances",
+       "text": "2,710",
+       "value": 2710.0,
+       "unit": null,
+       "higher_is_better": null
+      },
+      {
+       "evidence_id": "T1.r1.wren",
+       "row": "Unseen test set – Banking",
+       "column": "Wrenfold",
+       "text": "93.1",
+       "value": 93.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.fenn",
+       "row": "Unseen test set – Banking",
+       "column": "Fennick-Base",
+       "text": "91.6",
+       "value": 91.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.svm",
+       "row": "Unseen test set – Banking",
+       "column": "Keyword-SVM",
+       "text": "84.2",
+       "value": 84.2,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.n",
+       "row": "Unseen test set – Travel",
+       "column": "Test utterances",
+       "text": "2,760",
+       "value": 2760.0,
+       "unit": null,
+       "higher_is_better": null
+      },
+      {
+       "evidence_id": "T1.r2.wren",
+       "row": "Unseen test set – Travel",
+       "column": "Wrenfold",
+       "text": "92.4",
+       "value": 92.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.fenn",
+       "row": "Unseen test set – Travel",
+       "column": "Fennick-Base",
+       "text": "90.9",
+       "value": 90.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.svm",
+       "row": "Unseen test set – Travel",
+       "column": "Keyword-SVM",
+       "text": "83.5",
+       "value": 83.5,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.n",
+     "T1.r1.wren",
+     "T1.r1.fenn",
+     "T1.r1.svm",
+     "T1.r2.n",
+     "T1.r2.wren",
+     "T1.r2.fenn",
+     "T1.r2.svm"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_fb1c73097bdf44f5ad1d68eb",
+    "tool": "get_test_metadata",
+    "status": "NOT_FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Wrenfold vs Fennick-Base, macro-F1, unseen test set"
+    },
+    "returned_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+    "provenance": "comparison exp1/cmp1"
+   },
+   {
+    "call_id": "call_17c1bf0355b14786b2266109",
+    "tool": "lookup_table",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [],
+    "message": "No row 'r3' in T1. Rows: r1=Unseen test set – Banking; r2=Unseen test set – Travel",
+    "provenance": ""
+   },
+   {
+    "call_id": "call_d92a593800b84d8c9306a489",
+    "tool": "lookup_table",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [],
+    "message": "No row 'r4' in T1. Rows: r1=Unseen test set – Banking; r2=Unseen test set – Travel",
+    "provenance": ""
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Wrenfold's advantage over Fennick-Base transferred to all three held-out domains (macro-F1: Insurance 85.7 vs 81.2, Telecom 83.9 vs 80.4, Utilities 86.2 vs 82.0).",
+   "revised_text": "",
+   "evidence_ids": [
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn",
+    "absent:test:exp1/cmp1"
+   ],
+   "rationale": "Table T1 contains only Banking (r1) and Travel (r2) rows; rows r3–r5 (Insurance, Telecom, Utilities) do not exist. The claimed numbers and the \"all three held-out domains\" claim have no evidence. No statistical test is reported for exp1/cmp1 either.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 5,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 2,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-GEN-S-partner:D1-tools:verify_adaptive_D1:40d019f56d",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912924-qz5o3mchHBV6K9vhAIc5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3031,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.92128e-05,
+   "cost_is_estimate": false,
+   "latency_s": 11.916,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D1-tools:verify_adaptive_D1:f6ee431d39",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912936-HiqJtDx4fkdfECohOvhZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3688,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001025728,
+   "cost_is_estimate": false,
+   "latency_s": 1.732,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D1-tools:verify_adaptive_D1:6f232bbc0f",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912938-eqOCpYpp86irrg83BoUv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3864,
+   "completion_tokens": 167,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.87632e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.385,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D1-tools:verify_adaptive_D1:98820e95f4",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912941-jS5NlsG2yrymvsW2b3yN",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4185,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.8272e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.578,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D1-tools:verify_adaptive_D1:230e86cc9c",
+   "role": "verify_adaptive_D1",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792912942-xf9rxVsbIIVwRfBiwNdV",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4312,
+   "completion_tokens": 400,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001360768,
+   "cost_is_estimate": false,
+   "latency_s": 8.297,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.0004149,
+ "prompt_tokens": 19080,
+ "completion_tokens": 747,
+ "finished_at": "2026-10-25T07:22:31Z",
+ "status": "completed"
+}

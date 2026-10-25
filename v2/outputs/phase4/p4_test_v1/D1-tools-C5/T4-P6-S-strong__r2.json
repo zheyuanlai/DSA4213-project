@@ -1,0 +1,296 @@
+{
+ "run_id": "p4_test_v1:D1-tools-C5:T4-P6-S-strong:r2",
+ "probe_id": "T4-P6-S-strong",
+ "case_id": "T4-P6-strong",
+ "condition": "D1-tools-C5",
+ "repeat": 2,
+ "draft_text": "Prismark was robust across all four tested corruption severities, meeting the pre-specified maximum accuracy drop of 5.0 percentage points at each severity.",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-25T09:37:29Z",
+ "decision": "ACCEPT",
+ "revised_text": "Prismark was robust across all four tested corruption severities, meeting the pre-specified maximum accuracy drop of 5.0 percentage points at each severity.",
+ "rationale": "Drops at 10%, 20%, 30%, 40% are 0.9, 2.1, 3.6, 4.9 pp, all ≤5.0. The claim's scope (\"all four tested severities\") matches the evaluated severities. No statistical test is needed since the criterion is a descriptive threshold, not significance.",
+ "evidence_ids": [
+  "T1.r2.drop",
+  "T1.r3.drop",
+  "T1.r4.drop",
+  "T1.r5.drop",
+  "absent:test:exp1/cmp1"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {
+  "proposition": "Prismark met the 5.0 pp max accuracy drop at all four corruption severities",
+  "expressed_strength": "\"robust across all four tested corruption severities, meeting the pre-specified maximum accuracy drop of 5.0 percentage points at each severity\"",
+  "strongest_supported": "Prismark met the pre-specified maximum accuracy drop of 5.0 percentage points at each of the four tested corruption severities on the NacreShift-Images test split.",
+  "support_relation": "MATCHES"
+ },
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "get_test_metadata",
+   "args": {
+    "comparison_id": "cmp1",
+    "experiment_id": "exp1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.acc",
+  "T1.r1.drop",
+  "T1.r2.acc",
+  "T1.r2.drop",
+  "T1.r3.acc",
+  "T1.r3.drop",
+  "T1.r4.acc",
+  "T1.r4.drop",
+  "T1.r5.acc",
+  "T1.r5.drop",
+  "absent:test:exp1/cmp1"
+ ],
+ "max_tokens_per_turn": 800,
+ "can_strengthen": false,
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Prismark was robust across all four tested corruption severities, meeting the pre-specified maximum accuracy drop of 5.0 percentage points at each severity.",
+  "actions": [
+   {
+    "call_id": "call_17ca3f2ccaaf48ff91f14ccd",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_8b4e4b9b168a4c6391d6a5ad",
+    "tool": "get_test_metadata",
+    "args": {
+     "comparison_id": "cmp1",
+     "experiment_id": "exp1"
+    },
+    "policy": "adaptive",
+    "step": 2
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_17ca3f2ccaaf48ff91f14ccd",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Prismark accuracy and accuracy drop on the NacreShift-Images test split.",
+     "notes": "Accuracy drop is measured relative to the uncorrupted accuracy of 88.0%.",
+     "cells": [
+      {
+       "evidence_id": "T1.r1.acc",
+       "row": "Uncorrupted",
+       "column": "Accuracy (%)",
+       "text": "88.0",
+       "value": 88.0,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.drop",
+       "row": "Uncorrupted",
+       "column": "Accuracy drop",
+       "text": "0.0",
+       "value": 0.0,
+       "unit": "percentage points",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r2.acc",
+       "row": "10% corruption",
+       "column": "Accuracy (%)",
+       "text": "87.1",
+       "value": 87.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.drop",
+       "row": "10% corruption",
+       "column": "Accuracy drop",
+       "text": "0.9",
+       "value": 0.9,
+       "unit": "percentage points",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r3.acc",
+       "row": "20% corruption",
+       "column": "Accuracy (%)",
+       "text": "85.9",
+       "value": 85.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r3.drop",
+       "row": "20% corruption",
+       "column": "Accuracy drop",
+       "text": "2.1",
+       "value": 2.1,
+       "unit": "percentage points",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r4.acc",
+       "row": "30% corruption",
+       "column": "Accuracy (%)",
+       "text": "84.4",
+       "value": 84.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r4.drop",
+       "row": "30% corruption",
+       "column": "Accuracy drop",
+       "text": "3.6",
+       "value": 3.6,
+       "unit": "percentage points",
+       "higher_is_better": false
+      },
+      {
+       "evidence_id": "T1.r5.acc",
+       "row": "40% corruption",
+       "column": "Accuracy (%)",
+       "text": "83.1",
+       "value": 83.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r5.drop",
+       "row": "40% corruption",
+       "column": "Accuracy drop",
+       "text": "4.9",
+       "value": 4.9,
+       "unit": "percentage points",
+       "higher_is_better": false
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.acc",
+     "T1.r1.drop",
+     "T1.r2.acc",
+     "T1.r2.drop",
+     "T1.r3.acc",
+     "T1.r3.drop",
+     "T1.r4.acc",
+     "T1.r4.drop",
+     "T1.r5.acc",
+     "T1.r5.drop"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_8b4e4b9b168a4c6391d6a5ad",
+    "tool": "get_test_metadata",
+    "status": "NOT_FOUND",
+    "data": {
+     "comparison": "exp1/cmp1",
+     "description": "Prismark accuracy at four corruption severities compared with its uncorrupted accuracy"
+    },
+    "returned_ids": [
+     "absent:test:exp1/cmp1"
+    ],
+    "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+    "provenance": "comparison exp1/cmp1"
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "ACCEPT",
+   "original_text": "Prismark was robust across all four tested corruption severities, meeting the pre-specified maximum accuracy drop of 5.0 percentage points at each severity.",
+   "revised_text": "Prismark was robust across all four tested corruption severities, meeting the pre-specified maximum accuracy drop of 5.0 percentage points at each severity.",
+   "evidence_ids": [
+    "T1.r2.drop",
+    "T1.r3.drop",
+    "T1.r4.drop",
+    "T1.r5.drop",
+    "absent:test:exp1/cmp1"
+   ],
+   "rationale": "Drops at 10%, 20%, 30%, 40% are 0.9, 2.1, 3.6, 4.9 pp, all ≤5.0. The claim's scope (\"all four tested severities\") matches the evaluated severities. No statistical test is needed since the criterion is a descriptive threshold, not significance.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 3,
+  "protocol_errors": [],
+  "ignored_parallel_calls": 1,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "T4-P6-S-strong:D1-tools-C5:verify_adaptive_D1-C5:cdf15b78c8",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921049-dRsFraQHhlC4MsT64MiE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2958,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.70448e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.473,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P6-S-strong:D1-tools-C5:verify_adaptive_D1-C5:10299de27f",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921053-298PwQ0QJZ32GZZYQWk7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3830,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.96352e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.439,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "T4-P6-S-strong:D1-tools-C5:verify_adaptive_D1-C5:d8193e6c41",
+   "role": "verify_adaptive_D1-C5",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792921055-syIvfYcTudimWxi959F5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4005,
+   "completion_tokens": 365,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000121632,
+   "cost_is_estimate": false,
+   "latency_s": 9.136,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00021831,
+ "prompt_tokens": 10793,
+ "completion_tokens": 534,
+ "finished_at": "2026-10-25T09:37:45Z",
+ "status": "completed"
+}

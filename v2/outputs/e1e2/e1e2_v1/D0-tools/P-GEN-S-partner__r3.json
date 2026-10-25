@@ -1,0 +1,366 @@
+{
+ "run_id": "e1e2_v1:D0-tools:P-GEN-S-partner:r3",
+ "probe_id": "P-GEN-S-partner",
+ "case_id": "GEN-p1b",
+ "condition": "D0-tools",
+ "repeat": 3,
+ "draft_text": "Wrenfold's advantage over Fennick-Base transferred to all three held-out domains (macro-F1: Insurance 85.7 vs 81.2, Telecom 83.9 vs 80.4, Utilities 86.2 vs 82.0).",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "started_at": "2026-10-24T11:56:28Z",
+ "decision": "REMOVE",
+ "revised_text": "",
+ "rationale": "T1 contains only Banking (r1) and Travel (r2) rows; no Insurance, Telecom, or Utilities rows exist. The claimed numbers (85.7/81.2, 83.9/80.4, 86.2/82.0) and the \"all three held-out domains\" claim have no evidence support. No defensible narrower version is available.",
+ "evidence_ids": [
+  "T1",
+  "T1.r1.wren",
+  "T1.r1.fenn",
+  "T1.r2.wren",
+  "T1.r2.fenn"
+ ],
+ "valid": true,
+ "validation_notes": [],
+ "judgement": {},
+ "tools": [
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "lookup_table",
+   "args": {
+    "table_id": "T1",
+    "row_id": "r3"
+   }
+  },
+  {
+   "tool": "lookup_table",
+   "args": {
+    "row_id": "r4",
+    "table_id": "T1"
+   }
+  },
+  {
+   "tool": "lookup_table",
+   "args": {
+    "row_id": "r5",
+    "table_id": "T1"
+   }
+  }
+ ],
+ "returned_ids": [
+  "T1",
+  "T1.r1.fenn",
+  "T1.r1.n",
+  "T1.r1.svm",
+  "T1.r1.wren",
+  "T1.r2.fenn",
+  "T1.r2.n",
+  "T1.r2.svm",
+  "T1.r2.wren"
+ ],
+ "trace": {
+  "claim_id": "s1",
+  "original_text": "Wrenfold's advantage over Fennick-Base transferred to all three held-out domains (macro-F1: Insurance 85.7 vs 81.2, Telecom 83.9 vs 80.4, Utilities 86.2 vs 82.0).",
+  "actions": [
+   {
+    "call_id": "call_752ba1d105fb40a9b6b4b8c9",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 1
+   },
+   {
+    "call_id": "call_3ed4044cb5f84489bc4856c4",
+    "tool": "lookup_table",
+    "args": {
+     "table_id": "T1",
+     "row_id": "r3"
+    },
+    "policy": "adaptive",
+    "step": 2
+   },
+   {
+    "call_id": "call_6e76f11a952f481296a2ff36",
+    "tool": "lookup_table",
+    "args": {
+     "row_id": "r4",
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 3
+   },
+   {
+    "call_id": "call_1f7b574f3c1841beaaccacc4",
+    "tool": "lookup_table",
+    "args": {
+     "row_id": "r5",
+     "table_id": "T1"
+    },
+    "policy": "adaptive",
+    "step": 4
+   }
+  ],
+  "observations": [
+   {
+    "call_id": "call_752ba1d105fb40a9b6b4b8c9",
+    "tool": "lookup_table",
+    "status": "FOUND",
+    "data": {
+     "table_id": "T1",
+     "caption": "Macro-F1 (%) by evaluation set, mean over 5 seeds.",
+     "notes": null,
+     "cells": [
+      {
+       "evidence_id": "T1.r1.n",
+       "row": "Unseen test set – Banking",
+       "column": "Test utterances",
+       "text": "2,710",
+       "value": 2710.0,
+       "unit": null,
+       "higher_is_better": null
+      },
+      {
+       "evidence_id": "T1.r1.wren",
+       "row": "Unseen test set – Banking",
+       "column": "Wrenfold",
+       "text": "93.1",
+       "value": 93.1,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.fenn",
+       "row": "Unseen test set – Banking",
+       "column": "Fennick-Base",
+       "text": "91.6",
+       "value": 91.6,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r1.svm",
+       "row": "Unseen test set – Banking",
+       "column": "Keyword-SVM",
+       "text": "84.2",
+       "value": 84.2,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.n",
+       "row": "Unseen test set – Travel",
+       "column": "Test utterances",
+       "text": "2,760",
+       "value": 2760.0,
+       "unit": null,
+       "higher_is_better": null
+      },
+      {
+       "evidence_id": "T1.r2.wren",
+       "row": "Unseen test set – Travel",
+       "column": "Wrenfold",
+       "text": "92.4",
+       "value": 92.4,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.fenn",
+       "row": "Unseen test set – Travel",
+       "column": "Fennick-Base",
+       "text": "90.9",
+       "value": 90.9,
+       "unit": "%",
+       "higher_is_better": true
+      },
+      {
+       "evidence_id": "T1.r2.svm",
+       "row": "Unseen test set – Travel",
+       "column": "Keyword-SVM",
+       "text": "83.5",
+       "value": 83.5,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     ]
+    },
+    "returned_ids": [
+     "T1",
+     "T1.r1.n",
+     "T1.r1.wren",
+     "T1.r1.fenn",
+     "T1.r1.svm",
+     "T1.r2.n",
+     "T1.r2.wren",
+     "T1.r2.fenn",
+     "T1.r2.svm"
+    ],
+    "message": "",
+    "provenance": "table T1"
+   },
+   {
+    "call_id": "call_3ed4044cb5f84489bc4856c4",
+    "tool": "lookup_table",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [],
+    "message": "No row 'r3' in T1. Rows: r1=Unseen test set – Banking; r2=Unseen test set – Travel",
+    "provenance": ""
+   },
+   {
+    "call_id": "call_6e76f11a952f481296a2ff36",
+    "tool": "lookup_table",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [],
+    "message": "No row 'r4' in T1. Rows: r1=Unseen test set – Banking; r2=Unseen test set – Travel",
+    "provenance": ""
+   },
+   {
+    "call_id": "call_1f7b574f3c1841beaaccacc4",
+    "tool": "lookup_table",
+    "status": "NOT_FOUND",
+    "data": {},
+    "returned_ids": [],
+    "message": "No row 'r5' in T1. Rows: r1=Unseen test set – Banking; r2=Unseen test set – Travel",
+    "provenance": ""
+   }
+  ],
+  "decision": {
+   "claim_id": "s1",
+   "decision": "REMOVE",
+   "original_text": "Wrenfold's advantage over Fennick-Base transferred to all three held-out domains (macro-F1: Insurance 85.7 vs 81.2, Telecom 83.9 vs 80.4, Utilities 86.2 vs 82.0).",
+   "revised_text": "",
+   "evidence_ids": [
+    "T1",
+    "T1.r1.wren",
+    "T1.r1.fenn",
+    "T1.r2.wren",
+    "T1.r2.fenn"
+   ],
+   "rationale": "T1 contains only Banking (r1) and Travel (r2) rows; no Insurance, Telecom, or Utilities rows exist. The claimed numbers (85.7/81.2, 83.9/80.4, 86.2/82.0) and the \"all three held-out domains\" claim have no evidence support. No defensible narrower version is available.",
+   "valid": true,
+   "validation_notes": []
+  },
+  "model_calls": 6,
+  "protocol_errors": [
+   "invalid decision: cited ids not returned by this claim's tool calls: ['T1.r1', 'T1.r2', 'absent:T1.r3', 'absent:T1.r4', 'absent:T1.r5']; REMOVE must cite evidence returned by tools"
+  ],
+  "ignored_parallel_calls": 2,
+  "stop_reason": "decision"
+ },
+ "calls": [
+  {
+   "call_id": "P-GEN-S-partner:D0-tools:verify_adaptive:634a950b1b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842987-ZRa88Yf0h92apAk5o0aI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2548,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.03312e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.448,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D0-tools:verify_adaptive:b757a6e3f9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842989-XBeU4rgcFu6ImcGvVwMg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3205,
+   "completion_tokens": 167,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.43936e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.163,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D0-tools:verify_adaptive:77a34873eb",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842991-N47qyPk9k3sd6MznuYUu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3526,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.57136e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.079,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D0-tools:verify_adaptive:0e0e7b0c3c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842993-I3xDZnM5obM99KNBJtO9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3653,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.50784e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.346,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D0-tools:verify_adaptive:9533e425b8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842995-bFYxQ37qbk2MKyfSzvSp",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3780,
+   "completion_tokens": 189,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.71792e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.755,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "P-GEN-S-partner:D0-tools:verify_adaptive:63e9e10928",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1792842998-MKnGsbHEQdNeIdILqm8S",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4149,
+   "completion_tokens": 209,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001149312,
+   "cost_is_estimate": false,
+   "latency_s": 3.244,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "cost_usd": 0.00041763,
+ "prompt_tokens": 20861,
+ "completion_tokens": 742,
+ "finished_at": "2026-10-24T11:56:42Z",
+ "status": "completed"
+}
