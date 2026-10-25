@@ -16,3 +16,17 @@ with the time, the reason and the new hash. `phase4_freeze.py --check` will repo
   scoring rules (`phase4_score.py`), the verifier and the TEST items.
 * **What had been seen.** No judge label existed. The coordinating agent had seen only the runner's progress lines.
 * **Cost of the failed call.** About $0.05 (one Judge A call), on the judge ledger.
+
+## D2 (2026-10-25, during judging, before any score was computed)
+
+* **Files and new SHA-256.** `v2/scripts/phase4_judge.py` `d7631df19b1ae779e767245245fc4ab1273075fa12ae6ae83a5aa7e43e9fdfb3`; `v2/or_judge.py` `68355415caef02a793a63852e5a0d1e5fc755a0e069e0c23499375c70f31e78c`.
+* **Problem.** Claude Haiku 5.5 (Judge B) reasons by default, and its reasoning tokens count against the per-call limit.
+  The verify reply for one package hit the 6,000-token limit (`finish_reason = length`), and so did its repair turn,
+  so the JSON was cut off.
+* **Changes.**
+  1. The verify-call token limit is raised from 6,000 to 16,000. Billing is by actual use.
+  2. The cache never reuses a truncated reply; such files are renamed `*.truncated.json` and kept.
+  3. The judge-ledger stage cap `p4_judge` is raised from $1.50 to $2.50. Observed Judge A cost is $0.06–0.14 per
+     package, against an expected $0.04–0.05, which projects to about $1.6–1.8 in total.
+* **Not changed.** Prompts, schemas, labels, numeric checks, scoring rules, verifier, items.
+* **What had been seen.** Judge labels for P1 only, at the level of these log lines. No score had been computed.

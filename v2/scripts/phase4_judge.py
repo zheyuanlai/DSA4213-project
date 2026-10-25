@@ -104,7 +104,7 @@ def verify_call(model: str, case_id: str, pkg, texts: dict[str, str], tag: str) 
               .replace("{{PASSAGES}}", passages).replace("{{CLAIMS}}", cblock))
     check_leakage(prompt, [package, passages, cblock], [])
     system = (V1P / "system.md").read_text(encoding="utf-8").strip()
-    out, calls = call_validated(model, f"{tag}:{case_id}:{model}", system, prompt, SCHEMAS["verify"], 6000)
+    out, calls = call_validated(model, f"{tag}:{case_id}:{model}", system, prompt, SCHEMAS["verify"], 16000)
     return {c["claim_id"]: c for c in out["claims"]}, claims, {"calls": calls}
 
 

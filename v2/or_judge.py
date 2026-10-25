@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LEDGER = ROOT / "v2" / "outputs" / "judge_ledger.jsonl"
 RAW_DIR = ROOT / "v2" / "outputs" / "judge_raw"
 HARD_CAP_USD = 6.0
-STAGE_CAPS = {"p4_author": 3.5, "p4_validate": 1.0, "p4_judge": 1.5}
+STAGE_CAPS = {"p4_author": 3.5, "p4_validate": 1.0, "p4_judge": 2.5}  # p4_judge raised 1.5 -> 2.5: deviation D2
 
 AUTHOR_MODEL = "openai/gpt-5.6-sol"
 VALIDATOR_MODEL = "anthropic/claude-sonnet-5.5"
@@ -85,7 +85,9 @@ def call_json(model: str, stage: str, item_key: str, system: str, prompt: str, *
     raw = RAW_DIR / stage / f"{key}.json"
     if raw.exists():
         rec = json.loads(raw.read_text(encoding="utf-8"))
-        return JsonCall(model, stage, item_key, rec["content"], rec.get("cost_usd") or 0.0, True, str(raw))
+        if rec.get("finish_reason") != "length":  # never reuse a truncated reply (deviation D2)
+            return JsonCall(model, stage, item_key, rec["content"], rec.get("cost_usd") or 0.0, True, str(raw))
+        raw.rename(raw.with_suffix(".truncated.json"))
     client = client_for(model)
     if isinstance(client, OpenRouterClient) and model in PRICES:
         client.guard.pricing = Pricing(*PRICES[model])
