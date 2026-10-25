@@ -54,4 +54,5 @@ remain. On Linux CI the check passes unchanged.
 5. E5, D1 inside the tool loop: [`docs/E5_PLAN.md`](docs/E5_PLAN.md). Run `e5_v1` done; results in
    [`docs/E5_RESULTS.md`](docs/E5_RESULTS.md) (student checks pending).
 6. Phase 4 (reduced): held-out test of the V2 fix. Design [`docs/PHASE4_DESIGN.md`](docs/PHASE4_DESIGN.md);
-   benchmark built, validated and **frozen** ([`docs/PHASE4_BENCHMARK.md`](docs/PHASE4_BENCHMARK.md)); TEST inference not run.
+   benchmark built, validated and **frozen** ([`docs/PHASE4_BENCHMARK.md`](docs/PHASE4_BENCHMARK.md)); TEST run, judged and
+   scored: [`docs/PHASE4_RESULTS.md`](docs/PHASE4_RESULTS.md) (deviations: [`docs/PHASE4_DEVIATIONS.md`](docs/PHASE4_DEVIATIONS.md)).
