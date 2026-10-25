@@ -8,6 +8,8 @@ Probe-level figures use the majority decision over repeats. Failure stages are k
 | decision_accuracy | 25/39 | 25/39 | 32/39 | 33/39 |
 | correct_strengthen | 0/12 | 0/12 | 7/12 | 9/12 |
 | correct_strengthen_excl_proxy | 0/11 | 0/11 | 7/11 | 9/11 |
+| correct_strengthen_claim_level_posthoc | 0/9 | 0/9 | 7/9 | 9/9 |
+| correct_strengthen_scope_subgroup_posthoc | 0/3 | 0/3 | 0/3 | 0/3 |
 | accept_accuracy | 15/15 | 15/15 | 14/15 | 13/15 |
 | weaken_remove_accuracy | 10/12 | 10/12 | 11/12 | 11/12 |
 | false_strengthen | 0/27 | 0/27 | 0/27 | 1/27 |

@@ -26,7 +26,11 @@ sys.path.insert(0, str(ROOT))
 
 from v2.verifier_oracle import action_consistent  # noqa: E402
 
-ORDER = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle")
+ORDER = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle")
+STRUCTURED = ("D1-oracle", "D2-oracle", "D1c-oracle")
+# POST-HOC subgroup (decided 2026-10-25 after e1e2_v1): these drafts state an accurate sub-claim, so "strengthening"
+# means broadening scope, not strengthening the same proposition. Reported separately; original results are kept.
+SCOPE_ANCHORING = {"P-GEN-U-strong", "P-ROB-U-strong", "P-EFF-U-strong"}
 # Phrases that suggest the decisive fact was mentioned. Suggestions only; final coding is manual.
 DECISIVE_MARKERS = {
     "SIG": ["0.017", "S2", "t-test", "t test"],
@@ -69,7 +73,7 @@ def suggest_stage(run: dict[str, Any], probe: dict[str, Any]) -> str:
     if cond == "D0-tools" and not decisive_retrieved(run, probe):
         return "F0"
     j = run.get("judgement") or {}
-    if cond in ("D1-oracle", "D2-oracle"):
+    if cond in STRUCTURED:
         if j.get("support_relation") == "STRONGER_SUPPORTED":
             return "F3"
         return "F2" if mentions(j.get("strongest_supported", ""), probe["pair"]) else "F1"
@@ -102,11 +106,12 @@ def analyse(runs: list[dict[str, Any]], probes: list[dict[str, Any]]) -> dict[st
             })
         s = [x for x in rows if x["expected"] == "STRENGTHEN"]
         s_main = [x for x in s if x["subgroup"] == "claim_strength"]
+        s_claim = [x for x in s if x["probe_id"] not in SCOPE_ANCHORING]
         a_ = [x for x in rows if x["expected"] == "ACCEPT"]
         w = [x for x in rows if x["expected"] in ("WEAKEN", "REMOVE")]
         non_s = [x for x in rows if x["expected"] != "STRENGTHEN"]
         crs = [r for k, v in by.items() if k[0] == c for r in v]
-        structured = c in ("D1-oracle", "D2-oracle")
+        structured = c in STRUCTURED
         stages = Counter()
         for x in s:
             for r in by.get((c, x["probe_id"]), []):
@@ -117,6 +122,8 @@ def analyse(runs: list[dict[str, Any]], probes: list[dict[str, Any]]) -> dict[st
             "decision_accuracy": f"{sum(x['correct'] for x in rows)}/{len(rows)}",
             "correct_strengthen": f"{sum(x['correct'] for x in s)}/{len(s)}",
             "correct_strengthen_excl_proxy": f"{sum(x['correct'] for x in s_main)}/{len(s_main)}",
+            "correct_strengthen_claim_level_posthoc": f"{sum(x['correct'] for x in s_claim)}/{len(s_claim)}",
+            "correct_strengthen_scope_subgroup_posthoc": f"{sum(x['correct'] for x in s if x['probe_id'] in SCOPE_ANCHORING)}/{len(SCOPE_ANCHORING)}",
             "accept_accuracy": f"{sum(x['correct'] for x in a_)}/{len(a_)}",
             "weaken_remove_accuracy": f"{sum(x['correct'] for x in w)}/{len(w)}",
             "false_strengthen": f"{sum(x['majority'] == 'STRENGTHEN' for x in non_s)}/{len(non_s)}",
@@ -179,7 +186,8 @@ def rule_checks(cs: dict[str, Any]) -> dict[str, str]:
 
 def write_tables(res: dict[str, Any], path: Path) -> None:
     cs = res["conditions"]
-    keys = ["n_runs", "decision_accuracy", "correct_strengthen", "correct_strengthen_excl_proxy", "accept_accuracy",
+    keys = ["n_runs", "decision_accuracy", "correct_strengthen", "correct_strengthen_excl_proxy",
+            "correct_strengthen_claim_level_posthoc", "correct_strengthen_scope_subgroup_posthoc", "accept_accuracy",
             "weaken_remove_accuracy", "false_strengthen", "run_level_strengthen_rate_on_S_probes",
             "run_level_false_strengthen", "stable_probes", "relation_accuracy_S", "relation_accuracy_all",
             "action_inconsistent_probes", "suggested_failure_stages_on_S_runs", "invalid_decisions", "cost_usd"]
@@ -203,9 +211,15 @@ def write_tables(res: dict[str, Any], path: Path) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def _sheet_path(out: Path, name: str) -> Path:
+    """Never overwrite a review sheet that may hold manual coding: write a .regenerated copy beside it instead."""
+    p = out / name
+    return p.with_name(p.stem + ".regenerated.csv") if p.exists() else p
+
+
 def write_sheets(runs: list[dict[str, Any]], probes: list[dict[str, Any]], out: Path) -> None:
     pmap = {p["probe_id"]: p for p in probes}
-    with open(out / "failure_coding.csv", "w", newline="", encoding="utf-8") as f:
+    with open(_sheet_path(out, "failure_coding.csv"), "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["condition", "probe_id", "repeat", "decision", "support_relation", "strongest_supported",
                     "rationale", "decisive_fact", "decisive_retrieved_tools_only", "suggested_stage", "coded_stage",
@@ -232,7 +246,7 @@ def write_sheets(runs: list[dict[str, Any]], probes: list[dict[str, Any]], out: 
         seen[k] = {"condition": r["condition"], "probe_id": r["probe_id"], "decision": r["decision"],
                    "case_gold_level": p["case_gold_level"], "target_level": p["target_level_after_edit"],
                    "original": r["draft_text"], "revised": r["revised_text"], "n_runs": 1}
-    with open(out / "revision_review.csv", "w", newline="", encoding="utf-8") as f:
+    with open(_sheet_path(out, "revision_review.csv"), "w", newline="", encoding="utf-8") as f:
         cols = ["condition", "probe_id", "decision", "case_gold_level", "target_level", "original", "revised", "n_runs",
                 "expressed_level_after", "new_factual_error", "reviewer", "notes"]
         w = csv.DictWriter(f, fieldnames=cols)

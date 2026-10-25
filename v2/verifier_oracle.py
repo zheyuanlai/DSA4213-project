@@ -7,6 +7,7 @@ decision instructions and the decision schema:
 * D0: the V1 adaptive-verifier prompt with the tool procedure removed; the V1 `submit_decision` schema.
 * D1: D0 + an explicit structured strength judgement (fields generated before the decision).
 * D2: D1 + a generic list of ways a sentence can understate its evidence.
+* D1c: D1 + one general paragraph on the comparability of compared results (experiment E2b).
 
 The system-prompt prefix, the evidence block, the user message and the token limit are identical across variants.
 V1 modules are imported read-only; nothing in `src/` is modified.
@@ -30,7 +31,7 @@ from src.verifier import ALL_DECISIONS, claim_user_message, validate_decision
 from src.writer import call_record
 
 PROMPT_DIR = Path(__file__).resolve().parent / "prompts"
-VARIANTS = ("D0", "D1", "D2")
+VARIANTS = ("D0", "D1", "D2", "D1c")
 RELATIONS = ["STRONGER_SUPPORTED", "MATCHES", "WEAKER_SUPPORTED", "NOT_SUPPORTED", "UNDETERMINED"]
 # Mapping used to measure action consistency (and, only if rule R3 fires, by a later D3).
 RELATION_TO_DECISION = {
@@ -51,15 +52,18 @@ def _load(name: str) -> str:
 
 def prompt_files(variant: str) -> list[str]:
     files = ["verifier_oracle_d0.md"]
-    if variant in ("D1", "D2"):
+    if variant in ("D1", "D2", "D1c"):
         files.append("verifier_oracle_d1_addendum.md")
     if variant == "D2":
         files.append("verifier_oracle_d2_addendum.md")
+    if variant == "D1c":
+        files.append("verifier_oracle_d1c_comparability.md")
     return files
 
 
 def v2_prompt_hashes() -> dict[str, str]:
-    names = ["verifier_oracle_d0.md", "verifier_oracle_d1_addendum.md", "verifier_oracle_d2_addendum.md"]
+    names = ["verifier_oracle_d0.md", "verifier_oracle_d1_addendum.md", "verifier_oracle_d2_addendum.md",
+             "verifier_oracle_d1c_comparability.md"]
     return {n: hashlib.sha256(_load(n).encode("utf-8")).hexdigest()[:16] for n in names}
 
 

@@ -66,6 +66,25 @@ def test_prompt_prefixes_and_content():
     assert "support_relation" in d1 and "support_relation" not in d0
 
 
+def test_d1c_is_d1_plus_comparability_paragraph():
+    allowed = list(ALL_DECISIONS)
+    d1, d1c = system_prompt("D1", allowed), system_prompt("D1c", allowed)
+    assert d1c.startswith(d1) and "## Comparisons" in d1c and "## Comparisons" not in d1
+    assert decision_schema("D1c", allowed) == decision_schema("D1", allowed)
+
+
+def test_compare_conditions_mock(tmp_path):
+    from v2.scripts import compare_conditions, run_e1_e2
+
+    out = tmp_path / "run"
+    run_e1_e2.main(["--run-tag", "t", "--mock", "--repeats", "1", "--probe-ids", "P-CON-U-strong,P-SIG-S-partner",
+                    "--out-root", str(out), "--conditions", "D1-oracle,D1c-oracle", "--workers", "1"])
+    probes = [p for p in PROBES if p["probe_id"] in ("P-CON-U-strong", "P-SIG-S-partner")]
+    res = compare_conditions.compare(compare_conditions.load(f"{out}:D1-oracle"),
+                                     compare_conditions.load(f"{out}:D1c-oracle"), probes)
+    assert len(res["unchanged"]) == 2  # mock is variant-independent
+
+
 def test_oracle_evidence_has_all_values_and_no_task():
     pkg = CASES["SIG-p1a"].package
     ev = oracle_evidence(pkg)

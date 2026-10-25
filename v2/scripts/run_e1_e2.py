@@ -5,7 +5,8 @@
   # paid run (needs OPENROUTER_API_KEY in the environment and the explicit --real flag)
   python v2/scripts/run_e1_e2.py --run-tag e1e2_v1 --real
 
-Conditions: D0-tools (V1 adaptive verifier, unchanged code, C4 settings), D0-oracle, D1-oracle, D2-oracle.
+Conditions: D0-tools (V1 adaptive verifier, unchanged code, C4 settings), D0-oracle, D1-oracle, D2-oracle, and
+D1c-oracle (E2b; select it with --conditions).
 Backbone, decoding and routing come from configs/frozen_primary.yaml. Spend is guarded by V1's CostGuard on a separate
 V2 ledger (v2/outputs/cost_ledger.jsonl) with a hard cap. Re-running the same command resumes: finished jobs are skipped,
 and a run directory created under different code or prompts is refused.
@@ -38,7 +39,8 @@ from v2.verifier_oracle import v2_prompt_hashes, verify_claim_oracle  # noqa: E4
 
 CONFIG = ROOT / "configs" / "frozen_primary.yaml"
 DEFAULT_PROBES = ROOT / "v2" / "data" / "dev_probes_batch1.json"
-ALL_CONDITIONS = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle")
+ALL_CONDITIONS = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle")
+E1E2_CONDITIONS = ALL_CONDITIONS[:4]  # default = the original E1/E2 design
 STAGE = "v2_e1e2"
 HARD_CAP_USD = 1.00
 V2_LEDGER = ROOT / "v2" / "outputs" / "cost_ledger.jsonl"
@@ -109,7 +111,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--run-tag", required=True)
     ap.add_argument("--probes", default=str(DEFAULT_PROBES))
-    ap.add_argument("--conditions", default=",".join(ALL_CONDITIONS))
+    ap.add_argument("--conditions", default=",".join(E1E2_CONDITIONS))
     ap.add_argument("--repeats", type=int, default=3)
     ap.add_argument("--probe-ids", default="", help="comma-separated subset (default: all)")
     ap.add_argument("--workers", type=int, default=2)
