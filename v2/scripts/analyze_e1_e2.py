@@ -26,9 +26,10 @@ sys.path.insert(0, str(ROOT))
 
 from v2.verifier_oracle import action_consistent  # noqa: E402
 
-ORDER = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle", "D0-tools-800", "D1-tools")
-STRUCTURED = ("D1-oracle", "D2-oracle", "D1c-oracle", "D1-tools")
-TOOL_CONDITIONS = ("D0-tools", "D0-tools-800", "D1-tools")
+ORDER = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle", "D0-tools-800", "D1-tools", "D1-tools-C5")
+STRUCTURED = ("D1-oracle", "D2-oracle", "D1c-oracle", "D1-tools", "D1-tools-C5")
+TOOL_CONDITIONS = ("D0-tools", "D0-tools-800", "D1-tools", "D1-tools-C5")
+NO_STRENGTHEN = ("D1-tools-C5",)  # its policy maps STRONGER_SUPPORTED -> ACCEPT
 # POST-HOC subgroup (decided 2026-10-25 after e1e2_v1): these drafts state an accurate sub-claim, so "strengthening"
 # means broadening scope, not strengthening the same proposition. Reported separately; original results are kept.
 SCOPE_ANCHORING = {"P-GEN-U-strong", "P-ROB-U-strong", "P-EFF-U-strong"}
@@ -96,7 +97,9 @@ def analyse(runs: list[dict[str, Any]], probes: list[dict[str, Any]]) -> dict[st
             decs = [r["decision"] for r in rs]
             maj = majority(decs)
             rel_maj = majority([(r.get("judgement") or {}).get("support_relation") or "NONE" for r in rs])
-            incons = [action_consistent(r.get("judgement") or {}, r["decision"]) is False for r in rs]
+            incons = [action_consistent(r.get("judgement") or {}, r["decision"]) is False
+                      and not (c in NO_STRENGTHEN and (r.get("judgement") or {}).get("support_relation")
+                               == "STRONGER_SUPPORTED" and r["decision"] == "ACCEPT") for r in rs]
             rows.append({
                 "probe_id": p["probe_id"], "expected": p["expected_decision"], "acceptable": p["acceptable_decisions"],
                 "subgroup": p["subgroup"], "decisions": decs, "majority": maj,

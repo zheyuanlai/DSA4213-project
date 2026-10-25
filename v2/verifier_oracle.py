@@ -63,7 +63,7 @@ def prompt_files(variant: str) -> list[str]:
 
 def v2_prompt_hashes() -> dict[str, str]:
     names = ["verifier_oracle_d0.md", "verifier_oracle_d1_addendum.md", "verifier_oracle_d2_addendum.md",
-             "verifier_oracle_d1c_comparability.md"]
+             "verifier_oracle_d1c_comparability.md", "verifier_tools_d1_c5_addendum.md"]
     return {n: hashlib.sha256(_load(n).encode("utf-8")).hexdigest()[:16] for n in names}
 
 

@@ -41,10 +41,13 @@ from v2.verifier_tools import verify_draft_tools  # noqa: E402
 
 CONFIG = ROOT / "configs" / "frozen_primary.yaml"
 DEFAULT_PROBES = ROOT / "v2" / "data" / "dev_probes_batch1.json"
-ALL_CONDITIONS = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle", "D0-tools-800", "D1-tools")
+ALL_CONDITIONS = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle", "D0-tools-800", "D1-tools",
+                  "D1-tools-C5")
 E1E2_CONDITIONS = ALL_CONDITIONS[:4]  # default = the original E1/E2 design
 # E5: both tool-loop conditions use 800 tokens per turn (V1 used 450), so the decision frameworks are compared fairly.
 E5_TOOL_CFG = VerifierConfig(mode="adaptive", can_strengthen=True, max_tool_calls=4, max_claims=6, max_tokens_per_turn=800)
+# Phase 4 V2 C5: identical except STRENGTHEN is not in the allowed set
+C5_TOOL_CFG = VerifierConfig(mode="adaptive", can_strengthen=False, max_tool_calls=4, max_claims=6, max_tokens_per_turn=800)
 STAGE = "v2_e1e2"
 HARD_CAP_USD = 1.00
 V2_LEDGER = ROOT / "v2" / "outputs" / "cost_ledger.jsonl"
@@ -95,20 +98,22 @@ def run_job(client, cases, p: dict[str, Any], cond: str, rep: int, run_tag: str)
                    tools=[{"tool": a.tool, "args": a.args} for a in t.actions],
                    returned_ids=sorted({i for o in t.observations for i in o.returned_ids}),
                    trace=t.model_dump(), calls=[c.model_dump() for c in calls])
-    elif cond in ("D0-tools-800", "D1-tools"):
+    elif cond in ("D0-tools-800", "D1-tools", "D1-tools-C5"):
         calls = []
         if cond == "D0-tools-800":  # V1's own code, unchanged, at 800 tokens per turn
             _, traces = verify_draft(client, rec.package, draft, E5_TOOL_CFG, ctx, calls)
             judgements = [{}]
-        else:  # V2 port of the V1 loop with the D1 prompt addendum and schema
+        elif cond == "D1-tools":  # V2 port of the V1 loop with the D1 prompt addendum and schema
             _, traces, judgements = verify_draft_tools(client, rec.package, draft, E5_TOOL_CFG, "D1", ctx, calls)
+        else:  # V2 C5: same loop, STRENGTHEN disabled, mapping STRONGER_SUPPORTED -> ACCEPT
+            _, traces, judgements = verify_draft_tools(client, rec.package, draft, C5_TOOL_CFG, "D1-C5", ctx, calls)
         t = traces[0]
         d = t.decision
         out.update(decision=d.decision, revised_text=d.revised_text, rationale=d.rationale, evidence_ids=d.evidence_ids,
                    valid=d.valid, validation_notes=d.validation_notes, judgement=judgements[0],
                    tools=[{"tool": a.tool, "args": a.args} for a in t.actions],
                    returned_ids=sorted({i for o in t.observations for i in o.returned_ids}),
-                   max_tokens_per_turn=E5_TOOL_CFG.max_tokens_per_turn,
+                   max_tokens_per_turn=E5_TOOL_CFG.max_tokens_per_turn, can_strengthen=cond != "D1-tools-C5",
                    trace=t.model_dump(), calls=[c.model_dump() for c in calls])
     else:
         variant = cond.split("-")[0]
@@ -138,7 +143,13 @@ def main(argv: list[str] | None = None) -> int:
     mode.add_argument("--mock", action="store_true", help="offline deterministic mock (free)")
     mode.add_argument("--real", action="store_true", help="paid OpenRouter calls")
     ap.add_argument("--out-root", default="", help="override output root (tests)")
+    ap.add_argument("--cases", default=str(ROOT / "data" / "synthetic" / "dev.jsonl"), help="CaseRecord JSONL")
+    ap.add_argument("--split", default="dev", help="every probe's case must have this split")
+    ap.add_argument("--family", default="e1e2", help="output family under v2/outputs/")
+    ap.add_argument("--stage", default=STAGE, help="cost stage on the V2 ledger")
+    ap.add_argument("--stage-cap", type=float, default=HARD_CAP_USD, help="hard cap (USD) for this stage")
     a = ap.parse_args(argv)
+    globals()["STAGE"], globals()["HARD_CAP_USD"] = a.stage, a.stage_cap
 
     conds = [c.strip() for c in a.conditions.split(",") if c.strip()]
     bad = [c for c in conds if c not in ALL_CONDITIONS]
@@ -149,9 +160,9 @@ def main(argv: list[str] | None = None) -> int:
     if a.probe_ids:
         keep = set(a.probe_ids.split(","))
         probes = [p for p in probes if p["probe_id"] in keep]
-    cases = {c.case_id: c for c in load_cases(ROOT / "data" / "synthetic" / "dev.jsonl")}
-    if any(cases[p["case_id"]].split != "dev" for p in probes):
-        raise SystemExit("DEV cases only")
+    cases = {c.case_id: c for c in load_cases(Path(a.cases))}
+    if any(cases[p["case_id"]].split != a.split for p in probes):
+        raise SystemExit(f"every probe must use a {a.split!r} case from {a.cases}")
 
     cfg = load_config(CONFIG)
     if a.mock:
@@ -159,14 +170,15 @@ def main(argv: list[str] | None = None) -> int:
         default_root = ROOT / "v2" / "outputs" / "_mock" / a.run_tag
     else:
         client = make_client(cfg, make_v2_guard(cfg))
-        default_root = ROOT / "v2" / "outputs" / "e1e2" / a.run_tag
+        default_root = ROOT / "v2" / "outputs" / a.family / a.run_tag
     out_root = Path(a.out_root) if a.out_root else default_root
 
-    meta = {"run_tag": a.run_tag, "design": "v2/docs/E1_E2_DESIGN.md", "exploratory": True, "dev_only": True,
+    meta = {"run_tag": a.run_tag, "family": a.family, "exploratory": True, "dev_only": a.split == "dev",
             "config_file": CONFIG.name, "model": cfg["model"], "is_mock": client.is_mock,
             "v1_prompt_hashes": v1_prompt_hashes(), "v2_prompt_hashes": v2_prompt_hashes(),
             "v1_code_hash": v1_code_hash(), "v2_code_hash": v2_code_hash(),
             "probes_file": probes_path.name, "probes_sha256": sha_file(probes_path),
+            "cases_file": Path(a.cases).name, "cases_sha256": sha_file(Path(a.cases)), "split": a.split,
             "hard_cap_usd": HARD_CAP_USD, "stage": STAGE}
     meta_path = out_root / "run_meta.json"
     if meta_path.exists():

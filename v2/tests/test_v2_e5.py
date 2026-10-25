@@ -75,3 +75,34 @@ def test_e5_runner_and_attribution_mock(tmp_path):
     assert analyze_e1_e2.main(["--run-dir", str(out), "--out", str(res)]) == 0
     s = json.loads((res / "summary.json").read_text(encoding="utf-8"))
     assert "D1-tools" in s["conditions"] and isinstance(s["e5_attribution"], list)
+
+
+# ------------------------------------------------------------------ Phase 4 V2 C5
+CFG_C5 = VerifierConfig(mode="adaptive", can_strengthen=False, max_tool_calls=4, max_claims=6, max_tokens_per_turn=800)
+
+
+def test_c5_prompt_differs_from_d1_only_in_mapping_and_allowed_set():
+    d1 = _load("verifier_oracle_d1_addendum.md").splitlines()
+    c5 = _load("verifier_tools_d1_c5_addendum.md").splitlines()
+    diff = [(a, b) for a, b in zip(d1, c5) if a != b]
+    assert len(d1) == len(c5) and len(diff) == 1
+    assert "STRONGER_SUPPORTED -> ACCEPT (strengthening is not available)" in diff[0][1]
+    p = tools_system_prompt("D1-C5", CFG_C5)
+    assert "STRENGTHEN —" not in p and "Strengthening is not available in this configuration" in p
+    with pytest.raises(ValueError):
+        tools_system_prompt("D1-C5", CFG_800)
+    with pytest.raises(ValueError):
+        tools_system_prompt("D1", CFG_C5)
+
+
+def test_c5_schema_and_runner_mock(tmp_path):
+    client = MockClient(oracle_mock_responder)
+    _, traces, judg = verify_draft_tools(client, CASES["CON-p1a"].package, _draft("Ferrule's advantage is consistent."),
+                                         CFG_C5, "D1-C5", {"stage": "t"}, [])
+    assert traces[0].decision.decision != "STRENGTHEN"
+    from v2.scripts import run_e1_e2
+    out = tmp_path / "run"
+    assert run_e1_e2.main(["--run-tag", "t", "--mock", "--repeats", "1", "--probe-ids", "P-CON-U-strong",
+                           "--out-root", str(out), "--conditions", "D1-tools-C5", "--workers", "1"]) == 0
+    rec = json.loads((out / "D1-tools-C5" / "P-CON-U-strong__r1.json").read_text(encoding="utf-8"))
+    assert rec["can_strengthen"] is False and rec["decision"] != "STRENGTHEN"

@@ -6,7 +6,10 @@ directly. Everything else (tools, tool execution, budgets, duplicate handling, f
 repair turn) is V1's own code, called read-only. `tests/test_v2_e5.py` checks that with V1's prompt and schema the port
 sends the same messages and returns the same decisions as V1.
 
-Variants: "D0" = V1 adaptive prompt and schema; "D1" = V1 adaptive prompt + the D1 addendum, D1 schema.
+Variants: "D0" = V1 adaptive prompt and schema; "D1" = V1 adaptive prompt + the D1 addendum, D1 schema;
+"D1-C5" = as D1 but for a config with STRENGTHEN disabled: the addendum's single mapping line reads
+"STRONGER_SUPPORTED -> ACCEPT (strengthening is not available)" (v2/prompts/verifier_tools_d1_c5_addendum.md), and
+V1's no-strengthen note is appended to the decision definitions automatically.
 """
 from __future__ import annotations
 
@@ -24,16 +27,19 @@ from src.verifier import VerifierConfig, _canon_args, _named, claim_user_message
 from src.writer import call_record
 from v2.verifier_oracle import _judgement, _load, decision_schema
 
-TOOL_VARIANTS = ("D0", "D1")
+TOOL_VARIANTS = ("D0", "D1", "D1-C5")
+ADDENDUM = {"D1": "verifier_oracle_d1_addendum.md", "D1-C5": "verifier_tools_d1_c5_addendum.md"}
 
 
 def tools_system_prompt(variant: str, cfg: VerifierConfig) -> str:
     """V1's adaptive system prompt exactly as V1 builds it, plus the D1 addendum for D1."""
     if variant not in TOOL_VARIANTS or cfg.mode != "adaptive":
-        raise ValueError("E5 uses the adaptive loop with variant D0 or D1")
+        raise ValueError("the adaptive loop with variant D0, D1 or D1-C5 is required")
+    if variant != "D0" and (variant == "D1-C5") == cfg.can_strengthen:
+        raise ValueError("D1-C5 requires can_strengthen=False, and D1 requires can_strengthen=True")
     base = v1_system_prompt("verifier_adaptive.md", decision_definitions=decision_block(cfg.allowed_decisions()),
                             max_tool_calls=str(cfg.max_tool_calls))
-    return base if variant == "D0" else base + "\n\n" + _load("verifier_oracle_d1_addendum.md")
+    return base if variant == "D0" else base + "\n\n" + _load(ADDENDUM[variant])
 
 
 def verify_claim_tools(client: BaseClient, store: EvidenceStore, system: str, context: str, draft: Draft, idx: int,
@@ -154,7 +160,7 @@ def verify_draft_tools(client: BaseClient, pkg: ResearchPackage, draft: Draft, c
     """Port of V1 `verify_draft` for the adaptive loop. Returns (final draft, traces, D1 judgements per claim)."""
     store = EvidenceStore.from_package(pkg)
     system = tools_system_prompt(variant, cfg)
-    schema = decision_schema(variant, cfg.allowed_decisions())
+    schema = decision_schema("D0" if variant == "D0" else "D1", cfg.allowed_decisions())
     context = render_verifier_context(pkg)
     role = f"verify_{cfg.mode}" if variant == "D0" else f"verify_{cfg.mode}_{variant}"
     traces: list[ClaimTrace] = []
