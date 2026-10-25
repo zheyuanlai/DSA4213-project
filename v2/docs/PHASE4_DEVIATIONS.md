@@ -30,3 +30,15 @@ with the time, the reason and the new hash. `phase4_freeze.py --check` will repo
      package, against an expected $0.04–0.05, which projects to about $1.6–1.8 in total.
 * **Not changed.** Prompts, schemas, labels, numeric checks, scoring rules, verifier, items.
 * **What had been seen.** Judge labels for P1 only, at the level of these log lines. No score had been computed.
+
+## D0 (record correction, 2026-10-25, written after scoring)
+
+* **Correction.** `PHASE4_BENCHMARK.md` said that the gold was kept only in the gitignored `v2/private/`. That is not
+  accurate. The raw authoring and validation replies under `v2/outputs/judge_raw/p4_author/` and `p4_validate/` contain
+  each draft's intended level, and the validator's labels. They were committed in `cc34177`, before the freeze and
+  before TEST inference.
+* **Effect on results: none.** No component of the run can read the repository:
+  * the verifier sees only the package and the draft;
+  * the judges see only blinded prompts, checked by `check_leakage`.
+
+  The branch was never pushed. The freeze manifest's gold hash and the scoring are unaffected.

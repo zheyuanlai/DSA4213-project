@@ -12,7 +12,7 @@ No verifier has been run on these items.
 | Blind validation r1 | Claude Sonnet 5.5 (`anthropic/claude-sonnet-5.5`) judged 50 items, blind to the intended levels, using V1's judge label definitions verbatim: **38/50 agree** | $0.18 |
 | Revision r2 | The 6 pairs with disputes were sent back to the author once, with the reader's labels and reasons | $0.52 |
 | Re-validation r2 | Revised pairs re-validated; r1 results kept for P2 and P7: **40/50 agree**. The 10 still disputed are **dropped** (20%, below the 25% stop rule) | $0.13 |
-| Freeze | Public items and cases in `v2/benchmarks/test_v2/`; gold in `v2/private/phase4/gold.json` (gitignored; SHA-256 in the manifest); hashes of the 23 files the run and the scoring depend on | none |
+| Freeze | Public items and cases in `v2/benchmarks/test_v2/`; gold in `v2/private/phase4/gold.json` (gitignored; SHA-256 in the manifest). Note: the raw authoring/validation replies, which contain the intended levels, were committed under `v2/outputs/judge_raw/` (see `PHASE4_DEVIATIONS.md` D0). Hashes of the 23 files the run and the scoring depend on | none |
 | **Total** | OpenRouter key usage reconciles: V1 $1.22 + V2 experiments $0.21 + Phase 4 authoring/validation $1.61 = $3.03 | **$1.61** |
 
 **Checker fix before validation.** The pair check first flagged 4 pairs whose decisive evidence was given as a whole
