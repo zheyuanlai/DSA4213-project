@@ -19,7 +19,8 @@ this directory is part of the pre-registered V1 analysis.
 | `v2/docs/` | experiment designs and results, one document per step |
 | `v2/data/` | DEV-only probes (`dev_probes_batch1.json`); held-out V2 cases will be added separately later |
 | `v2/prompts/` | V2 verifier prompts (D0 oracle prompt, D1 and D2 addenda) |
-| `v2/verifier_oracle.py` | oracle-evidence verifier for E1/E2 |
+| `v2/verifier_oracle.py` | oracle-evidence verifier for E1/E2/E2b |
+| `v2/verifier_tools.py` | port of V1's tool loop with injectable prompt and schema (E5) |
 | `v2/scripts/` | `run_e1_e2.py` (runner), `analyze_e1_e2.py` (analysis and review sheets) |
 | `v2/tests/` | offline tests (mock client) |
 | `v2/outputs/` | run records and the separate V2 cost ledger (`_mock/` is git-ignored) |
@@ -49,4 +50,5 @@ remain. On Linux CI the check passes unchanged.
    **Status: run `e1e2_v1` done; results in [`docs/E1_E2_RESULTS.md`](docs/E1_E2_RESULTS.md) (student checks pending).**
 3. E2b, comparability addition D1c: [`docs/E2b_COMPARABILITY.md`](docs/E2b_COMPARABILITY.md). Run `e2b_v1` done; **D1 kept**.
    Targeted student review sheet: [`review/E2_REVIEW_SHEET.md`](review/E2_REVIEW_SHEET.md).
-4. E5, D1 inside the tool loop: plan in [`docs/E5_PLAN.md`](docs/E5_PLAN.md). **Awaiting approval.**
+4. Reproducibility audit of the D1 batch-to-batch variation: [`docs/REPRODUCIBILITY_AUDIT.md`](docs/REPRODUCIBILITY_AUDIT.md).
+5. E5, D1 inside the tool loop: [`docs/E5_PLAN.md`](docs/E5_PLAN.md). Implemented and offline-tested; **paid run awaits approval.**
