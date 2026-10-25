@@ -53,3 +53,5 @@ remain. On Linux CI the check passes unchanged.
 4. Reproducibility audit of the D1 batch-to-batch variation: [`docs/REPRODUCIBILITY_AUDIT.md`](docs/REPRODUCIBILITY_AUDIT.md).
 5. E5, D1 inside the tool loop: [`docs/E5_PLAN.md`](docs/E5_PLAN.md). Run `e5_v1` done; results in
    [`docs/E5_RESULTS.md`](docs/E5_RESULTS.md) (student checks pending).
+6. Phase 4 (held-out capability test and retrospective natural-draft study): design in
+   [`docs/PHASE4_DESIGN.md`](docs/PHASE4_DESIGN.md). **Design for review; nothing generated or run.**
