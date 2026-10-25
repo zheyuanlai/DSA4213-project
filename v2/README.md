@@ -1,5 +1,7 @@
 # V2: post-hoc investigation of bidirectional claim calibration (EXPLORATORY)
 
+**Start here:** [`docs/V2_SUMMARY.md`](docs/V2_SUMMARY.md), the research summary and technical handoff for the team.
+
 V2 is a post-hoc follow-up to the completed V1 study. It was designed **after** the V1 results were known, so nothing in
 this directory is part of the pre-registered V1 analysis.
 
