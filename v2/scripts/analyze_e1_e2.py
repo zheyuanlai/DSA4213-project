@@ -26,8 +26,9 @@ sys.path.insert(0, str(ROOT))
 
 from v2.verifier_oracle import action_consistent  # noqa: E402
 
-ORDER = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle")
-STRUCTURED = ("D1-oracle", "D2-oracle", "D1c-oracle")
+ORDER = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle", "D0-tools-800", "D1-tools")
+STRUCTURED = ("D1-oracle", "D2-oracle", "D1c-oracle", "D1-tools")
+TOOL_CONDITIONS = ("D0-tools", "D0-tools-800", "D1-tools")
 # POST-HOC subgroup (decided 2026-10-25 after e1e2_v1): these drafts state an accurate sub-claim, so "strengthening"
 # means broadening scope, not strengthening the same proposition. Reported separately; original results are kept.
 SCOPE_ANCHORING = {"P-GEN-U-strong", "P-ROB-U-strong", "P-EFF-U-strong"}
@@ -70,7 +71,7 @@ def decisive_retrieved(run: dict[str, Any], probe: dict[str, Any]) -> bool:
 
 def suggest_stage(run: dict[str, Any], probe: dict[str, Any]) -> str:
     cond = run["condition"]
-    if cond == "D0-tools" and not decisive_retrieved(run, probe):
+    if cond in TOOL_CONDITIONS and not decisive_retrieved(run, probe):
         return "F0"
     j = run.get("judgement") or {}
     if cond in STRUCTURED:
@@ -141,6 +142,7 @@ def analyse(runs: list[dict[str, Any]], probes: list[dict[str, Any]]) -> dict[st
             "per_probe": rows,
         }
     out["rule_checks"] = rule_checks(out["conditions"])
+    out["e5_attribution"] = e5_attribution(out["conditions"], by, pmap)
     return out
 
 
@@ -184,6 +186,30 @@ def rule_checks(cs: dict[str, Any]) -> dict[str, str]:
     return out
 
 
+def e5_attribution(cs: dict[str, Any], by: dict, pmap: dict) -> list[dict[str, Any]]:
+    """Probes right in D1-oracle but wrong in D1-tools (majority), with per-run retrieval status (E5)."""
+    if "D1-oracle" not in cs or "D1-tools" not in cs:
+        return []
+    ok = {x["probe_id"]: x for x in cs["D1-oracle"]["per_probe"]}
+    out = []
+    for x in cs["D1-tools"]["per_probe"]:
+        o = ok[x["probe_id"]]
+        if o["correct"] and not x["correct"]:
+            p = pmap[x["probe_id"]]
+            runs = sorted(by.get(("D1-tools", x["probe_id"]), []), key=lambda r: r["repeat"])
+            per_run = [{"repeat": r["repeat"], "decision": r["decision"],
+                        "decisive_retrieved": decisive_retrieved(r, p) if p["decisive_evidence_ids"] else None,
+                        "relation": (r.get("judgement") or {}).get("support_relation"),
+                        "suggested_stage": suggest_stage(r, p) if p["expected_decision"] == "STRENGTHEN" else None}
+                       for r in runs]
+            n_ret = sum(1 for r in per_run if r["decisive_retrieved"])
+            kind = ("not applicable (no decisive-evidence list)" if not p["decisive_evidence_ids"] else
+                    "retrieval loss" if n_ret == 0 else "decision loss" if n_ret == len(per_run) else "mixed")
+            out.append({"probe_id": x["probe_id"], "expected": x["expected"], "oracle": o["decisions"],
+                        "tools": x["decisions"], "attribution": kind, "runs": per_run})
+    return out
+
+
 def write_tables(res: dict[str, Any], path: Path) -> None:
     cs = res["conditions"]
     keys = ["n_runs", "decision_accuracy", "correct_strengthen", "correct_strengthen_excl_proxy",
@@ -199,6 +225,15 @@ def write_tables(res: dict[str, Any], path: Path) -> None:
         lines.append(f"| {k} | " + " | ".join(str(cs[c].get(k)) for c in cs) + " |")
     lines += ["", "## Rule checks (descriptive; no automatic root cause)", ""]
     lines += [f"* **{k}**: {v}" for k, v in res["rule_checks"].items()]
+    if res.get("e5_attribution") is not None and "D1-tools" in cs:
+        lines += ["", "## E5: probes right in D1-oracle but wrong in D1-tools", ""]
+        if not res["e5_attribution"]:
+            lines.append("(none)")
+        for a in res["e5_attribution"]:
+            lines.append(f"* **{a['probe_id']}** (expected {a['expected']}): oracle {a['oracle']}, tools {a['tools']} "
+                         f"-> {a['attribution']}; runs: " + "; ".join(
+                             f"r{r['repeat']} {r['decision']} retrieved={r['decisive_retrieved']} rel={r['relation']}"
+                             for r in a["runs"]))
     lines += ["", "## Per-probe majority decisions", "",
               "| Probe | Expected | " + " | ".join(cs) + " |", "|---|---|" + "---|" * len(cs)]
     for i, p in enumerate(next(iter(cs.values()))["per_probe"]):
@@ -230,7 +265,7 @@ def write_sheets(runs: list[dict[str, Any]], probes: list[dict[str, Any]], out: 
                     or r["decision"] == "STRENGTHEN":
                 continue
             j = r.get("judgement") or {}
-            retrieved = decisive_retrieved(r, p) if r["condition"] == "D0-tools" else ""
+            retrieved = decisive_retrieved(r, p) if r["condition"] in TOOL_CONDITIONS else ""
             w.writerow([r["condition"], r["probe_id"], r["repeat"], r["decision"], j.get("support_relation", ""),
                         j.get("strongest_supported", ""), r.get("rationale", ""), p["decisive_fact"], retrieved,
                         suggest_stage(r, p), "", "", "", ""])

@@ -6,7 +6,8 @@
   python v2/scripts/run_e1_e2.py --run-tag e1e2_v1 --real
 
 Conditions: D0-tools (V1 adaptive verifier, unchanged code, C4 settings), D0-oracle, D1-oracle, D2-oracle, and
-D1c-oracle (E2b; select it with --conditions).
+D1c-oracle (E2b); for E5, D0-tools-800 (V1 code at 800 tokens/turn) and D1-tools (V1 loop ported with the D1 prompt
+addendum and schema, 800 tokens/turn). Select non-default conditions with --conditions.
 Backbone, decoding and routing come from configs/frozen_primary.yaml. Spend is guarded by V1's CostGuard on a separate
 V2 ledger (v2/outputs/cost_ledger.jsonl) with a hard cap. Re-running the same command resumes: finished jobs are skipped,
 and a run directory created under different code or prompts is refused.
@@ -33,14 +34,17 @@ from src.openrouter_client import FatalAPIError, MockClient, TransientAPIError  
 from src.prompts import prompt_hashes as v1_prompt_hashes  # noqa: E402
 from src.runner import code_hash as v1_code_hash, git_commit, git_dirty, load_cases, load_config, make_client  # noqa: E402
 from src.schemas import ClaimDraft, Draft  # noqa: E402
-from src.verifier import verify_draft  # noqa: E402
+from src.verifier import VerifierConfig, verify_draft  # noqa: E402
 from v2.mock_responder import oracle_mock_responder  # noqa: E402
 from v2.verifier_oracle import v2_prompt_hashes, verify_claim_oracle  # noqa: E402
+from v2.verifier_tools import verify_draft_tools  # noqa: E402
 
 CONFIG = ROOT / "configs" / "frozen_primary.yaml"
 DEFAULT_PROBES = ROOT / "v2" / "data" / "dev_probes_batch1.json"
-ALL_CONDITIONS = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle")
+ALL_CONDITIONS = ("D0-tools", "D0-oracle", "D1-oracle", "D2-oracle", "D1c-oracle", "D0-tools-800", "D1-tools")
 E1E2_CONDITIONS = ALL_CONDITIONS[:4]  # default = the original E1/E2 design
+# E5: both tool-loop conditions use 800 tokens per turn (V1 used 450), so the decision frameworks are compared fairly.
+E5_TOOL_CFG = VerifierConfig(mode="adaptive", can_strengthen=True, max_tool_calls=4, max_claims=6, max_tokens_per_turn=800)
 STAGE = "v2_e1e2"
 HARD_CAP_USD = 1.00
 V2_LEDGER = ROOT / "v2" / "outputs" / "cost_ledger.jsonl"
@@ -90,6 +94,21 @@ def run_job(client, cases, p: dict[str, Any], cond: str, rep: int, run_tag: str)
                    valid=d.valid, validation_notes=d.validation_notes, judgement={},
                    tools=[{"tool": a.tool, "args": a.args} for a in t.actions],
                    returned_ids=sorted({i for o in t.observations for i in o.returned_ids}),
+                   trace=t.model_dump(), calls=[c.model_dump() for c in calls])
+    elif cond in ("D0-tools-800", "D1-tools"):
+        calls = []
+        if cond == "D0-tools-800":  # V1's own code, unchanged, at 800 tokens per turn
+            _, traces = verify_draft(client, rec.package, draft, E5_TOOL_CFG, ctx, calls)
+            judgements = [{}]
+        else:  # V2 port of the V1 loop with the D1 prompt addendum and schema
+            _, traces, judgements = verify_draft_tools(client, rec.package, draft, E5_TOOL_CFG, "D1", ctx, calls)
+        t = traces[0]
+        d = t.decision
+        out.update(decision=d.decision, revised_text=d.revised_text, rationale=d.rationale, evidence_ids=d.evidence_ids,
+                   valid=d.valid, validation_notes=d.validation_notes, judgement=judgements[0],
+                   tools=[{"tool": a.tool, "args": a.args} for a in t.actions],
+                   returned_ids=sorted({i for o in t.observations for i in o.returned_ids}),
+                   max_tokens_per_turn=E5_TOOL_CFG.max_tokens_per_turn,
                    trace=t.model_dump(), calls=[c.model_dump() for c in calls])
     else:
         variant = cond.split("-")[0]

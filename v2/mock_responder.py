@@ -21,9 +21,24 @@ def _tc(args: dict[str, Any]) -> dict[str, Any]:
             "function": {"name": "submit_decision", "arguments": json.dumps(args)}}
 
 
+def _wants_judgement(tools) -> bool:
+    for t in tools or []:
+        if t["function"]["name"] == "submit_decision":
+            return "support_relation" in t["function"]["parameters"]["properties"]
+    return False
+
+
 def oracle_mock_responder(messages, tools, tool_choice, role):
     if not role.startswith("verify_oracle"):
-        return v1_mock_responder(messages, tools, tool_choice, role)
+        msg = v1_mock_responder(messages, tools, tool_choice, role)
+        if _wants_judgement(tools):  # D1 in the tool loop: add the judgement fields to V1's mock decision
+            for tc in msg.get("tool_calls", []):
+                if tc["function"]["name"] == "submit_decision":
+                    a = json.loads(tc["function"]["arguments"])
+                    rel = {"STRENGTHEN": "STRONGER_SUPPORTED", "WEAKEN": "WEAKER_SUPPORTED"}.get(a["decision"], "MATCHES")
+                    tc["function"]["arguments"] = json.dumps({"proposition": "mock", "expressed_strength": "mock",
+                                                              "strongest_supported": "mock", "support_relation": rel, **a})
+        return msg
     user = next(m["content"] for m in messages if m["role"] == "user")
     m = re.search(r'## Claim to verify now \(claim_id \w+\)\n"(.*)"', user)
     text = m.group(1) if m else ""
