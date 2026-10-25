@@ -16,6 +16,9 @@ DSA4213 *Natural Language Processing for Data Science* (NUS, Sem 1 AY2026/27), G
 > All 224 primary, 46/48 real-paper and 24 long-package outputs exist. OpenRouter spend is $1.22, reconciled
 > ($0.71 for the experiments, $0.51 for the third AI judge). Documentation index: [`docs/README.md`](docs/README.md).
 
+> **V2 follow-up (post hoc, exploratory; V1 files unchanged):** why the verifier never chose STRENGTHEN, and a
+> held-out test of a fix. Summary: [`v2/docs/V2_SUMMARY.md`](v2/docs/V2_SUMMARY.md); everything else in [`v2/`](v2/README.md).
+
 **Main findings** (AI-judged; details in the report):
 
 * The full agent (C4) does **not** outperform the generic writer–reviewer loop (C2) in claim accuracy or passage-level
