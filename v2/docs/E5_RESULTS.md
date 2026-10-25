@@ -21,7 +21,7 @@
 | Stable probes (of 39) | 37 | 35 | 34 |
 | Decisive evidence returned, STRENGTHEN-probe runs (of 36) | 33 | 33 | n/a |
 | Evidence-tool calls per claim | 2.21 | 2.46 | 0 |
-| Model latency per run (s) | 9.1 | 12.2 | about 4 |
+| Model latency per run (s) | 9.1 | 12.2 | 6.1 |
 | Cost (USD, 117 runs) | 0.0431 | 0.0446 | 0.0221 |
 
 ## 2. Does the oracle improvement survive the tool loop?
