@@ -8,6 +8,11 @@ the revised sentences are pending, so every statement below is provisional.**
 * Design: [`E1_E2_DESIGN.md`](E1_E2_DESIGN.md). Records: `v2/outputs/e1e2/e1e2_v1/`. Tables and sheets:
   `v2/results/e1e2/e1e2_v1/`.
 * All probe-level figures use the majority decision over the 3 repeats.
+* **Update 2026-10-25 (E2b):** an identical re-run of D1 one day later strengthened 9/12 probes, not 7/12 (same prompt,
+  code, model and provider). Differences between conditions of about two probes in this table are within batch-to-batch
+  variation. In particular, D2's advantage over D1 cannot be attributed to its prompt. See
+  [`E2b_COMPARABILITY.md`](E2b_COMPARABILITY.md). The post-hoc scope-anchoring subgroup (GEN-U, ROB-U, EFF-U) is now
+  reported separately in `TABLES.md`; claim-level STRENGTHEN here is D1 7/9, D2 9/9, D0 0/9.
 
 ## 1. Main table
 

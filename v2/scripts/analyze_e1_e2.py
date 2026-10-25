@@ -208,7 +208,7 @@ def write_tables(res: dict[str, Any], path: Path) -> None:
             mark = "" if x["correct"] else " ✗"
             cells.append(f"{x['majority']}{mark} ({','.join(d[:2] for d in x['decisions'])})")
         lines.append(f"| {p['probe_id']} | {'/'.join(p['acceptable'])} | " + " | ".join(cells) + " |")
-    path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 
 
 def _sheet_path(out: Path, name: str) -> Path:
@@ -267,7 +267,7 @@ def main(argv: list[str] | None = None) -> int:
     res = analyse(runs, probes)
     out = Path(a.out) if a.out else ROOT / "v2" / "results" / "e1e2" / run_dir.name
     out.mkdir(parents=True, exist_ok=True)
-    (out / "summary.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8")
+    (out / "summary.json").write_text(json.dumps(res, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
     write_tables(res, out / "TABLES.md")
     write_sheets(runs, probes, out)
     for c, x in res["conditions"].items():

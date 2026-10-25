@@ -64,7 +64,7 @@ def main(argv: list[str] | None = None) -> int:
     lines.append(f"unchanged: {len(res['unchanged'])}")
     text = "\n".join(lines) + "\n"
     if x.out:
-        Path(x.out).write_text(text, encoding="utf-8")
+        Path(x.out).write_text(text, encoding="utf-8", newline="\n")
     print(text)
     return 0
 

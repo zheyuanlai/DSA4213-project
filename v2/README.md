@@ -47,3 +47,6 @@ remain. On Linux CI the check passes unchanged.
 1. Phase 1 diagnosis (done, reported in conversation).
 2. Phase 2, E1/E2 decision-stage experiments: design in [`docs/E1_E2_DESIGN.md`](docs/E1_E2_DESIGN.md).
    **Status: run `e1e2_v1` done; results in [`docs/E1_E2_RESULTS.md`](docs/E1_E2_RESULTS.md) (student checks pending).**
+3. E2b, comparability addition D1c: [`docs/E2b_COMPARABILITY.md`](docs/E2b_COMPARABILITY.md). Run `e2b_v1` done; **D1 kept**.
+   Targeted student review sheet: [`review/E2_REVIEW_SHEET.md`](review/E2_REVIEW_SHEET.md).
+4. E5, D1 inside the tool loop: plan in [`docs/E5_PLAN.md`](docs/E5_PLAN.md). **Awaiting approval.**
