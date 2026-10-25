@@ -79,10 +79,20 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--round", required=True)
     ap.add_argument("--pairs", default=",".join(PAIR_SPEC))
     ap.add_argument("--revise", default="", help="validation JSON whose disputes are sent back to the author")
+    ap.add_argument("--recheck", action="store_true", help="re-run the deterministic checks on stored pairs (no calls)")
     a = ap.parse_args(argv)
     avoid_set = known_names()
     avoid = sorted(avoid_set)
     out_dir = PRIVATE / "authored" / a.round
+    if a.recheck:
+        for f in sorted(out_dir.glob("P*.json")):
+            rec = json.loads(f.read_text(encoding="utf-8"))
+            if rec["pair"] is not None:
+                rec["errors"], rec["warnings"] = check_pair(rec["pair"], avoid_set)
+                rec.setdefault("rechecked", []).append("phase4_checks after decisive-evidence fix")
+                f.write_text(json.dumps(rec, ensure_ascii=False, indent=1), encoding="utf-8", newline="\n")
+            print(f"{rec['pair_id']}: {'OK' if not rec['errors'] else rec['errors']} warnings={rec['warnings']}")
+        return 0
     out_dir.mkdir(parents=True, exist_ok=True)
     pids = [p for p in a.pairs.split(",") if p]
     disputes_by_pair: dict[str, list] = {}

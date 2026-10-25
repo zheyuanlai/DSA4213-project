@@ -79,8 +79,10 @@ def main(argv: list[str] | None = None) -> int:
         for c in cases:
             f.write(c.model_dump_json() + "\n")
     public, gold = [], []
-    spec_pattern_new = {"P1": {"U2"}, "P2": {"U"}, "P3": {"U", "U2"}, "P4": {"U2"}, "P5": {"U2"}, "P6": {"U", "U2"},
-                        "P7": {"U2"}, "P8": {"U2"}}
+    # A U/U2 draft uses a pattern "new relative to DEV" if it contains none of the hedge/weakening markers used in the
+    # DEV probes' U/U2 drafts (v2/data/dev_probes_batch1.json). Decided from the final text, because validation-driven
+    # revisions changed some wording.
+    dev_markers = ("appears", "slightly", "most of", "generally", " may ", "suggest", "somewhat", "higher mean")
     for x in kept:
         pair = pairs[x["pair_id"]]
         d = next(d for d in pair["drafts"] if d["key"] == x["key"])
@@ -96,7 +98,8 @@ def main(argv: list[str] | None = None) -> int:
                      "decisive_evidence_ids": pair["decisive_evidence_ids"] if exp == "STRENGTHEN" else [],
                      "decisive_fact": pair["pair_contrast"] if exp == "STRENGTHEN" else None,
                      "subgroup": "claim_strength", "borderline": None, "pattern": d.get("pattern"),
-                     "pattern_new_vs_dev": x["key"] in spec_pattern_new.get(x["pair_id"], set()),
+                     "pattern_new_vs_dev": x["key"] in ("U", "U2") and not any(
+                         m in f" {d['text'].lower()} " for m in dev_markers),
                      "needs_test": PAIR_SPEC[x["pair_id"]]["needs_test"],
                      "validator_label": x["validator_label"]})
     (PUB / "items.json").write_text(json.dumps({"description": "Phase 4 TEST items (draft sentences only; gold is "

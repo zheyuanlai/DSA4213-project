@@ -148,8 +148,17 @@ def check_pair(obj: dict[str, Any], avoid: set[str] | None = None) -> tuple[list
     for d in dec:
         if not ss.has(d):
             errs.append(f"{pid}: decisive id {d!r} not in strong package")
-    if dec and all(ss.has(d) and ps.has(d) and ss.get(d).text == ps.get(d).text and ss.get(d).value == ps.get(d).value
-                   for d in dec):
+    def _differs(d: str) -> bool:
+        """A decisive ID differs if any evidence item at or under it (a table's rows and cells, a row's cells) differs
+        in text, value or scope note between members, or is missing in the partner."""
+        keys = [k for k in ss.items if k == d or k.startswith(d + ".")]
+        for k in keys:
+            a, b = ss.get(k), ps.get(k)
+            if b is None or (a.text, a.value, a.validity_bounds) != (b.text, b.value, b.validity_bounds):
+                return True
+        return False
+
+    if dec and not any(_differs(d) for d in dec if ss.has(d)):
         errs.append(f"{pid}: decisive evidence is identical in both members")
     drafts = {d.get("key"): d for d in obj["drafts"]}
     need = ["U", "U2", "S"] + (["Z"] if spec["partner_level"] == 0 else [])
