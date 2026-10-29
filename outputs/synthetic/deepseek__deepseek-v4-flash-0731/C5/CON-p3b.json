@@ -1,0 +1,1336 @@
+{
+ "run_id": "primary_v1:C5:CON-p3b",
+ "case_id": "CON-p3b",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:39:20Z",
+ "finished_at": "2026-10-10T11:39:55Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "22aea81e683cb16e9302232b1a4b4fa683a031a65f9581422fd9e2dfe33b3d1a"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Marten-GNN outperforms Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%) in mean test accuracy, but Pinecrest-Conv has higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%).",
+    "evidence_ids": [
+     "T1.r1.mar",
+     "T1.r1.pin",
+     "T1.r2.mar",
+     "T1.r2.pin",
+     "T1.r3.mar",
+     "T1.r3.pin",
+     "T1.r4.mar",
+     "T1.r4.pin"
+    ],
+    "scope": "Four node-classification graphs (Elmstead-Cite, Harlow-Coauthor, Brack-Social, Tiller-Protein), test accuracy (%), mean ± SD over 10 seeds.",
+    "caveats": "No statistical tests reported; differences in means only, so no significance claims."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Marten-GNN outperforms the feature-only MLP on all four graphs (e.g., 84.7% vs 74.2% on Elmstead-Cite, 92.6% vs 88.9% on Harlow-Coauthor, 69.8% vs 61.3% on Brack-Social, 75.5% vs 68.7% on Tiller-Protein).",
+    "evidence_ids": [
+     "T1.r1.mar",
+     "T1.r1.mlp",
+     "T1.r2.mar",
+     "T1.r2.mlp",
+     "T1.r3.mar",
+     "T1.r3.mlp",
+     "T1.r4.mar",
+     "T1.r4.mlp"
+    ],
+    "scope": "Four node-classification graphs, test accuracy (%), mean ± SD over 10 seeds.",
+    "caveats": "No statistical tests reported; differences in means only."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The comparison between Marten-GNN and Pinecrest-Conv is mixed: Marten-GNN wins on two graphs, Pinecrest-Conv wins on two graphs, so the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv across the four graphs.",
+    "evidence_ids": [
+     "T1.r1.mar",
+     "T1.r1.pin",
+     "T1.r2.mar",
+     "T1.r2.pin",
+     "T1.r3.mar",
+     "T1.r3.pin",
+     "T1.r4.mar",
+     "T1.r4.pin"
+    ],
+    "scope": "Four-graph benchmark, test accuracy (%).",
+    "caveats": "No statistical tests; results are per-graph means only."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%). Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark. Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively). No statistical tests were reported, so these differences are descriptive only.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%).",
+     "evidence_ids": [
+      "T1.r1.mar",
+      "T1.r1.pin",
+      "T1.r2.mar",
+      "T1.r2.pin",
+      "T1.r3.mar",
+      "T1.r3.pin",
+      "T1.r4.mar",
+      "T1.r4.pin"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark.",
+     "evidence_ids": [
+      "T1.r1.mar",
+      "T1.r1.pin",
+      "T1.r2.mar",
+      "T1.r2.pin",
+      "T1.r3.mar",
+      "T1.r3.pin",
+      "T1.r4.mar",
+      "T1.r4.pin"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively).",
+     "evidence_ids": [
+      "T1.r1.mar",
+      "T1.r1.mlp",
+      "T1.r2.mar",
+      "T1.r2.mlp",
+      "T1.r3.mar",
+      "T1.r3.mlp",
+      "T1.r4.mar",
+      "T1.r4.mlp"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, so these differences are descriptive only.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%). Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark. Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively). No statistical tests were reported, so these differences are descriptive only.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%).",
+     "evidence_ids": [
+      "T1.r1.mar",
+      "T1.r1.pin",
+      "T1.r2.mar",
+      "T1.r2.pin",
+      "T1.r3.mar",
+      "T1.r3.pin",
+      "T1.r4.mar",
+      "T1.r4.pin"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark.",
+     "evidence_ids": [
+      "T1.r1.mar",
+      "T1.r1.pin",
+      "T1.r2.mar",
+      "T1.r2.pin",
+      "T1.r3.mar",
+      "T1.r3.pin",
+      "T1.r4.mar",
+      "T1.r4.pin"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively).",
+     "evidence_ids": [
+      "T1.r1.mar",
+      "T1.r1.mlp",
+      "T1.r2.mar",
+      "T1.r2.mlp",
+      "T1.r3.mar",
+      "T1.r3.mlp",
+      "T1.r4.mar",
+      "T1.r4.mlp"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, so these differences are descriptive only.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%).",
+   "actions": [
+    {
+     "call_id": "call_31fe343f8cdd47ae8aee5a02",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_3836c5414de941159a065415",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_31fe343f8cdd47ae8aee5a02",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test accuracy (%) on four node-classification graphs, mean ± SD over 10 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mar",
+        "row": "Elmstead-Cite",
+        "column": "Marten-GNN",
+        "text": "84.7 ± 0.5",
+        "value": 84.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.pin",
+        "row": "Elmstead-Cite",
+        "column": "Pinecrest-Conv",
+        "text": "83.1 ± 0.6",
+        "value": 83.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.mlp",
+        "row": "Elmstead-Cite",
+        "column": "MLP (features only)",
+        "text": "74.2 ± 0.8",
+        "value": 74.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mar",
+        "row": "Harlow-Coauthor",
+        "column": "Marten-GNN",
+        "text": "92.6 ± 0.3",
+        "value": 92.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.pin",
+        "row": "Harlow-Coauthor",
+        "column": "Pinecrest-Conv",
+        "text": "91.8 ± 0.4",
+        "value": 91.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mlp",
+        "row": "Harlow-Coauthor",
+        "column": "MLP (features only)",
+        "text": "88.9 ± 0.5",
+        "value": 88.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mar",
+        "row": "Brack-Social",
+        "column": "Marten-GNN",
+        "text": "69.8 ± 0.9",
+        "value": 69.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.pin",
+        "row": "Brack-Social",
+        "column": "Pinecrest-Conv",
+        "text": "70.4 ± 0.9",
+        "value": 70.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mlp",
+        "row": "Brack-Social",
+        "column": "MLP (features only)",
+        "text": "61.3 ± 1.1",
+        "value": 61.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mar",
+        "row": "Tiller-Protein",
+        "column": "Marten-GNN",
+        "text": "75.5 ± 0.7",
+        "value": 75.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.pin",
+        "row": "Tiller-Protein",
+        "column": "Pinecrest-Conv",
+        "text": "76.2 ± 0.7",
+        "value": 76.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mlp",
+        "row": "Tiller-Protein",
+        "column": "MLP (features only)",
+        "text": "68.7 ± 0.9",
+        "value": 68.7,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mar",
+      "T1.r1.pin",
+      "T1.r1.mlp",
+      "T1.r2.mar",
+      "T1.r2.pin",
+      "T1.r2.mlp",
+      "T1.r3.mar",
+      "T1.r3.pin",
+      "T1.r3.mlp",
+      "T1.r4.mar",
+      "T1.r4.pin",
+      "T1.r4.mlp"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_3836c5414de941159a065415",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marten-GNN vs Pinecrest-Conv, test accuracy, per graph"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%).",
+    "revised_text": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%).",
+    "evidence_ids": [
+     "T1.r1.mar",
+     "T1.r1.pin",
+     "T1.r2.mar",
+     "T1.r2.pin",
+     "T1.r3.mar",
+     "T1.r3.pin",
+     "T1.r4.mar",
+     "T1.r4.pin",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "All four per-graph mean values match the table exactly: Elmstead-Cite 84.7 vs 83.1, Harlow-Coauthor 92.6 vs 91.8, Brack-Social 69.8 vs 70.4, Tiller-Protein 75.5 vs 76.2. The claim correctly reports means and directions, and uses \"mean\" without significance claims. No test reported, consistent with descriptive framing.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark.",
+   "actions": [
+    {
+     "call_id": "call_6570fe2e332e4602b21409be",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_65182975d851412ba4c69a96",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_6570fe2e332e4602b21409be",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test accuracy (%) on four node-classification graphs, mean ± SD over 10 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mar",
+        "row": "Elmstead-Cite",
+        "column": "Marten-GNN",
+        "text": "84.7 ± 0.5",
+        "value": 84.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.pin",
+        "row": "Elmstead-Cite",
+        "column": "Pinecrest-Conv",
+        "text": "83.1 ± 0.6",
+        "value": 83.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.mlp",
+        "row": "Elmstead-Cite",
+        "column": "MLP (features only)",
+        "text": "74.2 ± 0.8",
+        "value": 74.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mar",
+        "row": "Harlow-Coauthor",
+        "column": "Marten-GNN",
+        "text": "92.6 ± 0.3",
+        "value": 92.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.pin",
+        "row": "Harlow-Coauthor",
+        "column": "Pinecrest-Conv",
+        "text": "91.8 ± 0.4",
+        "value": 91.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mlp",
+        "row": "Harlow-Coauthor",
+        "column": "MLP (features only)",
+        "text": "88.9 ± 0.5",
+        "value": 88.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mar",
+        "row": "Brack-Social",
+        "column": "Marten-GNN",
+        "text": "69.8 ± 0.9",
+        "value": 69.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.pin",
+        "row": "Brack-Social",
+        "column": "Pinecrest-Conv",
+        "text": "70.4 ± 0.9",
+        "value": 70.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mlp",
+        "row": "Brack-Social",
+        "column": "MLP (features only)",
+        "text": "61.3 ± 1.1",
+        "value": 61.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mar",
+        "row": "Tiller-Protein",
+        "column": "Marten-GNN",
+        "text": "75.5 ± 0.7",
+        "value": 75.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.pin",
+        "row": "Tiller-Protein",
+        "column": "Pinecrest-Conv",
+        "text": "76.2 ± 0.7",
+        "value": 76.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mlp",
+        "row": "Tiller-Protein",
+        "column": "MLP (features only)",
+        "text": "68.7 ± 0.9",
+        "value": 68.7,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mar",
+      "T1.r1.pin",
+      "T1.r1.mlp",
+      "T1.r2.mar",
+      "T1.r2.pin",
+      "T1.r2.mlp",
+      "T1.r3.mar",
+      "T1.r3.pin",
+      "T1.r3.mlp",
+      "T1.r4.mar",
+      "T1.r4.pin",
+      "T1.r4.mlp"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_65182975d851412ba4c69a96",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marten-GNN vs Pinecrest-Conv, test accuracy, per graph"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark.",
+    "revised_text": "Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark.",
+    "evidence_ids": [
+     "T1.r1.mar",
+     "T1.r1.pin",
+     "T1.r2.mar",
+     "T1.r2.pin",
+     "T1.r3.mar",
+     "T1.r3.pin",
+     "T1.r4.mar",
+     "T1.r4.pin",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "The claim states the comparison is mixed (Marten-GNN higher on Elmstead-Cite and Harlow-Coauthor; Pinecrest-Conv higher on Brack-Social and Tiller-Protein) and that no general-outperformance claim is supported. Table T1 confirms these per-graph directions, and no statistical test was reported for cmp1. The claim is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively).",
+   "actions": [
+    {
+     "call_id": "call_ef1755927bdf429f95455409",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_efc6dd22a15343c7806f32fd",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 84.7,
+      "evidence_id": "T1.r1.mar"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_8bd832c5e5c147f59a608796",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 74.2,
+      "evidence_id": "T1.r1.mlp"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_ca121a5445a0418aa6e1d644",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 92.6,
+      "evidence_id": "T1.r2.mar"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_ef1755927bdf429f95455409",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test accuracy (%) on four node-classification graphs, mean ± SD over 10 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mar",
+        "row": "Elmstead-Cite",
+        "column": "Marten-GNN",
+        "text": "84.7 ± 0.5",
+        "value": 84.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.pin",
+        "row": "Elmstead-Cite",
+        "column": "Pinecrest-Conv",
+        "text": "83.1 ± 0.6",
+        "value": 83.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.mlp",
+        "row": "Elmstead-Cite",
+        "column": "MLP (features only)",
+        "text": "74.2 ± 0.8",
+        "value": 74.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mar",
+        "row": "Harlow-Coauthor",
+        "column": "Marten-GNN",
+        "text": "92.6 ± 0.3",
+        "value": 92.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.pin",
+        "row": "Harlow-Coauthor",
+        "column": "Pinecrest-Conv",
+        "text": "91.8 ± 0.4",
+        "value": 91.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.mlp",
+        "row": "Harlow-Coauthor",
+        "column": "MLP (features only)",
+        "text": "88.9 ± 0.5",
+        "value": 88.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mar",
+        "row": "Brack-Social",
+        "column": "Marten-GNN",
+        "text": "69.8 ± 0.9",
+        "value": 69.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.pin",
+        "row": "Brack-Social",
+        "column": "Pinecrest-Conv",
+        "text": "70.4 ± 0.9",
+        "value": 70.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.mlp",
+        "row": "Brack-Social",
+        "column": "MLP (features only)",
+        "text": "61.3 ± 1.1",
+        "value": 61.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mar",
+        "row": "Tiller-Protein",
+        "column": "Marten-GNN",
+        "text": "75.5 ± 0.7",
+        "value": 75.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.pin",
+        "row": "Tiller-Protein",
+        "column": "Pinecrest-Conv",
+        "text": "76.2 ± 0.7",
+        "value": 76.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.mlp",
+        "row": "Tiller-Protein",
+        "column": "MLP (features only)",
+        "text": "68.7 ± 0.9",
+        "value": 68.7,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mar",
+      "T1.r1.pin",
+      "T1.r1.mlp",
+      "T1.r2.mar",
+      "T1.r2.pin",
+      "T1.r2.mlp",
+      "T1.r3.mar",
+      "T1.r3.pin",
+      "T1.r3.mlp",
+      "T1.r4.mar",
+      "T1.r4.pin",
+      "T1.r4.mlp"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_efc6dd22a15343c7806f32fd",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 84.7,
+      "actual": 84.7,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.mar",
+       "row": "Elmstead-Cite",
+       "column": "Marten-GNN",
+       "text": "84.7 ± 0.5",
+       "value": 84.7,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.mar"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_8bd832c5e5c147f59a608796",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 74.2,
+      "actual": 74.2,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.mlp",
+       "row": "Elmstead-Cite",
+       "column": "MLP (features only)",
+       "text": "74.2 ± 0.8",
+       "value": 74.2,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.mlp"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_ca121a5445a0418aa6e1d644",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 92.6,
+      "actual": 92.6,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.mar",
+       "row": "Harlow-Coauthor",
+       "column": "Marten-GNN",
+       "text": "92.6 ± 0.3",
+       "value": 92.6,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r2.mar"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively).",
+    "revised_text": "Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively).",
+    "evidence_ids": [
+     "T1.r1.mar",
+     "T1.r1.mlp",
+     "T1.r2.mar",
+     "T1.r2.mlp",
+     "T1.r3.mar",
+     "T1.r3.mlp",
+     "T1.r4.mar",
+     "T1.r4.mlp"
+    ],
+    "rationale": "All eight numbers match the table exactly (84.7/74.2, 92.6/88.9, 69.8/61.3, 75.5/68.7), and in each graph Marten-GNN's mean exceeds the MLP's. The claim is descriptive (no significance asserted), consistent with the passage's note that no tests were reported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 7,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "No statistical tests were reported, so these differences are descriptive only.",
+   "actions": [
+    {
+     "call_id": "call_2a7440abf637468f91966dd4",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_49586084ada844b39ca4c2c8",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_2a7440abf637468f91966dd4",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marten-GNN vs Pinecrest-Conv, test accuracy, per graph"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_49586084ada844b39ca4c2c8",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Marten-GNN vs feature-only MLP, test accuracy, per graph"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "No statistical tests were reported, so these differences are descriptive only.",
+    "revised_text": "No statistical tests were reported, so these differences are descriptive only.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "No statistical test is reported for either comparison (cmp1 Marten-GNN vs Pinecrest-Conv, cmp2 Marten-GNN vs MLP). The claim that differences are descriptive only is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%). Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark. Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively). No statistical tests were reported, so these differences are descriptive only.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Marten-GNN achieved higher mean test accuracy than Pinecrest-Conv on Elmstead-Cite (84.7% vs 83.1%) and Harlow-Coauthor (92.6% vs 91.8%), but Pinecrest-Conv achieved higher mean accuracy on Brack-Social (70.4% vs 69.8%) and Tiller-Protein (76.2% vs 75.5%).",
+   "evidence_ids": [
+    "T1.r1.mar",
+    "T1.r1.pin",
+    "T1.r2.mar",
+    "T1.r2.pin",
+    "T1.r3.mar",
+    "T1.r3.pin",
+    "T1.r4.mar",
+    "T1.r4.pin"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Thus, the comparison is mixed across the four graphs, and the evidence does not support a claim that Marten-GNN generally outperforms Pinecrest-Conv on this benchmark.",
+   "evidence_ids": [
+    "T1.r1.mar",
+    "T1.r1.pin",
+    "T1.r2.mar",
+    "T1.r2.pin",
+    "T1.r3.mar",
+    "T1.r3.pin",
+    "T1.r4.mar",
+    "T1.r4.pin"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Marten-GNN did, however, exceed the feature-only MLP on all four graphs (84.7% vs 74.2%, 92.6% vs 88.9%, 69.8% vs 61.3%, and 75.5% vs 68.7%, respectively).",
+   "evidence_ids": [
+    "T1.r1.mar",
+    "T1.r1.mlp",
+    "T1.r2.mar",
+    "T1.r2.mlp",
+    "T1.r3.mar",
+    "T1.r3.mlp",
+    "T1.r4.mar",
+    "T1.r4.mlp"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "No statistical tests were reported, so these differences are descriptive only.",
+   "evidence_ids": [],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "CON-p3b:shared_outline:outline:c21679795f",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631856-gABa3CSsfTLOvpXRP0gD",
+   "finish_reason": "stop",
+   "prompt_tokens": 1070,
+   "completion_tokens": 624,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00032452,
+   "cost_is_estimate": false,
+   "latency_s": 4.373,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:shared_outline:writer_from_outline:bc53a1258d",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631860-R1QhKfuBCHuKtLbAaxXn",
+   "finish_reason": "stop",
+   "prompt_tokens": 1756,
+   "completion_tokens": 441,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00036932,
+   "cost_is_estimate": false,
+   "latency_s": 3.194,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:6c4831a977",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631950-DFqQN4EGuclDDquxOQDo",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2785,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001048096,
+   "cost_is_estimate": false,
+   "latency_s": 1.488,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:615f537761",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631951-qYqExmSelOH5hHx1QaaA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3783,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000132744,
+   "cost_is_estimate": false,
+   "latency_s": 1.584,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:7eb0841eda",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631953-MYJT5uV6K4JCplNqg8B4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3958,
+   "completion_tokens": 262,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001121152,
+   "cost_is_estimate": false,
+   "latency_s": 3.9,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:ecd94e6a7c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631957-c0JQbyQLhnuMqATPM3Ic",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2732,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001001456,
+   "cost_is_estimate": false,
+   "latency_s": 1.266,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:55b3864397",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631958-7YPwkv9x9UXLNlwL1vEr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3730,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00012808,
+   "cost_is_estimate": false,
+   "latency_s": 1.386,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:73ec0af075",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631959-p3IZqbY25OelWwun7Q96",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3905,
+   "completion_tokens": 248,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001037552,
+   "cost_is_estimate": false,
+   "latency_s": 3.385,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:95e064997c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631963-sazoR0FzkdfHSxZRZSR9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2761,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001029616,
+   "cost_is_estimate": false,
+   "latency_s": 1.531,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:41f17fe98e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631965-0C59laBYVJjVQL09DNL8",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3759,
+   "completion_tokens": 446,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000230424,
+   "cost_is_estimate": false,
+   "latency_s": 7.219,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:7c63fae8da",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631972-sdwHklHd8CZCpHFXJFRa",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4674,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001239072,
+   "cost_is_estimate": false,
+   "latency_s": 1.555,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:eb390ce9c8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631973-SapDmeQCMptrJCaUeSrQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4890,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.56704e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.45,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:4cb249cdd5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631975-uUu1krXx6SJe8CNfV3PT",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5105,
+   "completion_tokens": 237,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.73952e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.494,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:e471358df9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631979-gVE8GmLtPhllXAGVA4dK",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2646,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001123776,
+   "cost_is_estimate": false,
+   "latency_s": 2.037,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:d30c51b9b9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631981-bJIxfV6S9ZYdm3CSVEFy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2921,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.6888e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.509,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p3b:C5:verify_adaptive:4e6764d634",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631982-FnMsdVPppIvBDXqTU1rQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3095,
+   "completion_tokens": 161,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.49408e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.713,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 16,
+  "n_model_calls_condition_only": 14,
+  "n_tool_calls": 10,
+  "tool_counts": {
+   "lookup_table": 3,
+   "get_test_metadata": 4,
+   "compare_numbers": 3
+  },
+  "prompt_tokens": 53570,
+  "completion_tokens": 3023,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00223005,
+  "cost_usd_condition_only": 0.00153621,
+  "any_cost_estimated": false,
+  "latency_s": 42.084,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 8,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

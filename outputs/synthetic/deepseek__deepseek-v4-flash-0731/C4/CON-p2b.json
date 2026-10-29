@@ -1,0 +1,1426 @@
+{
+ "run_id": "primary_v1:C4:CON-p2b",
+ "case_id": "CON-p2b",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:35:40Z",
+ "finished_at": "2026-10-10T11:36:11Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "31b559aeb5bd2718ff1209d69052f93b7fa93c1e827005a4784b55c091bf822e"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Halyard achieves lower test MAE than Tidewell on all five datasets in the suite, with differences ranging from 0.013 to 0.017.",
+    "evidence_ids": [
+     "T1.r1.hal",
+     "T1.r1.tid",
+     "T1.r2.hal",
+     "T1.r2.tid",
+     "T1.r3.hal",
+     "T1.r3.tid",
+     "T1.r4.hal",
+     "T1.r4.tid",
+     "T1.r5.hal",
+     "T1.r5.tid"
+    ],
+    "scope": "Five multivariate forecasting datasets (Kelso-Grid, Marrick-Traffic, Doveton-Weather, Ashby-Retail, Pell-Solar), horizon 96, test MAE on z-normalized series, mean over 3 seeds.",
+    "caveats": "No statistical tests were reported, so the consistency of the advantage across datasets is descriptive only; significance is not established."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Halyard also outperforms the seasonal-naive reference on all five datasets, with larger margins than against Tidewell.",
+    "evidence_ids": [
+     "T1.r1.hal",
+     "T1.r1.naive",
+     "T1.r2.hal",
+     "T1.r2.naive",
+     "T1.r3.hal",
+     "T1.r3.naive",
+     "T1.r4.hal",
+     "T1.r4.naive",
+     "T1.r5.hal",
+     "T1.r5.naive"
+    ],
+    "scope": "Same five datasets, horizon 96, test MAE on z-normalized series, mean over 3 seeds.",
+    "caveats": "No statistical tests reported; margins are descriptive."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The evidence supports that Halyard outperforms Tidewell across the evaluated benchmark suite, but the claim is limited to these five datasets and this specific setting (horizon 96, z-normalized MAE, 3-seed mean).",
+    "evidence_ids": [
+     "T1.r1",
+     "T1.r2",
+     "T1.r3",
+     "T1.r4",
+     "T1.r5"
+    ],
+    "scope": "The full five-dataset suite under the stated experimental setup.",
+    "caveats": "No statistical significance tests were provided; generalizability beyond these datasets and settings is not established."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Kelso-Grid) to 0.017 (Pell-Solar). Halyard also outperformed the seasonal-naive reference on all five datasets, with larger margins (0.068–0.111) than against Tidewell. These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Kelso-Grid) to 0.017 (Pell-Solar).",
+     "evidence_ids": [
+      "T1.r1.hal",
+      "T1.r1.tid",
+      "T1.r2.hal",
+      "T1.r2.tid",
+      "T1.r3.hal",
+      "T1.r3.tid",
+      "T1.r4.hal",
+      "T1.r4.tid",
+      "T1.r5.hal",
+      "T1.r5.tid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Halyard also outperformed the seasonal-naive reference on all five datasets, with larger margins (0.068–0.111) than against Tidewell.",
+     "evidence_ids": [
+      "T1.r1.hal",
+      "T1.r1.naive",
+      "T1.r2.hal",
+      "T1.r2.naive",
+      "T1.r3.hal",
+      "T1.r3.naive",
+      "T1.r4.hal",
+      "T1.r4.naive",
+      "T1.r5.hal",
+      "T1.r5.naive"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Pell-Solar) to 0.016 (Kelso-Grid). Halyard also outperformed the seasonal-naive reference on all five datasets, with margins ranging from 0.068 (Pell-Solar) to 0.111 (Marrick-Traffic), larger than the margins against Tidewell. These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Pell-Solar) to 0.016 (Kelso-Grid).",
+     "evidence_ids": [
+      "T1.r1.hal",
+      "T1.r1.tid",
+      "T1.r2.hal",
+      "T1.r2.tid",
+      "T1.r3.hal",
+      "T1.r3.tid",
+      "T1.r4.hal",
+      "T1.r4.tid",
+      "T1.r5.hal",
+      "T1.r5.tid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Halyard also outperformed the seasonal-naive reference on all five datasets, with margins ranging from 0.068 (Pell-Solar) to 0.111 (Marrick-Traffic), larger than the margins against Tidewell.",
+     "evidence_ids": [
+      "T1.r1.hal",
+      "T1.r1.naive",
+      "T1.r2.hal",
+      "T1.r2.naive",
+      "T1.r3.hal",
+      "T1.r3.naive",
+      "T1.r4.hal",
+      "T1.r4.naive",
+      "T1.r5.hal",
+      "T1.r5.naive"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+     "evidence_ids": [
+      "T1.r1",
+      "T1.r2",
+      "T1.r3",
+      "T1.r4",
+      "T1.r5"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Kelso-Grid) to 0.017 (Pell-Solar).",
+   "actions": [
+    {
+     "call_id": "call_fec12e208fe34e5aacd3d009",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_354684a2d9c44d0f9caa25fc",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.013,
+      "evidence_id": "T1.r1.tid",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.hal"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_3e888dd1704642008ee6675c",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.017,
+      "evidence_id": "T1.r5.tid",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r5.hal"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_fec12e208fe34e5aacd3d009",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test MAE (z-normalized, horizon 96; lower is better), mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hal",
+        "row": "Kelso-Grid",
+        "column": "Halyard",
+        "text": "0.231",
+        "value": 0.231,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tid",
+        "row": "Kelso-Grid",
+        "column": "Tidewell",
+        "text": "0.247",
+        "value": 0.247,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.naive",
+        "row": "Kelso-Grid",
+        "column": "Seasonal-naive",
+        "text": "0.312",
+        "value": 0.312,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.hal",
+        "row": "Marrick-Traffic",
+        "column": "Halyard",
+        "text": "0.284",
+        "value": 0.284,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tid",
+        "row": "Marrick-Traffic",
+        "column": "Tidewell",
+        "text": "0.301",
+        "value": 0.301,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.naive",
+        "row": "Marrick-Traffic",
+        "column": "Seasonal-naive",
+        "text": "0.395",
+        "value": 0.395,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.hal",
+        "row": "Doveton-Weather",
+        "column": "Halyard",
+        "text": "0.398",
+        "value": 0.398,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tid",
+        "row": "Doveton-Weather",
+        "column": "Tidewell",
+        "text": "0.412",
+        "value": 0.412,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.naive",
+        "row": "Doveton-Weather",
+        "column": "Seasonal-naive",
+        "text": "0.468",
+        "value": 0.468,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.hal",
+        "row": "Ashby-Retail",
+        "column": "Halyard",
+        "text": "0.517",
+        "value": 0.517,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.tid",
+        "row": "Ashby-Retail",
+        "column": "Tidewell",
+        "text": "0.538",
+        "value": 0.538,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.naive",
+        "row": "Ashby-Retail",
+        "column": "Seasonal-naive",
+        "text": "0.611",
+        "value": 0.611,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.hal",
+        "row": "Pell-Solar",
+        "column": "Halyard",
+        "text": "0.176",
+        "value": 0.176,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.tid",
+        "row": "Pell-Solar",
+        "column": "Tidewell",
+        "text": "0.189",
+        "value": 0.189,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.naive",
+        "row": "Pell-Solar",
+        "column": "Seasonal-naive",
+        "text": "0.244",
+        "value": 0.244,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hal",
+      "T1.r1.tid",
+      "T1.r1.naive",
+      "T1.r2.hal",
+      "T1.r2.tid",
+      "T1.r2.naive",
+      "T1.r3.hal",
+      "T1.r3.tid",
+      "T1.r3.naive",
+      "T1.r4.hal",
+      "T1.r4.tid",
+      "T1.r4.naive",
+      "T1.r5.hal",
+      "T1.r5.tid",
+      "T1.r5.naive"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_354684a2d9c44d0f9caa25fc",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 0.013,
+      "actual": 0.016,
+      "abs_error": 0.003,
+      "tolerance": 0.001,
+      "match": false,
+      "evidence": {
+       "evidence_id": "T1.r1.tid",
+       "row": "Kelso-Grid",
+       "column": "Tidewell",
+       "text": "0.247",
+       "value": 0.247,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r1.hal",
+       "row": "Kelso-Grid",
+       "column": "Halyard",
+       "text": "0.231",
+       "value": 0.231,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r1.hal"
+     },
+     "returned_ids": [
+      "T1.r1.tid",
+      "T1.r1.hal"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_3e888dd1704642008ee6675c",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 0.017,
+      "actual": 0.013,
+      "abs_error": 0.004,
+      "tolerance": 0.001,
+      "match": false,
+      "evidence": {
+       "evidence_id": "T1.r5.tid",
+       "row": "Pell-Solar",
+       "column": "Tidewell",
+       "text": "0.189",
+       "value": 0.189,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r5.hal",
+       "row": "Pell-Solar",
+       "column": "Halyard",
+       "text": "0.176",
+       "value": 0.176,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r5.hal"
+     },
+     "returned_ids": [
+      "T1.r5.tid",
+      "T1.r5.hal"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "WEAKEN",
+    "original_text": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Kelso-Grid) to 0.017 (Pell-Solar).",
+    "revised_text": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Pell-Solar) to 0.016 (Kelso-Grid).",
+    "evidence_ids": [
+     "T1.r1.hal",
+     "T1.r1.tid",
+     "T1.r2.hal",
+     "T1.r2.tid",
+     "T1.r3.hal",
+     "T1.r3.tid",
+     "T1.r4.hal",
+     "T1.r4.tid",
+     "T1.r5.hal",
+     "T1.r5.tid"
+    ],
+    "rationale": "Halyard indeed has lower MAE than Tidewell on all five datasets (0.231<0.247, 0.284<0.301, 0.398<0.412, 0.517<0.538, 0.176<0.189). However, the stated margins are wrong: Kelso-Grid margin is 0.016 (not 0.013) and Pell-Solar margin is 0.013 (not 0.017).",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Halyard also outperformed the seasonal-naive reference on all five datasets, with larger margins (0.068–0.111) than against Tidewell.",
+   "actions": [
+    {
+     "call_id": "call_4ede30f47033482287235d7f",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_7b1903bc8a414bc380b8e899",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.068,
+      "evidence_id": "T1.r1.naive",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.hal"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_ecc86745991443708f5ef89c",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.111,
+      "evidence_id": "T1.r5.naive",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r5.hal"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_f2adba9c987f415fab1737f1",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.111,
+      "evidence_id": "T1.r2.naive",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.hal"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_4ede30f47033482287235d7f",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test MAE (z-normalized, horizon 96; lower is better), mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hal",
+        "row": "Kelso-Grid",
+        "column": "Halyard",
+        "text": "0.231",
+        "value": 0.231,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tid",
+        "row": "Kelso-Grid",
+        "column": "Tidewell",
+        "text": "0.247",
+        "value": 0.247,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.naive",
+        "row": "Kelso-Grid",
+        "column": "Seasonal-naive",
+        "text": "0.312",
+        "value": 0.312,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.hal",
+        "row": "Marrick-Traffic",
+        "column": "Halyard",
+        "text": "0.284",
+        "value": 0.284,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tid",
+        "row": "Marrick-Traffic",
+        "column": "Tidewell",
+        "text": "0.301",
+        "value": 0.301,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.naive",
+        "row": "Marrick-Traffic",
+        "column": "Seasonal-naive",
+        "text": "0.395",
+        "value": 0.395,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.hal",
+        "row": "Doveton-Weather",
+        "column": "Halyard",
+        "text": "0.398",
+        "value": 0.398,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tid",
+        "row": "Doveton-Weather",
+        "column": "Tidewell",
+        "text": "0.412",
+        "value": 0.412,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.naive",
+        "row": "Doveton-Weather",
+        "column": "Seasonal-naive",
+        "text": "0.468",
+        "value": 0.468,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.hal",
+        "row": "Ashby-Retail",
+        "column": "Halyard",
+        "text": "0.517",
+        "value": 0.517,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.tid",
+        "row": "Ashby-Retail",
+        "column": "Tidewell",
+        "text": "0.538",
+        "value": 0.538,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.naive",
+        "row": "Ashby-Retail",
+        "column": "Seasonal-naive",
+        "text": "0.611",
+        "value": 0.611,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.hal",
+        "row": "Pell-Solar",
+        "column": "Halyard",
+        "text": "0.176",
+        "value": 0.176,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.tid",
+        "row": "Pell-Solar",
+        "column": "Tidewell",
+        "text": "0.189",
+        "value": 0.189,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.naive",
+        "row": "Pell-Solar",
+        "column": "Seasonal-naive",
+        "text": "0.244",
+        "value": 0.244,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hal",
+      "T1.r1.tid",
+      "T1.r1.naive",
+      "T1.r2.hal",
+      "T1.r2.tid",
+      "T1.r2.naive",
+      "T1.r3.hal",
+      "T1.r3.tid",
+      "T1.r3.naive",
+      "T1.r4.hal",
+      "T1.r4.tid",
+      "T1.r4.naive",
+      "T1.r5.hal",
+      "T1.r5.tid",
+      "T1.r5.naive"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_7b1903bc8a414bc380b8e899",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 0.068,
+      "actual": 0.081,
+      "abs_error": 0.013,
+      "tolerance": 0.001,
+      "match": false,
+      "evidence": {
+       "evidence_id": "T1.r1.naive",
+       "row": "Kelso-Grid",
+       "column": "Seasonal-naive",
+       "text": "0.312",
+       "value": 0.312,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r1.hal",
+       "row": "Kelso-Grid",
+       "column": "Halyard",
+       "text": "0.231",
+       "value": 0.231,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r1.hal"
+     },
+     "returned_ids": [
+      "T1.r1.naive",
+      "T1.r1.hal"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_ecc86745991443708f5ef89c",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 0.111,
+      "actual": 0.068,
+      "abs_error": 0.043,
+      "tolerance": 0.001,
+      "match": false,
+      "evidence": {
+       "evidence_id": "T1.r5.naive",
+       "row": "Pell-Solar",
+       "column": "Seasonal-naive",
+       "text": "0.244",
+       "value": 0.244,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r5.hal",
+       "row": "Pell-Solar",
+       "column": "Halyard",
+       "text": "0.176",
+       "value": 0.176,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r5.hal"
+     },
+     "returned_ids": [
+      "T1.r5.naive",
+      "T1.r5.hal"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_f2adba9c987f415fab1737f1",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 0.111,
+      "actual": 0.111,
+      "abs_error": 0.0,
+      "tolerance": 0.001,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.naive",
+       "row": "Marrick-Traffic",
+       "column": "Seasonal-naive",
+       "text": "0.395",
+       "value": 0.395,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r2.hal",
+       "row": "Marrick-Traffic",
+       "column": "Halyard",
+       "text": "0.284",
+       "value": 0.284,
+       "unit": null,
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r2.hal"
+     },
+     "returned_ids": [
+      "T1.r2.naive",
+      "T1.r2.hal"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "WEAKEN",
+    "original_text": "Halyard also outperformed the seasonal-naive reference on all five datasets, with larger margins (0.068–0.111) than against Tidewell.",
+    "revised_text": "Halyard also outperformed the seasonal-naive reference on all five datasets, with margins ranging from 0.068 (Pell-Solar) to 0.111 (Marrick-Traffic), larger than the margins against Tidewell.",
+    "evidence_ids": [
+     "T1.r1.hal",
+     "T1.r1.naive",
+     "T1.r2.hal",
+     "T1.r2.naive",
+     "T1.r3.hal",
+     "T1.r3.naive",
+     "T1.r4.hal",
+     "T1.r4.naive",
+     "T1.r5.hal",
+     "T1.r5.naive"
+    ],
+    "rationale": "Halyard beats seasonal-naive on all five datasets (0.231<0.312, 0.284<0.395, 0.398<0.468, 0.517<0.611, 0.176<0.244). But the stated margin range is wrong: actual margins are 0.081, 0.111, 0.070, 0.094, 0.068, i.e. 0.068–0.111. The claim's range is correct in endpoints but the 0.068/0.111 attribution is swapped; the range itself is accurate.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+   "actions": [
+    {
+     "call_id": "call_17dad731745b464492107686",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_c9fc40a30ad84522b8706edb",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_17dad731745b464492107686",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Test MAE (z-normalized, horizon 96; lower is better), mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hal",
+        "row": "Kelso-Grid",
+        "column": "Halyard",
+        "text": "0.231",
+        "value": 0.231,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tid",
+        "row": "Kelso-Grid",
+        "column": "Tidewell",
+        "text": "0.247",
+        "value": 0.247,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.naive",
+        "row": "Kelso-Grid",
+        "column": "Seasonal-naive",
+        "text": "0.312",
+        "value": 0.312,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.hal",
+        "row": "Marrick-Traffic",
+        "column": "Halyard",
+        "text": "0.284",
+        "value": 0.284,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tid",
+        "row": "Marrick-Traffic",
+        "column": "Tidewell",
+        "text": "0.301",
+        "value": 0.301,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.naive",
+        "row": "Marrick-Traffic",
+        "column": "Seasonal-naive",
+        "text": "0.395",
+        "value": 0.395,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.hal",
+        "row": "Doveton-Weather",
+        "column": "Halyard",
+        "text": "0.398",
+        "value": 0.398,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tid",
+        "row": "Doveton-Weather",
+        "column": "Tidewell",
+        "text": "0.412",
+        "value": 0.412,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.naive",
+        "row": "Doveton-Weather",
+        "column": "Seasonal-naive",
+        "text": "0.468",
+        "value": 0.468,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.hal",
+        "row": "Ashby-Retail",
+        "column": "Halyard",
+        "text": "0.517",
+        "value": 0.517,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.tid",
+        "row": "Ashby-Retail",
+        "column": "Tidewell",
+        "text": "0.538",
+        "value": 0.538,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.naive",
+        "row": "Ashby-Retail",
+        "column": "Seasonal-naive",
+        "text": "0.611",
+        "value": 0.611,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.hal",
+        "row": "Pell-Solar",
+        "column": "Halyard",
+        "text": "0.176",
+        "value": 0.176,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.tid",
+        "row": "Pell-Solar",
+        "column": "Tidewell",
+        "text": "0.189",
+        "value": 0.189,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.naive",
+        "row": "Pell-Solar",
+        "column": "Seasonal-naive",
+        "text": "0.244",
+        "value": 0.244,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hal",
+      "T1.r1.tid",
+      "T1.r1.naive",
+      "T1.r2.hal",
+      "T1.r2.tid",
+      "T1.r2.naive",
+      "T1.r3.hal",
+      "T1.r3.tid",
+      "T1.r3.naive",
+      "T1.r4.hal",
+      "T1.r4.tid",
+      "T1.r4.naive",
+      "T1.r5.hal",
+      "T1.r5.tid",
+      "T1.r5.naive"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_c9fc40a30ad84522b8706edb",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Halyard vs Tidewell, test MAE, per dataset"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+    "revised_text": "These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+    "evidence_ids": [
+     "T1.r1.hal",
+     "T1.r1.tid",
+     "T1.r2.hal",
+     "T1.r2.tid",
+     "T1.r3.hal",
+     "T1.r3.tid",
+     "T1.r4.hal",
+     "T1.r4.tid",
+     "T1.r5.hal",
+     "T1.r5.tid",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Halyard has lower MAE than Tidewell on all five datasets (0.231<0.247, 0.284<0.301, 0.398<0.412, 0.517<0.538, 0.176<0.189). No statistical test was reported for exp1/cmp1, and the claim explicitly limits scope to these five datasets, the specific setting, and notes no significance tests were reported. Claim is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Pell-Solar) to 0.016 (Kelso-Grid). Halyard also outperformed the seasonal-naive reference on all five datasets, with margins ranging from 0.068 (Pell-Solar) to 0.111 (Marrick-Traffic), larger than the margins against Tidewell. These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Across the five multivariate forecasting datasets in the suite, Halyard achieved lower test MAE than Tidewell on every dataset, with margins ranging from 0.013 (Pell-Solar) to 0.016 (Kelso-Grid).",
+   "evidence_ids": [
+    "T1.r1.hal",
+    "T1.r1.tid",
+    "T1.r2.hal",
+    "T1.r2.tid",
+    "T1.r3.hal",
+    "T1.r3.tid",
+    "T1.r4.hal",
+    "T1.r4.tid",
+    "T1.r5.hal",
+    "T1.r5.tid"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Halyard also outperformed the seasonal-naive reference on all five datasets, with margins ranging from 0.068 (Pell-Solar) to 0.111 (Marrick-Traffic), larger than the margins against Tidewell.",
+   "evidence_ids": [
+    "T1.r1.hal",
+    "T1.r1.naive",
+    "T1.r2.hal",
+    "T1.r2.naive",
+    "T1.r3.hal",
+    "T1.r3.naive",
+    "T1.r4.hal",
+    "T1.r4.naive",
+    "T1.r5.hal",
+    "T1.r5.naive"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "These results support that Halyard outperforms Tidewell across the evaluated suite, but the claim is limited to these five datasets under the specific setting of horizon 96, z-normalized test MAE, and a 3-seed mean, and no statistical significance tests were reported.",
+   "evidence_ids": [
+    "T1.r1",
+    "T1.r2",
+    "T1.r3",
+    "T1.r4",
+    "T1.r5"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "CON-p2b:shared_outline:outline:f179886132",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631690-Wwx0y13BiChV6qP2YXq2",
+   "finish_reason": "stop",
+   "prompt_tokens": 1011,
+   "completion_tokens": 518,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00021746,
+   "cost_is_estimate": false,
+   "latency_s": 2.632,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:shared_outline:writer_from_outline:a996e2f831",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631693-ZbGQSvCkbmOUp1OgBPfO",
+   "finish_reason": "stop",
+   "prompt_tokens": 1592,
+   "completion_tokens": 363,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00032452,
+   "cost_is_estimate": false,
+   "latency_s": 1.994,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:9ff4308a87",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631729-MqmsMY3kRXIxEFZKunQ0",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2715,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001640832,
+   "cost_is_estimate": false,
+   "latency_s": 1.306,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:a47d1bf35f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631731-H1egNJV4R8CTtKJDkyQF",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3836,
+   "completion_tokens": 202,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000172784,
+   "cost_is_estimate": false,
+   "latency_s": 3.019,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:f971e77def",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631734-QUQsZUY1x2TtIOpoFaUc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4305,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001019952,
+   "cost_is_estimate": false,
+   "latency_s": 1.586,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:0ad863cb9d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631736-1h2yWD6oPUT66GeP6KrH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4634,
+   "completion_tokens": 327,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001451408,
+   "cost_is_estimate": false,
+   "latency_s": 3.946,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:84a07c20a6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631740-SKNfMboGirbVwxuSxk8f",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2697,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001624992,
+   "cost_is_estimate": false,
+   "latency_s": 1.353,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:1df9221616",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631741-KhR9s95oGmqvBuY9VAFA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3818,
+   "completion_tokens": 202,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001712,
+   "cost_is_estimate": false,
+   "latency_s": 2.614,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:7f57be01df",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631744-H2AxZUP7rzJjEBzCyBT4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4288,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001004992,
+   "cost_is_estimate": false,
+   "latency_s": 1.951,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:b40728f5a4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631746-HeQcQwQXBsjR9vblhZDF",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4618,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.59168e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.088,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:5c465f2702",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631748-x9Li6GSv2m2TnMWrpQWN",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4950,
+   "completion_tokens": 356,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001369824,
+   "cost_is_estimate": false,
+   "latency_s": 4.685,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:2261438801",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631753-aZpmty9AI3d2kklD0pLU",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2672,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001745552,
+   "cost_is_estimate": false,
+   "latency_s": 1.799,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:10359dfe6e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631754-ujSCZyKCHMsKMAoG7JXc",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3893,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000142424,
+   "cost_is_estimate": false,
+   "latency_s": 2.967,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CON-p2b:C4:verify_adaptive:65f87197ed",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631757-9lzACbSeLYvQJ799hS37",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4065,
+   "completion_tokens": 286,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000106056,
+   "cost_is_estimate": false,
+   "latency_s": 3.499,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 14,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 9,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 5,
+   "get_test_metadata": 1
+  },
+  "prompt_tokens": 49094,
+  "completion_tokens": 2841,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00220612,
+  "cost_usd_condition_only": 0.00166414,
+  "any_cost_estimated": false,
+  "latency_s": 35.439,
+  "n_claims": 3,
+  "decision_counts": {
+   "WEAKEN": 2,
+   "ACCEPT": 1
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 3,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

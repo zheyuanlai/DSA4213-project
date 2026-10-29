@@ -1,0 +1,963 @@
+{
+ "run_id": "primary_v1:C4:NEG-p2b",
+ "case_id": "NEG-p2b",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:50:32Z",
+ "finished_at": "2026-10-10T11:50:57Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "8b60c440d374e293a7976947dbd1ab9c7802f14811485210ab00d1cf6b8a5070"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Skua achieved a higher held-out success rate than Plover-PG (44.63% vs 40.50%), a statistically significant improvement (paired t-test, p=0.0029, 95% CI [1.82, 6.44] percentage points).",
+    "evidence_ids": [
+     "T1.r3.suc",
+     "T1.r1.suc",
+     "S2"
+    ],
+    "scope": "200 held-out Mirefield levels, 10 seeds, primary endpoint success rate",
+    "caveats": "Only this dataset and setting; no general claim beyond Mirefield."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Skua's normalized return (62.95) was not significantly different from Plover-PG's (62.04) (paired t-test, p=0.27, 95% CI [-0.84, 2.66]).",
+    "evidence_ids": [
+     "T1.r3.ret",
+     "T1.r1.ret",
+     "S1"
+    ],
+    "scope": "200 held-out Mirefield levels, 10 seeds, secondary endpoint normalized return",
+    "caveats": "Non-significance does not imply equivalence; CI includes both negative and positive differences."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The Tally bonus reference agent (success 42.10%, return 62.71) performed between Plover-PG and Skua on both metrics, but no statistical tests were reported for comparisons involving it.",
+    "evidence_ids": [
+     "T1.r2.suc",
+     "T1.r2.ret"
+    ],
+    "scope": "200 held-out Mirefield levels, 10 seeds",
+    "caveats": "No inferential statistics; descriptive only."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points). However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence. The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points).",
+     "evidence_ids": [
+      "T1.r3.suc",
+      "T1.r1.suc",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence.",
+     "evidence_ids": [
+      "T1.r3.ret",
+      "T1.r1.ret",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+     "evidence_ids": [
+      "T1.r2.suc",
+      "T1.r2.ret"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points). However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence. The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points).",
+     "evidence_ids": [
+      "T1.r3.suc",
+      "T1.r1.suc",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence.",
+     "evidence_ids": [
+      "T1.r3.ret",
+      "T1.r1.ret",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+     "evidence_ids": [
+      "T1.r2.suc",
+      "T1.r2.ret"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points).",
+   "actions": [
+    {
+     "call_id": "call_97f4d9ded229473dba6d2548",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "suc"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_0e82aa6500994e5193f19a5f",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_97f4d9ded229473dba6d2548",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Held-out Mirefield results, mean ± SD over 10 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.suc",
+        "row": "Plover-PG",
+        "column": "Success rate (%, primary)",
+        "text": "40.50 ± 4.78",
+        "value": 40.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.suc",
+        "row": "Plover-PG + Tally bonus",
+        "column": "Success rate (%, primary)",
+        "text": "42.10 ± 4.40",
+        "value": 42.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.suc",
+        "row": "Skua (ours)",
+        "column": "Success rate (%, primary)",
+        "text": "44.63 ± 3.85",
+        "value": 44.63,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.suc",
+      "T1.r2.suc",
+      "T1.r3.suc"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_0e82aa6500994e5193f19a5f",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Skua vs Plover-PG: success rate",
+      "tests": [
+       {
+        "test_id": "S2",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp2",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 10,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 4.05,
+        "df": 9.0,
+        "p_value": 0.0029,
+        "p_value_text": "p = 0.0029",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 1.82,
+        "ci_high": 6.44,
+        "effect_description": "mean paired difference in success rate (Skua − Plover-PG), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": "Pre-registered primary endpoint.",
+        "summary": "paired t-test; two-sided; paired; n=10 random seeds; t=4.05 (df=9); p = 0.0029; 95% CI [1.82, 6.44] for mean paired difference in success rate (Skua − Plover-PG), percentage points; alpha=0.05; note: Pre-registered primary endpoint."
+       }
+      ]
+     },
+     "returned_ids": [
+      "S2"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points).",
+    "revised_text": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points).",
+    "evidence_ids": [
+     "T1.r3.suc",
+     "T1.r1.suc",
+     "S2"
+    ],
+    "rationale": "Success rates match (Skua 44.63%, Plover-PG 40.50%). Paired t-test reported for exactly this comparison: p=0.0029, 95% CI [1.82, 6.44] pp, significant at α=0.05. Claim is accurate and correctly scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence.",
+   "actions": [
+    {
+     "call_id": "call_1d424d77a8f34306b5ff3dc3",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "ret"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_c871fc015a1142b5bb4109be",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_1d424d77a8f34306b5ff3dc3",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Held-out Mirefield results, mean ± SD over 10 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.ret",
+        "row": "Plover-PG",
+        "column": "Normalized return (secondary)",
+        "text": "62.04 ± 4.29",
+        "value": 62.04,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.ret",
+        "row": "Plover-PG + Tally bonus",
+        "column": "Normalized return (secondary)",
+        "text": "62.71 ± 3.62",
+        "value": 62.71,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.ret",
+        "row": "Skua (ours)",
+        "column": "Normalized return (secondary)",
+        "text": "62.95 ± 5.04",
+        "value": 62.95,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.ret",
+      "T1.r2.ret",
+      "T1.r3.ret"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_c871fc015a1142b5bb4109be",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Skua vs Plover-PG: normalized return",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp1",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 10,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 1.18,
+        "df": 9.0,
+        "p_value": 0.269,
+        "p_value_text": "p = 0.27",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": -0.84,
+        "ci_high": 2.66,
+        "effect_description": "mean paired difference in normalized return (Skua − Plover-PG)",
+        "multiple_comparison_adjustment": null,
+        "notes": "Pre-registered secondary endpoint.",
+        "summary": "paired t-test; two-sided; paired; n=10 random seeds; t=1.18 (df=9); p = 0.27; 95% CI [-0.84, 2.66] for mean paired difference in normalized return (Skua − Plover-PG); alpha=0.05; note: Pre-registered secondary endpoint."
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence.",
+    "revised_text": "However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence.",
+    "evidence_ids": [
+     "T1.r3.ret",
+     "T1.r1.ret",
+     "S1"
+    ],
+    "rationale": "Test S1 reports paired t-test, two-sided, n=10, p=0.27, 95% CI [-0.84, 2.66] for normalized return (Skua−Plover-PG). Values match table (62.95 vs 62.04). Non-significance correctly noted as not establishing equivalence.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+   "actions": [
+    {
+     "call_id": "call_65631dc6d4484d1380d746cb",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r2"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_fe4eb81b12b443a588399133",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_08b0d3a87c7544d0ba460433",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_8ffcb76c0c5340bc8042b250",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_65631dc6d4484d1380d746cb",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Held-out Mirefield results, mean ± SD over 10 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r2.ret",
+        "row": "Plover-PG + Tally bonus",
+        "column": "Normalized return (secondary)",
+        "text": "62.71 ± 3.62",
+        "value": 62.71,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.suc",
+        "row": "Plover-PG + Tally bonus",
+        "column": "Success rate (%, primary)",
+        "text": "42.10 ± 4.40",
+        "value": 42.1,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r2.ret",
+      "T1.r2.suc"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_fe4eb81b12b443a588399133",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Held-out Mirefield results, mean ± SD over 10 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.ret",
+        "row": "Plover-PG",
+        "column": "Normalized return (secondary)",
+        "text": "62.04 ± 4.29",
+        "value": 62.04,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.suc",
+        "row": "Plover-PG",
+        "column": "Success rate (%, primary)",
+        "text": "40.50 ± 4.78",
+        "value": 40.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.ret",
+        "row": "Plover-PG + Tally bonus",
+        "column": "Normalized return (secondary)",
+        "text": "62.71 ± 3.62",
+        "value": 62.71,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.suc",
+        "row": "Plover-PG + Tally bonus",
+        "column": "Success rate (%, primary)",
+        "text": "42.10 ± 4.40",
+        "value": 42.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.ret",
+        "row": "Skua (ours)",
+        "column": "Normalized return (secondary)",
+        "text": "62.95 ± 5.04",
+        "value": 62.95,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.suc",
+        "row": "Skua (ours)",
+        "column": "Success rate (%, primary)",
+        "text": "44.63 ± 3.85",
+        "value": 44.63,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.ret",
+      "T1.r1.suc",
+      "T1.r2.ret",
+      "T1.r2.suc",
+      "T1.r3.ret",
+      "T1.r3.suc"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_08b0d3a87c7544d0ba460433",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Skua vs Plover-PG: normalized return",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp1",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 10,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 1.18,
+        "df": 9.0,
+        "p_value": 0.269,
+        "p_value_text": "p = 0.27",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": -0.84,
+        "ci_high": 2.66,
+        "effect_description": "mean paired difference in normalized return (Skua − Plover-PG)",
+        "multiple_comparison_adjustment": null,
+        "notes": "Pre-registered secondary endpoint.",
+        "summary": "paired t-test; two-sided; paired; n=10 random seeds; t=1.18 (df=9); p = 0.27; 95% CI [-0.84, 2.66] for mean paired difference in normalized return (Skua − Plover-PG); alpha=0.05; note: Pre-registered secondary endpoint."
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_8ffcb76c0c5340bc8042b250",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Skua vs Plover-PG: success rate",
+      "tests": [
+       {
+        "test_id": "S2",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp2",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 10,
+        "n_unit": "random seeds",
+        "statistic_name": "t",
+        "statistic": 4.05,
+        "df": 9.0,
+        "p_value": 0.0029,
+        "p_value_text": "p = 0.0029",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 1.82,
+        "ci_high": 6.44,
+        "effect_description": "mean paired difference in success rate (Skua − Plover-PG), percentage points",
+        "multiple_comparison_adjustment": null,
+        "notes": "Pre-registered primary endpoint.",
+        "summary": "paired t-test; two-sided; paired; n=10 random seeds; t=4.05 (df=9); p = 0.0029; 95% CI [1.82, 6.44] for mean paired difference in success rate (Skua − Plover-PG), percentage points; alpha=0.05; note: Pre-registered primary endpoint."
+       }
+      ]
+     },
+     "returned_ids": [
+      "S2"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+    "revised_text": "The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+    "evidence_ids": [
+     "T1.r2.suc",
+     "T1.r2.ret",
+     "T1.r1.suc",
+     "T1.r1.ret",
+     "T1.r3.suc",
+     "T1.r3.ret",
+     "S1",
+     "S2"
+    ],
+    "rationale": "Tally bonus success 42.10% lies between Plover-PG 40.50% and Skua 44.63%; return 62.71 lies between 62.04 and 62.95. Only cmp1 and cmp2 (Skua vs Plover-PG) have reported tests; no tests involve the Tally bonus.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points). However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence. The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the 200 held-out Mirefield levels, Skua achieved a significantly higher success rate than Plover-PG (44.63% vs 40.50%; paired t-test, p = 0.0029, 95% CI [1.82, 6.44] percentage points).",
+   "evidence_ids": [
+    "T1.r3.suc",
+    "T1.r1.suc",
+    "S2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "However, the difference in normalized return was not statistically significant (62.95 vs 62.04; paired t-test, p = 0.27, 95% CI [-0.84, 2.66]), and this non-significance does not establish equivalence.",
+   "evidence_ids": [
+    "T1.r3.ret",
+    "T1.r1.ret",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "The reference agent with the Tally bonus scored between the two on both metrics (success 42.10%, return 62.71), but no statistical tests were reported for comparisons involving it.",
+   "evidence_ids": [
+    "T1.r2.suc",
+    "T1.r2.ret"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NEG-p2b:shared_outline:outline:243a421a2f",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632590-ZvDuS0s4lG4utum7QUYi",
+   "finish_reason": "stop",
+   "prompt_tokens": 1142,
+   "completion_tokens": 381,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026656,
+   "cost_is_estimate": false,
+   "latency_s": 1.738,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:shared_outline:writer_from_outline:7bac9cac8d",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632592-n0b6JKhrTGgOzhWxuguF",
+   "finish_reason": "stop",
+   "prompt_tokens": 1569,
+   "completion_tokens": 250,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00028966,
+   "cost_is_estimate": false,
+   "latency_s": 1.943,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:435a4a89c2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632622-oquXA5DAOusbsOFPBOhx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2660,
+   "completion_tokens": 118,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001779872,
+   "cost_is_estimate": false,
+   "latency_s": 2.773,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:b64d61baaf",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632625-c8uRDw88z1HvqQbD07tH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3114,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.3872e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.312,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:85a81e6d35",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632626-sw6xvGZ9mZVjSctgPQPX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3520,
+   "completion_tokens": 182,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.60736e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.158,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:25f699a6c4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632629-jIbZZzimllVk4SUCIfJs",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2651,
+   "completion_tokens": 117,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001769312,
+   "cost_is_estimate": false,
+   "latency_s": 2.064,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:5070daf447",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632631-YxfPAxDReg4lqpExwZEB",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3104,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.2992e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.58,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:b6f1418546",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632633-hr4agHOsKJ8SH1Z4X0Ss",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3501,
+   "completion_tokens": 183,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.46656e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.933,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:d726ff2e8f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632636-o4xyziSx4JvlfYtYZ1s3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2630,
+   "completion_tokens": 98,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001700672,
+   "cost_is_estimate": false,
+   "latency_s": 1.781,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:b4961da457",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632638-OVYNuqGXVCLSJJhjLwog",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2995,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.7856e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.045,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:180b158f11",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632640-qJFFX3ftYA9C3ryOMlEo",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3555,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001051248,
+   "cost_is_estimate": false,
+   "latency_s": 2.105,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:01555b4555",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632642-b9IJiD8hnjyFbaBQthnr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4052,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.09824e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.655,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p2b:C4:verify_adaptive:d3da2f4d1e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632644-mzCKqYJyutucelMGatCm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4458,
+   "completion_tokens": 221,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00012348,
+   "cost_is_estimate": false,
+   "latency_s": 3.064,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 13,
+  "n_model_calls_condition_only": 11,
+  "n_tool_calls": 8,
+  "tool_counts": {
+   "lookup_table": 4,
+   "get_test_metadata": 4
+  },
+  "prompt_tokens": 38951,
+  "completion_tokens": 1923,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00179625,
+  "cost_usd_condition_only": 0.00124003,
+  "any_cost_estimated": false,
+  "latency_s": 28.151,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 4,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

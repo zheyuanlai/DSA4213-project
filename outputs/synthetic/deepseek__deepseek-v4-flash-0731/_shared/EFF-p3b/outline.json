@@ -1,0 +1,116 @@
+{
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "created_at": "2026-10-10T11:42:55Z",
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Eddyline achieves lower MAE than Brenna-ODE on the Kestrel-Grid test split (0.212 vs 0.219), while using fewer NFE per window (17.8 vs 64).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe"
+    ],
+    "scope": "Kestrel-Grid test split, 8,760 hourly forecast windows from 320 substations, MAE and NFE metrics",
+    "caveats": "No statistical tests reported; difference in means only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Eddyline has higher latency than Brenna-ODE (268 ms vs 241 ms per batch of 256) on the Halden H5 accelerator under the measured conditions.",
+    "evidence_ids": [
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "scope": "Halden H5 accelerator, fp32, batch size 256, median wall-clock time per batch over 50 timed batches after 10 warm-up batches",
+    "caveats": "No statistical tests reported; single hardware configuration."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Eddyline achieves lower MAE than Sluice-TCN (0.212 vs 0.231) but has higher latency (268 ms vs 38 ms per batch of 256).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r3.mae",
+     "T1.r1.lat",
+     "T1.r3.lat"
+    ],
+    "scope": "Kestrel-Grid test split, MAE and latency metrics on Halden H5 accelerator",
+    "caveats": "No statistical tests reported; Sluice-TCN is a non-ODE reference model."
+   }
+  ]
+ },
+ "status": "ok",
+ "draft": {
+  "sentences": [
+   {
+    "claim_id": "s1",
+    "text": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s2",
+    "text": "However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows).",
+    "evidence_ids": [
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s3",
+    "text": "Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r3.mae",
+     "T1.r1.lat",
+     "T1.r3.lat"
+    ],
+    "scope": null
+   }
+  ]
+ },
+ "sha256": "daf9123eac673c320d10141a58ff6a8790d958a6a8eddae9721f7bc3af347118",
+ "calls": [
+  {
+   "call_id": "EFF-p3b:shared_outline:outline:f32c0ef357",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632165-etRhL1BuCGZdHzNdVdQ0",
+   "finish_reason": "stop",
+   "prompt_tokens": 1043,
+   "completion_tokens": 413,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026166,
+   "cost_is_estimate": false,
+   "latency_s": 2.977,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:shared_outline:writer_from_outline:fc5459634e",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632168-T509DFAQCYOnWnFNQyQJ",
+   "finish_reason": "stop",
+   "prompt_tokens": 1504,
+   "completion_tokens": 245,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00027916,
+   "cost_is_estimate": false,
+   "latency_s": 1.405,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ]
+}

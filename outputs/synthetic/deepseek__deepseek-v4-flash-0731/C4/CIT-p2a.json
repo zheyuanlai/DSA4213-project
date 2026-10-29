@@ -1,0 +1,1598 @@
+{
+ "run_id": "primary_v1:C4:CIT-p2a",
+ "case_id": "CIT-p2a",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:30:03Z",
+ "finished_at": "2026-10-10T11:30:50Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "21df2256159318ebcb9bf7d068719040fd9eb66df4711e05267a73a7c02cec98"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Corbel's zero-shot nDCG@10 average (40.7) is 4.7 points higher than Dovetail-DR (36.0) across the four evaluated collections, which is slightly smaller than the 5.2-point average gain previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite.",
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r2.avg",
+     "P1"
+    ],
+    "scope": "Average nDCG@10 across Brackwater-News, Felloe-Fin, Moorstone-Bio, Lintel-Law; single training run per system; no statistical tests reported.",
+    "caveats": "The prior gain was measured on a different set of collections (six vs. four) and included forum and scientific text not in the current evaluation; no statistical significance tests are reported for either comparison."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Corbel outperforms Dovetail-DR on each of the four individual collections, with gains of 4.7 (news), 3.8 (fin), 5.9 (bio), and 4.4 (law) nDCG@10 points.",
+    "evidence_ids": [
+     "T1.r3.news",
+     "T1.r2.news",
+     "T1.r3.fin",
+     "T1.r2.fin",
+     "T1.r3.bio",
+     "T1.r2.bio",
+     "T1.r3.law",
+     "T1.r2.law"
+    ],
+    "scope": "Per-collection nDCG@10 on Brackwater-News, Felloe-Fin, Moorstone-Bio, Lintel-Law; single training run per system.",
+    "caveats": "No statistical tests reported; results are from one training run per system."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Corbel also outperforms the lexical reference Lexi-Sparse on average (40.7 vs. 35.3) and on all four collections, with gains ranging from 2.3 (law) to 9.3 (bio) points.",
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r1.avg",
+     "T1.r3.news",
+     "T1.r1.news",
+     "T1.r3.fin",
+     "T1.r1.fin",
+     "T1.r3.bio",
+     "T1.r1.bio",
+     "T1.r3.law",
+     "T1.r1.law"
+    ],
+    "scope": "Average and per-collection nDCG@10 on the four held-out collections; single training run per system.",
+    "caveats": "No statistical tests reported; single training run per system."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite. Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law. Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio. No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite.",
+     "evidence_ids": [
+      "T1.r3.avg",
+      "T1.r2.avg",
+      "P1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law.",
+     "evidence_ids": [
+      "T1.r3.news",
+      "T1.r2.news",
+      "T1.r3.fin",
+      "T1.r2.fin",
+      "T1.r3.bio",
+      "T1.r2.bio",
+      "T1.r3.law",
+      "T1.r2.law"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio.",
+     "evidence_ids": [
+      "T1.r3.avg",
+      "T1.r1.avg",
+      "T1.r3.news",
+      "T1.r1.news",
+      "T1.r3.fin",
+      "T1.r1.fin",
+      "T1.r3.bio",
+      "T1.r1.bio",
+      "T1.r3.law",
+      "T1.r1.law"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite. Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law. Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio. No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite.",
+     "evidence_ids": [
+      "T1.r3.avg",
+      "T1.r2.avg",
+      "P1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law.",
+     "evidence_ids": [
+      "T1.r3.news",
+      "T1.r2.news",
+      "T1.r3.fin",
+      "T1.r2.fin",
+      "T1.r3.bio",
+      "T1.r2.bio",
+      "T1.r3.law",
+      "T1.r2.law"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio.",
+     "evidence_ids": [
+      "T1.r3.avg",
+      "T1.r1.avg",
+      "T1.r3.news",
+      "T1.r1.news",
+      "T1.r3.fin",
+      "T1.r1.fin",
+      "T1.r3.bio",
+      "T1.r1.bio",
+      "T1.r3.law",
+      "T1.r1.law"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite.",
+   "actions": [
+    {
+     "call_id": "call_eb981313dc494569bb974e76",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r3",
+      "column": "avg"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_0c188db5bf6743b4a4b866e5",
+     "tool": "lookup_table",
+     "args": {
+      "column": "avg",
+      "row_id": "r2",
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_fad9b7fd3a7246cfba8f1419",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_abd0043f64494a438cd3899e",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.7,
+      "evidence_id": "T1.r3.avg",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.avg"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_eb981313dc494569bb974e76",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Zero-shot nDCG@10 (×100) on four held-out collections.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r3.avg",
+        "row": "Corbel (ours)",
+        "column": "Average",
+        "text": "40.7",
+        "value": 40.7,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_0c188db5bf6743b4a4b866e5",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Zero-shot nDCG@10 (×100) on four held-out collections.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r2.avg",
+        "row": "Dovetail-DR",
+        "column": "Average",
+        "text": "36.0",
+        "value": 36.0,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r2.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_fad9b7fd3a7246cfba8f1419",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Hallberg & Osei (2023)",
+        "source_title": "Cleaner Negatives: Denoised Hard-Negative Mining for Zero-Shot Dense Retrieval",
+        "text": "Averaged over the six zero-shot collections in our suite, which span news, finance, biomedical, legal, forum and scientific text, denoised hard-negative mining raised nDCG@10 by 5.2 points over the same retriever trained with standard in-batch negatives, with the largest gains on queries longer than ten tokens."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    },
+    {
+     "call_id": "call_abd0043f64494a438cd3899e",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 4.7,
+      "actual": 4.7,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.avg",
+       "row": "Corbel (ours)",
+       "column": "Average",
+       "text": "40.7",
+       "value": 40.7,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.avg",
+       "row": "Dovetail-DR",
+       "column": "Average",
+       "text": "36.0",
+       "value": 36.0,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.avg"
+     },
+     "returned_ids": [
+      "T1.r3.avg",
+      "T1.r2.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite.",
+    "revised_text": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite.",
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r2.avg",
+     "P1"
+    ],
+    "rationale": "Corbel avg 40.7, Dovetail-DR avg 36.0, difference 4.7 confirmed. P1 states denoised hard-negative mining raised nDCG@10 by 5.2 points over standard in-batch negatives on a six-collection suite. All numbers and scope match.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law.",
+   "actions": [
+    {
+     "call_id": "call_63830db2df7a47fa84919890",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_efa1eb8aab0b409baaaeff31",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.7,
+      "evidence_id": "T1.r3.news",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.news"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_70efb47d3fc84da3941945fc",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 3.8,
+      "evidence_id": "T1.r3.fin",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.fin"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_fa643b5701d14178927c1c29",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 5.9,
+      "evidence_id": "T1.r3.bio",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r2.bio"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_63830db2df7a47fa84919890",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Zero-shot nDCG@10 (×100) on four held-out collections.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.news",
+        "row": "Lexi-Sparse",
+        "column": "Brackwater-News",
+        "text": "40.2",
+        "value": 40.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.fin",
+        "row": "Lexi-Sparse",
+        "column": "Felloe-Fin",
+        "text": "27.9",
+        "value": 27.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.bio",
+        "row": "Lexi-Sparse",
+        "column": "Moorstone-Bio",
+        "text": "41.3",
+        "value": 41.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.law",
+        "row": "Lexi-Sparse",
+        "column": "Lintel-Law",
+        "text": "31.8",
+        "value": 31.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.avg",
+        "row": "Lexi-Sparse",
+        "column": "Average",
+        "text": "35.3",
+        "value": 35.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.news",
+        "row": "Dovetail-DR",
+        "column": "Brackwater-News",
+        "text": "38.4",
+        "value": 38.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.fin",
+        "row": "Dovetail-DR",
+        "column": "Felloe-Fin",
+        "text": "31.2",
+        "value": 31.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.bio",
+        "row": "Dovetail-DR",
+        "column": "Moorstone-Bio",
+        "text": "44.7",
+        "value": 44.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.law",
+        "row": "Dovetail-DR",
+        "column": "Lintel-Law",
+        "text": "29.7",
+        "value": 29.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.avg",
+        "row": "Dovetail-DR",
+        "column": "Average",
+        "text": "36.0",
+        "value": 36.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.news",
+        "row": "Corbel (ours)",
+        "column": "Brackwater-News",
+        "text": "43.1",
+        "value": 43.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.fin",
+        "row": "Corbel (ours)",
+        "column": "Felloe-Fin",
+        "text": "35.0",
+        "value": 35.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.bio",
+        "row": "Corbel (ours)",
+        "column": "Moorstone-Bio",
+        "text": "50.6",
+        "value": 50.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.law",
+        "row": "Corbel (ours)",
+        "column": "Lintel-Law",
+        "text": "34.1",
+        "value": 34.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.avg",
+        "row": "Corbel (ours)",
+        "column": "Average",
+        "text": "40.7",
+        "value": 40.7,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.news",
+      "T1.r1.fin",
+      "T1.r1.bio",
+      "T1.r1.law",
+      "T1.r1.avg",
+      "T1.r2.news",
+      "T1.r2.fin",
+      "T1.r2.bio",
+      "T1.r2.law",
+      "T1.r2.avg",
+      "T1.r3.news",
+      "T1.r3.fin",
+      "T1.r3.bio",
+      "T1.r3.law",
+      "T1.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_efa1eb8aab0b409baaaeff31",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 4.7,
+      "actual": 4.7,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.news",
+       "row": "Corbel (ours)",
+       "column": "Brackwater-News",
+       "text": "43.1",
+       "value": 43.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.news",
+       "row": "Dovetail-DR",
+       "column": "Brackwater-News",
+       "text": "38.4",
+       "value": 38.4,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.news"
+     },
+     "returned_ids": [
+      "T1.r3.news",
+      "T1.r2.news"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_70efb47d3fc84da3941945fc",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 3.8,
+      "actual": 3.8,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.fin",
+       "row": "Corbel (ours)",
+       "column": "Felloe-Fin",
+       "text": "35.0",
+       "value": 35.0,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.fin",
+       "row": "Dovetail-DR",
+       "column": "Felloe-Fin",
+       "text": "31.2",
+       "value": 31.2,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.fin"
+     },
+     "returned_ids": [
+      "T1.r3.fin",
+      "T1.r2.fin"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_fa643b5701d14178927c1c29",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 5.9,
+      "actual": 5.9,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.bio",
+       "row": "Corbel (ours)",
+       "column": "Moorstone-Bio",
+       "text": "50.6",
+       "value": 50.6,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r2.bio",
+       "row": "Dovetail-DR",
+       "column": "Moorstone-Bio",
+       "text": "44.7",
+       "value": 44.7,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.bio"
+     },
+     "returned_ids": [
+      "T1.r3.bio",
+      "T1.r2.bio"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law.",
+    "revised_text": "Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law.",
+    "evidence_ids": [
+     "T1.r3.news",
+     "T1.r2.news",
+     "T1.r3.fin",
+     "T1.r2.fin",
+     "T1.r3.bio",
+     "T1.r2.bio",
+     "T1.r3.law",
+     "T1.r2.law"
+    ],
+    "rationale": "Corbel exceeds Dovetail-DR on all four collections (43.1>38.4, 35.0>31.2, 50.6>44.7, 34.1>29.7), and each claimed gain (4.7, 3.8, 5.9, 4.4) matches the computed differences exactly.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio.",
+   "actions": [
+    {
+     "call_id": "call_42a4fae7cf174a4bbf52ec4e",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_c0528ad859d9409fa3928e6b",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 5.4,
+      "evidence_id": "T1.r3.avg",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.avg"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_c4aa95a0dc3b4354afbfc4fb",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 2.3,
+      "evidence_id": "T1.r3.law",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.law"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_83af6347237047f59f71f49f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 9.3,
+      "evidence_id": "T1.r3.bio",
+      "mode": "difference",
+      "reference_evidence_id": "T1.r1.bio"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_42a4fae7cf174a4bbf52ec4e",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Zero-shot nDCG@10 (×100) on four held-out collections.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.news",
+        "row": "Lexi-Sparse",
+        "column": "Brackwater-News",
+        "text": "40.2",
+        "value": 40.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.fin",
+        "row": "Lexi-Sparse",
+        "column": "Felloe-Fin",
+        "text": "27.9",
+        "value": 27.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.bio",
+        "row": "Lexi-Sparse",
+        "column": "Moorstone-Bio",
+        "text": "41.3",
+        "value": 41.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.law",
+        "row": "Lexi-Sparse",
+        "column": "Lintel-Law",
+        "text": "31.8",
+        "value": 31.8,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.avg",
+        "row": "Lexi-Sparse",
+        "column": "Average",
+        "text": "35.3",
+        "value": 35.3,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.news",
+        "row": "Dovetail-DR",
+        "column": "Brackwater-News",
+        "text": "38.4",
+        "value": 38.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.fin",
+        "row": "Dovetail-DR",
+        "column": "Felloe-Fin",
+        "text": "31.2",
+        "value": 31.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.bio",
+        "row": "Dovetail-DR",
+        "column": "Moorstone-Bio",
+        "text": "44.7",
+        "value": 44.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.law",
+        "row": "Dovetail-DR",
+        "column": "Lintel-Law",
+        "text": "29.7",
+        "value": 29.7,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.avg",
+        "row": "Dovetail-DR",
+        "column": "Average",
+        "text": "36.0",
+        "value": 36.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.news",
+        "row": "Corbel (ours)",
+        "column": "Brackwater-News",
+        "text": "43.1",
+        "value": 43.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.fin",
+        "row": "Corbel (ours)",
+        "column": "Felloe-Fin",
+        "text": "35.0",
+        "value": 35.0,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.bio",
+        "row": "Corbel (ours)",
+        "column": "Moorstone-Bio",
+        "text": "50.6",
+        "value": 50.6,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.law",
+        "row": "Corbel (ours)",
+        "column": "Lintel-Law",
+        "text": "34.1",
+        "value": 34.1,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.avg",
+        "row": "Corbel (ours)",
+        "column": "Average",
+        "text": "40.7",
+        "value": 40.7,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.news",
+      "T1.r1.fin",
+      "T1.r1.bio",
+      "T1.r1.law",
+      "T1.r1.avg",
+      "T1.r2.news",
+      "T1.r2.fin",
+      "T1.r2.bio",
+      "T1.r2.law",
+      "T1.r2.avg",
+      "T1.r3.news",
+      "T1.r3.fin",
+      "T1.r3.bio",
+      "T1.r3.law",
+      "T1.r3.avg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_c0528ad859d9409fa3928e6b",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 5.4,
+      "actual": 5.4,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.avg",
+       "row": "Corbel (ours)",
+       "column": "Average",
+       "text": "40.7",
+       "value": 40.7,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.avg",
+       "row": "Lexi-Sparse",
+       "column": "Average",
+       "text": "35.3",
+       "value": 35.3,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.avg"
+     },
+     "returned_ids": [
+      "T1.r3.avg",
+      "T1.r1.avg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_c4aa95a0dc3b4354afbfc4fb",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 2.3,
+      "actual": 2.3,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.law",
+       "row": "Corbel (ours)",
+       "column": "Lintel-Law",
+       "text": "34.1",
+       "value": 34.1,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.law",
+       "row": "Lexi-Sparse",
+       "column": "Lintel-Law",
+       "text": "31.8",
+       "value": 31.8,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.law"
+     },
+     "returned_ids": [
+      "T1.r3.law",
+      "T1.r1.law"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_83af6347237047f59f71f49f",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 9.3,
+      "actual": 9.3,
+      "abs_error": 0.0,
+      "tolerance": 0.1,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.bio",
+       "row": "Corbel (ours)",
+       "column": "Moorstone-Bio",
+       "text": "50.6",
+       "value": 50.6,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.bio",
+       "row": "Lexi-Sparse",
+       "column": "Moorstone-Bio",
+       "text": "41.3",
+       "value": 41.3,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r3.bio"
+     },
+     "returned_ids": [
+      "T1.r3.bio",
+      "T1.r1.bio"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio.",
+    "revised_text": "Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio.",
+    "evidence_ids": [
+     "T1.r3.avg",
+     "T1.r1.avg",
+     "T1.r3.law",
+     "T1.r1.law",
+     "T1.r3.bio",
+     "T1.r1.bio",
+     "T1.r3.news",
+     "T1.r1.news",
+     "T1.r3.fin",
+     "T1.r1.fin"
+    ],
+    "rationale": "Average difference 40.7-35.3=5.4 matches; per-collection gains: law 34.1-31.8=2.3, bio 50.6-41.3=9.3 match. Corbel exceeds Lexi-Sparse on all four collections (news 43.1>40.2, fin 35.0>27.9, bio 50.6>41.3, law 34.1>31.8).",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+   "actions": [
+    {
+     "call_id": "call_b33219a25eb642a3b58aae3a",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_2c8da596221c4da3bd3bcf7d",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_b33219a25eb642a3b58aae3a",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Corbel vs Dovetail-DR: nDCG@10 per collection and average"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_2c8da596221c4da3bd3bcf7d",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Corbel vs Lexi-Sparse: nDCG@10 per collection and average"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+    "revised_text": "No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "No statistical test is reported for either comparison (cmp1, cmp2), and the setup states a single training run per system. The claim's cautionary framing is supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite. Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law. Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio. No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Corbel's average zero-shot nDCG@10 of 40.7 across the four evaluated collections is 4.7 points higher than Dovetail-DR's 36.0, a gain slightly smaller than the 5.2-point average improvement previously reported for denoised hard-negative mining over standard in-batch negatives on a different six-collection suite.",
+   "evidence_ids": [
+    "T1.r3.avg",
+    "T1.r2.avg",
+    "P1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Corbel outperforms Dovetail-DR on every individual collection, with gains of 4.7 points on Brackwater-News, 3.8 on Felloe-Fin, 5.9 on Moorstone-Bio, and 4.4 on Lintel-Law.",
+   "evidence_ids": [
+    "T1.r3.news",
+    "T1.r2.news",
+    "T1.r3.fin",
+    "T1.r2.fin",
+    "T1.r3.bio",
+    "T1.r2.bio",
+    "T1.r3.law",
+    "T1.r2.law"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Corbel also exceeds the lexical reference Lexi-Sparse by 5.4 points on average (40.7 vs. 35.3) and on all four collections, with per-collection gains ranging from 2.3 points on Lintel-Law to 9.3 points on Moorstone-Bio.",
+   "evidence_ids": [
+    "T1.r3.avg",
+    "T1.r1.avg",
+    "T1.r3.news",
+    "T1.r1.news",
+    "T1.r3.fin",
+    "T1.r1.fin",
+    "T1.r3.bio",
+    "T1.r1.bio",
+    "T1.r3.law",
+    "T1.r1.law"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "No statistical significance tests were reported for any of these comparisons, and each dense retriever was trained only once, so the observed differences should be interpreted with caution.",
+   "evidence_ids": [],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "CIT-p2a:shared_outline:outline:67507b92f9",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631342-SN4JhdEyQ7k6FD9yBdZz",
+   "finish_reason": "stop",
+   "prompt_tokens": 1261,
+   "completion_tokens": 601,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00034482,
+   "cost_is_estimate": false,
+   "latency_s": 2.524,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:shared_outline:writer_from_outline:8eb26b6fd9",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631344-DnzSiQdMByb5cFPJdmgQ",
+   "finish_reason": "stop",
+   "prompt_tokens": 1921,
+   "completion_tokens": 446,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00039382,
+   "cost_is_estimate": false,
+   "latency_s": 5.635,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:1b2c780b9c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631393-prEhn0u9tHLUW3Ctneyt",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2879,
+   "completion_tokens": 184,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002146832,
+   "cost_is_estimate": false,
+   "latency_s": 2.525,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:f93666d8b8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631396-HfHk7lsd6DpqopPkHEZ6",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3288,
+   "completion_tokens": 117,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.03088e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.838,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:2ef09c1120",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631398-N57vBDnbWQKD2qwMnLsH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3584,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.68576e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.513,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:21932a6fb5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631399-sLkkZwteWk7qL9PCApPv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3795,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.71152e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.048,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:5117be74a7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631401-uGWQNxNYfOQNLW15Vmz2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4122,
+   "completion_tokens": 180,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001048992,
+   "cost_is_estimate": false,
+   "latency_s": 2.511,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:957cb7ae2a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631404-RhvkSEE4YsLQL3ZwFGWQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2908,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001810672,
+   "cost_is_estimate": false,
+   "latency_s": 1.475,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:f8e6931215",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631405-DREEL8Z0trnuc6E6UOdn",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4041,
+   "completion_tokens": 390,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002186448,
+   "cost_is_estimate": false,
+   "latency_s": 3.721,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:27a92ed825",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631409-DJPiS29HQ1LYQD2VU4F3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4796,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000123392,
+   "cost_is_estimate": false,
+   "latency_s": 1.783,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:1488a6ecf4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631411-mue8zeXKHlTxLovB0Xv9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5131,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.74384e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.51,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:7b56ac5492",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631413-ASFciC9XREa713YA9szI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5466,
+   "completion_tokens": 236,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000107088,
+   "cost_is_estimate": false,
+   "latency_s": 2.891,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:ad0729975a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631416-AxNR9MArGUlA0P2S0WD7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2930,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001830032,
+   "cost_is_estimate": false,
+   "latency_s": 3.406,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:aa68334296",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631419-zyBk6LEcmUJ5Xusi92ls",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4063,
+   "completion_tokens": 296,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001957648,
+   "cost_is_estimate": false,
+   "latency_s": 8.279,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:25684e4310",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631427-B86FpXH39vrqRvWW6EOu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4669,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000112216,
+   "cost_is_estimate": false,
+   "latency_s": 1.747,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:11ab935b56",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631429-qpfEA4fycGv7Ddlrlogv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5003,
+   "completion_tokens": 108,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.61744e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.631,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:f23231b296",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631431-r6YCZpmtOb7ohJbalppY",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5337,
+   "completion_tokens": 276,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001281072,
+   "cost_is_estimate": false,
+   "latency_s": 3.194,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:b378c88245",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631434-dafxUhfph63Ri8yCvDsM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2818,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001929472,
+   "cost_is_estimate": false,
+   "latency_s": 1.933,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:9d74ef8f18",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631436-W95RiIFKAFUj7VX5mBM6",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3096,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.04768e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.35,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p2a:C4:verify_adaptive:62fe6a6ebd",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631438-7mZ5LdYcaAVdt58yzZRu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3273,
+   "completion_tokens": 150,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.58896e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.535,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 20,
+  "n_model_calls_condition_only": 18,
+  "n_tool_calls": 14,
+  "tool_counts": {
+   "lookup_table": 4,
+   "retrieve_passage": 1,
+   "compare_numbers": 7,
+   "get_test_metadata": 2
+  },
+  "prompt_tokens": 74381,
+  "completion_tokens": 3750,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00298471,
+  "cost_usd_condition_only": 0.00224607,
+  "any_cost_estimated": false,
+  "latency_s": 54.049,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 9,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

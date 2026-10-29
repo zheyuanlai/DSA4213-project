@@ -1,0 +1,126 @@
+{
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "created_at": "2026-10-10T11:38:45Z",
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Sablewing is more efficient than Ordell-DDS (50 steps) on Halvern-Faces 256×256, using 0.94 TFLOPs per image versus 5.40 TFLOPs, and 8 NFE versus 50 NFE, but has a higher FID (7.8 vs 7.1).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r2.tflops",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.fid",
+     "T1.r2.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, exp1/cmp1",
+    "caveats": "No statistical tests reported; difference in FID is descriptive only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Sablewing is more efficient than Ordell-DDS-10, using 0.94 TFLOPs per image versus 1.08 TFLOPs, and 8 NFE versus 10 NFE, and also has a lower FID (7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r3.tflops",
+     "T1.r1.nfe",
+     "T1.r3.nfe",
+     "T1.r1.fid",
+     "T1.r3.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, exp1/cmp2",
+    "caveats": "No statistical tests reported; difference in FID is descriptive only."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Sablewing's sample quality is worse than the 50-step teacher (FID 7.8 vs 7.1) but better than the 10-step truncated teacher (FID 7.8 vs 15.6), indicating a quality cost relative to the full teacher but a quality gain over the truncated baseline.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid",
+     "T1.r3.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, exp1/cmp1 and exp1/cmp2",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   }
+  ]
+ },
+ "status": "ok",
+ "draft": {
+  "sentences": [
+   {
+    "claim_id": "s1",
+    "text": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r2.tflops",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.fid",
+     "T1.r2.fid"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s2",
+    "text": "Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r3.tflops",
+     "T1.r1.nfe",
+     "T1.r3.nfe",
+     "T1.r1.fid",
+     "T1.r3.fid"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s3",
+    "text": "Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid",
+     "T1.r3.fid"
+    ],
+    "scope": null
+   }
+  ]
+ },
+ "sha256": "f8eeec2cfea449ce15af3a9f1d32cbed817953b87ce0f568042076ee321662fd",
+ "calls": [
+  {
+   "call_id": "EFF-p2a:shared_outline:outline:7312ca31a0",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631915-5sIwszhcUGHNvlzT3z9B",
+   "finish_reason": "stop",
+   "prompt_tokens": 993,
+   "completion_tokens": 504,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00028014,
+   "cost_is_estimate": false,
+   "latency_s": 2.458,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:shared_outline:writer_from_outline:5c1fe4d11d",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631918-G3JaS9bLX0hx4TQHBCPO",
+   "finish_reason": "stop",
+   "prompt_tokens": 1550,
+   "completion_tokens": 358,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00031724,
+   "cost_is_estimate": false,
+   "latency_s": 2.155,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ]
+}

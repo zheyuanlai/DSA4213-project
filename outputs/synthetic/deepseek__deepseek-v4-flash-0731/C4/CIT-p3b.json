@@ -1,0 +1,1217 @@
+{
+ "run_id": "primary_v1:C4:CIT-p3b",
+ "case_id": "CIT-p3b",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:33:07Z",
+ "finished_at": "2026-10-10T11:33:47Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "243948fa47be91912164531e0c70aaf59d4cd0b0c1b5462105db4d2f41855e89"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Thimble's long-tail Recall@20 on Garnet-Retail (0.091) is higher than Cobble-GNN's (0.072), a relative improvement of 26.4%, and also higher than Cobble-GNN + debiased sampling (0.085).",
+    "evidence_ids": [
+     "T1.r1.tail",
+     "T1.r2.tail",
+     "T1.r3.tail"
+    ],
+    "scope": "Garnet-Retail test split, long-tail Recall@20, mean of 3 runs",
+    "caveats": "No statistical tests reported; single dataset; differences may not be significant."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Cobble-GNN + debiased sampling improves long-tail Recall@20 over Cobble-GNN (0.085 vs 0.072, a relative gain of 18.1%), consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling.",
+    "evidence_ids": [
+     "T1.r1.tail",
+     "T1.r2.tail",
+     "P1"
+    ],
+    "scope": "Garnet-Retail test split, long-tail Recall@20, mean of 3 runs",
+    "caveats": "No statistical test reported; single dataset; prior work's 21% gain was on different datasets."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Thimble's overall Recall@20 (0.219) is slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling (0.212), but the differences are small (≤2.3% relative) and no statistical test is reported.",
+    "evidence_ids": [
+     "T1.r1.overall",
+     "T1.r2.overall",
+     "T1.r3.overall"
+    ],
+    "scope": "Garnet-Retail test split, overall Recall@20, mean of 3 runs",
+    "caveats": "No statistical tests; single dataset; differences may not be meaningful."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively. The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets. Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of at most 2.3%. No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively.",
+     "evidence_ids": [
+      "T1.r1.tail",
+      "T1.r2.tail",
+      "T1.r3.tail"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets.",
+     "evidence_ids": [
+      "T1.r1.tail",
+      "T1.r2.tail",
+      "P1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of at most 2.3%.",
+     "evidence_ids": [
+      "T1.r1.overall",
+      "T1.r2.overall",
+      "T1.r3.overall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively. The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets. Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of 2.3% and 3.3%, respectively. No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively.",
+     "evidence_ids": [
+      "T1.r1.tail",
+      "T1.r2.tail",
+      "T1.r3.tail"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets.",
+     "evidence_ids": [
+      "T1.r1.tail",
+      "T1.r2.tail",
+      "P1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of 2.3% and 3.3%, respectively.",
+     "evidence_ids": [
+      "T1.r1.overall",
+      "T1.r2.overall",
+      "T1.r3.overall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively.",
+   "actions": [
+    {
+     "call_id": "call_bd168eb33b294a4792b1dbed",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "tail"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_762a57c219e941d284da7d14",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.091,
+      "evidence_id": "T1.r3.tail"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_c89f1a945bba4a8b8462f615",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.072,
+      "evidence_id": "T1.r1.tail"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_c4d8d2ad0b9f4902b5195ec4",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.085,
+      "evidence_id": "T1.r2.tail"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_bd168eb33b294a4792b1dbed",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Recall@20 on the Garnet-Retail test split (mean of 3 runs).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.tail",
+        "row": "Cobble-GNN (uniform sampling)",
+        "column": "Recall@20 (long-tail)",
+        "text": "0.072",
+        "value": 0.072,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.tail",
+        "row": "Cobble-GNN + debiased sampling",
+        "column": "Recall@20 (long-tail)",
+        "text": "0.085",
+        "value": 0.085,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.tail",
+        "row": "Thimble (ours)",
+        "column": "Recall@20 (long-tail)",
+        "text": "0.091",
+        "value": 0.091,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.tail",
+      "T1.r2.tail",
+      "T1.r3.tail"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_762a57c219e941d284da7d14",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.091,
+      "actual": 0.091,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.tail",
+       "row": "Thimble (ours)",
+       "column": "Recall@20 (long-tail)",
+       "text": "0.091",
+       "value": 0.091,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.tail"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_c89f1a945bba4a8b8462f615",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.072,
+      "actual": 0.072,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.tail",
+       "row": "Cobble-GNN (uniform sampling)",
+       "column": "Recall@20 (long-tail)",
+       "text": "0.072",
+       "value": 0.072,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.tail"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_c4d8d2ad0b9f4902b5195ec4",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.085,
+      "actual": 0.085,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.tail",
+       "row": "Cobble-GNN + debiased sampling",
+       "column": "Recall@20 (long-tail)",
+       "text": "0.085",
+       "value": 0.085,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r2.tail"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively.",
+    "revised_text": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively.",
+    "evidence_ids": [
+     "T1.r1.tail",
+     "T1.r2.tail",
+     "T1.r3.tail"
+    ],
+    "rationale": "All three tail values match the table exactly (0.091, 0.072, 0.085). Thimble's 0.091 exceeds both. Relative gains: (0.091-0.072)/0.072=26.4% and (0.091-0.085)/0.085=7.1%, matching the claim.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 4,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets.",
+   "actions": [
+    {
+     "call_id": "call_1d8b7f193cfc438885d0f38c",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_00f4c8013ff24986b76d5fca",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 18.1,
+      "evidence_id": "T1.r2.tail",
+      "mode": "percent_change",
+      "reference_evidence_id": "T1.r1.tail"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_67bce131ff98443ba43069fa",
+     "tool": "retrieve_passage",
+     "args": {
+      "query_or_source_id": "P1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_1d8b7f193cfc438885d0f38c",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Recall@20 on the Garnet-Retail test split (mean of 3 runs).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.overall",
+        "row": "Cobble-GNN (uniform sampling)",
+        "column": "Recall@20 (overall)",
+        "text": "0.214",
+        "value": 0.214,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.tail",
+        "row": "Cobble-GNN (uniform sampling)",
+        "column": "Recall@20 (long-tail)",
+        "text": "0.072",
+        "value": 0.072,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.overall",
+        "row": "Cobble-GNN + debiased sampling",
+        "column": "Recall@20 (overall)",
+        "text": "0.212",
+        "value": 0.212,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.tail",
+        "row": "Cobble-GNN + debiased sampling",
+        "column": "Recall@20 (long-tail)",
+        "text": "0.085",
+        "value": 0.085,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.overall",
+        "row": "Thimble (ours)",
+        "column": "Recall@20 (overall)",
+        "text": "0.219",
+        "value": 0.219,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.tail",
+        "row": "Thimble (ours)",
+        "column": "Recall@20 (long-tail)",
+        "text": "0.091",
+        "value": 0.091,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.overall",
+      "T1.r1.tail",
+      "T1.r2.overall",
+      "T1.r2.tail",
+      "T1.r3.overall",
+      "T1.r3.tail"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_00f4c8013ff24986b76d5fca",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "percent_change",
+      "claimed": 18.1,
+      "actual": 18.055556,
+      "abs_error": 0.044444,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.tail",
+       "row": "Cobble-GNN + debiased sampling",
+       "column": "Recall@20 (long-tail)",
+       "text": "0.085",
+       "value": 0.085,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "reference": {
+       "evidence_id": "T1.r1.tail",
+       "row": "Cobble-GNN (uniform sampling)",
+       "column": "Recall@20 (long-tail)",
+       "text": "0.072",
+       "value": 0.072,
+       "unit": null,
+       "higher_is_better": true
+      },
+      "better_entry": "T1.r2.tail",
+      "unit_note": "percent change relative to the reference"
+     },
+     "returned_ids": [
+      "T1.r2.tail",
+      "T1.r1.tail"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_67bce131ff98443ba43069fa",
+     "tool": "retrieve_passage",
+     "status": "FOUND",
+     "data": {
+      "passages": [
+       {
+        "passage_id": "P1",
+        "citation_key": "Sorensen-Nakata et al. (2022)",
+        "source_title": "Sampling Against the Head: Popularity-Debiased Negatives for Recommendation",
+        "text": "On both datasets we studied, popularity-debiased negative sampling improved Recall@20 on long-tail items (the 80% least popular items) by 21% relative to uniform negative sampling. Overall Recall@20 changed by less than 1% on both datasets."
+       }
+      ]
+     },
+     "returned_ids": [
+      "P1"
+     ],
+     "message": "",
+     "provenance": "supplied passages"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets.",
+    "revised_text": "The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets.",
+    "evidence_ids": [
+     "T1.r1.tail",
+     "T1.r2.tail",
+     "P1"
+    ],
+    "rationale": "The 18.1% relative gain (0.085 vs 0.072) is confirmed (actual 18.06%). P1 states debiased sampling improved long-tail Recall@20 by 21% on both datasets studied, consistent with \"roughly 20%\". The claim's scope caveat (different datasets) is accurate.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of at most 2.3%.",
+   "actions": [
+    {
+     "call_id": "call_11dda4316331494db88508f0",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "overall"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_2aec1e021959419cb1879730",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.219,
+      "evidence_id": "T1.r3.overall"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_089ce630f1ed46b2af60c06c",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.214,
+      "evidence_id": "T1.r1.overall"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_8539d72db16e4c499611cae8",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.212,
+      "evidence_id": "T1.r2.overall"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_11dda4316331494db88508f0",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Recall@20 on the Garnet-Retail test split (mean of 3 runs).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.overall",
+        "row": "Cobble-GNN (uniform sampling)",
+        "column": "Recall@20 (overall)",
+        "text": "0.214",
+        "value": 0.214,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.overall",
+        "row": "Cobble-GNN + debiased sampling",
+        "column": "Recall@20 (overall)",
+        "text": "0.212",
+        "value": 0.212,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.overall",
+        "row": "Thimble (ours)",
+        "column": "Recall@20 (overall)",
+        "text": "0.219",
+        "value": 0.219,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.overall",
+      "T1.r2.overall",
+      "T1.r3.overall"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_2aec1e021959419cb1879730",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.219,
+      "actual": 0.219,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.overall",
+       "row": "Thimble (ours)",
+       "column": "Recall@20 (overall)",
+       "text": "0.219",
+       "value": 0.219,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.overall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_089ce630f1ed46b2af60c06c",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.214,
+      "actual": 0.214,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.overall",
+       "row": "Cobble-GNN (uniform sampling)",
+       "column": "Recall@20 (overall)",
+       "text": "0.214",
+       "value": 0.214,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.overall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_8539d72db16e4c499611cae8",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.212,
+      "actual": 0.212,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.overall",
+       "row": "Cobble-GNN + debiased sampling",
+       "column": "Recall@20 (overall)",
+       "text": "0.212",
+       "value": 0.212,
+       "unit": null,
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r2.overall"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "WEAKEN",
+    "original_text": "Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of at most 2.3%.",
+    "revised_text": "Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of 2.3% and 3.3%, respectively.",
+    "evidence_ids": [
+     "T1.r1.overall",
+     "T1.r2.overall",
+     "T1.r3.overall"
+    ],
+    "rationale": "All three overall Recall@20 values match the table exactly (0.219, 0.214, 0.212). Relative differences: Thimble vs Cobble-GNN = (0.219-0.214)/0.214 = 2.3%; vs debiased = (0.219-0.212)/0.212 = 3.3%. The claim \"at most 2.3%\" is incorrect for the debiased comparison (3.3%).",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+   "actions": [
+    {
+     "call_id": "call_34d476dc83884d5cbb296756",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_ffee662cbf74495e9e6d9656",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_34d476dc83884d5cbb296756",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Thimble vs Cobble-GNN: overall and long-tail Recall@20"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_ffee662cbf74495e9e6d9656",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Cobble-GNN + debiased sampling vs Cobble-GNN: long-tail Recall@20"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+    "revised_text": "No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "No statistical tests were reported for either comparison (exp1/cmp1 and exp1/cmp2). The claim accurately states this and appropriately cautions interpretation on a single dataset. The claim is supported and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively. The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets. Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of 2.3% and 3.3%, respectively. No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Garnet-Retail test split, Thimble's long-tail Recall@20 of 0.091 exceeds both Cobble-GNN's 0.072 and Cobble-GNN + debiased sampling's 0.085, corresponding to relative gains of 26.4% and 7.1%, respectively.",
+   "evidence_ids": [
+    "T1.r1.tail",
+    "T1.r2.tail",
+    "T1.r3.tail"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "The 18.1% relative improvement in long-tail Recall@20 from Cobble-GNN + debiased sampling (0.085 vs 0.072) is consistent with the roughly 20% relative gains reported by Sorensen-Nakata et al. (2022) for popularity-debiased negative sampling, though that prior work used different datasets.",
+   "evidence_ids": [
+    "T1.r1.tail",
+    "T1.r2.tail",
+    "P1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Thimble's overall Recall@20 (0.219) is only slightly higher than Cobble-GNN's (0.214) and Cobble-GNN + debiased sampling's (0.212), with relative differences of 2.3% and 3.3%, respectively.",
+   "evidence_ids": [
+    "T1.r1.overall",
+    "T1.r2.overall",
+    "T1.r3.overall"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "No statistical tests were reported, so these differences, while directionally consistent with the expected benefits of debiased sampling, should be interpreted cautiously on this single dataset.",
+   "evidence_ids": [],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "CIT-p3b:shared_outline:outline:5ce30f53b1",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631528-OvnZZS4ThDlcsvapKVEQ",
+   "finish_reason": "stop",
+   "prompt_tokens": 1139,
+   "completion_tokens": 454,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00028658,
+   "cost_is_estimate": false,
+   "latency_s": 2.598,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:shared_outline:writer_from_outline:197039e19f",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631531-s9ia62SgrqDhE4PMI8Pr",
+   "finish_reason": "stop",
+   "prompt_tokens": 1640,
+   "completion_tokens": 342,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00032536,
+   "cost_is_estimate": false,
+   "latency_s": 4.214,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:8a24ab5c94",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631577-p3MTf4wyCaPwGzp2AfO9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2830,
+   "completion_tokens": 63,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001784272,
+   "cost_is_estimate": false,
+   "latency_s": 1.562,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:30ccf01af0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631578-Um72Eo685w9Prw6eyoEF",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3175,
+   "completion_tokens": 359,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001342528,
+   "cost_is_estimate": false,
+   "latency_s": 3.976,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:539e62bb6f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631582-qupAVG1uc32DU9Q4xt4w",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3861,
+   "completion_tokens": 67,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.57216e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.824,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:2bfcdcf97d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631584-en6qMxcK7WhSqewwMWwA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4074,
+   "completion_tokens": 67,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.9032e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.305,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:6dfba43242",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631586-ESL6jTqJ9BpC0yoWpXMd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4289,
+   "completion_tokens": 190,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000100424,
+   "cost_is_estimate": false,
+   "latency_s": 2.624,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:da2d45eb62",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631588-ZB38brxqDA3tgRcNsnFU",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2833,
+   "completion_tokens": 83,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001839712,
+   "cost_is_estimate": false,
+   "latency_s": 1.695,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:16086ecb52",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631590-X7ajBYT4PyTsNGjdK5Yd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3468,
+   "completion_tokens": 143,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001030128,
+   "cost_is_estimate": false,
+   "latency_s": 2.54,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:47a8583930",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631593-AdtmuaCIPhyzVKuvzYiZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3905,
+   "completion_tokens": 50,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.32944e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.679,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:67fad6d9f4",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631594-czvrTO8TRcYPnVQFCpy4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4098,
+   "completion_tokens": 182,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.1504e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.783,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:f0394a6025",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631597-TjdrB7AoUsfYqdVwq4XS",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2824,
+   "completion_tokens": 64,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001781632,
+   "cost_is_estimate": false,
+   "latency_s": 1.564,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:056dcd5091",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631599-KHz71NNVIOmLUsQbTgRQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3182,
+   "completion_tokens": 179,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.73488e-05,
+   "cost_is_estimate": false,
+   "latency_s": 5.856,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:310fa846fc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631605-v9Ok0wDz0gdvsTff2u4F",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3600,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.32816e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.357,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:bfe147ac98",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631606-Ihp3by2sX0qdyQkddRcQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3819,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.89312e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.273,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:bddf5ff5f3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631608-x907T4nf0Ozv00qFhIXq",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4040,
+   "completion_tokens": 285,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001254032,
+   "cost_is_estimate": false,
+   "latency_s": 3.457,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:9eb8011a51",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631611-p6Q5MQZQTBbPcP3dAVWg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2775,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001891632,
+   "cost_is_estimate": false,
+   "latency_s": 2.032,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:c5c2d0c7db",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631613-4hbvYV9P16h2T6fH1tg9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3050,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.824e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.356,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "CIT-p3b:C4:verify_adaptive:5f21483aa5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631615-Gn33rZVvW39e2eFXymUv",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3230,
+   "completion_tokens": 160,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.65568e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.5,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 19,
+  "n_model_calls_condition_only": 17,
+  "n_tool_calls": 13,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 7,
+   "retrieve_passage": 1,
+   "get_test_metadata": 2
+  },
+  "prompt_tokens": 61832,
+  "completion_tokens": 3016,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00246867,
+  "cost_usd_condition_only": 0.00185673,
+  "any_cost_estimated": false,
+  "latency_s": 46.195,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 3,
+   "WEAKEN": 1
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 9,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -4,6 +4,10 @@
 > All reported quality labels are AI judgements ([`AI_ANNOTATION_RESULTS.md`](AI_ANNOTATION_RESULTS.md),
 > [`EVALUATION_EXTENSION_RESULTS.md`](EVALUATION_EXTENSION_RESULTS.md); final report [`report/final_report.md`](../report/final_report.md)).
 > The packets and instructions below remain valid for a later human audit of the AI labels.
+>
+> **Partial release (2026-10-29).** The TEST gold (`data/synthetic/gold/test_gold.jsonl`, sha256 = `gold_test_PRIVATE`),
+> the shared TEST outlines (`outputs/synthetic/*/_shared/*/outline.json`) and the C4/C5 runs are now in git. The other
+> raw outputs and the condition mappings stay private. A later human audit can no longer be blind to C4/C5.
 
 **Status: AWAITING BLIND HUMAN ANNOTATION BY GROUP MEMBERS.** No human labels exist yet. No human agreement
 (κ) has been computed. No calibration result in this repository is human-validated.

@@ -1,0 +1,1271 @@
+{
+ "run_id": "primary_v1:C4:NEG-p3b",
+ "case_id": "NEG-p3b",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:52:48Z",
+ "finished_at": "2026-10-10T11:53:21Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "d59f794eeec78df850ead1699b46f7c9bf99cff2b3c6589408b724696e763afa"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Glimmer (full) outperforms Trellis-RE on Hollin-DocRE (65.2 vs 61.8) and Saltmarsh-Bio (55.9 vs 52.3), but underperforms on Wistmoor-News (69.2 vs 70.0).",
+    "evidence_ids": [
+     "T1.r1.hollin",
+     "T1.r3.hollin",
+     "T1.r1.salt",
+     "T1.r3.salt",
+     "T1.r1.wist",
+     "T1.r3.wist"
+    ],
+    "scope": "Relation F1 on Hollin-DocRE, Saltmarsh-Bio, and Wistmoor-News; mean over 3 seeds.",
+    "caveats": "No statistical tests reported; differences may not be significant."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Removing the evidence-gating module reduces F1 on Hollin-DocRE (63.0 vs 65.2) and Saltmarsh-Bio (54.1 vs 55.9), but increases F1 on Wistmoor-News (72.4 vs 69.2).",
+    "evidence_ids": [
+     "T1.r2.hollin",
+     "T1.r3.hollin",
+     "T1.r2.salt",
+     "T1.r3.salt",
+     "T1.r2.wist",
+     "T1.r3.wist"
+    ],
+    "scope": "Ablation comparison on the three test sets; relation F1, mean over 3 seeds.",
+    "caveats": "No statistical tests reported; effect direction varies by domain."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The evidence-gating module's benefit is inconsistent across domains: it helps in-domain and biomedical settings but hurts on the news test set.",
+    "evidence_ids": [
+     "F1",
+     "F2"
+    ],
+    "scope": "Across Hollin-DocRE, Saltmarsh-Bio, and Wistmoor-News.",
+    "caveats": "Based on mean F1 differences only; no significance testing."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%). Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%). Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set. No statistical tests were reported, so these differences may not be significant.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%).",
+     "evidence_ids": [
+      "T1.r1.hollin",
+      "T1.r3.hollin",
+      "T1.r1.salt",
+      "T1.r3.salt",
+      "T1.r1.wist",
+      "T1.r3.wist"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%).",
+     "evidence_ids": [
+      "T1.r2.hollin",
+      "T1.r3.hollin",
+      "T1.r2.salt",
+      "T1.r3.salt",
+      "T1.r2.wist",
+      "T1.r3.wist"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set.",
+     "evidence_ids": [
+      "T1.r1.hollin",
+      "T1.r3.hollin",
+      "T1.r1.salt",
+      "T1.r3.salt",
+      "T1.r1.wist",
+      "T1.r3.wist",
+      "T1.r2.hollin",
+      "T1.r3.hollin",
+      "T1.r2.salt",
+      "T1.r3.salt",
+      "T1.r2.wist",
+      "T1.r3.wist"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, so these differences may not be significant.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%). Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%). Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set. No statistical tests were reported, so these differences may not be significant.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%).",
+     "evidence_ids": [
+      "T1.r1.hollin",
+      "T1.r3.hollin",
+      "T1.r1.salt",
+      "T1.r3.salt",
+      "T1.r1.wist",
+      "T1.r3.wist"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%).",
+     "evidence_ids": [
+      "T1.r2.hollin",
+      "T1.r3.hollin",
+      "T1.r2.salt",
+      "T1.r3.salt",
+      "T1.r2.wist",
+      "T1.r3.wist"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set.",
+     "evidence_ids": [
+      "T1.r1.hollin",
+      "T1.r3.hollin",
+      "T1.r1.salt",
+      "T1.r3.salt",
+      "T1.r1.wist",
+      "T1.r3.wist",
+      "T1.r2.hollin",
+      "T1.r3.hollin",
+      "T1.r2.salt",
+      "T1.r3.salt",
+      "T1.r2.wist",
+      "T1.r3.wist"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, so these differences may not be significant.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%).",
+   "actions": [
+    {
+     "call_id": "call_d8c37274a51b449bac6e372f",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_4fc46879a0fd46dbaff673cf",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 65.2,
+      "evidence_id": "T1.r3.hollin"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_1a50af58c5a44f92a9182b46",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 61.8,
+      "evidence_id": "T1.r1.hollin"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_45dbb407012149138182f607",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 55.9,
+      "evidence_id": "T1.r3.salt"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_d8c37274a51b449bac6e372f",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Relation F1 (%) on three test sets, mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hollin",
+        "row": "Trellis-RE",
+        "column": "Hollin-DocRE",
+        "text": "61.8",
+        "value": 61.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.salt",
+        "row": "Trellis-RE",
+        "column": "Saltmarsh-Bio",
+        "text": "52.3",
+        "value": 52.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.wist",
+        "row": "Trellis-RE",
+        "column": "Wistmoor-News",
+        "text": "70.0",
+        "value": 70.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hollin",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Hollin-DocRE",
+        "text": "63.0",
+        "value": 63.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.salt",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Saltmarsh-Bio",
+        "text": "54.1",
+        "value": 54.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.wist",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Wistmoor-News",
+        "text": "72.4",
+        "value": 72.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hollin",
+        "row": "Glimmer (full)",
+        "column": "Hollin-DocRE",
+        "text": "65.2",
+        "value": 65.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.salt",
+        "row": "Glimmer (full)",
+        "column": "Saltmarsh-Bio",
+        "text": "55.9",
+        "value": 55.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.wist",
+        "row": "Glimmer (full)",
+        "column": "Wistmoor-News",
+        "text": "69.2",
+        "value": 69.2,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hollin",
+      "T1.r1.salt",
+      "T1.r1.wist",
+      "T1.r2.hollin",
+      "T1.r2.salt",
+      "T1.r2.wist",
+      "T1.r3.hollin",
+      "T1.r3.salt",
+      "T1.r3.wist"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_4fc46879a0fd46dbaff673cf",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 65.2,
+      "actual": 65.2,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.hollin",
+       "row": "Glimmer (full)",
+       "column": "Hollin-DocRE",
+       "text": "65.2",
+       "value": 65.2,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.hollin"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_1a50af58c5a44f92a9182b46",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 61.8,
+      "actual": 61.8,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.hollin",
+       "row": "Trellis-RE",
+       "column": "Hollin-DocRE",
+       "text": "61.8",
+       "value": 61.8,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.hollin"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_45dbb407012149138182f607",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 55.9,
+      "actual": 55.9,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.salt",
+       "row": "Glimmer (full)",
+       "column": "Saltmarsh-Bio",
+       "text": "55.9",
+       "value": 55.9,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.salt"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%).",
+    "revised_text": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%).",
+    "evidence_ids": [
+     "T1.r3.hollin",
+     "T1.r1.hollin",
+     "T1.r3.salt",
+     "T1.r1.salt",
+     "T1.r3.wist",
+     "T1.r1.wist"
+    ],
+    "rationale": "All six numbers match the table exactly: Glimmer 65.2 vs Trellis 61.8 on Hollin, 55.9 vs 52.3 on Salt, 69.2 vs 70.0 on Wist. Directions (higher/lower) are correct. No statistical significance claimed in this sentence.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 5,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%).",
+   "actions": [
+    {
+     "call_id": "call_4acf477a5fef4eb681db5a5d",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_27c640db06c94c718ea1d779",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_4acf477a5fef4eb681db5a5d",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Relation F1 (%) on three test sets, mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hollin",
+        "row": "Trellis-RE",
+        "column": "Hollin-DocRE",
+        "text": "61.8",
+        "value": 61.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.salt",
+        "row": "Trellis-RE",
+        "column": "Saltmarsh-Bio",
+        "text": "52.3",
+        "value": 52.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.wist",
+        "row": "Trellis-RE",
+        "column": "Wistmoor-News",
+        "text": "70.0",
+        "value": 70.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hollin",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Hollin-DocRE",
+        "text": "63.0",
+        "value": 63.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.salt",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Saltmarsh-Bio",
+        "text": "54.1",
+        "value": 54.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.wist",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Wistmoor-News",
+        "text": "72.4",
+        "value": 72.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hollin",
+        "row": "Glimmer (full)",
+        "column": "Hollin-DocRE",
+        "text": "65.2",
+        "value": 65.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.salt",
+        "row": "Glimmer (full)",
+        "column": "Saltmarsh-Bio",
+        "text": "55.9",
+        "value": 55.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.wist",
+        "row": "Glimmer (full)",
+        "column": "Wistmoor-News",
+        "text": "69.2",
+        "value": 69.2,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hollin",
+      "T1.r1.salt",
+      "T1.r1.wist",
+      "T1.r2.hollin",
+      "T1.r2.salt",
+      "T1.r2.wist",
+      "T1.r3.hollin",
+      "T1.r3.salt",
+      "T1.r3.wist"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_27c640db06c94c718ea1d779",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Glimmer (full) vs Glimmer w/o evidence gating: F1 per test set (ablation)"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%).",
+    "revised_text": "Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%).",
+    "evidence_ids": [
+     "T1.r2.hollin",
+     "T1.r3.hollin",
+     "T1.r2.salt",
+     "T1.r3.salt",
+     "T1.r2.wist",
+     "T1.r3.wist",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "All numbers match T1: r2 vs r3 gives 63.0 vs 65.2 (Hollin), 54.1 vs 55.9 (Salt), 72.4 vs 69.2 (Wist). Removing gating decreases F1 on Hollin and Salt, increases on Wist. No significance claimed. Supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set.",
+   "actions": [
+    {
+     "call_id": "call_ba30ba14dc0e43d2be110a9b",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_462344555a87457b81cbdcbd",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_bbdd7fce0c204d0da286a41c",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_ba30ba14dc0e43d2be110a9b",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Relation F1 (%) on three test sets, mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.hollin",
+        "row": "Trellis-RE",
+        "column": "Hollin-DocRE",
+        "text": "61.8",
+        "value": 61.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.salt",
+        "row": "Trellis-RE",
+        "column": "Saltmarsh-Bio",
+        "text": "52.3",
+        "value": 52.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.wist",
+        "row": "Trellis-RE",
+        "column": "Wistmoor-News",
+        "text": "70.0",
+        "value": 70.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.hollin",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Hollin-DocRE",
+        "text": "63.0",
+        "value": 63.0,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.salt",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Saltmarsh-Bio",
+        "text": "54.1",
+        "value": 54.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.wist",
+        "row": "Glimmer w/o evidence gating",
+        "column": "Wistmoor-News",
+        "text": "72.4",
+        "value": 72.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.hollin",
+        "row": "Glimmer (full)",
+        "column": "Hollin-DocRE",
+        "text": "65.2",
+        "value": 65.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.salt",
+        "row": "Glimmer (full)",
+        "column": "Saltmarsh-Bio",
+        "text": "55.9",
+        "value": 55.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.wist",
+        "row": "Glimmer (full)",
+        "column": "Wistmoor-News",
+        "text": "69.2",
+        "value": 69.2,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.hollin",
+      "T1.r1.salt",
+      "T1.r1.wist",
+      "T1.r2.hollin",
+      "T1.r2.salt",
+      "T1.r2.wist",
+      "T1.r3.hollin",
+      "T1.r3.salt",
+      "T1.r3.wist"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_462344555a87457b81cbdcbd",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Glimmer (full) vs Glimmer w/o evidence gating: F1 per test set (ablation)"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_bbdd7fce0c204d0da286a41c",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Glimmer (full) vs Trellis-RE: F1 per test set"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set.",
+    "revised_text": "Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set.",
+    "evidence_ids": [
+     "T1.r2.hollin",
+     "T1.r3.hollin",
+     "T1.r2.salt",
+     "T1.r3.salt",
+     "T1.r2.wist",
+     "T1.r3.wist",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "The claim describes the ablation direction per domain: gating improves Hollin (63.0→65.2) and Saltmarsh (54.1→55.9) but hurts Wistmoor (72.4→69.2). All numbers match T1. The claim is descriptive of direction, not significance, and the passage already notes no tests were reported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "No statistical tests were reported, so these differences may not be significant.",
+   "actions": [
+    {
+     "call_id": "call_0aca920969584340af543c2d",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_9f4ab3b5b507499daa603be7",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_0aca920969584340af543c2d",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Glimmer (full) vs Trellis-RE: F1 per test set"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_9f4ab3b5b507499daa603be7",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Glimmer (full) vs Glimmer w/o evidence gating: F1 per test set (ablation)"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "No statistical tests were reported, so these differences may not be significant.",
+    "revised_text": "No statistical tests were reported, so these differences may not be significant.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "No statistical test is reported for either comparison (cmp1, cmp2). The claim that no tests were reported and differences may not be significant is accurate and appropriately hedged.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%). Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%). Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set. No statistical tests were reported, so these differences may not be significant.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Glimmer (full) achieves higher relation F1 than Trellis-RE on Hollin-DocRE (65.2% vs 61.8%) and Saltmarsh-Bio (55.9% vs 52.3%), but lower F1 on Wistmoor-News (69.2% vs 70.0%).",
+   "evidence_ids": [
+    "T1.r1.hollin",
+    "T1.r3.hollin",
+    "T1.r1.salt",
+    "T1.r3.salt",
+    "T1.r1.wist",
+    "T1.r3.wist"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Removing the evidence-gating module decreases F1 on Hollin-DocRE (63.0% vs 65.2%) and Saltmarsh-Bio (54.1% vs 55.9%), but increases F1 on Wistmoor-News (72.4% vs 69.2%).",
+   "evidence_ids": [
+    "T1.r2.hollin",
+    "T1.r3.hollin",
+    "T1.r2.salt",
+    "T1.r3.salt",
+    "T1.r2.wist",
+    "T1.r3.wist"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Thus, the evidence-gating module's benefit is inconsistent across domains: it improves performance in the in-domain and biomedical settings but hurts performance on the news test set.",
+   "evidence_ids": [
+    "T1.r1.hollin",
+    "T1.r3.hollin",
+    "T1.r1.salt",
+    "T1.r3.salt",
+    "T1.r1.wist",
+    "T1.r3.wist",
+    "T1.r2.hollin",
+    "T1.r3.hollin",
+    "T1.r2.salt",
+    "T1.r3.salt",
+    "T1.r2.wist",
+    "T1.r3.wist"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "No statistical tests were reported, so these differences may not be significant.",
+   "evidence_ids": [],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NEG-p3b:shared_outline:outline:9641275b3d",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632713-Z14ZVSWZLG2nLCVSPpDP",
+   "finish_reason": "stop",
+   "prompt_tokens": 1016,
+   "completion_tokens": 459,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00027076,
+   "cost_is_estimate": false,
+   "latency_s": 3.048,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:shared_outline:writer_from_outline:036f54a71b",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632717-uEfHSHO8hxtmxZz2qvN7",
+   "finish_reason": "stop",
+   "prompt_tokens": 1527,
+   "completion_tokens": 432,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00033474,
+   "cost_is_estimate": false,
+   "latency_s": 2.216,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:d6fb8899cc",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632758-Zo65rA4nDvYj20ptMxec",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2786,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001703312,
+   "cost_is_estimate": false,
+   "latency_s": 1.357,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:ea9f6128f9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632760-aPB4KSiFv7Mgag5V8yRL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3541,
+   "completion_tokens": 340,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000183256,
+   "cost_is_estimate": false,
+   "latency_s": 3.617,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:357ab660fb",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632763-Je65mSHRAsoyNRWUXECh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4257,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001092864,
+   "cost_is_estimate": false,
+   "latency_s": 1.473,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:2202cd5b8f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632765-Xo0ZTDGpj7WWupCiBHrx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4472,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.25088e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.309,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:dfbbaa0e3f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632766-3g5yCdDlErTyVlXHcSky",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4683,
+   "completion_tokens": 211,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.70176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.903,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:b86fb2d90f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632769-0kbvtGTK2qBYBXZ9BknK",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2780,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001698032,
+   "cost_is_estimate": false,
+   "latency_s": 1.808,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:d76d671d77",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632771-aL7yrHJHlIdPKq2N4HAM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3535,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00011092,
+   "cost_is_estimate": false,
+   "latency_s": 1.394,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:35aabcf6f2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632772-hn7eSWWL22YuHT7nVAgd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3717,
+   "completion_tokens": 228,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001037424,
+   "cost_is_estimate": false,
+   "latency_s": 3.256,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:4a05f3539c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632776-ftrkZiAVv6cyG9KxpQRC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2796,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001712112,
+   "cost_is_estimate": false,
+   "latency_s": 1.708,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:f30088ac31",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632778-66prf9FCOOrCuEM9CkOm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3551,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000112328,
+   "cost_is_estimate": false,
+   "latency_s": 1.903,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:3218d28fc9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632780-oBdGuEMQDxY5D6AiYU78",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3733,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.29104e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.472,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:0540fff731",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632781-oBTQjUeYIuOgu1nuvRyM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3910,
+   "completion_tokens": 231,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.97072e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.449,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:1153b7e7f2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632785-goZ0GKU1K1xh3PgV7oif",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2678,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.976e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.788,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:c2512468ad",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632786-8pAxOKtc8rYwEsXjylKb",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2955,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.988e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.685,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NEG-p3b:C4:verify_adaptive:374b5d716c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632788-0GbOucoIuNqtCGXTtqh8",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3137,
+   "completion_tokens": 150,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.57328e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.52,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 17,
+  "n_model_calls_condition_only": 15,
+  "n_tool_calls": 11,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 3,
+   "get_test_metadata": 5
+  },
+  "prompt_tokens": 55074,
+  "completion_tokens": 2723,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.0022439,
+  "cost_usd_condition_only": 0.0016384,
+  "any_cost_estimated": false,
+  "latency_s": 36.906,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 6,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

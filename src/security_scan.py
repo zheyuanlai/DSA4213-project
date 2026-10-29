@@ -21,12 +21,13 @@ GENERIC_PATTERNS = {
     "bearer_header": re.compile(r"Authorization:\s*Bearer\s+[A-Za-z0-9\-_\.]{20,}", re.I),
     "nus_student_number": re.compile(r"\bA0\d{6}[A-Z]\b"),
 }
+RELEASED_SYNTHETIC_NEG = r"(?!outputs/synthetic/[^/]+/(?:_shared/[^/]+/outline\.json|C[45]/[^/]+\.json)$)"
 FORBIDDEN_TRACKED = [
     re.compile(r"(^|/)\.env$"), re.compile(r"(^|/)\.env\.(?!example$)"), re.compile(r"^private/"),
     re.compile(r"condition_mapping"), re.compile(r"PRIVATE_EXECUTION", re.I), re.compile(r"openrouter\.env$"),
-    re.compile(r"^data/real_papers/raw/"), re.compile(r"(^|/)test_gold\.jsonl$"),
-    # withheld until blind annotation ends (remove these two lines in the release commit)
-    re.compile(r"^outputs/synthetic/"), re.compile(r"^outputs/real_papers(_v2)?/"),
+    re.compile(r"^data/real_papers/raw/"), re.compile(r"^(?!data/synthetic/gold/)(.*/)?test_gold\.jsonl$"),
+    # withheld until blind annotation ends; shared TEST outlines and C4/C5 runs were released 2026-10-29
+    re.compile(RELEASED_SYNTHETIC_NEG + r"^outputs/synthetic/"), re.compile(r"^outputs/real_papers(_v2)?/"),
 ]
 BINARY_EXT = {".png", ".jpg", ".jpeg", ".gif", ".pdf", ".zip", ".gz", ".tar", ".pyc", ".ico", ".woff", ".woff2"}
 

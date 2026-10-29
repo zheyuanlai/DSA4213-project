@@ -1,0 +1,1296 @@
+{
+ "run_id": "primary_v1:C5:ROB-p3b",
+ "case_id": "ROB-p3b",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T12:01:36Z",
+ "finished_at": "2026-10-10T12:02:03Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "877bbf520c05f71dfc734cea75a1f366eb407ab4ba97cf057e57f5fb132b74e2"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with drops of 0.7 and 1.6 points respectively, but fails it at severity 5 with a drop of 4.6 points.",
+    "evidence_ids": [
+     "T1.r1.st_drop",
+     "T1.r2.st_drop",
+     "T1.r3.st_drop"
+    ],
+    "scope": "Ostmark-Aerial test split, Gaussian blur severities 1, 3, 5, top-1 accuracy, mean over 3 seeds",
+    "caveats": "No statistical tests reported; drops are point differences from clean accuracy."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Stellate-Net's accuracy drops are smaller than Lattice-CNN's at every blur severity (0.7 vs 1.8 at severity 1, 1.6 vs 5.7 at severity 3, 4.6 vs 11.3 at severity 5).",
+    "evidence_ids": [
+     "T1.r1.st_drop",
+     "T1.r1.la_drop",
+     "T1.r2.st_drop",
+     "T1.r2.la_drop",
+     "T1.r3.st_drop",
+     "T1.r3.la_drop"
+    ],
+    "scope": "Ostmark-Aerial test split, Gaussian blur severities 1, 3, 5, top-1 accuracy drop, mean over 3 seeds",
+    "caveats": "No statistical tests reported; comparison is descriptive only."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Stellate-Net's robustness to blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+    "evidence_ids": [
+     "T1.r1.st_drop",
+     "T1.r2.st_drop",
+     "T1.r3.st_drop"
+    ],
+    "scope": "Ostmark-Aerial test split, Gaussian blur severities 1, 3, 5, top-1 accuracy",
+    "caveats": "Only one dataset and one blur type tested; no statistical significance established."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points. At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5). Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points.",
+     "evidence_ids": [
+      "T1.r1.st_drop",
+      "T1.r2.st_drop",
+      "T1.r3.st_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5).",
+     "evidence_ids": [
+      "T1.r1.st_drop",
+      "T1.r1.la_drop",
+      "T1.r2.st_drop",
+      "T1.r2.la_drop",
+      "T1.r3.st_drop",
+      "T1.r3.la_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+     "evidence_ids": [
+      "T1.r1.st_drop",
+      "T1.r2.st_drop",
+      "T1.r3.st_drop"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points. At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5). Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points.",
+     "evidence_ids": [
+      "T1.r1.st_drop",
+      "T1.r2.st_drop",
+      "T1.r3.st_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5).",
+     "evidence_ids": [
+      "T1.r1.st_drop",
+      "T1.r1.la_drop",
+      "T1.r2.st_drop",
+      "T1.r2.la_drop",
+      "T1.r3.st_drop",
+      "T1.r3.la_drop"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+     "evidence_ids": [
+      "T1.r1.st_drop",
+      "T1.r2.st_drop",
+      "T1.r3.st_drop"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points.",
+   "actions": [
+    {
+     "call_id": "call_5232e3cd7eb5466a89e5d5e2",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_f9efe4b0b4c0483f8b90aa41",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.7,
+      "evidence_id": "T1.r1.st_drop"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_bf864e03bd7a4ec6bbf57e15",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 1.6,
+      "evidence_id": "T1.r2.st_drop"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_75c27fb06ce6480a982aaaa2",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 4.6,
+      "evidence_id": "T1.r3.st_drop"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_5232e3cd7eb5466a89e5d5e2",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Top-1 accuracy (%) on the Ostmark-Aerial test split under Gaussian blur, mean over 3 seeds; drop = clean accuracy minus blurred accuracy (points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r0.st_acc",
+        "row": "Clean",
+        "column": "Stellate-Net accuracy",
+        "text": "94.2",
+        "value": 94.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r0.st_drop",
+        "row": "Clean",
+        "column": "Stellate-Net drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r0.la_acc",
+        "row": "Clean",
+        "column": "Lattice-CNN accuracy",
+        "text": "93.6",
+        "value": 93.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r0.la_drop",
+        "row": "Clean",
+        "column": "Lattice-CNN drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.st_acc",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "93.5",
+        "value": 93.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.st_drop",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Stellate-Net drop",
+        "text": "0.7",
+        "value": 0.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.la_acc",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "91.8",
+        "value": 91.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.la_drop",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Lattice-CNN drop",
+        "text": "1.8",
+        "value": 1.8,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.st_acc",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "92.6",
+        "value": 92.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.st_drop",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Stellate-Net drop",
+        "text": "1.6",
+        "value": 1.6,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.la_acc",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "87.9",
+        "value": 87.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.la_drop",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Lattice-CNN drop",
+        "text": "5.7",
+        "value": 5.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.st_acc",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "89.6",
+        "value": 89.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.st_drop",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Stellate-Net drop",
+        "text": "4.6",
+        "value": 4.6,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.la_acc",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "82.3",
+        "value": 82.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.la_drop",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Lattice-CNN drop",
+        "text": "11.3",
+        "value": 11.3,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r0.st_acc",
+      "T1.r0.st_drop",
+      "T1.r0.la_acc",
+      "T1.r0.la_drop",
+      "T1.r1.st_acc",
+      "T1.r1.st_drop",
+      "T1.r1.la_acc",
+      "T1.r1.la_drop",
+      "T1.r2.st_acc",
+      "T1.r2.st_drop",
+      "T1.r2.la_acc",
+      "T1.r2.la_drop",
+      "T1.r3.st_acc",
+      "T1.r3.st_drop",
+      "T1.r3.la_acc",
+      "T1.r3.la_drop"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_f9efe4b0b4c0483f8b90aa41",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.7,
+      "actual": 0.7,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.st_drop",
+       "row": "Blur severity 1 (σ = 1 px)",
+       "column": "Stellate-Net drop",
+       "text": "0.7",
+       "value": 0.7,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.st_drop"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_bf864e03bd7a4ec6bbf57e15",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 1.6,
+      "actual": 1.6,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.st_drop",
+       "row": "Blur severity 3 (σ = 2 px)",
+       "column": "Stellate-Net drop",
+       "text": "1.6",
+       "value": 1.6,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r2.st_drop"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_75c27fb06ce6480a982aaaa2",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 4.6,
+      "actual": 4.6,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.st_drop",
+       "row": "Blur severity 5 (σ = 3 px)",
+       "column": "Stellate-Net drop",
+       "text": "4.6",
+       "value": 4.6,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r3.st_drop"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points.",
+    "revised_text": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points.",
+    "evidence_ids": [
+     "T1.r1.st_drop",
+     "T1.r2.st_drop",
+     "T1.r3.st_drop"
+    ],
+    "rationale": "All three drop values match the table exactly (0.7, 1.6, 4.6 points). The robustness criterion (drop ≤ 3.0) is met at severities 1 and 3 (0.7, 1.6 ≤ 3.0) and failed at severity 5 (4.6 > 3.0). Claim is accurate and correctly scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5).",
+   "actions": [
+    {
+     "call_id": "call_64a7f74aa18449e683541dfb",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_f6579d5ef89c48098e9e6d3b",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_0306a5bbeef64c8cb4000580",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_64a7f74aa18449e683541dfb",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Top-1 accuracy (%) on the Ostmark-Aerial test split under Gaussian blur, mean over 3 seeds; drop = clean accuracy minus blurred accuracy (points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r0.st_acc",
+        "row": "Clean",
+        "column": "Stellate-Net accuracy",
+        "text": "94.2",
+        "value": 94.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r0.st_drop",
+        "row": "Clean",
+        "column": "Stellate-Net drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r0.la_acc",
+        "row": "Clean",
+        "column": "Lattice-CNN accuracy",
+        "text": "93.6",
+        "value": 93.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r0.la_drop",
+        "row": "Clean",
+        "column": "Lattice-CNN drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.st_acc",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "93.5",
+        "value": 93.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.st_drop",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Stellate-Net drop",
+        "text": "0.7",
+        "value": 0.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.la_acc",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "91.8",
+        "value": 91.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.la_drop",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Lattice-CNN drop",
+        "text": "1.8",
+        "value": 1.8,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.st_acc",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "92.6",
+        "value": 92.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.st_drop",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Stellate-Net drop",
+        "text": "1.6",
+        "value": 1.6,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.la_acc",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "87.9",
+        "value": 87.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.la_drop",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Lattice-CNN drop",
+        "text": "5.7",
+        "value": 5.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.st_acc",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "89.6",
+        "value": 89.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.st_drop",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Stellate-Net drop",
+        "text": "4.6",
+        "value": 4.6,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.la_acc",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "82.3",
+        "value": 82.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.la_drop",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Lattice-CNN drop",
+        "text": "11.3",
+        "value": 11.3,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r0.st_acc",
+      "T1.r0.st_drop",
+      "T1.r0.la_acc",
+      "T1.r0.la_drop",
+      "T1.r1.st_acc",
+      "T1.r1.st_drop",
+      "T1.r1.la_acc",
+      "T1.r1.la_drop",
+      "T1.r2.st_acc",
+      "T1.r2.st_drop",
+      "T1.r2.la_acc",
+      "T1.r2.la_drop",
+      "T1.r3.st_acc",
+      "T1.r3.st_drop",
+      "T1.r3.la_acc",
+      "T1.r3.la_drop"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_f6579d5ef89c48098e9e6d3b",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Stellate-Net: accuracy drop from clean at each blur severity"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_0306a5bbeef64c8cb4000580",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Lattice-CNN: accuracy drop from clean at each blur severity"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5).",
+    "revised_text": "At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5).",
+    "evidence_ids": [
+     "T1.r1.st_drop",
+     "T1.r1.la_drop",
+     "T1.r2.st_drop",
+     "T1.r2.la_drop",
+     "T1.r3.st_drop",
+     "T1.r3.la_drop",
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "All drop values match the table exactly: severity 1 (0.7 vs 1.8), severity 3 (1.6 vs 5.7), severity 5 (4.6 vs 11.3). At each severity Stellate-Net's drop is smaller than Lattice-CNN's. The claim makes no significance claim, so absence of a test does not weaken it.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+   "actions": [
+    {
+     "call_id": "call_7163592c325440bdb12c3e7a",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_6ef0bed9ed574b9dbb9da43e",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_7163592c325440bdb12c3e7a",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Top-1 accuracy (%) on the Ostmark-Aerial test split under Gaussian blur, mean over 3 seeds; drop = clean accuracy minus blurred accuracy (points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r0.st_acc",
+        "row": "Clean",
+        "column": "Stellate-Net accuracy",
+        "text": "94.2",
+        "value": 94.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r0.st_drop",
+        "row": "Clean",
+        "column": "Stellate-Net drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r0.la_acc",
+        "row": "Clean",
+        "column": "Lattice-CNN accuracy",
+        "text": "93.6",
+        "value": 93.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r0.la_drop",
+        "row": "Clean",
+        "column": "Lattice-CNN drop",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.st_acc",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "93.5",
+        "value": 93.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.st_drop",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Stellate-Net drop",
+        "text": "0.7",
+        "value": 0.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.la_acc",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "91.8",
+        "value": 91.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.la_drop",
+        "row": "Blur severity 1 (σ = 1 px)",
+        "column": "Lattice-CNN drop",
+        "text": "1.8",
+        "value": 1.8,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.st_acc",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "92.6",
+        "value": 92.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.st_drop",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Stellate-Net drop",
+        "text": "1.6",
+        "value": 1.6,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.la_acc",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "87.9",
+        "value": 87.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.la_drop",
+        "row": "Blur severity 3 (σ = 2 px)",
+        "column": "Lattice-CNN drop",
+        "text": "5.7",
+        "value": 5.7,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.st_acc",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Stellate-Net accuracy",
+        "text": "89.6",
+        "value": 89.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.st_drop",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Stellate-Net drop",
+        "text": "4.6",
+        "value": 4.6,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.la_acc",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Lattice-CNN accuracy",
+        "text": "82.3",
+        "value": 82.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.la_drop",
+        "row": "Blur severity 5 (σ = 3 px)",
+        "column": "Lattice-CNN drop",
+        "text": "11.3",
+        "value": 11.3,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r0.st_acc",
+      "T1.r0.st_drop",
+      "T1.r0.la_acc",
+      "T1.r0.la_drop",
+      "T1.r1.st_acc",
+      "T1.r1.st_drop",
+      "T1.r1.la_acc",
+      "T1.r1.la_drop",
+      "T1.r2.st_acc",
+      "T1.r2.st_drop",
+      "T1.r2.la_acc",
+      "T1.r2.la_drop",
+      "T1.r3.st_acc",
+      "T1.r3.st_drop",
+      "T1.r3.la_acc",
+      "T1.r3.la_drop"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_6ef0bed9ed574b9dbb9da43e",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Stellate-Net: accuracy drop from clean at each blur severity"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+    "revised_text": "Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+    "evidence_ids": [
+     "T1.r1.st_drop",
+     "T1.r2.st_drop",
+     "T1.r3.st_drop",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Drops of 0.7 (sev1), 1.6 (sev3), and 4.6 (sev5) points match the table. The claim's characterization (meets ≤3.0 at sev1/3, exceeds at sev5, hence partial) is supported. No statistical-significance language is used, so absence of a test does not weaken it.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points. At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5). Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Stellate-Net meets the pre-specified robustness criterion (drop ≤ 3.0 points) at blur severities 1 and 3, with top-1 accuracy drops of 0.7 and 1.6 points from clean accuracy, but fails it at severity 5 with a drop of 4.6 points.",
+   "evidence_ids": [
+    "T1.r1.st_drop",
+    "T1.r2.st_drop",
+    "T1.r3.st_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "At every blur severity, Stellate-Net's accuracy drop is smaller than Lattice-CNN's (0.7 vs 1.8 points at severity 1, 1.6 vs 5.7 at severity 3, and 4.6 vs 11.3 at severity 5).",
+   "evidence_ids": [
+    "T1.r1.st_drop",
+    "T1.r1.la_drop",
+    "T1.r2.st_drop",
+    "T1.r2.la_drop",
+    "T1.r3.st_drop",
+    "T1.r3.la_drop"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Thus, Stellate-Net's robustness to Gaussian blur is partial: it degrades gracefully at low-to-moderate blur but exceeds the 3.0-point threshold at the highest tested severity.",
+   "evidence_ids": [
+    "T1.r1.st_drop",
+    "T1.r2.st_drop",
+    "T1.r3.st_drop"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "ROB-p3b:shared_outline:outline:2068da0d6e",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633223-ezjAfGpHC57LE1Anj6vM",
+   "finish_reason": "stop",
+   "prompt_tokens": 1131,
+   "completion_tokens": 488,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00029498,
+   "cost_is_estimate": false,
+   "latency_s": 2.397,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:shared_outline:writer_from_outline:e58ffd0008",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633226-YysQ1tzPMdTAsL8WdiXF",
+   "finish_reason": "stop",
+   "prompt_tokens": 1669,
+   "completion_tokens": 337,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00032802,
+   "cost_is_estimate": false,
+   "latency_s": 1.867,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:7d1e01df0c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633286-38GZIjNGdjoc6TkUZxkx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2787,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001049856,
+   "cost_is_estimate": false,
+   "latency_s": 1.3,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:0ad17d5629",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633287-mRx2lUhFpyh2wB8ZctLY",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4119,
+   "completion_tokens": 179,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000191616,
+   "cost_is_estimate": false,
+   "latency_s": 2.446,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:434984d537",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633290-u59NdAUwmJsRUUrBzXbu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4542,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.89328e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.679,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:24f6fb43bf",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633291-MyalJ6s00izlpiQvOKqH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4763,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.65696e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.925,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:41fb645ccf",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633293-INHfPLqI9hvdUoo8nLkt",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4984,
+   "completion_tokens": 204,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.98464e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.765,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:1e66dd4945",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633296-MDxpu86jPCEgl0EH3xCa",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2814,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001073616,
+   "cost_is_estimate": false,
+   "latency_s": 1.423,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:8580a4fad0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633298-fWOjOHtOWqXNBjD9BlKQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4146,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000178944,
+   "cost_is_estimate": false,
+   "latency_s": 2.001,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:cf96983ce6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633300-ZbPrG8a2NtCUtAv4nKDu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4418,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.77568e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.358,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:25d74e9f8e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633301-l6Fs5mLHuL5ic4KFBhlA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4590,
+   "completion_tokens": 254,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001001856,
+   "cost_is_estimate": false,
+   "latency_s": 3.084,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:4d66e8f29f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633304-jLj26hBo4Xg2cU0ocMuI",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2760,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 3.7176e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.322,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:880da8408a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633306-XBE0OHjNlriNcpnHJ8OS",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4092,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000159936,
+   "cost_is_estimate": false,
+   "latency_s": 1.454,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p3b:C5:verify_adaptive:7d320ace63",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633307-YB1oaevASi82JAY3BbQw",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4264,
+   "completion_tokens": 212,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000104032,
+   "cost_is_estimate": false,
+   "latency_s": 5.787,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 14,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 9,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 3,
+   "get_test_metadata": 3
+  },
+  "prompt_tokens": 51079,
+  "completion_tokens": 2211,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00190034,
+  "cost_usd_condition_only": 0.00127734,
+  "any_cost_estimated": false,
+  "latency_s": 30.808,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 3,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

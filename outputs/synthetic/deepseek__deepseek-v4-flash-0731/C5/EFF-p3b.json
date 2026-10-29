@@ -1,0 +1,1099 @@
+{
+ "run_id": "primary_v1:C5:EFF-p3b",
+ "case_id": "EFF-p3b",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:44:00Z",
+ "finished_at": "2026-10-10T11:44:26Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "daf9123eac673c320d10141a58ff6a8790d958a6a8eddae9721f7bc3af347118"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Eddyline achieves lower MAE than Brenna-ODE on the Kestrel-Grid test split (0.212 vs 0.219), while using fewer NFE per window (17.8 vs 64).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe"
+    ],
+    "scope": "Kestrel-Grid test split, 8,760 hourly forecast windows from 320 substations, MAE and NFE metrics",
+    "caveats": "No statistical tests reported; difference in means only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Eddyline has higher latency than Brenna-ODE (268 ms vs 241 ms per batch of 256) on the Halden H5 accelerator under the measured conditions.",
+    "evidence_ids": [
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "scope": "Halden H5 accelerator, fp32, batch size 256, median wall-clock time per batch over 50 timed batches after 10 warm-up batches",
+    "caveats": "No statistical tests reported; single hardware configuration."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Eddyline achieves lower MAE than Sluice-TCN (0.212 vs 0.231) but has higher latency (268 ms vs 38 ms per batch of 256).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r3.mae",
+     "T1.r1.lat",
+     "T1.r3.lat"
+    ],
+    "scope": "Kestrel-Grid test split, MAE and latency metrics on Halden H5 accelerator",
+    "caveats": "No statistical tests reported; Sluice-TCN is a non-ODE reference model."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64). However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows). Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64).",
+     "evidence_ids": [
+      "T1.r1.mae",
+      "T1.r2.mae",
+      "T1.r1.nfe",
+      "T1.r2.nfe"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows).",
+     "evidence_ids": [
+      "T1.r1.lat",
+      "T1.r2.lat"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+     "evidence_ids": [
+      "T1.r1.mae",
+      "T1.r3.mae",
+      "T1.r1.lat",
+      "T1.r3.lat"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64). However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows). Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64).",
+     "evidence_ids": [
+      "T1.r1.mae",
+      "T1.r2.mae",
+      "T1.r1.nfe",
+      "T1.r2.nfe"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows).",
+     "evidence_ids": [
+      "T1.r1.lat",
+      "T1.r2.lat"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+     "evidence_ids": [
+      "T1.r1.mae",
+      "T1.r3.mae",
+      "T1.r1.lat",
+      "T1.r3.lat"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64).",
+   "actions": [
+    {
+     "call_id": "call_7347af24f25e4a6cb624f33b",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_488d24fe17cc43afa319dea1",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_7347af24f25e4a6cb624f33b",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Forecast accuracy and inference cost on the Kestrel-Grid test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mae",
+        "row": "Eddyline (ours)",
+        "column": "MAE",
+        "text": "0.212",
+        "value": 0.212,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Eddyline (ours)",
+        "column": "NFE per window",
+        "text": "17.8",
+        "value": 17.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.lat",
+        "row": "Eddyline (ours)",
+        "column": "Latency (ms per batch of 256)",
+        "text": "268",
+        "value": 268.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.mae",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "MAE",
+        "text": "0.219",
+        "value": 0.219,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "NFE per window",
+        "text": "64",
+        "value": 64.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.lat",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "Latency (ms per batch of 256)",
+        "text": "241",
+        "value": 241.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.mae",
+        "row": "Sluice-TCN",
+        "column": "MAE",
+        "text": "0.231",
+        "value": 0.231,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Sluice-TCN",
+        "column": "NFE per window",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.lat",
+        "row": "Sluice-TCN",
+        "column": "Latency (ms per batch of 256)",
+        "text": "38",
+        "value": 38.0,
+        "unit": "ms",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mae",
+      "T1.r1.nfe",
+      "T1.r1.lat",
+      "T1.r2.mae",
+      "T1.r2.nfe",
+      "T1.r2.lat",
+      "T1.r3.mae",
+      "T1.r3.nfe",
+      "T1.r3.lat"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_488d24fe17cc43afa319dea1",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Eddyline vs Brenna-ODE: latency, NFE and MAE"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64).",
+    "revised_text": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe"
+    ],
+    "rationale": "Table T1 confirms Eddyline MAE 0.212 vs Brenna-ODE 0.219 (lower is better), and NFE 17.8 vs 64. The claim states these values accurately and does not use significance language, so no statistical test is required. Scope is correctly limited to the Kestrel-Grid test split.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows).",
+   "actions": [
+    {
+     "call_id": "call_f38de7da587a4a17a62e142f",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_3169eff5c94b423d97fce83f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 268,
+      "evidence_id": "T1.r1.lat"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_b0c006e7d3e8448e9014bd12",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 241,
+      "evidence_id": "T1.r2.lat"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_f38de7da587a4a17a62e142f",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Forecast accuracy and inference cost on the Kestrel-Grid test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mae",
+        "row": "Eddyline (ours)",
+        "column": "MAE",
+        "text": "0.212",
+        "value": 0.212,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Eddyline (ours)",
+        "column": "NFE per window",
+        "text": "17.8",
+        "value": 17.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.lat",
+        "row": "Eddyline (ours)",
+        "column": "Latency (ms per batch of 256)",
+        "text": "268",
+        "value": 268.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.mae",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "MAE",
+        "text": "0.219",
+        "value": 0.219,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "NFE per window",
+        "text": "64",
+        "value": 64.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.lat",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "Latency (ms per batch of 256)",
+        "text": "241",
+        "value": 241.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.mae",
+        "row": "Sluice-TCN",
+        "column": "MAE",
+        "text": "0.231",
+        "value": 0.231,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Sluice-TCN",
+        "column": "NFE per window",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.lat",
+        "row": "Sluice-TCN",
+        "column": "Latency (ms per batch of 256)",
+        "text": "38",
+        "value": 38.0,
+        "unit": "ms",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mae",
+      "T1.r1.nfe",
+      "T1.r1.lat",
+      "T1.r2.mae",
+      "T1.r2.nfe",
+      "T1.r2.lat",
+      "T1.r3.mae",
+      "T1.r3.nfe",
+      "T1.r3.lat"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_3169eff5c94b423d97fce83f",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 268.0,
+      "actual": 268.0,
+      "abs_error": 0.0,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.lat",
+       "row": "Eddyline (ours)",
+       "column": "Latency (ms per batch of 256)",
+       "text": "268",
+       "value": 268.0,
+       "unit": "ms",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.lat"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_b0c006e7d3e8448e9014bd12",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 241.0,
+      "actual": 241.0,
+      "abs_error": 0.0,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.lat",
+       "row": "Brenna-ODE (RK4, 64 NFE)",
+       "column": "Latency (ms per batch of 256)",
+       "text": "241",
+       "value": 241.0,
+       "unit": "ms",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r2.lat"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows).",
+    "revised_text": "However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows).",
+    "evidence_ids": [
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "rationale": "Table T1 shows Eddyline latency 268 ms and Brenna-ODE 241 ms per batch of 256 on the Halden H5 accelerator. Both numbers match the claim exactly, and higher latency for Eddyline is correctly stated. No statistical test is claimed.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+   "actions": [
+    {
+     "call_id": "call_47aa181a46274aa1b65a2c66",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_19cb93dcda1945a28b7fc5ee",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.212,
+      "evidence_id": "T1.r1.mae"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_97e2bb8d85994eac8fe86783",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.231,
+      "evidence_id": "T1.r3.mae"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_cf6524635e4f45efa7daf356",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 268,
+      "evidence_id": "T1.r1.lat"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_47aa181a46274aa1b65a2c66",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Forecast accuracy and inference cost on the Kestrel-Grid test split.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.mae",
+        "row": "Eddyline (ours)",
+        "column": "MAE",
+        "text": "0.212",
+        "value": 0.212,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Eddyline (ours)",
+        "column": "NFE per window",
+        "text": "17.8",
+        "value": 17.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.lat",
+        "row": "Eddyline (ours)",
+        "column": "Latency (ms per batch of 256)",
+        "text": "268",
+        "value": 268.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.mae",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "MAE",
+        "text": "0.219",
+        "value": 0.219,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "NFE per window",
+        "text": "64",
+        "value": 64.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.lat",
+        "row": "Brenna-ODE (RK4, 64 NFE)",
+        "column": "Latency (ms per batch of 256)",
+        "text": "241",
+        "value": 241.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.mae",
+        "row": "Sluice-TCN",
+        "column": "MAE",
+        "text": "0.231",
+        "value": 0.231,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Sluice-TCN",
+        "column": "NFE per window",
+        "text": "—",
+        "value": null,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.lat",
+        "row": "Sluice-TCN",
+        "column": "Latency (ms per batch of 256)",
+        "text": "38",
+        "value": 38.0,
+        "unit": "ms",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.mae",
+      "T1.r1.nfe",
+      "T1.r1.lat",
+      "T1.r2.mae",
+      "T1.r2.nfe",
+      "T1.r2.lat",
+      "T1.r3.mae",
+      "T1.r3.nfe",
+      "T1.r3.lat"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_19cb93dcda1945a28b7fc5ee",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.212,
+      "actual": 0.212,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.mae",
+       "row": "Eddyline (ours)",
+       "column": "MAE",
+       "text": "0.212",
+       "value": 0.212,
+       "unit": null,
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.mae"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_97e2bb8d85994eac8fe86783",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.231,
+      "actual": 0.231,
+      "abs_error": 0.0,
+      "tolerance": 0.0005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.mae",
+       "row": "Sluice-TCN",
+       "column": "MAE",
+       "text": "0.231",
+       "value": 0.231,
+       "unit": null,
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r3.mae"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_cf6524635e4f45efa7daf356",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 268.0,
+      "actual": 268.0,
+      "abs_error": 0.0,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.lat",
+       "row": "Eddyline (ours)",
+       "column": "Latency (ms per batch of 256)",
+       "text": "268",
+       "value": 268.0,
+       "unit": "ms",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.lat"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+    "revised_text": "Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r3.mae",
+     "T1.r1.lat",
+     "T1.r3.lat"
+    ],
+    "rationale": "All four numbers match the table exactly: Eddyline MAE 0.212 vs Sluice-TCN 0.231 (lower better, so Eddyline outperforms), and latency 268 ms vs 38 ms (higher, so substantially higher). The claim is accurate and scoped to the Kestrel-Grid test split.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64). However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows). Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Kestrel-Grid test split, Eddyline achieved a lower MAE than Brenna-ODE (0.212 vs 0.219) while using fewer function evaluations per window (17.8 vs 64).",
+   "evidence_ids": [
+    "T1.r1.mae",
+    "T1.r2.mae",
+    "T1.r1.nfe",
+    "T1.r2.nfe"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "However, Eddyline incurred higher latency than Brenna-ODE on the Halden H5 accelerator (268 ms vs 241 ms per batch of 256 windows).",
+   "evidence_ids": [
+    "T1.r1.lat",
+    "T1.r2.lat"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Eddyline also outperformed the non-ODE reference Sluice-TCN in MAE (0.212 vs 0.231) but at substantially higher latency (268 ms vs 38 ms per batch).",
+   "evidence_ids": [
+    "T1.r1.mae",
+    "T1.r3.mae",
+    "T1.r1.lat",
+    "T1.r3.lat"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "EFF-p3b:shared_outline:outline:f32c0ef357",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632165-etRhL1BuCGZdHzNdVdQ0",
+   "finish_reason": "stop",
+   "prompt_tokens": 1043,
+   "completion_tokens": 413,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026166,
+   "cost_is_estimate": false,
+   "latency_s": 2.977,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:shared_outline:writer_from_outline:fc5459634e",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632168-T509DFAQCYOnWnFNQyQJ",
+   "finish_reason": "stop",
+   "prompt_tokens": 1504,
+   "completion_tokens": 245,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00027916,
+   "cost_is_estimate": false,
+   "latency_s": 1.405,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:e0702053d3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632230-QLhuQytuVtbKHQiefZni",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2689,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.63616e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.391,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:afc50e7555",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632231-QROnbYy7FfVByTvkKP0a",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3444,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000102912,
+   "cost_is_estimate": false,
+   "latency_s": 1.397,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:3ea7211d6d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632233-qnm08Y1jNeEWqTb5c1L4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3619,
+   "completion_tokens": 198,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.71984e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.666,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:1bf2ab3651",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632236-LzOEuOO6VFxgINPKIekQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2657,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.38096e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.407,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:bea8f492e3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632237-1t4LDgmS9k6DlMieB6fw",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3412,
+   "completion_tokens": 118,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000113296,
+   "cost_is_estimate": false,
+   "latency_s": 1.969,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:76bb896d5c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632239-WIYgAbU89kpVv0fmofKm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3722,
+   "completion_tokens": 66,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.14144e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.246,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:d13fdc9d82",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632242-akXxM3iZtgcn43GHtRGC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3942,
+   "completion_tokens": 163,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.45712e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.612,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:7c09c36c2f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632245-IQ0dyB6qoXWiCeYVoBMg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2687,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.61856e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.305,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:338cd12487",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632246-IVc6T34u3aROso7vXDbx",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3442,
+   "completion_tokens": 228,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000144976,
+   "cost_is_estimate": false,
+   "latency_s": 2.884,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:5b9d938b53",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632249-WC9ppkk5TjJsJuu7zWse",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3951,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.23584e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.105,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:f2d94b4993",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632252-rxhT9dllYPinMOh48u2r",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4163,
+   "completion_tokens": 66,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.66e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.238,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3b:C5:verify_adaptive:ad17ce4d94",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632253-2Lp1HIbGiYciIHd5dYnt",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4375,
+   "completion_tokens": 196,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.77648e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.22,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 14,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 9,
+  "tool_counts": {
+   "lookup_table": 3,
+   "get_test_metadata": 1,
+   "compare_numbers": 5
+  },
+  "prompt_tokens": 44650,
+  "completion_tokens": 1972,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00164827,
+  "cost_usd_condition_only": 0.00110745,
+  "any_cost_estimated": false,
+  "latency_s": 29.822,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 4,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

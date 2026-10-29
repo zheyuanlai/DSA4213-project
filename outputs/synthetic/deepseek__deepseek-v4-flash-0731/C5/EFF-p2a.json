@@ -1,0 +1,980 @@
+{
+ "run_id": "primary_v1:C5:EFF-p2a",
+ "case_id": "EFF-p2a",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:39:45Z",
+ "finished_at": "2026-10-10T11:40:07Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "f8eeec2cfea449ce15af3a9f1d32cbed817953b87ce0f568042076ee321662fd"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Sablewing is more efficient than Ordell-DDS (50 steps) on Halvern-Faces 256×256, using 0.94 TFLOPs per image versus 5.40 TFLOPs, and 8 NFE versus 50 NFE, but has a higher FID (7.8 vs 7.1).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r2.tflops",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.fid",
+     "T1.r2.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, exp1/cmp1",
+    "caveats": "No statistical tests reported; difference in FID is descriptive only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Sablewing is more efficient than Ordell-DDS-10, using 0.94 TFLOPs per image versus 1.08 TFLOPs, and 8 NFE versus 10 NFE, and also has a lower FID (7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r3.tflops",
+     "T1.r1.nfe",
+     "T1.r3.nfe",
+     "T1.r1.fid",
+     "T1.r3.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, exp1/cmp2",
+    "caveats": "No statistical tests reported; difference in FID is descriptive only."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Sablewing's sample quality is worse than the 50-step teacher (FID 7.8 vs 7.1) but better than the 10-step truncated teacher (FID 7.8 vs 15.6), indicating a quality cost relative to the full teacher but a quality gain over the truncated baseline.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid",
+     "T1.r3.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, exp1/cmp1 and exp1/cmp2",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1). Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6). Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1).",
+     "evidence_ids": [
+      "T1.r1.tflops",
+      "T1.r2.tflops",
+      "T1.r1.nfe",
+      "T1.r2.nfe",
+      "T1.r1.fid",
+      "T1.r2.fid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6).",
+     "evidence_ids": [
+      "T1.r1.tflops",
+      "T1.r3.tflops",
+      "T1.r1.nfe",
+      "T1.r3.nfe",
+      "T1.r1.fid",
+      "T1.r3.fid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+     "evidence_ids": [
+      "T1.r1.fid",
+      "T1.r2.fid",
+      "T1.r3.fid"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1). Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6). Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1).",
+     "evidence_ids": [
+      "T1.r1.tflops",
+      "T1.r2.tflops",
+      "T1.r1.nfe",
+      "T1.r2.nfe",
+      "T1.r1.fid",
+      "T1.r2.fid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6).",
+     "evidence_ids": [
+      "T1.r1.tflops",
+      "T1.r3.tflops",
+      "T1.r1.nfe",
+      "T1.r3.nfe",
+      "T1.r1.fid",
+      "T1.r3.fid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+     "evidence_ids": [
+      "T1.r1.fid",
+      "T1.r2.fid",
+      "T1.r3.fid"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1).",
+   "actions": [
+    {
+     "call_id": "call_69e8d18a4b9040a597a955e4",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_74539279809d415aa8bcbb5c",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_69e8d18a4b9040a597a955e4",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Sample quality and sampling cost on Halvern-Faces 256×256.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.fid",
+        "row": "Sablewing (ours)",
+        "column": "FID",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Sablewing (ours)",
+        "column": "NFE",
+        "text": "8",
+        "value": 8.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tflops",
+        "row": "Sablewing (ours)",
+        "column": "TFLOPs per image",
+        "text": "0.94",
+        "value": 0.94,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.fid",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "FID",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "NFE",
+        "text": "50",
+        "value": 50.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tflops",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "TFLOPs per image",
+        "text": "5.40",
+        "value": 5.4,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.fid",
+        "row": "Ordell-DDS-10",
+        "column": "FID",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Ordell-DDS-10",
+        "column": "NFE",
+        "text": "10",
+        "value": 10.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tflops",
+        "row": "Ordell-DDS-10",
+        "column": "TFLOPs per image",
+        "text": "1.08",
+        "value": 1.08,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r2.fid",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_74539279809d415aa8bcbb5c",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Sablewing vs Ordell-DDS (50 steps): sampling cost and FID"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1).",
+    "revised_text": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r2.tflops",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.fid",
+     "T1.r2.fid",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "All numbers match T1: Sablewing 0.94 TFLOPs, 8 NFE, FID 7.8; Ordell-DDS 5.40 TFLOPs, 50 NFE, FID 7.1. \"Substantially more efficient\" is supported by the large cost gap. No significance claim is made; the sentence is descriptive. Scope limited to Halvern-Faces 256×256.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6).",
+   "actions": [
+    {
+     "call_id": "call_a29310b76fef405784d0742d",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_3b5dededb591439aa71b4127",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a29310b76fef405784d0742d",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Sample quality and sampling cost on Halvern-Faces 256×256.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.fid",
+        "row": "Sablewing (ours)",
+        "column": "FID",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Sablewing (ours)",
+        "column": "NFE",
+        "text": "8",
+        "value": 8.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tflops",
+        "row": "Sablewing (ours)",
+        "column": "TFLOPs per image",
+        "text": "0.94",
+        "value": 0.94,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.fid",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "FID",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "NFE",
+        "text": "50",
+        "value": 50.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tflops",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "TFLOPs per image",
+        "text": "5.40",
+        "value": 5.4,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.fid",
+        "row": "Ordell-DDS-10",
+        "column": "FID",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Ordell-DDS-10",
+        "column": "NFE",
+        "text": "10",
+        "value": 10.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tflops",
+        "row": "Ordell-DDS-10",
+        "column": "TFLOPs per image",
+        "text": "1.08",
+        "value": 1.08,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r2.fid",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_3b5dededb591439aa71b4127",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Sablewing vs Ordell-DDS-10: sampling cost and FID"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6).",
+    "revised_text": "Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.tflops",
+     "T1.r3.tflops",
+     "T1.r1.nfe",
+     "T1.r3.nfe",
+     "T1.r1.fid",
+     "T1.r3.fid",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "All numbers match T1: Sablewing 0.94 TFLOPs/8 NFE/7.8 FID vs Ordell-DDS-10 1.08 TFLOPs/10 NFE/15.6 FID. Claim is descriptive (efficiency and lower FID), no significance asserted. Supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+   "actions": [
+    {
+     "call_id": "call_da3f8f41f2244d16a4cce702",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_0dd83c236d7640e9b2e2c5ae",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_794f662c88184658a64ea477",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_da3f8f41f2244d16a4cce702",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Sample quality and sampling cost on Halvern-Faces 256×256.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.fid",
+        "row": "Sablewing (ours)",
+        "column": "FID",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Sablewing (ours)",
+        "column": "NFE",
+        "text": "8",
+        "value": 8.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tflops",
+        "row": "Sablewing (ours)",
+        "column": "TFLOPs per image",
+        "text": "0.94",
+        "value": 0.94,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.fid",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "FID",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "NFE",
+        "text": "50",
+        "value": 50.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tflops",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "TFLOPs per image",
+        "text": "5.40",
+        "value": 5.4,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.fid",
+        "row": "Ordell-DDS-10",
+        "column": "FID",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Ordell-DDS-10",
+        "column": "NFE",
+        "text": "10",
+        "value": 10.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tflops",
+        "row": "Ordell-DDS-10",
+        "column": "TFLOPs per image",
+        "text": "1.08",
+        "value": 1.08,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r2.fid",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_0dd83c236d7640e9b2e2c5ae",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Sablewing vs Ordell-DDS (50 steps): sampling cost and FID"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_794f662c88184658a64ea477",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Sablewing vs Ordell-DDS-10: sampling cost and FID"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+    "revised_text": "Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid",
+     "T1.r3.fid",
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "FID values confirm Sablewing (7.8) is worse than Ordell-DDS (7.1) and better than Ordell-DDS-10 (15.6), lower-is-better. No statistical tests reported for either comparison, so the claim's descriptive-only caveat is accurate. Claim is supported at correct scope.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1). Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6). Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On Halvern-Faces 256×256, Sablewing is substantially more efficient than the 50-step Ordell-DDS teacher, requiring 0.94 TFLOPs per image and 8 NFE versus 5.40 TFLOPs and 50 NFE, at the cost of a higher FID (7.8 vs 7.1).",
+   "evidence_ids": [
+    "T1.r1.tflops",
+    "T1.r2.tflops",
+    "T1.r1.nfe",
+    "T1.r2.nfe",
+    "T1.r1.fid",
+    "T1.r2.fid"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Compared with the 10-step truncated teacher (Ordell-DDS-10), Sablewing is both more efficient (0.94 vs 1.08 TFLOPs; 8 vs 10 NFE) and achieves a lower FID (7.8 vs 15.6).",
+   "evidence_ids": [
+    "T1.r1.tflops",
+    "T1.r3.tflops",
+    "T1.r1.nfe",
+    "T1.r3.nfe",
+    "T1.r1.fid",
+    "T1.r3.fid"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Thus, Sablewing's sample quality is worse than the full 50-step teacher but better than the 10-step truncated baseline, indicating a quality cost relative to the full teacher and a quality gain over the truncated baseline; no statistical tests were reported, so these FID differences are descriptive only.",
+   "evidence_ids": [
+    "T1.r1.fid",
+    "T1.r2.fid",
+    "T1.r3.fid"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "EFF-p2a:shared_outline:outline:7312ca31a0",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631915-5sIwszhcUGHNvlzT3z9B",
+   "finish_reason": "stop",
+   "prompt_tokens": 993,
+   "completion_tokens": 504,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00028014,
+   "cost_is_estimate": false,
+   "latency_s": 2.458,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:shared_outline:writer_from_outline:5c1fe4d11d",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791631918-G3JaS9bLX0hx4TQHBCPO",
+   "finish_reason": "stop",
+   "prompt_tokens": 1550,
+   "completion_tokens": 358,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00031724,
+   "cost_is_estimate": false,
+   "latency_s": 2.155,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:8dda0d05ea",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631975-rvbzuq2Q29IatAr9bS68",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2754,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001023456,
+   "cost_is_estimate": false,
+   "latency_s": 1.236,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:674ad63318",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631977-6wHvpVUH7Pxuhn5TPDot",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3494,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000107312,
+   "cost_is_estimate": false,
+   "latency_s": 2.132,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:193e475d2e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631979-EbfDIYBoKQKI4u3nHVCQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3670,
+   "completion_tokens": 247,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001046224,
+   "cost_is_estimate": false,
+   "latency_s": 3.475,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:1bf613bc64",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631982-el0qjk85H4aKG9LZ8ald",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2738,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001006736,
+   "cost_is_estimate": false,
+   "latency_s": 1.284,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:4d6b1ada35",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631984-EApNf7VuNPuknhmn5hJz",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3478,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000105904,
+   "cost_is_estimate": false,
+   "latency_s": 1.481,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:f9b2b2946c",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631985-FpVAkAC34uFoMNiv9G3o",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3653,
+   "completion_tokens": 224,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.70544e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.062,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:e2fff3667b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631988-3xctrNjxR2QE3rnWtwgK",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2711,
+   "completion_tokens": 155,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001268096,
+   "cost_is_estimate": false,
+   "latency_s": 1.992,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:9d49e69ba6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631990-aF7GdxkFqRljvISk0Gyl",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3651,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000121128,
+   "cost_is_estimate": false,
+   "latency_s": 1.703,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:6059140974",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631992-uYZjkWhzuxwAiSSt6XLj",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3827,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.93712e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.355,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2a:C5:verify_adaptive:157af7d44d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791631994-kRsK4rOTBsgQ096OlkWq",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4002,
+   "completion_tokens": 208,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001017312,
+   "cost_is_estimate": false,
+   "latency_s": 2.841,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 12,
+  "n_model_calls_condition_only": 10,
+  "n_tool_calls": 7,
+  "tool_counts": {
+   "lookup_table": 3,
+   "get_test_metadata": 4
+  },
+  "prompt_tokens": 36521,
+  "completion_tokens": 2063,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00161433,
+  "cost_usd_condition_only": 0.00101695,
+  "any_cost_estimated": false,
+  "latency_s": 25.174,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 2,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

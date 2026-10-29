@@ -1,0 +1,980 @@
+{
+ "run_id": "primary_v1:C5:SIG-p3b",
+ "case_id": "SIG-p3b",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T12:05:51Z",
+ "finished_at": "2026-10-10T12:06:32Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "a16a79b6697b174055122be1ef6e85328467b43d3bdc04e94063f2f742a26bb9"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 on Quillbench (mean 46.1% vs 45.6%; paired t-test, Holm-adjusted p=0.36, 95% CI [-0.75, 1.79] percentage points).",
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r2.pass1",
+     "S1"
+    ],
+    "scope": "Quillbench, 420 Python problems, greedy decoding, 8 paired seeds, pass@1 metric",
+    "caveats": "Non-significant difference is not evidence of equivalence; CI includes both negative and positive values."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Ridgeline-FT significantly outperformed Plainweave-FT in compile rate on Quillbench (mean 93.1% vs 90.4%; paired t-test, Holm-adjusted p=0.0087, 95% CI [1.19, 4.35] percentage points).",
+    "evidence_ids": [
+     "T1.r1.compile",
+     "T1.r2.compile",
+     "S2"
+    ],
+    "scope": "Quillbench, 420 Python problems, greedy decoding, 8 paired seeds, compile rate metric",
+    "caveats": "Secondary endpoint; significance controlled across two endpoints via Holm–Bonferroni."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r1.compile",
+     "T1.r2.pass1",
+     "T1.r2.compile",
+     "T1.r3.pass1",
+     "T1.r3.compile"
+    ],
+    "scope": "Quillbench, 420 Python problems, greedy decoding, base model single run vs fine-tuned 8-seed means",
+    "caveats": "Base model is a single deterministic run; no statistical test reported for these comparisons."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points). However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points). Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points).",
+     "evidence_ids": [
+      "T1.r1.pass1",
+      "T1.r2.pass1",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points).",
+     "evidence_ids": [
+      "T1.r1.compile",
+      "T1.r2.compile",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+     "evidence_ids": [
+      "T1.r1.pass1",
+      "T1.r1.compile",
+      "T1.r2.pass1",
+      "T1.r2.compile",
+      "T1.r3.pass1",
+      "T1.r3.compile"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points). However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points). Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points).",
+     "evidence_ids": [
+      "T1.r1.pass1",
+      "T1.r2.pass1",
+      "S1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points).",
+     "evidence_ids": [
+      "T1.r1.compile",
+      "T1.r2.compile",
+      "S2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+     "evidence_ids": [
+      "T1.r1.pass1",
+      "T1.r1.compile",
+      "T1.r2.pass1",
+      "T1.r2.compile",
+      "T1.r3.pass1",
+      "T1.r3.compile"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points).",
+   "actions": [
+    {
+     "call_id": "call_1a1a1470e4104df4a67dba1c",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r1",
+      "column": "pass1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_45a7cc94a6da4d7d86832646",
+     "tool": "lookup_table",
+     "args": {
+      "column": "pass1",
+      "row_id": "r2",
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_9ce1d700f0544fcf85fc7dfe",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_1a1a1470e4104df4a67dba1c",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Quillbench results, mean ± SD over 8 seeds (base model: single deterministic run).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.pass1",
+        "row": "Ridgeline-FT (ours)",
+        "column": "pass@1 (%)",
+        "text": "46.1 ± 1.8",
+        "value": 46.1,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.pass1"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_45a7cc94a6da4d7d86832646",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Quillbench results, mean ± SD over 8 seeds (base model: single deterministic run).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r2.pass1",
+        "row": "Plainweave-FT",
+        "column": "pass@1 (%)",
+        "text": "45.6 ± 1.7",
+        "value": 45.6,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r2.pass1"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_9ce1d700f0544fcf85fc7dfe",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Ridgeline-FT vs Plainweave-FT, pass@1 (primary endpoint)",
+      "tests": [
+       {
+        "test_id": "S1",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp1",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 8,
+        "n_unit": "random seeds (paired by seed)",
+        "statistic_name": "t",
+        "statistic": 0.97,
+        "df": 7.0,
+        "p_value": 0.36,
+        "p_value_text": "Holm-adjusted p = 0.36",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": -0.75,
+        "ci_high": 1.79,
+        "effect_description": "mean paired difference in pass@1 (Ridgeline-FT − Plainweave-FT), percentage points; unadjusted 95% CI",
+        "multiple_comparison_adjustment": "Holm–Bonferroni across the two pre-specified endpoints (S1 pass@1, S2 compile rate)",
+        "notes": "Unadjusted p = 0.36 (unchanged by the Holm step-down).",
+        "summary": "paired t-test; two-sided; paired; n=8 random seeds (paired by seed); t=0.97 (df=7); Holm-adjusted p = 0.36; 95% CI [-0.75, 1.79] for mean paired difference in pass@1 (Ridgeline-FT − Plainweave-FT), percentage points; unadjusted 95% CI; alpha=0.05; adjustment: Holm–Bonferroni across the two pre-specified endpoints (S1 pass@1, S2 compile rate); note: Unadjusted p = 0.36 (unchanged by the Holm step-down)."
+       }
+      ]
+     },
+     "returned_ids": [
+      "S1"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points).",
+    "revised_text": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points).",
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r2.pass1",
+     "S1"
+    ],
+    "rationale": "Table T1 confirms pass@1 values 46.1±1.8 (Ridgeline-FT) and 45.6±1.7 (Plainweave-FT). Test S1 reports paired t-test, Holm-adjusted p=0.36, 95% CI [-0.75,1.79], all matching the claim. Non-significance claim is supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points).",
+   "actions": [
+    {
+     "call_id": "call_f17de3c24c1a4d5ea69b9bde",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "compile"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_b7ae148062894e2a97b286c4",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_f17de3c24c1a4d5ea69b9bde",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Quillbench results, mean ± SD over 8 seeds (base model: single deterministic run).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.compile",
+        "row": "Ridgeline-FT (ours)",
+        "column": "Compile rate (%)",
+        "text": "93.1 ± 1.3",
+        "value": 93.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.compile",
+        "row": "Plainweave-FT",
+        "column": "Compile rate (%)",
+        "text": "90.4 ± 1.8",
+        "value": 90.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.compile",
+        "row": "Fernleaf-1.3B (no fine-tuning)",
+        "column": "Compile rate (%)",
+        "text": "84.0",
+        "value": 84.0,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.compile",
+      "T1.r2.compile",
+      "T1.r3.compile"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_b7ae148062894e2a97b286c4",
+     "tool": "get_test_metadata",
+     "status": "FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Ridgeline-FT vs Plainweave-FT, compile rate (secondary endpoint)",
+      "tests": [
+       {
+        "test_id": "S2",
+        "experiment_id": "exp1",
+        "comparison_id": "cmp2",
+        "test_name": "paired t-test",
+        "sidedness": "two-sided",
+        "paired": true,
+        "n": 8,
+        "n_unit": "random seeds (paired by seed)",
+        "statistic_name": "t",
+        "statistic": 4.14,
+        "df": 7.0,
+        "p_value": 0.0087,
+        "p_value_text": "Holm-adjusted p = 0.0087",
+        "alpha": 0.05,
+        "ci_level": 0.95,
+        "ci_low": 1.19,
+        "ci_high": 4.35,
+        "effect_description": "mean paired difference in compile rate (Ridgeline-FT − Plainweave-FT), percentage points; unadjusted 95% CI",
+        "multiple_comparison_adjustment": "Holm–Bonferroni across the two pre-specified endpoints (S1 pass@1, S2 compile rate)",
+        "notes": "Unadjusted p = 0.0043.",
+        "summary": "paired t-test; two-sided; paired; n=8 random seeds (paired by seed); t=4.14 (df=7); Holm-adjusted p = 0.0087; 95% CI [1.19, 4.35] for mean paired difference in compile rate (Ridgeline-FT − Plainweave-FT), percentage points; unadjusted 95% CI; alpha=0.05; adjustment: Holm–Bonferroni across the two pre-specified endpoints (S1 pass@1, S2 compile rate); note: Unadjusted p = 0.0043."
+       }
+      ]
+     },
+     "returned_ids": [
+      "S2"
+     ],
+     "message": "",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points).",
+    "revised_text": "However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points).",
+    "evidence_ids": [
+     "T1.r1.compile",
+     "T1.r2.compile",
+     "S2"
+    ],
+    "rationale": "Table T1 confirms compile rates 93.1±1.3 (Ridgeline) vs 90.4±1.8 (Plainweave). Test S2 reports paired t-test, Holm-adjusted p=0.0087, 95% CI [1.19,4.35], significant at α=0.05. All numbers and statistical language match the claim.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+   "actions": [
+    {
+     "call_id": "call_a07527793b44425dbf590508",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_2679867cd420445ca45628ae",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 46.1,
+      "evidence_id": "T1.r1.pass1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_9633526679244972b74cc7a6",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 45.6,
+      "evidence_id": "T1.r2.pass1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_d4efc19ffd324593b898d938",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 31.4,
+      "evidence_id": "T1.r3.pass1"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a07527793b44425dbf590508",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Quillbench results, mean ± SD over 8 seeds (base model: single deterministic run).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.pass1",
+        "row": "Ridgeline-FT (ours)",
+        "column": "pass@1 (%)",
+        "text": "46.1 ± 1.8",
+        "value": 46.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.compile",
+        "row": "Ridgeline-FT (ours)",
+        "column": "Compile rate (%)",
+        "text": "93.1 ± 1.3",
+        "value": 93.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.pass1",
+        "row": "Plainweave-FT",
+        "column": "pass@1 (%)",
+        "text": "45.6 ± 1.7",
+        "value": 45.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.compile",
+        "row": "Plainweave-FT",
+        "column": "Compile rate (%)",
+        "text": "90.4 ± 1.8",
+        "value": 90.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.pass1",
+        "row": "Fernleaf-1.3B (no fine-tuning)",
+        "column": "pass@1 (%)",
+        "text": "31.4",
+        "value": 31.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.compile",
+        "row": "Fernleaf-1.3B (no fine-tuning)",
+        "column": "Compile rate (%)",
+        "text": "84.0",
+        "value": 84.0,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.pass1",
+      "T1.r1.compile",
+      "T1.r2.pass1",
+      "T1.r2.compile",
+      "T1.r3.pass1",
+      "T1.r3.compile"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_2679867cd420445ca45628ae",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 46.1,
+      "actual": 46.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.pass1",
+       "row": "Ridgeline-FT (ours)",
+       "column": "pass@1 (%)",
+       "text": "46.1 ± 1.8",
+       "value": 46.1,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r1.pass1"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_9633526679244972b74cc7a6",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 45.6,
+      "actual": 45.6,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.pass1",
+       "row": "Plainweave-FT",
+       "column": "pass@1 (%)",
+       "text": "45.6 ± 1.7",
+       "value": 45.6,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r2.pass1"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_d4efc19ffd324593b898d938",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 31.4,
+      "actual": 31.4,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.pass1",
+       "row": "Fernleaf-1.3B (no fine-tuning)",
+       "column": "pass@1 (%)",
+       "text": "31.4",
+       "value": 31.4,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.pass1"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+    "revised_text": "Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+    "evidence_ids": [
+     "T1.r1.pass1",
+     "T1.r2.pass1",
+     "T1.r3.pass1",
+     "T1.r1.compile",
+     "T1.r2.compile",
+     "T1.r3.compile"
+    ],
+    "rationale": "All six numbers match the table exactly. Both fine-tuned recipes (46.1, 45.6 pass@1; 93.1, 90.4 compile) exceed the base model (31.4 pass@1; 84.0 compile), supporting \"improved\" for both metrics.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 5,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points). However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points). Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On Quillbench, Ridgeline-FT did not significantly differ from Plainweave-FT in pass@1 (46.1% ± 1.8% vs 45.6% ± 1.7%; paired t-test, Holm-adjusted p = 0.36, 95% CI [-0.75, 1.79] percentage points).",
+   "evidence_ids": [
+    "T1.r1.pass1",
+    "T1.r2.pass1",
+    "S1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "However, Ridgeline-FT significantly outperformed Plainweave-FT in compile rate (93.1% ± 1.3% vs 90.4% ± 1.8%; paired t-test, Holm-adjusted p = 0.0087, 95% CI [1.19, 4.35] percentage points).",
+   "evidence_ids": [
+    "T1.r1.compile",
+    "T1.r2.compile",
+    "S2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Both fine-tuned recipes improved pass@1 and compile rate over the base Fernleaf-1.3B model (pass@1: 46.1% and 45.6% vs 31.4%; compile: 93.1% and 90.4% vs 84.0%).",
+   "evidence_ids": [
+    "T1.r1.pass1",
+    "T1.r1.compile",
+    "T1.r2.pass1",
+    "T1.r2.compile",
+    "T1.r3.pass1",
+    "T1.r3.compile"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "SIG-p3b:shared_outline:outline:897e8a5222",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633476-9b0s3zLWdQWRoAkhX9D9",
+   "finish_reason": "stop",
+   "prompt_tokens": 1340,
+   "completion_tokens": 491,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00032508,
+   "cost_is_estimate": false,
+   "latency_s": 2.196,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:shared_outline:writer_from_outline:4a80e5695f",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633478-zRhJWDA71cVZVqxb1Zbt",
+   "finish_reason": "stop",
+   "prompt_tokens": 1881,
+   "completion_tokens": 338,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00035798,
+   "cost_is_estimate": false,
+   "latency_s": 1.326,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:aecb900264",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633541-17PU7g6oheBnTYZKgEuN",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2797,
+   "completion_tokens": 204,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001473136,
+   "cost_is_estimate": false,
+   "latency_s": 2.68,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:57961d3825",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633544-OJ5OtckXwY0gOBL8Y0aj",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3243,
+   "completion_tokens": 136,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000103176,
+   "cost_is_estimate": false,
+   "latency_s": 1.831,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:0c93d666d3",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633546-9c4EOTMTxxwFIiBr8PkR",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3572,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.05536e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.573,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:4d634536e9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633548-P4nOZmsK7AeaVji8yajX",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4097,
+   "completion_tokens": 196,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001287344,
+   "cost_is_estimate": false,
+   "latency_s": 4.068,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:40224b79cf",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633552-mL4DyL4k4LbLxer2OrpZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2788,
+   "completion_tokens": 117,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001235536,
+   "cost_is_estimate": false,
+   "latency_s": 1.929,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:095770ed77",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633554-YDI50Z0ivjXCgdxnPpb2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3240,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.496e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.46,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:3059db1ab2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633555-mymfnnDvfsdS46sPgVDd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3749,
+   "completion_tokens": 192,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001188656,
+   "cost_is_estimate": false,
+   "latency_s": 11.875,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:765dd0df55",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633567-MDpS0suGZeSaYlKsBTcO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2811,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001070976,
+   "cost_is_estimate": false,
+   "latency_s": 1.338,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:c990614079",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633569-Y2WlsTxKuFQoV5H0e2Rp",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3376,
+   "completion_tokens": 338,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.000168208,
+   "cost_is_estimate": false,
+   "latency_s": 3.477,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:d828c89992",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633572-Z4JHjVNS2Y26PVajJpx7",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4096,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.51184e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.427,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:1fb2f3307a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633574-vwX81afUI40t5gGZ7SN9",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4314,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.88688e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.64,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p3b:C5:verify_adaptive:6f593f70e8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633575-weB5BV6zUStfbfBuUmbq",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4533,
+   "completion_tokens": 205,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001040448,
+   "cost_is_estimate": false,
+   "latency_s": 6.198,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 14,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 9,
+  "tool_counts": {
+   "lookup_table": 4,
+   "get_test_metadata": 2,
+   "compare_numbers": 3
+  },
+  "prompt_tokens": 45837,
+  "completion_tokens": 2538,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00198355,
+  "cost_usd_condition_only": 0.00130049,
+  "any_cost_estimated": false,
+  "latency_s": 43.018,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 9,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

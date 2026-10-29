@@ -1,0 +1,903 @@
+{
+ "run_id": "primary_v1:C5:NUM-p2a",
+ "case_id": "NUM-p2a",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:53:48Z",
+ "finished_at": "2026-10-10T11:54:11Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "5ab70d9842802a0274999e6a950b66a9730bf4b29cc9ec1137870aab4dc4144c"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4) on the Ombria-News test set.",
+    "evidence_ids": [
+     "T1.r2.chrf",
+     "T1.r1.chrf"
+    ],
+    "scope": "Ombria-News test set, chrF metric",
+    "caveats": "No statistical test reported; difference may not be significant."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Marrowline-int8 has substantially lower serving latency than Selk-MT: p50 97 ms vs 186 ms and p99 610 ms vs 1,240 ms.",
+    "evidence_ids": [
+     "T1.r2.p50",
+     "T1.r2.p99",
+     "T1.r1.p50",
+     "T1.r1.p99"
+    ],
+    "scope": "Replayed production trace on Pellmar P2, p50 and p99 latency",
+    "caveats": "No statistical test reported."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+    "evidence_ids": [
+     "T1.r3.chrf",
+     "T1.r3.p50",
+     "T1.r3.p99",
+     "T1.r1.chrf",
+     "T1.r1.p50",
+     "T1.r1.p99"
+    ],
+    "scope": "Ombria-News test set and replayed production trace",
+    "caveats": "No statistical test reported; quality difference is larger than int8."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference. Marrowline-int8 also provides substantially lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace. Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference.",
+     "evidence_ids": [
+      "T1.r2.chrf",
+      "T1.r1.chrf"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Marrowline-int8 also provides substantially lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace.",
+     "evidence_ids": [
+      "T1.r2.p50",
+      "T1.r2.p99",
+      "T1.r1.p50",
+      "T1.r1.p99"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+     "evidence_ids": [
+      "T1.r3.chrf",
+      "T1.r3.p50",
+      "T1.r3.p99",
+      "T1.r1.chrf",
+      "T1.r1.p50",
+      "T1.r1.p99"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference. Marrowline-int8 also provides lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace, though no statistical test was reported for this difference. Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference.",
+     "evidence_ids": [
+      "T1.r2.chrf",
+      "T1.r1.chrf"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Marrowline-int8 also provides lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace, though no statistical test was reported for this difference.",
+     "evidence_ids": [
+      "T1.r2.p50",
+      "T1.r2.p99",
+      "T1.r1.p50",
+      "T1.r1.p99",
+      "absent:test:exp1/cmp1"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+     "evidence_ids": [
+      "T1.r3.chrf",
+      "T1.r3.p50",
+      "T1.r3.p99",
+      "T1.r1.chrf",
+      "T1.r1.p50",
+      "T1.r1.p99"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference.",
+   "actions": [
+    {
+     "call_id": "call_56c8079536d04074baede6e6",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r2",
+      "column": "chrf"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_0b958801e6cb4a3c9c9609f6",
+     "tool": "lookup_table",
+     "args": {
+      "column": "chrf",
+      "row_id": "r1",
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_d045d00c2cbc4298b59bca78",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_56c8079536d04074baede6e6",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Translation quality and serving latency (Ombria-News; replayed production trace).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r2.chrf",
+        "row": "Marrowline-int8",
+        "column": "chrF",
+        "text": "57.9",
+        "value": 57.9,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r2.chrf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_0b958801e6cb4a3c9c9609f6",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Translation quality and serving latency (Ombria-News; replayed production trace).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.chrf",
+        "row": "Selk-MT (fp16)",
+        "column": "chrF",
+        "text": "58.4",
+        "value": 58.4,
+        "unit": null,
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.chrf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_d045d00c2cbc4298b59bca78",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marrowline-int8 vs Selk-MT: chrF, p50 and p99 latency"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference.",
+    "revised_text": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference.",
+    "evidence_ids": [
+     "T1.r2.chrf",
+     "T1.r1.chrf",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "chrF values match (57.9 for Marrowline-int8, 58.4 for Selk-MT), so int8 is slightly lower. No statistical test was reported for exp1/cmp1, matching the claim's statement. The claim is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Marrowline-int8 also provides substantially lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace.",
+   "actions": [
+    {
+     "call_id": "call_695d1b3e96984463a721d6c2",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_5ce3b689ed0746cba805b151",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_695d1b3e96984463a721d6c2",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Translation quality and serving latency (Ombria-News; replayed production trace).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.chrf",
+        "row": "Selk-MT (fp16)",
+        "column": "chrF",
+        "text": "58.4",
+        "value": 58.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.p50",
+        "row": "Selk-MT (fp16)",
+        "column": "p50 latency (ms)",
+        "text": "186",
+        "value": 186.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.p99",
+        "row": "Selk-MT (fp16)",
+        "column": "p99 latency (ms)",
+        "text": "1,240",
+        "value": 1240.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.chrf",
+        "row": "Marrowline-int8",
+        "column": "chrF",
+        "text": "57.9",
+        "value": 57.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.p50",
+        "row": "Marrowline-int8",
+        "column": "p50 latency (ms)",
+        "text": "97",
+        "value": 97.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.p99",
+        "row": "Marrowline-int8",
+        "column": "p99 latency (ms)",
+        "text": "610",
+        "value": 610.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.chrf",
+        "row": "Marrowline-int4",
+        "column": "chrF",
+        "text": "55.2",
+        "value": 55.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.p50",
+        "row": "Marrowline-int4",
+        "column": "p50 latency (ms)",
+        "text": "71",
+        "value": 71.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.p99",
+        "row": "Marrowline-int4",
+        "column": "p99 latency (ms)",
+        "text": "460",
+        "value": 460.0,
+        "unit": "ms",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.chrf",
+      "T1.r1.p50",
+      "T1.r1.p99",
+      "T1.r2.chrf",
+      "T1.r2.p50",
+      "T1.r2.p99",
+      "T1.r3.chrf",
+      "T1.r3.p50",
+      "T1.r3.p99"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_5ce3b689ed0746cba805b151",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marrowline-int8 vs Selk-MT: chrF, p50 and p99 latency"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "WEAKEN",
+    "original_text": "Marrowline-int8 also provides substantially lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace.",
+    "revised_text": "Marrowline-int8 also provides lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace, though no statistical test was reported for this difference.",
+    "evidence_ids": [
+     "T1.r2.p50",
+     "T1.r2.p99",
+     "T1.r1.p50",
+     "T1.r1.p99",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "The latency numbers match the table exactly (p50 97 vs 186 ms; p99 610 vs 1,240 ms). However, no statistical test was reported for this comparison, so \"substantially lower\" implies significance that is not established. The claim should note the absence of a reported test.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+   "actions": [
+    {
+     "call_id": "call_a3536db44fd546b9975af38b",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_803ee98337644431bce95f0e",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a3536db44fd546b9975af38b",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Translation quality and serving latency (Ombria-News; replayed production trace).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.chrf",
+        "row": "Selk-MT (fp16)",
+        "column": "chrF",
+        "text": "58.4",
+        "value": 58.4,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.p50",
+        "row": "Selk-MT (fp16)",
+        "column": "p50 latency (ms)",
+        "text": "186",
+        "value": 186.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.p99",
+        "row": "Selk-MT (fp16)",
+        "column": "p99 latency (ms)",
+        "text": "1,240",
+        "value": 1240.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.chrf",
+        "row": "Marrowline-int8",
+        "column": "chrF",
+        "text": "57.9",
+        "value": 57.9,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.p50",
+        "row": "Marrowline-int8",
+        "column": "p50 latency (ms)",
+        "text": "97",
+        "value": 97.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.p99",
+        "row": "Marrowline-int8",
+        "column": "p99 latency (ms)",
+        "text": "610",
+        "value": 610.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.chrf",
+        "row": "Marrowline-int4",
+        "column": "chrF",
+        "text": "55.2",
+        "value": 55.2,
+        "unit": null,
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.p50",
+        "row": "Marrowline-int4",
+        "column": "p50 latency (ms)",
+        "text": "71",
+        "value": 71.0,
+        "unit": "ms",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.p99",
+        "row": "Marrowline-int4",
+        "column": "p99 latency (ms)",
+        "text": "460",
+        "value": 460.0,
+        "unit": "ms",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.chrf",
+      "T1.r1.p50",
+      "T1.r1.p99",
+      "T1.r2.chrf",
+      "T1.r2.p50",
+      "T1.r2.p99",
+      "T1.r3.chrf",
+      "T1.r3.p50",
+      "T1.r3.p99"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_803ee98337644431bce95f0e",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Marrowline-int4 vs Selk-MT: chrF, p50 and p99 latency"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+    "revised_text": "Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+    "evidence_ids": [
+     "T1.r3.chrf",
+     "T1.r1.chrf",
+     "T1.r3.p50",
+     "T1.r1.p50",
+     "T1.r3.p99",
+     "T1.r1.p99",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "All numbers match the table: int4 chrF 55.2 vs Selk 58.4 (larger drop than int8's 57.9), p50 71 vs 186, p99 460 vs 1240. The claim does not assert statistical significance, so the absence of a test does not weaken it. Scope is correctly limited to the evaluated settings.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference. Marrowline-int8 also provides lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace, though no statistical test was reported for this difference. Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Ombria-News test set, Marrowline-int8 achieves slightly lower translation quality than Selk-MT (chrF 57.9 vs 58.4), though no statistical test was reported for this difference.",
+   "evidence_ids": [
+    "T1.r2.chrf",
+    "T1.r1.chrf"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Marrowline-int8 also provides lower serving latency than Selk-MT, with p50 latency of 97 ms vs 186 ms and p99 latency of 610 ms vs 1,240 ms on the replayed production trace, though no statistical test was reported for this difference.",
+   "evidence_ids": [
+    "T1.r2.p50",
+    "T1.r2.p99",
+    "T1.r1.p50",
+    "T1.r1.p99",
+    "absent:test:exp1/cmp1"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Marrowline-int4 shows a larger quality drop (chrF 55.2 vs 58.4) but even lower latency (p50 71 ms, p99 460 ms) compared to Selk-MT.",
+   "evidence_ids": [
+    "T1.r3.chrf",
+    "T1.r3.p50",
+    "T1.r3.p99",
+    "T1.r1.chrf",
+    "T1.r1.p50",
+    "T1.r1.p99"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "NUM-p2a:shared_outline:outline:fc829206cb",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632758-ymx8QhrltCNxGSQyz8Zj",
+   "finish_reason": "stop",
+   "prompt_tokens": 971,
+   "completion_tokens": 378,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00024178,
+   "cost_is_estimate": false,
+   "latency_s": 2.299,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:shared_outline:writer_from_outline:ff1d037b9b",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632760-NNCC9Um8fHY3Q6OHTsQe",
+   "finish_reason": "stop",
+   "prompt_tokens": 1399,
+   "completion_tokens": 275,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00027286,
+   "cost_is_estimate": false,
+   "latency_s": 1.686,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:5f03a65c7d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632818-aZbiYT7Gu8Tm512iexld",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2615,
+   "completion_tokens": 205,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001315616,
+   "cost_is_estimate": false,
+   "latency_s": 2.644,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:c78e40d81e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632820-QEU2XZouDIC7aZSPjSLO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3046,
+   "completion_tokens": 136,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.584e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.864,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:cbd2898acd",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632822-5r9A3WnyDPvhzmijxJrR",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3365,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.41488e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.466,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:845f3b887b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632824-c2cDVmfsMig8VjX3J13S",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3544,
+   "completion_tokens": 179,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.55824e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.528,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:72eee37a9a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632826-6qRv3666DgGclHWUjl5O",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2632,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.16096e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.388,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:75a05e5643",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632828-Xu1kt6hXSf0oHefe6HU2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3363,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.5784e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.126,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:2baed48455",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632830-EqZXukjCoPitySVglfFf",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3542,
+   "completion_tokens": 259,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.65264e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.567,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:ae0a4afff2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632834-9UDbAzNvSg1kJ8HpZ0Xq",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2646,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.25776e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.521,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:f836f986c0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632836-hCrgHgpub612bk4gkTkT",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3377,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.7016e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.482,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "NUM-p2a:C5:verify_adaptive:c86dbf4d7e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632838-WboaXPSiJCdY1TDGWvik",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3556,
+   "completion_tokens": 231,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.03664e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.224,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 12,
+  "n_model_calls_condition_only": 10,
+  "n_tool_calls": 7,
+  "tool_counts": {
+   "lookup_table": 4,
+   "get_test_metadata": 3
+  },
+  "prompt_tokens": 34056,
+  "completion_tokens": 1962,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00144565,
+  "cost_usd_condition_only": 0.00093101,
+  "any_cost_estimated": false,
+  "latency_s": 26.795,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 2,
+   "WEAKEN": 1
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 3,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

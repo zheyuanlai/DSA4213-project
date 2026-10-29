@@ -1,0 +1,1107 @@
+{
+ "run_id": "primary_v1:C4:ROB-p2b",
+ "case_id": "ROB-p2b",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:58:49Z",
+ "finished_at": "2026-10-10T11:59:25Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "1c4410f1652db91e87a7b31a30ebf594f255d387a1e03f88a996f8df8d80a052"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Marrowfield-ASR meets the pre-specified robustness criterion (WER increase ≤ 1.5 absolute points) at all tested noise levels (20, 10, 5 dB SNR), with increases of 0.3, 0.9, and 1.3 points respectively.",
+    "evidence_ids": [
+     "T2.r1.ma_inc",
+     "T2.r2.ma_inc",
+     "T2.r3.ma_inc"
+    ],
+    "scope": "Tallis-Read test set with additive Ambrose-Noise (babble, street, café) at 20, 10, 5 dB SNR; WER increase over original recordings; mean over 3 seeds.",
+    "caveats": "No statistical tests reported; results are descriptive means only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Marrowfield-ASR shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, 1.3 vs 6.6 at 5 dB).",
+    "evidence_ids": [
+     "T2.r1.ma_inc",
+     "T2.r1.os_inc",
+     "T2.r2.ma_inc",
+     "T2.r2.os_inc",
+     "T2.r3.ma_inc",
+     "T2.r3.os_inc"
+    ],
+    "scope": "Tallis-Read test set with additive noise at 20, 10, 5 dB SNR; WER increase over original recordings; mean over 3 seeds.",
+    "caveats": "No statistical test reported for the difference; only one noise collection (Ambrose-Noise) and one test set used."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), but the differences are small and no statistical test is reported.",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r2.wer",
+     "T1.r3.wer"
+    ],
+    "scope": "Tallis-Read test set, original recordings; WER mean over 3 seeds.",
+    "caveats": "No statistical significance test; differences may not be reliable."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively. Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB). On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively.",
+     "evidence_ids": [
+      "T2.r1.ma_inc",
+      "T2.r2.ma_inc",
+      "T2.r3.ma_inc"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB).",
+     "evidence_ids": [
+      "T2.r1.ma_inc",
+      "T2.r1.os_inc",
+      "T2.r2.ma_inc",
+      "T2.r2.os_inc",
+      "T2.r3.ma_inc",
+      "T2.r3.os_inc"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r2.wer",
+      "T1.r3.wer"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively. Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB). On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively.",
+     "evidence_ids": [
+      "T2.r1.ma_inc",
+      "T2.r2.ma_inc",
+      "T2.r3.ma_inc"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB).",
+     "evidence_ids": [
+      "T2.r1.ma_inc",
+      "T2.r1.os_inc",
+      "T2.r2.ma_inc",
+      "T2.r2.os_inc",
+      "T2.r3.ma_inc",
+      "T2.r3.os_inc"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r2.wer",
+      "T1.r3.wer"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively.",
+   "actions": [
+    {
+     "call_id": "call_0c24c38bafb6466a9eac2b25",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2",
+      "column": "ma_inc"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_26369eff89604c9388b431d5",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.3,
+      "evidence_id": "T2.r1.ma_inc"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_0793ad308c8145f49b888ff1",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.9,
+      "evidence_id": "T2.r2.ma_inc"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_ca3b77c74cca4fd78333481f",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 1.3,
+      "evidence_id": "T2.r3.ma_inc"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_0c24c38bafb6466a9eac2b25",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "WER (%) under additive background noise, mean over 3 seeds; increase = WER at that SNR minus WER on the original recordings (absolute points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r0.ma_inc",
+        "row": "Original recordings",
+        "column": "Marrowfield-ASR increase",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.ma_inc",
+        "row": "SNR 20 dB",
+        "column": "Marrowfield-ASR increase",
+        "text": "0.3",
+        "value": 0.3,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.ma_inc",
+        "row": "SNR 10 dB",
+        "column": "Marrowfield-ASR increase",
+        "text": "0.9",
+        "value": 0.9,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.ma_inc",
+        "row": "SNR 5 dB",
+        "column": "Marrowfield-ASR increase",
+        "text": "1.3",
+        "value": 1.3,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r0.ma_inc",
+      "T2.r1.ma_inc",
+      "T2.r2.ma_inc",
+      "T2.r3.ma_inc"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_26369eff89604c9388b431d5",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.3,
+      "actual": 0.3,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r1.ma_inc",
+       "row": "SNR 20 dB",
+       "column": "Marrowfield-ASR increase",
+       "text": "0.3",
+       "value": 0.3,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T2.r1.ma_inc"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_0793ad308c8145f49b888ff1",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.9,
+      "actual": 0.9,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r2.ma_inc",
+       "row": "SNR 10 dB",
+       "column": "Marrowfield-ASR increase",
+       "text": "0.9",
+       "value": 0.9,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T2.r2.ma_inc"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_ca3b77c74cca4fd78333481f",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 1.3,
+      "actual": 1.3,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T2.r3.ma_inc",
+       "row": "SNR 5 dB",
+       "column": "Marrowfield-ASR increase",
+       "text": "1.3",
+       "value": 1.3,
+       "unit": "points",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T2.r3.ma_inc"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively.",
+    "revised_text": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively.",
+    "evidence_ids": [
+     "T2.r1.ma_inc",
+     "T2.r2.ma_inc",
+     "T2.r3.ma_inc"
+    ],
+    "rationale": "All three increase values match the table exactly (0.3, 0.9, 1.3 points at 20, 10, 5 dB). Each is at most 1.5 points, satisfying the pre-specified criterion at all tested noise levels. Scope is correctly limited to tested conditions.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB).",
+   "actions": [
+    {
+     "call_id": "call_5a9752fe6d2f42c993f7441c",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T2"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_a3bd6db9b94540aa8cbb45ea",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp3"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_5a9752fe6d2f42c993f7441c",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T2",
+      "caption": "WER (%) under additive background noise, mean over 3 seeds; increase = WER at that SNR minus WER on the original recordings (absolute points).",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T2.r0.ma_wer",
+        "row": "Original recordings",
+        "column": "Marrowfield-ASR WER",
+        "text": "5.8",
+        "value": 5.8,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r0.ma_inc",
+        "row": "Original recordings",
+        "column": "Marrowfield-ASR increase",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r0.os_wer",
+        "row": "Original recordings",
+        "column": "Ostrander-CTC WER",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r0.os_inc",
+        "row": "Original recordings",
+        "column": "Ostrander-CTC increase",
+        "text": "0.0",
+        "value": 0.0,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.ma_wer",
+        "row": "SNR 20 dB",
+        "column": "Marrowfield-ASR WER",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.ma_inc",
+        "row": "SNR 20 dB",
+        "column": "Marrowfield-ASR increase",
+        "text": "0.3",
+        "value": 0.3,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.os_wer",
+        "row": "SNR 20 dB",
+        "column": "Ostrander-CTC WER",
+        "text": "7.5",
+        "value": 7.5,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r1.os_inc",
+        "row": "SNR 20 dB",
+        "column": "Ostrander-CTC increase",
+        "text": "1.1",
+        "value": 1.1,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.ma_wer",
+        "row": "SNR 10 dB",
+        "column": "Marrowfield-ASR WER",
+        "text": "6.7",
+        "value": 6.7,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.ma_inc",
+        "row": "SNR 10 dB",
+        "column": "Marrowfield-ASR increase",
+        "text": "0.9",
+        "value": 0.9,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.os_wer",
+        "row": "SNR 10 dB",
+        "column": "Ostrander-CTC WER",
+        "text": "9.6",
+        "value": 9.6,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r2.os_inc",
+        "row": "SNR 10 dB",
+        "column": "Ostrander-CTC increase",
+        "text": "3.2",
+        "value": 3.2,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.ma_wer",
+        "row": "SNR 5 dB",
+        "column": "Marrowfield-ASR WER",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.ma_inc",
+        "row": "SNR 5 dB",
+        "column": "Marrowfield-ASR increase",
+        "text": "1.3",
+        "value": 1.3,
+        "unit": "points",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.os_wer",
+        "row": "SNR 5 dB",
+        "column": "Ostrander-CTC WER",
+        "text": "13.0",
+        "value": 13.0,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T2.r3.os_inc",
+        "row": "SNR 5 dB",
+        "column": "Ostrander-CTC increase",
+        "text": "6.6",
+        "value": 6.6,
+        "unit": "points",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T2",
+      "T2.r0.ma_wer",
+      "T2.r0.ma_inc",
+      "T2.r0.os_wer",
+      "T2.r0.os_inc",
+      "T2.r1.ma_wer",
+      "T2.r1.ma_inc",
+      "T2.r1.os_wer",
+      "T2.r1.os_inc",
+      "T2.r2.ma_wer",
+      "T2.r2.ma_inc",
+      "T2.r2.os_wer",
+      "T2.r2.os_inc",
+      "T2.r3.ma_wer",
+      "T2.r3.ma_inc",
+      "T2.r3.os_wer",
+      "T2.r3.os_inc"
+     ],
+     "message": "",
+     "provenance": "table T2"
+    },
+    {
+     "call_id": "call_a3bd6db9b94540aa8cbb45ea",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp3",
+      "description": "WER increase over the original recordings at each SNR, per model"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp3"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp3"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB).",
+    "revised_text": "Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB).",
+    "evidence_ids": [
+     "T2.r1.ma_inc",
+     "T2.r1.os_inc",
+     "T2.r2.ma_inc",
+     "T2.r2.os_inc",
+     "T2.r3.ma_inc",
+     "T2.r3.os_inc",
+     "absent:test:exp2/cmp3"
+    ],
+    "rationale": "All six increase values match the table exactly (0.3/1.1, 0.9/3.2, 1.3/6.6), and Marrowfield-ASR's increase is smaller at every SNR. The claim does not assert statistical significance, so the absence of a test does not weaken it.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+   "actions": [
+    {
+     "call_id": "call_3f3d348fa01c4b128575f3c0",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_8e7fbc76ff324e3eac61f628",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_91cef410ae1649b6a990ae9f",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_3f3d348fa01c4b128575f3c0",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "WER (%) on the Tallis-Read test set (original recordings), mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "WER (%)",
+        "text": "5.8",
+        "value": 5.8,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.params",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "Parameters (M)",
+        "text": "121",
+        "value": 121.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.rtf",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "Real-time factor",
+        "text": "0.21",
+        "value": 0.21,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Ostrander-CTC",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.params",
+        "row": "Ostrander-CTC",
+        "column": "Parameters (M)",
+        "text": "118",
+        "value": 118.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.rtf",
+        "row": "Ostrander-CTC",
+        "column": "Real-time factor",
+        "text": "0.12",
+        "value": 0.12,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.wer",
+        "row": "Pellucid-RNNT",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.params",
+        "row": "Pellucid-RNNT",
+        "column": "Parameters (M)",
+        "text": "124",
+        "value": 124.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.rtf",
+        "row": "Pellucid-RNNT",
+        "column": "Real-time factor",
+        "text": "0.18",
+        "value": 0.18,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r1.params",
+      "T1.r1.rtf",
+      "T1.r2.wer",
+      "T1.r2.params",
+      "T1.r2.rtf",
+      "T1.r3.wer",
+      "T1.r3.params",
+      "T1.r3.rtf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_8e7fbc76ff324e3eac61f628",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marrowfield-ASR vs Ostrander-CTC, WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_91cef410ae1649b6a990ae9f",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Marrowfield-ASR vs Pellucid-RNNT, WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+    "revised_text": "On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r2.wer",
+     "T1.r3.wer",
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "T1 confirms Marrowfield-ASR WER 5.8% < Ostrander-CTC 6.4% and < Pellucid-RNNT 6.1% on original recordings. No statistical test reported for exp1/cmp1 or exp1/cmp2, matching the claim's caveat. All numbers and scope accurate.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 2,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively. Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB). On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Marrowfield-ASR meets the pre-specified robustness criterion of a WER increase of at most 1.5 absolute points at all tested noise levels, with increases of 0.3, 0.9, and 1.3 points at 20, 10, and 5 dB SNR, respectively.",
+   "evidence_ids": [
+    "T2.r1.ma_inc",
+    "T2.r2.ma_inc",
+    "T2.r3.ma_inc"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Marrowfield-ASR also shows smaller WER increases under noise than Ostrander-CTC at every tested SNR (0.3 vs 1.1 points at 20 dB, 0.9 vs 3.2 at 10 dB, and 1.3 vs 6.6 at 5 dB).",
+   "evidence_ids": [
+    "T2.r1.ma_inc",
+    "T2.r1.os_inc",
+    "T2.r2.ma_inc",
+    "T2.r2.os_inc",
+    "T2.r3.ma_inc",
+    "T2.r3.os_inc"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "On the original clean recordings, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests are reported for any of these comparisons.",
+   "evidence_ids": [
+    "T1.r1.wer",
+    "T1.r2.wer",
+    "T1.r3.wer"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "ROB-p2b:shared_outline:outline:87fe61124b",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633082-dgT8T1yDuYSWJzkYiQ7R",
+   "finish_reason": "stop",
+   "prompt_tokens": 1367,
+   "completion_tokens": 530,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00033978,
+   "cost_is_estimate": false,
+   "latency_s": 3.469,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:shared_outline:writer_from_outline:7b7dd5f410",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633085-HaC6URFc3JkYRkhVKDbr",
+   "finish_reason": "stop",
+   "prompt_tokens": 1947,
+   "completion_tokens": 338,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00036722,
+   "cost_is_estimate": false,
+   "latency_s": 1.595,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:d6e7e7af6f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633119-yP49bS8geHBX284jCosC",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3024,
+   "completion_tokens": 65,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001960272,
+   "cost_is_estimate": false,
+   "latency_s": 1.52,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:775a8b7225",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633121-024ECi2HwIpqBwT1AeKd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3474,
+   "completion_tokens": 182,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001138368,
+   "cost_is_estimate": false,
+   "latency_s": 3.884,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:181d4d7ce1",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633125-Xwz4FhDYWbxMeVfqfTfP",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3898,
+   "completion_tokens": 70,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.79584e-05,
+   "cost_is_estimate": false,
+   "latency_s": 7.467,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:8fb1867328",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633132-plhvEhm8AwcN1j67upga",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4118,
+   "completion_tokens": 70,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.3696e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.622,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:bd56f493c6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633134-qczZ3DIUCVYHqfKto973",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4338,
+   "completion_tokens": 187,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.21328e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.101,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:7eea198818",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633137-ItSaPTs7aBpwYd5PVjIr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3053,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001938272,
+   "cost_is_estimate": false,
+   "latency_s": 1.994,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:a9503f3ccd",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633139-7t2J3a8fSUQoNvhAggjJ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4364,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001620608,
+   "cost_is_estimate": false,
+   "latency_s": 1.511,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:4c7841f685",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633141-rF5hJk9X41BDQpZyutn1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4536,
+   "completion_tokens": 230,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.90976e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.074,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:f3568dc1f0",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633144-3URBUT6Gw4Qt2PP9rc8t",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3010,
+   "completion_tokens": 155,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002185552,
+   "cost_is_estimate": false,
+   "latency_s": 2.251,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:9e7e8d6135",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633146-3sK6axGTdVZ5S7RVv05d",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3941,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001248368,
+   "cost_is_estimate": false,
+   "latency_s": 3.648,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:71f69ad521",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633150-YOBJAPDhU3d879O0lSEu",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4115,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.2904e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.561,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2b:C4:verify_adaptive:5ca6137e33",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633152-aZKcdCm5Wl1xY8AdGedh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4289,
+   "completion_tokens": 212,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.44208e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.819,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 14,
+  "n_model_calls_condition_only": 12,
+  "n_tool_calls": 9,
+  "tool_counts": {
+   "lookup_table": 3,
+   "compare_numbers": 3,
+   "get_test_metadata": 3
+  },
+  "prompt_tokens": 49474,
+  "completion_tokens": 2290,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00215635,
+  "cost_usd_condition_only": 0.00144935,
+  "any_cost_estimated": false,
+  "latency_s": 39.516,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 4,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

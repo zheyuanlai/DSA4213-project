@@ -1,0 +1,1738 @@
+{
+ "run_id": "primary_v1:C5:GEN-p3b",
+ "case_id": "GEN-p3b",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:48:57Z",
+ "finished_at": "2026-10-10T11:49:29Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "5f227486b5461a878b7e1b158237dd9278657cb729f1ea75e4ee8cf01b140417"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Gannet achieves higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse, Office, Cavern), with differences of 7.2, 5.5, and 6.8 percentage points respectively.",
+    "evidence_ids": [
+     "T1.r1.g_sr",
+     "T1.r1.l_sr",
+     "T1.r2.g_sr",
+     "T1.r2.l_sr",
+     "T1.r3.g_sr",
+     "T1.r3.l_sr"
+    ],
+    "scope": "Unseen layouts from training families (Warehouse, Office, Cavern), success rate metric, mean over 5 seeds",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Gannet also achieves higher success rates than Ledger-RNN on all three held-out map families (Orchard, Harbor, Quarry), with differences of 11.3, 8.8, and 9.8 percentage points respectively.",
+    "evidence_ids": [
+     "T1.r4.g_sr",
+     "T1.r4.l_sr",
+     "T1.r5.g_sr",
+     "T1.r5.l_sr",
+     "T1.r6.g_sr",
+     "T1.r6.l_sr"
+    ],
+    "scope": "Held-out map families (Orchard, Harbor, Quarry), success rate metric, mean over 5 seeds",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Gannet also produces shorter mean episode lengths on successful episodes than Ledger-RNN across all six evaluated conditions (three training families and three held-out families), with differences ranging from 12 to 21 steps.",
+    "evidence_ids": [
+     "T1.r1.g_len",
+     "T1.r1.l_len",
+     "T1.r2.g_len",
+     "T1.r2.l_len",
+     "T1.r3.g_len",
+     "T1.r3.l_len",
+     "T1.r4.g_len",
+     "T1.r4.l_len",
+     "T1.r5.g_len",
+     "T1.r5.l_len",
+     "T1.r6.g_len",
+     "T1.r6.l_len"
+    ],
+    "scope": "All six evaluated conditions (unseen training-family layouts and held-out families), mean episode length of successful episodes, mean over 5 seeds",
+    "caveats": "No statistical tests reported; differences are descriptive only."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%). This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), indicating that Gannet's benefit generalizes beyond the map families used in training. Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps. However, no statistical tests were reported, so these differences are descriptive only.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%).",
+     "evidence_ids": [
+      "T1.r1.g_sr",
+      "T1.r1.l_sr",
+      "T1.r2.g_sr",
+      "T1.r2.l_sr",
+      "T1.r3.g_sr",
+      "T1.r3.l_sr"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), indicating that Gannet's benefit generalizes beyond the map families used in training.",
+     "evidence_ids": [
+      "T1.r4.g_sr",
+      "T1.r4.l_sr",
+      "T1.r5.g_sr",
+      "T1.r5.l_sr",
+      "T1.r6.g_sr",
+      "T1.r6.l_sr"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps.",
+     "evidence_ids": [
+      "T1.r1.g_len",
+      "T1.r1.l_len",
+      "T1.r2.g_len",
+      "T1.r2.l_len",
+      "T1.r3.g_len",
+      "T1.r3.l_len",
+      "T1.r4.g_len",
+      "T1.r4.l_len",
+      "T1.r5.g_len",
+      "T1.r5.l_len",
+      "T1.r6.g_len",
+      "T1.r6.l_len"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "However, no statistical tests were reported, so these differences are descriptive only.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%). This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), though no statistical tests were reported for these comparisons, so the differences are descriptive only. Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps. However, no statistical tests were reported, so these differences are descriptive only.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%).",
+     "evidence_ids": [
+      "T1.r1.g_sr",
+      "T1.r1.l_sr",
+      "T1.r2.g_sr",
+      "T1.r2.l_sr",
+      "T1.r3.g_sr",
+      "T1.r3.l_sr"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), though no statistical tests were reported for these comparisons, so the differences are descriptive only.",
+     "evidence_ids": [
+      "T1.r4.g_sr",
+      "T1.r4.l_sr",
+      "T1.r5.g_sr",
+      "T1.r5.l_sr",
+      "T1.r6.g_sr",
+      "T1.r6.l_sr",
+      "absent:test:exp2/cmp2"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps.",
+     "evidence_ids": [
+      "T1.r1.g_len",
+      "T1.r1.l_len",
+      "T1.r2.g_len",
+      "T1.r2.l_len",
+      "T1.r3.g_len",
+      "T1.r3.l_len",
+      "T1.r4.g_len",
+      "T1.r4.l_len",
+      "T1.r5.g_len",
+      "T1.r5.l_len",
+      "T1.r6.g_len",
+      "T1.r6.l_len"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "However, no statistical tests were reported, so these differences are descriptive only.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%).",
+   "actions": [
+    {
+     "call_id": "call_a333c475b13a400cad08f743",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_6b3a59d770924470af20ab71",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_a333c475b13a400cad08f743",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Success rate (%) and mean episode length (steps, successful episodes), mean over 5 training seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.g_sr",
+        "row": "Warehouse – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "88.4",
+        "value": 88.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.l_sr",
+        "row": "Warehouse – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "81.2",
+        "value": 81.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.g_len",
+        "row": "Warehouse – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "142",
+        "value": 142.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.l_len",
+        "row": "Warehouse – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "158",
+        "value": 158.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.g_sr",
+        "row": "Office – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "85.1",
+        "value": 85.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.l_sr",
+        "row": "Office – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "79.6",
+        "value": 79.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.g_len",
+        "row": "Office – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "151",
+        "value": 151.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.l_len",
+        "row": "Office – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "163",
+        "value": 163.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.g_sr",
+        "row": "Cavern – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "79.3",
+        "value": 79.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.l_sr",
+        "row": "Cavern – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "72.5",
+        "value": 72.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.g_len",
+        "row": "Cavern – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "177",
+        "value": 177.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.l_len",
+        "row": "Cavern – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "189",
+        "value": 189.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.g_sr",
+        "row": "Orchard – held-out family",
+        "column": "Gannet success (%)",
+        "text": "71.6",
+        "value": 71.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.l_sr",
+        "row": "Orchard – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "60.3",
+        "value": 60.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.g_len",
+        "row": "Orchard – held-out family",
+        "column": "Gannet episode length",
+        "text": "205",
+        "value": 205.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.l_len",
+        "row": "Orchard – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "226",
+        "value": 226.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.g_sr",
+        "row": "Harbor – held-out family",
+        "column": "Gannet success (%)",
+        "text": "68.2",
+        "value": 68.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.l_sr",
+        "row": "Harbor – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "59.4",
+        "value": 59.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.g_len",
+        "row": "Harbor – held-out family",
+        "column": "Gannet episode length",
+        "text": "214",
+        "value": 214.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.l_len",
+        "row": "Harbor – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "231",
+        "value": 231.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r6.g_sr",
+        "row": "Quarry – held-out family",
+        "column": "Gannet success (%)",
+        "text": "64.9",
+        "value": 64.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.l_sr",
+        "row": "Quarry – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "55.1",
+        "value": 55.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.g_len",
+        "row": "Quarry – held-out family",
+        "column": "Gannet episode length",
+        "text": "223",
+        "value": 223.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r6.l_len",
+        "row": "Quarry – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "240",
+        "value": 240.0,
+        "unit": "steps",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.g_sr",
+      "T1.r1.l_sr",
+      "T1.r1.g_len",
+      "T1.r1.l_len",
+      "T1.r2.g_sr",
+      "T1.r2.l_sr",
+      "T1.r2.g_len",
+      "T1.r2.l_len",
+      "T1.r3.g_sr",
+      "T1.r3.l_sr",
+      "T1.r3.g_len",
+      "T1.r3.l_len",
+      "T1.r4.g_sr",
+      "T1.r4.l_sr",
+      "T1.r4.g_len",
+      "T1.r4.l_len",
+      "T1.r5.g_sr",
+      "T1.r5.l_sr",
+      "T1.r5.g_len",
+      "T1.r5.l_len",
+      "T1.r6.g_sr",
+      "T1.r6.l_sr",
+      "T1.r6.g_len",
+      "T1.r6.l_len"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_6b3a59d770924470af20ab71",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Gannet vs Ledger-RNN, success rate, per training family"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%).",
+    "revised_text": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%).",
+    "evidence_ids": [
+     "T1.r1.g_sr",
+     "T1.r1.l_sr",
+     "T1.r2.g_sr",
+     "T1.r2.l_sr",
+     "T1.r3.g_sr",
+     "T1.r3.l_sr",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "All six numbers match T1 exactly (Warehouse 88.4 vs 81.2; Office 85.1 vs 79.6; Cavern 79.3 vs 72.5), and Gannet is higher in each. The claim does not assert statistical significance, so the absence of a test does not weaken it.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), indicating that Gannet's benefit generalizes beyond the map families used in training.",
+   "actions": [
+    {
+     "call_id": "call_9900b3dee0c44005800c85ee",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_6faa8cdde8654d75b8d9e258",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp2",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_9900b3dee0c44005800c85ee",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Success rate (%) and mean episode length (steps, successful episodes), mean over 5 training seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.g_sr",
+        "row": "Warehouse – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "88.4",
+        "value": 88.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.l_sr",
+        "row": "Warehouse – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "81.2",
+        "value": 81.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.g_len",
+        "row": "Warehouse – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "142",
+        "value": 142.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.l_len",
+        "row": "Warehouse – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "158",
+        "value": 158.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.g_sr",
+        "row": "Office – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "85.1",
+        "value": 85.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.l_sr",
+        "row": "Office – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "79.6",
+        "value": 79.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.g_len",
+        "row": "Office – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "151",
+        "value": 151.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.l_len",
+        "row": "Office – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "163",
+        "value": 163.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.g_sr",
+        "row": "Cavern – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "79.3",
+        "value": 79.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.l_sr",
+        "row": "Cavern – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "72.5",
+        "value": 72.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.g_len",
+        "row": "Cavern – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "177",
+        "value": 177.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.l_len",
+        "row": "Cavern – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "189",
+        "value": 189.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.g_sr",
+        "row": "Orchard – held-out family",
+        "column": "Gannet success (%)",
+        "text": "71.6",
+        "value": 71.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.l_sr",
+        "row": "Orchard – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "60.3",
+        "value": 60.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.g_len",
+        "row": "Orchard – held-out family",
+        "column": "Gannet episode length",
+        "text": "205",
+        "value": 205.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.l_len",
+        "row": "Orchard – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "226",
+        "value": 226.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.g_sr",
+        "row": "Harbor – held-out family",
+        "column": "Gannet success (%)",
+        "text": "68.2",
+        "value": 68.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.l_sr",
+        "row": "Harbor – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "59.4",
+        "value": 59.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.g_len",
+        "row": "Harbor – held-out family",
+        "column": "Gannet episode length",
+        "text": "214",
+        "value": 214.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.l_len",
+        "row": "Harbor – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "231",
+        "value": 231.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r6.g_sr",
+        "row": "Quarry – held-out family",
+        "column": "Gannet success (%)",
+        "text": "64.9",
+        "value": 64.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.l_sr",
+        "row": "Quarry – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "55.1",
+        "value": 55.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.g_len",
+        "row": "Quarry – held-out family",
+        "column": "Gannet episode length",
+        "text": "223",
+        "value": 223.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r6.l_len",
+        "row": "Quarry – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "240",
+        "value": 240.0,
+        "unit": "steps",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.g_sr",
+      "T1.r1.l_sr",
+      "T1.r1.g_len",
+      "T1.r1.l_len",
+      "T1.r2.g_sr",
+      "T1.r2.l_sr",
+      "T1.r2.g_len",
+      "T1.r2.l_len",
+      "T1.r3.g_sr",
+      "T1.r3.l_sr",
+      "T1.r3.g_len",
+      "T1.r3.l_len",
+      "T1.r4.g_sr",
+      "T1.r4.l_sr",
+      "T1.r4.g_len",
+      "T1.r4.l_len",
+      "T1.r5.g_sr",
+      "T1.r5.l_sr",
+      "T1.r5.g_len",
+      "T1.r5.l_len",
+      "T1.r6.g_sr",
+      "T1.r6.l_sr",
+      "T1.r6.g_len",
+      "T1.r6.l_len"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_6faa8cdde8654d75b8d9e258",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp2",
+      "description": "Gannet vs Ledger-RNN, success rate, per held-out family"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "WEAKEN",
+    "original_text": "This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), indicating that Gannet's benefit generalizes beyond the map families used in training.",
+    "revised_text": "This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), though no statistical tests were reported for these comparisons, so the differences are descriptive only.",
+    "evidence_ids": [
+     "T1.r4.g_sr",
+     "T1.r4.l_sr",
+     "T1.r5.g_sr",
+     "T1.r5.l_sr",
+     "T1.r6.g_sr",
+     "T1.r6.l_sr",
+     "absent:test:exp2/cmp2"
+    ],
+    "rationale": "All six held-out family numbers match the table exactly (Orchard 71.6/60.3, Harbor 68.2/59.4, Quarry 64.9/55.1), and Gannet is higher in each. However, no statistical test is reported for exp2/cmp2, so \"advantage...generalizes\" overstates the evidence; the claim should be descriptive only.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps.",
+   "actions": [
+    {
+     "call_id": "call_0fc64c16f7bb40b6bd94451c",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_286e5ffb77484ec4941d80ec",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 16,
+      "evidence_id": "T1.r1.l_len",
+      "reference_evidence_id": "T1.r1.g_len",
+      "mode": "difference"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_4e8e4c6aa7a04c85b5b543f4",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 12,
+      "evidence_id": "T1.r2.l_len",
+      "reference_evidence_id": "T1.r2.g_len",
+      "mode": "difference"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_d78162241097483aa0a0e780",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 12,
+      "evidence_id": "T1.r3.l_len",
+      "reference_evidence_id": "T1.r3.g_len",
+      "mode": "difference"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_0fc64c16f7bb40b6bd94451c",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Success rate (%) and mean episode length (steps, successful episodes), mean over 5 training seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.g_sr",
+        "row": "Warehouse – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "88.4",
+        "value": 88.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.l_sr",
+        "row": "Warehouse – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "81.2",
+        "value": 81.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r1.g_len",
+        "row": "Warehouse – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "142",
+        "value": 142.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.l_len",
+        "row": "Warehouse – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "158",
+        "value": 158.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.g_sr",
+        "row": "Office – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "85.1",
+        "value": 85.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.l_sr",
+        "row": "Office – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "79.6",
+        "value": 79.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.g_len",
+        "row": "Office – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "151",
+        "value": 151.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.l_len",
+        "row": "Office – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "163",
+        "value": 163.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.g_sr",
+        "row": "Cavern – unseen layouts",
+        "column": "Gannet success (%)",
+        "text": "79.3",
+        "value": 79.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.l_sr",
+        "row": "Cavern – unseen layouts",
+        "column": "Ledger-RNN success (%)",
+        "text": "72.5",
+        "value": 72.5,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.g_len",
+        "row": "Cavern – unseen layouts",
+        "column": "Gannet episode length",
+        "text": "177",
+        "value": 177.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.l_len",
+        "row": "Cavern – unseen layouts",
+        "column": "Ledger-RNN episode length",
+        "text": "189",
+        "value": 189.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.g_sr",
+        "row": "Orchard – held-out family",
+        "column": "Gannet success (%)",
+        "text": "71.6",
+        "value": 71.6,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.l_sr",
+        "row": "Orchard – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "60.3",
+        "value": 60.3,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r4.g_len",
+        "row": "Orchard – held-out family",
+        "column": "Gannet episode length",
+        "text": "205",
+        "value": 205.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r4.l_len",
+        "row": "Orchard – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "226",
+        "value": 226.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.g_sr",
+        "row": "Harbor – held-out family",
+        "column": "Gannet success (%)",
+        "text": "68.2",
+        "value": 68.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.l_sr",
+        "row": "Harbor – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "59.4",
+        "value": 59.4,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r5.g_len",
+        "row": "Harbor – held-out family",
+        "column": "Gannet episode length",
+        "text": "214",
+        "value": 214.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r5.l_len",
+        "row": "Harbor – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "231",
+        "value": 231.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r6.g_sr",
+        "row": "Quarry – held-out family",
+        "column": "Gannet success (%)",
+        "text": "64.9",
+        "value": 64.9,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.l_sr",
+        "row": "Quarry – held-out family",
+        "column": "Ledger-RNN success (%)",
+        "text": "55.1",
+        "value": 55.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r6.g_len",
+        "row": "Quarry – held-out family",
+        "column": "Gannet episode length",
+        "text": "223",
+        "value": 223.0,
+        "unit": "steps",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r6.l_len",
+        "row": "Quarry – held-out family",
+        "column": "Ledger-RNN episode length",
+        "text": "240",
+        "value": 240.0,
+        "unit": "steps",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.g_sr",
+      "T1.r1.l_sr",
+      "T1.r1.g_len",
+      "T1.r1.l_len",
+      "T1.r2.g_sr",
+      "T1.r2.l_sr",
+      "T1.r2.g_len",
+      "T1.r2.l_len",
+      "T1.r3.g_sr",
+      "T1.r3.l_sr",
+      "T1.r3.g_len",
+      "T1.r3.l_len",
+      "T1.r4.g_sr",
+      "T1.r4.l_sr",
+      "T1.r4.g_len",
+      "T1.r4.l_len",
+      "T1.r5.g_sr",
+      "T1.r5.l_sr",
+      "T1.r5.g_len",
+      "T1.r5.l_len",
+      "T1.r6.g_sr",
+      "T1.r6.l_sr",
+      "T1.r6.g_len",
+      "T1.r6.l_len"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_286e5ffb77484ec4941d80ec",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 16.0,
+      "actual": 16.0,
+      "abs_error": 0.0,
+      "tolerance": 1.0,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.l_len",
+       "row": "Warehouse – unseen layouts",
+       "column": "Ledger-RNN episode length",
+       "text": "158",
+       "value": 158.0,
+       "unit": "steps",
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r1.g_len",
+       "row": "Warehouse – unseen layouts",
+       "column": "Gannet episode length",
+       "text": "142",
+       "value": 142.0,
+       "unit": "steps",
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r1.g_len"
+     },
+     "returned_ids": [
+      "T1.r1.l_len",
+      "T1.r1.g_len"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_4e8e4c6aa7a04c85b5b543f4",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 12.0,
+      "actual": 12.0,
+      "abs_error": 0.0,
+      "tolerance": 1.0,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.l_len",
+       "row": "Office – unseen layouts",
+       "column": "Ledger-RNN episode length",
+       "text": "163",
+       "value": 163.0,
+       "unit": "steps",
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r2.g_len",
+       "row": "Office – unseen layouts",
+       "column": "Gannet episode length",
+       "text": "151",
+       "value": 151.0,
+       "unit": "steps",
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r2.g_len"
+     },
+     "returned_ids": [
+      "T1.r2.l_len",
+      "T1.r2.g_len"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_d78162241097483aa0a0e780",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "difference",
+      "claimed": 12.0,
+      "actual": 12.0,
+      "abs_error": 0.0,
+      "tolerance": 1.0,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.l_len",
+       "row": "Cavern – unseen layouts",
+       "column": "Ledger-RNN episode length",
+       "text": "189",
+       "value": 189.0,
+       "unit": "steps",
+       "higher_is_better": false
+      },
+      "reference": {
+       "evidence_id": "T1.r3.g_len",
+       "row": "Cavern – unseen layouts",
+       "column": "Gannet episode length",
+       "text": "177",
+       "value": 177.0,
+       "unit": "steps",
+       "higher_is_better": false
+      },
+      "better_entry": "T1.r3.g_len"
+     },
+     "returned_ids": [
+      "T1.r3.l_len",
+      "T1.r3.g_len"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps.",
+    "revised_text": "Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps.",
+    "evidence_ids": [
+     "T1.r1.g_len",
+     "T1.r1.l_len",
+     "T1.r2.g_len",
+     "T1.r2.l_len",
+     "T1.r3.g_len",
+     "T1.r3.l_len",
+     "T1.r4.g_len",
+     "T1.r4.l_len",
+     "T1.r5.g_len",
+     "T1.r5.l_len",
+     "T1.r6.g_len",
+     "T1.r6.l_len"
+    ],
+    "rationale": "All six conditions show Gannet shorter than Ledger-RNN (Warehouse 142 vs 158, Office 151 vs 163, Cavern 177 vs 189, Orchard 205 vs 226, Harbor 214 vs 231, Quarry 223 vs 240). Differences: 16, 12, 12, 21, 17, 17 — all within 12–21 range. Claim accurate.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 4,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "However, no statistical tests were reported, so these differences are descriptive only.",
+   "actions": [
+    {
+     "call_id": "call_4d27749cc5694635a7197d65",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_deb743cbcf874f459955711b",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_4d27749cc5694635a7197d65",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Gannet vs Ledger-RNN, success rate, per training family"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_deb743cbcf874f459955711b",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp2/cmp2",
+      "description": "Gannet vs Ledger-RNN, success rate, per held-out family"
+     },
+     "returned_ids": [
+      "absent:test:exp2/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp2/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "However, no statistical tests were reported, so these differences are descriptive only.",
+    "revised_text": "However, no statistical tests were reported, so these differences are descriptive only.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1",
+     "absent:test:exp2/cmp2"
+    ],
+    "rationale": "No statistical tests are reported for either comparison (exp1/cmp1 and exp2/cmp2). The claim that no tests were reported and differences are descriptive only is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%). This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), though no statistical tests were reported for these comparisons, so the differences are descriptive only. Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps. However, no statistical tests were reported, so these differences are descriptive only.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "Gannet achieved higher success rates than Ledger-RNN on unseen layouts from all three training map families (Warehouse: 88.4% vs 81.2%; Office: 85.1% vs 79.6%; Cavern: 79.3% vs 72.5%).",
+   "evidence_ids": [
+    "T1.r1.g_sr",
+    "T1.r1.l_sr",
+    "T1.r2.g_sr",
+    "T1.r2.l_sr",
+    "T1.r3.g_sr",
+    "T1.r3.l_sr"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "This advantage also held on all three held-out map families (Orchard: 71.6% vs 60.3%; Harbor: 68.2% vs 59.4%; Quarry: 64.9% vs 55.1%), though no statistical tests were reported for these comparisons, so the differences are descriptive only.",
+   "evidence_ids": [
+    "T1.r4.g_sr",
+    "T1.r4.l_sr",
+    "T1.r5.g_sr",
+    "T1.r5.l_sr",
+    "T1.r6.g_sr",
+    "T1.r6.l_sr",
+    "absent:test:exp2/cmp2"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Gannet also produced shorter mean episode lengths on successful episodes than Ledger-RNN across all six conditions, with differences ranging from 12 to 21 steps.",
+   "evidence_ids": [
+    "T1.r1.g_len",
+    "T1.r1.l_len",
+    "T1.r2.g_len",
+    "T1.r2.l_len",
+    "T1.r3.g_len",
+    "T1.r3.l_len",
+    "T1.r4.g_len",
+    "T1.r4.l_len",
+    "T1.r5.g_len",
+    "T1.r5.l_len",
+    "T1.r6.g_len",
+    "T1.r6.l_len"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "However, no statistical tests were reported, so these differences are descriptive only.",
+   "evidence_ids": [],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "GEN-p3b:shared_outline:outline:df70366ae6",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632446-WAPC0RNxa1VmFIbml3g4",
+   "finish_reason": "stop",
+   "prompt_tokens": 1174,
+   "completion_tokens": 545,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00031696,
+   "cost_is_estimate": false,
+   "latency_s": 2.411,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:shared_outline:writer_from_outline:8022fd6309",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632449-u3Jn4KlYRQ3soxMLM8cX",
+   "finish_reason": "stop",
+   "prompt_tokens": 1781,
+   "completion_tokens": 430,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00036974,
+   "cost_is_estimate": false,
+   "latency_s": 1.78,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:20477b3cd5",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632527-eEF14PoCI4yzt1hWaHXQ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2851,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001106176,
+   "cost_is_estimate": false,
+   "latency_s": 1.363,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:3a39bd1c64",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632528-gVVaVzpTi0UX7UE5AXMD",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4661,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001881968,
+   "cost_is_estimate": false,
+   "latency_s": 1.685,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:73751373a2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632530-BErwdI8KneETqSyGRcVr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4835,
+   "completion_tokens": 229,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.33344e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.098,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:f7ee27536b",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632533-mrHXciEyrEOll4Y3kg0a",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2856,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001110576,
+   "cost_is_estimate": false,
+   "latency_s": 1.211,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:665ab45862",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632534-OiUiAF2C5JpXPFXXnPrO",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4666,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001886368,
+   "cost_is_estimate": false,
+   "latency_s": 1.575,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:d6f6e13b15",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632536-2hwuJ3inM1ILSH4quk0L",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4841,
+   "completion_tokens": 315,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001165664,
+   "cost_is_estimate": false,
+   "latency_s": 4.188,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:3d89342721",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632540-HM4GyfLFGdshnGVsNQh3",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2862,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001115856,
+   "cost_is_estimate": false,
+   "latency_s": 1.16,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:9198ba4531",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632542-uX2Zn66HpuSDKck0zu59",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4672,
+   "completion_tokens": 450,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0002900128,
+   "cost_is_estimate": false,
+   "latency_s": 4.718,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:2f2169fa64",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632546-4J5yqcqCpm12jM9YJMoL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5540,
+   "completion_tokens": 106,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001229024,
+   "cost_is_estimate": false,
+   "latency_s": 1.63,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:65db20b9a2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632548-R40sr5qh8zlszhPDabkj",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 5870,
+   "completion_tokens": 106,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.65088e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.577,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:6d45b043b7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632550-ATMm8HOoQ7O7a6GuKGGb",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 6202,
+   "completion_tokens": 280,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001398496,
+   "cost_is_estimate": false,
+   "latency_s": 3.683,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:8f1909bf93",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632553-5WmEGWJgtG5cTn2pucvR",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2750,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001215296,
+   "cost_is_estimate": false,
+   "latency_s": 1.794,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:cd163a6119",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632555-xgIaKPhcpBlmRMNCyYVD",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3024,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.5952e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.347,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "GEN-p3b:C5:verify_adaptive:a41f251f64",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632557-0MMfL9scao2PPaJVTkVM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3199,
+   "completion_tokens": 155,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.25088e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.412,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 16,
+  "n_model_calls_condition_only": 14,
+  "n_tool_calls": 10,
+  "tool_counts": {
+   "lookup_table": 3,
+   "get_test_metadata": 4,
+   "compare_numbers": 3
+  },
+  "prompt_tokens": 61784,
+  "completion_tokens": 3083,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00251596,
+  "cost_usd_condition_only": 0.00182926,
+  "any_cost_estimated": false,
+  "latency_s": 35.632,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 3,
+   "WEAKEN": 1
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 5,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

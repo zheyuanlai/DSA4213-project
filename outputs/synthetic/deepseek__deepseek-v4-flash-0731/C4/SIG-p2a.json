@@ -1,0 +1,813 @@
+{
+ "run_id": "primary_v1:C4:SIG-p2a",
+ "case_id": "SIG-p2a",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T12:01:38Z",
+ "finished_at": "2026-10-10T12:02:02Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "f47ded7a0a69b55411c762b181788592a2039ce66c71c6594ed1c89c341a1aea"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Bramblewood achieves a higher mean NDCG@10 (41.2%) than Larkspur-Seq (40.7%) on the Brightcart-Grocery test period, but no statistical test is reported, so the difference cannot be claimed as significant or reliable.",
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg"
+    ],
+    "scope": "Brightcart-Grocery test period, NDCG@10, 10 seeds",
+    "caveats": "No statistical test reported; difference is in means only."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Bramblewood's mean NDCG@10 (41.2%) is substantially higher than Most-Popular's deterministic NDCG@10 (18.3%) on the same test period.",
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "scope": "Brightcart-Grocery test period, NDCG@10",
+    "caveats": "Most-Popular is deterministic; no statistical test reported."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Bramblewood also shows higher mean Recall@20 (63.8%) than Larkspur-Seq (63.1%) and Most-Popular (37.9%), but no significance test is reported.",
+    "evidence_ids": [
+     "T1.r1.recall",
+     "T1.r2.recall",
+     "T1.r3.recall"
+    ],
+    "scope": "Brightcart-Grocery test period, Recall@20",
+    "caveats": "No statistical test reported."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant. Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%). Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant.",
+     "evidence_ids": [
+      "T1.r1.ndcg",
+      "T1.r2.ndcg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%).",
+     "evidence_ids": [
+      "T1.r1.ndcg",
+      "T1.r3.ndcg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+     "evidence_ids": [
+      "T1.r1.recall",
+      "T1.r2.recall",
+      "T1.r3.recall"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant. Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%). Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant.",
+     "evidence_ids": [
+      "T1.r1.ndcg",
+      "T1.r2.ndcg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%).",
+     "evidence_ids": [
+      "T1.r1.ndcg",
+      "T1.r3.ndcg"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+     "evidence_ids": [
+      "T1.r1.recall",
+      "T1.r2.recall",
+      "T1.r3.recall"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant.",
+   "actions": [
+    {
+     "call_id": "call_ac6828f54b4b44dcbcf6bd48",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "ndcg"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_4fc3b638997a4e0ebd541c49",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_ac6828f54b4b44dcbcf6bd48",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Next-item prediction on Brightcart-Grocery (test period). Neural models: mean ± SD over 10 seeds; Most-Popular is deterministic.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.ndcg",
+        "row": "Bramblewood (ours)",
+        "column": "NDCG@10 (%)",
+        "text": "41.2 ± 0.7",
+        "value": 41.2,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.ndcg",
+        "row": "Larkspur-Seq",
+        "column": "NDCG@10 (%)",
+        "text": "40.7 ± 0.6",
+        "value": 40.7,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.ndcg",
+        "row": "Most-Popular",
+        "column": "NDCG@10 (%)",
+        "text": "18.3",
+        "value": 18.3,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.ndcg",
+      "T1.r2.ndcg",
+      "T1.r3.ndcg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_4fc3b638997a4e0ebd541c49",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Bramblewood vs Larkspur-Seq, NDCG@10"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant.",
+    "revised_text": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant.",
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r2.ndcg",
+     "absent:test:exp1/cmp1"
+    ],
+    "rationale": "Table T1 confirms Bramblewood NDCG@10 = 41.2±0.7% vs Larkspur-Seq 40.7±0.6%, higher mean. No statistical test reported for exp1/cmp1, so the claim correctly states the difference cannot be claimed significant.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%).",
+   "actions": [
+    {
+     "call_id": "call_274eaf560c3c4e9e8789e89f",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "row_id": "r1",
+      "column": "ndcg"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_71fece1003704c1fabce6bd9",
+     "tool": "lookup_table",
+     "args": {
+      "column": "ndcg",
+      "row_id": "r3",
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_fb71a82b79b8400b99f26e2b",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 18.3,
+      "evidence_id": "T1.r3.ndcg",
+      "mode": "value"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_274eaf560c3c4e9e8789e89f",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Next-item prediction on Brightcart-Grocery (test period). Neural models: mean ± SD over 10 seeds; Most-Popular is deterministic.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.ndcg",
+        "row": "Bramblewood (ours)",
+        "column": "NDCG@10 (%)",
+        "text": "41.2 ± 0.7",
+        "value": 41.2,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.ndcg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_71fece1003704c1fabce6bd9",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Next-item prediction on Brightcart-Grocery (test period). Neural models: mean ± SD over 10 seeds; Most-Popular is deterministic.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r3.ndcg",
+        "row": "Most-Popular",
+        "column": "NDCG@10 (%)",
+        "text": "18.3",
+        "value": 18.3,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r3.ndcg"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_fb71a82b79b8400b99f26e2b",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 18.3,
+      "actual": 18.3,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r3.ndcg",
+       "row": "Most-Popular",
+       "column": "NDCG@10 (%)",
+       "text": "18.3",
+       "value": 18.3,
+       "unit": "%",
+       "higher_is_better": true
+      }
+     },
+     "returned_ids": [
+      "T1.r3.ndcg"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%).",
+    "revised_text": "Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%).",
+    "evidence_ids": [
+     "T1.r1.ndcg",
+     "T1.r3.ndcg"
+    ],
+    "rationale": "Bramblewood NDCG@10 = 41.2% (T1.r1.ndcg), Most-Popular = 18.3% (T1.r3.ndcg), matching the claimed value. The difference is large; \"substantially higher\" is a reasonable description of the magnitude. No significance test is claimed.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+   "actions": [
+    {
+     "call_id": "call_7ede503a82f246f8a4bfa5a3",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "recall"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_5c4161ab4c6740cc888b2d7b",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_0d737351583c4a718e57e289",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_7ede503a82f246f8a4bfa5a3",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Next-item prediction on Brightcart-Grocery (test period). Neural models: mean ± SD over 10 seeds; Most-Popular is deterministic.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.recall",
+        "row": "Bramblewood (ours)",
+        "column": "Recall@20 (%)",
+        "text": "63.8 ± 0.8",
+        "value": 63.8,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r2.recall",
+        "row": "Larkspur-Seq",
+        "column": "Recall@20 (%)",
+        "text": "63.1 ± 0.8",
+        "value": 63.1,
+        "unit": "%",
+        "higher_is_better": true
+       },
+       {
+        "evidence_id": "T1.r3.recall",
+        "row": "Most-Popular",
+        "column": "Recall@20 (%)",
+        "text": "37.9",
+        "value": 37.9,
+        "unit": "%",
+        "higher_is_better": true
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.recall",
+      "T1.r2.recall",
+      "T1.r3.recall"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_5c4161ab4c6740cc888b2d7b",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Bramblewood vs Larkspur-Seq, NDCG@10"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_0d737351583c4a718e57e289",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Bramblewood vs Most-Popular, NDCG@10"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+    "revised_text": "Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+    "evidence_ids": [
+     "T1.r1.recall",
+     "T1.r2.recall",
+     "T1.r3.recall",
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "Recall@20 values match: Bramblewood 63.8±0.8, Larkspur-Seq 63.1±0.8, Most-Popular 37.9. No statistical test reported for either comparison, so the \"without a reported significance test\" caveat is accurate. Claim is supported as stated.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant. Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%). Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the Brightcart-Grocery test period, Bramblewood achieved a higher mean NDCG@10 (41.2% ± 0.7%) than Larkspur-Seq (40.7% ± 0.6%), although no statistical test was reported, so this difference cannot be claimed as significant.",
+   "evidence_ids": [
+    "T1.r1.ndcg",
+    "T1.r2.ndcg"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "Bramblewood's mean NDCG@10 was also substantially higher than the deterministic Most-Popular baseline (18.3%).",
+   "evidence_ids": [
+    "T1.r1.ndcg",
+    "T1.r3.ndcg"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Bramblewood similarly showed higher mean Recall@20 (63.8% ± 0.8%) than both Larkspur-Seq (63.1% ± 0.8%) and Most-Popular (37.9%), again without a reported significance test.",
+   "evidence_ids": [
+    "T1.r1.recall",
+    "T1.r2.recall",
+    "T1.r3.recall"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "SIG-p2a:shared_outline:outline:1295ecd67d",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633252-e8JB5hGQ68xEVqYftybV",
+   "finish_reason": "stop",
+   "prompt_tokens": 1029,
+   "completion_tokens": 359,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00024458,
+   "cost_is_estimate": false,
+   "latency_s": 2.907,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:shared_outline:writer_from_outline:8ef55cbaf5",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791633255-o9D57dpKTmWnlBa7mkeb",
+   "finish_reason": "stop",
+   "prompt_tokens": 1433,
+   "completion_tokens": 243,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00026866,
+   "cost_is_estimate": false,
+   "latency_s": 2.639,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:ad25c21c13",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633288-YySJBvuoDTpaevdkiwYy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2721,
+   "completion_tokens": 118,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001833552,
+   "cost_is_estimate": false,
+   "latency_s": 2.026,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:a98241a752",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633290-bRy9EDLJO8EgJGn8PNoW",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3183,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.9944e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.421,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:ddaec980f6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633292-oIV5AbVBwHJM90IQEAbU",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3357,
+   "completion_tokens": 183,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.19936e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.946,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:fff6952a29",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633295-JXX0R4PYFjy7Zy7F6uOA",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2683,
+   "completion_tokens": 150,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001884592,
+   "cost_is_estimate": false,
+   "latency_s": 2.282,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:7c88222159",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633297-XzBdAzUxAHW0HajksisL",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3035,
+   "completion_tokens": 82,
+   "reasoning_tokens": 0,
+   "cost_usd": 7.0616e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.39,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:e4692ea2ef",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633299-3OqAbg8hrXJ380TGupIE",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3267,
+   "completion_tokens": 84,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.97488e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.725,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:6819eeba83",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633300-YRClW8w6maMc3OoDLnqy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3493,
+   "completion_tokens": 178,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.26416e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.595,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:d274a4ba1a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633303-SRKpHiUsHQz3YvYuOZq5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2723,
+   "completion_tokens": 64,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001692752,
+   "cost_is_estimate": false,
+   "latency_s": 2.693,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:fce19ebca6",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633306-WD42tQOzy0G4VMzuwLT1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3088,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.584e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.083,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:686f7143b1",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633308-EcCS9dhw7QpRH5tFiIK4",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3362,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.20736e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.365,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "SIG-p2a:C4:verify_adaptive:40b8a1a3ce",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633310-DgMblzUVAvII05hxDhId",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3535,
+   "completion_tokens": 211,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.32384e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.814,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 13,
+  "n_model_calls_condition_only": 11,
+  "n_tool_calls": 8,
+  "tool_counts": {
+   "lookup_table": 4,
+   "get_test_metadata": 3,
+   "compare_numbers": 1
+  },
+  "prompt_tokens": 36909,
+  "completion_tokens": 1930,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00167043,
+  "cost_usd_condition_only": 0.00115719,
+  "any_cost_estimated": false,
+  "latency_s": 28.886,
+  "n_claims": 3,
+  "decision_counts": {
+   "ACCEPT": 3
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 3,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

@@ -1,0 +1,723 @@
+{
+ "run_id": "primary_v1:C5:ROB-p2a",
+ "case_id": "ROB-p2a",
+ "condition": "C5",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:57:19Z",
+ "finished_at": "2026-10-10T11:57:38Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "302beaa8a4ae6d602952229594fa79c2338b43a2cb692194db886a32f160955a"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "On the original Tallis-Read test set, Marrowfield-ASR achieves a lower WER (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), but no statistical test is reported, so the difference is not established as significant.",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r2.wer",
+     "T1.r3.wer"
+    ],
+    "scope": "Tallis-Read test set, original recordings, WER (%), mean over 3 seeds",
+    "caveats": "No statistical tests reported; differences may not be reliable."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "The research question about robustness to additive background noise cannot be answered from the supplied evidence, because no noise conditions were evaluated and no robustness criterion was applied.",
+    "evidence_ids": [
+     "exp1"
+    ],
+    "scope": "All experiments in package",
+    "caveats": "Only original recordings were tested; no noise-added conditions or robustness comparisons are present."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons. The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r2.wer",
+      "T1.r3.wer"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+     "evidence_ids": [
+      "exp1"
+     ],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons. The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons.",
+     "evidence_ids": [
+      "T1.r1.wer",
+      "T1.r2.wer",
+      "T1.r3.wer"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+     "evidence_ids": [
+      "exp1"
+     ],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons.",
+   "actions": [
+    {
+     "call_id": "call_cbedfc5c13354a1cb5b02210",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_b3e7b6a5b0f0460b8fe1be15",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_044ddb555aac4af98e9fa191",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_cbedfc5c13354a1cb5b02210",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "WER (%) on the Tallis-Read test set (original recordings), mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "WER (%)",
+        "text": "5.8",
+        "value": 5.8,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.params",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "Parameters (M)",
+        "text": "121",
+        "value": 121.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.rtf",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "Real-time factor",
+        "text": "0.21",
+        "value": 0.21,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Ostrander-CTC",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.params",
+        "row": "Ostrander-CTC",
+        "column": "Parameters (M)",
+        "text": "118",
+        "value": 118.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.rtf",
+        "row": "Ostrander-CTC",
+        "column": "Real-time factor",
+        "text": "0.12",
+        "value": 0.12,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.wer",
+        "row": "Pellucid-RNNT",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.params",
+        "row": "Pellucid-RNNT",
+        "column": "Parameters (M)",
+        "text": "124",
+        "value": 124.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.rtf",
+        "row": "Pellucid-RNNT",
+        "column": "Real-time factor",
+        "text": "0.18",
+        "value": 0.18,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r1.params",
+      "T1.r1.rtf",
+      "T1.r2.wer",
+      "T1.r2.params",
+      "T1.r2.rtf",
+      "T1.r3.wer",
+      "T1.r3.params",
+      "T1.r3.rtf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_b3e7b6a5b0f0460b8fe1be15",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marrowfield-ASR vs Ostrander-CTC, WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_044ddb555aac4af98e9fa191",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Marrowfield-ASR vs Pellucid-RNNT, WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons.",
+    "revised_text": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons.",
+    "evidence_ids": [
+     "T1.r1.wer",
+     "T1.r2.wer",
+     "T1.r3.wer",
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "Table T1 confirms Marrowfield-ASR WER 5.8% is lower than Ostrander-CTC 6.4% and Pellucid-RNNT 6.1%. No statistical tests were reported for either comparison (absent:test:exp1/cmp1, cmp2), matching the claim's caveat. Claim is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+   "actions": [
+    {
+     "call_id": "call_722b744297b94a668c22fd5f",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_2403e636219446f9aa2ec3bb",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp1",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_ab2f363f3806458c9f19bff1",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_722b744297b94a668c22fd5f",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "WER (%) on the Tallis-Read test set (original recordings), mean over 3 seeds.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.wer",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "WER (%)",
+        "text": "5.8",
+        "value": 5.8,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.params",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "Parameters (M)",
+        "text": "121",
+        "value": 121.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r1.rtf",
+        "row": "Marrowfield-ASR (ours)",
+        "column": "Real-time factor",
+        "text": "0.21",
+        "value": 0.21,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.wer",
+        "row": "Ostrander-CTC",
+        "column": "WER (%)",
+        "text": "6.4",
+        "value": 6.4,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.params",
+        "row": "Ostrander-CTC",
+        "column": "Parameters (M)",
+        "text": "118",
+        "value": 118.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r2.rtf",
+        "row": "Ostrander-CTC",
+        "column": "Real-time factor",
+        "text": "0.12",
+        "value": 0.12,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.wer",
+        "row": "Pellucid-RNNT",
+        "column": "WER (%)",
+        "text": "6.1",
+        "value": 6.1,
+        "unit": "%",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.params",
+        "row": "Pellucid-RNNT",
+        "column": "Parameters (M)",
+        "text": "124",
+        "value": 124.0,
+        "unit": "M",
+        "higher_is_better": null
+       },
+       {
+        "evidence_id": "T1.r3.rtf",
+        "row": "Pellucid-RNNT",
+        "column": "Real-time factor",
+        "text": "0.18",
+        "value": 0.18,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.wer",
+      "T1.r1.params",
+      "T1.r1.rtf",
+      "T1.r2.wer",
+      "T1.r2.params",
+      "T1.r2.rtf",
+      "T1.r3.wer",
+      "T1.r3.params",
+      "T1.r3.rtf"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_2403e636219446f9aa2ec3bb",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Marrowfield-ASR vs Ostrander-CTC, WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_ab2f363f3806458c9f19bff1",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Marrowfield-ASR vs Pellucid-RNNT, WER"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+    "revised_text": "The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+    "evidence_ids": [
+     "T1",
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "The evidence index lists only exp1 on original recordings (T1); no noise-added conditions or robustness criterion appear in the package. The claim that the robustness question cannot be answered from the supplied evidence is accurate and appropriately scoped.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons. The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On the original Tallis-Read test set, Marrowfield-ASR achieved a lower word error rate (5.8%) than both Ostrander-CTC (6.4%) and Pellucid-RNNT (6.1%), though no statistical tests were reported for these comparisons.",
+   "evidence_ids": [
+    "T1.r1.wer",
+    "T1.r2.wer",
+    "T1.r3.wer"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "The research question regarding robustness to additive background noise cannot be answered from the supplied evidence, as only original recordings were evaluated and no noise-added conditions or robustness criterion were applied.",
+   "evidence_ids": [
+    "exp1"
+   ],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "ROB-p2a:shared_outline:outline:f00acae4d7",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632989-0zHurOPu8yUbgPovyZBI",
+   "finish_reason": "stop",
+   "prompt_tokens": 991,
+   "completion_tokens": 236,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00020482,
+   "cost_is_estimate": false,
+   "latency_s": 1.843,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:shared_outline:writer_from_outline:513f97f442",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632991-W3f76IY5ynuaBEd6q9HY",
+   "finish_reason": "stop",
+   "prompt_tokens": 1258,
+   "completion_tokens": 147,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00021728,
+   "cost_is_estimate": false,
+   "latency_s": 1.289,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:e228782159",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633029-aYCoTw6Ixr70VqIvYWKd",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2607,
+   "completion_tokens": 48,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.94096e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.351,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:abb5156bfe",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633030-s1shZg9Y6dwrBD2vUEDr",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3338,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00010784,
+   "cost_is_estimate": false,
+   "latency_s": 4.853,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:f22218c781",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633035-lhFfVPcUFCR4gjEoIITk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3612,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.22624e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.406,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:9f3c6c5e0d",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633037-82ViacLOttIzCPqZQbhZ",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3786,
+   "completion_tokens": 217,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.50992e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.923,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:0c2f4c2e76",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633040-QrdTbWBaYxLDoXLhyJKH",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2561,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.93536e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.913,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:198d6cede8",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633042-Q1mzN2KZI4JCtpCsq92u",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3392,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.8336e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.012,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:bcbc2445b2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633044-NKzoYEZMQoDb8mE0zaQn",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3566,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.82144e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.518,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "ROB-p2a:C5:verify_adaptive:f96c7485bf",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791633045-X8rtpOmgyENOFafuRUl5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3740,
+   "completion_tokens": 165,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.91344e-05,
+   "cost_is_estimate": false,
+   "latency_s": 2.682,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 10,
+  "n_model_calls_condition_only": 8,
+  "n_tool_calls": 6,
+  "tool_counts": {
+   "lookup_table": 2,
+   "get_test_metadata": 4
+  },
+  "prompt_tokens": 28851,
+  "completion_tokens": 1240,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00109175,
+  "cost_usd_condition_only": 0.00066965,
+  "any_cost_estimated": false,
+  "latency_s": 21.79,
+  "n_claims": 2,
+  "decision_counts": {
+   "ACCEPT": 2
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 2,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

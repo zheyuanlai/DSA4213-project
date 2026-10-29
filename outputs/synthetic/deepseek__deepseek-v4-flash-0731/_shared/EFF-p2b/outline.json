@@ -1,0 +1,136 @@
+{
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "created_at": "2026-10-10T11:40:28Z",
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Sablewing is more efficient than Ordell-DDS (50 steps) for 256×256 face generation, using 8 vs 50 NFE, 0.94 vs 5.40 TFLOPs per image, and 3.9 vs 21.7 s per batch of 64, but has a higher FID (7.8 vs 7.1).",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r1.nfe",
+     "T1.r1.tflops",
+     "T1.r1.wall",
+     "T1.r2.fid",
+     "T1.r2.nfe",
+     "T1.r2.tflops",
+     "T1.r2.wall"
+    ],
+    "scope": "Halvern-Faces 256×256, FID, NFE, TFLOPs, wall-clock time on Vantor V3",
+    "caveats": "No statistical tests reported; single dataset and setting."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Sablewing is more efficient than Ordell-DDS-10, using 8 vs 10 NFE, 0.94 vs 1.08 TFLOPs per image, and 3.9 vs 4.5 s per batch, and has a lower FID (7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r1.nfe",
+     "T1.r1.tflops",
+     "T1.r1.wall",
+     "T1.r3.fid",
+     "T1.r3.nfe",
+     "T1.r3.tflops",
+     "T1.r3.wall"
+    ],
+    "scope": "Halvern-Faces 256×256, FID, NFE, TFLOPs, wall-clock time on Vantor V3",
+    "caveats": "No statistical tests reported; single dataset and setting."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The efficiency gain of Sablewing over Ordell-DDS (50 steps) comes at a sample-quality cost: FID worsens from 7.1 to 7.8, a difference of 0.7 FID points.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, FID",
+    "caveats": "No statistical test reported; difference may not be significant or practically important."
+   }
+  ]
+ },
+ "status": "ok",
+ "draft": {
+  "sentences": [
+   {
+    "claim_id": "s1",
+    "text": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images.",
+    "evidence_ids": [
+     "T1.r1.nfe",
+     "T1.r1.tflops",
+     "T1.r1.wall",
+     "T1.r2.nfe",
+     "T1.r2.tflops",
+     "T1.r2.wall"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s2",
+    "text": "This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s3",
+    "text": "Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r1.nfe",
+     "T1.r1.tflops",
+     "T1.r1.wall",
+     "T1.r3.fid",
+     "T1.r3.nfe",
+     "T1.r3.tflops",
+     "T1.r3.wall"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s4",
+    "text": "No statistical tests were reported, and these results are limited to a single dataset and setting.",
+    "evidence_ids": [],
+    "scope": null
+   }
+  ]
+ },
+ "sha256": "b99c3a99229dea00f81210b1644e8cd56de4654dfd65bf66b53ce96f56b6d0ed",
+ "calls": [
+  {
+   "call_id": "EFF-p2b:shared_outline:outline:69e87e84f7",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632018-q1DjVqhiT8cubqGiMqcO",
+   "finish_reason": "stop",
+   "prompt_tokens": 1096,
+   "completion_tokens": 541,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00030492,
+   "cost_is_estimate": false,
+   "latency_s": 3.746,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:shared_outline:writer_from_outline:fef2d172f2",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632022-h7fKPuO21sDy5JWnAbWi",
+   "finish_reason": "stop",
+   "prompt_tokens": 1693,
+   "completion_tokens": 373,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00034146,
+   "cost_is_estimate": false,
+   "latency_s": 3.002,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ]
+}

@@ -1,0 +1,128 @@
+{
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "is_mock": false,
+ "created_at": "2026-10-10T11:40:42Z",
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Eddyline achieves lower MAE than Brenna-ODE on the Kestrel-Grid test split (0.212 vs 0.219), with substantially lower NFE (17.8 vs 64) and lower latency (112 ms vs 241 ms per batch of 256).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "scope": "Kestrel-Grid test split, 8,760 hourly forecast windows from 320 substations, MAE in normalized load units, NFE per window, latency in ms per batch of 256 on Halden H5 accelerator.",
+    "caveats": "No statistical tests reported; differences are descriptive only. Latency measured on one accelerator with batch size 256."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Eddyline also shows lower MAE than the reference non-ODE forecaster Sluice-TCN (0.212 vs 0.231) but higher latency (112 ms vs 38 ms per batch of 256).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r3.mae",
+     "T1.r1.lat",
+     "T1.r3.lat"
+    ],
+    "scope": "Kestrel-Grid test split, MAE in normalized load units, latency in ms per batch of 256 on Halden H5 accelerator.",
+    "caveats": "No statistical tests reported; differences are descriptive only. Sluice-TCN has no NFE reported."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "Eddyline's efficiency gain over Brenna-ODE is consistent across both NFE and latency, but the accuracy gain is small in absolute terms (0.007 MAE).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "scope": "Kestrel-Grid test split, MAE, NFE, latency as above.",
+    "caveats": "No statistical tests; practical importance of the MAE difference is not established."
+   }
+  ]
+ },
+ "status": "ok",
+ "draft": {
+  "sentences": [
+   {
+    "claim_id": "s1",
+    "text": "On the Kestrel-Grid test split, Eddyline achieved lower MAE than Brenna-ODE (0.212 vs 0.219) while using substantially fewer function evaluations (17.8 vs 64 NFE per window) and lower latency (112 ms vs 241 ms per batch of 256).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s2",
+    "text": "Eddyline also outperformed the reference non-ODE forecaster Sluice-TCN in MAE (0.212 vs 0.231), but at higher latency (112 ms vs 38 ms per batch of 256).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r3.mae",
+     "T1.r1.lat",
+     "T1.r3.lat"
+    ],
+    "scope": null
+   },
+   {
+    "claim_id": "s3",
+    "text": "The efficiency advantage of Eddyline over Brenna-ODE was consistent across both NFE and latency, although the absolute MAE improvement was small (0.007).",
+    "evidence_ids": [
+     "T1.r1.mae",
+     "T1.r2.mae",
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.lat",
+     "T1.r2.lat"
+    ],
+    "scope": null
+   }
+  ]
+ },
+ "sha256": "da35b746748086c946cc94df2b702ae0afe45b0212b85a142a7a52d1f1291bf2",
+ "calls": [
+  {
+   "call_id": "EFF-p3a:shared_outline:outline:ba8478562c",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632032-4CngleHgDVo9IvN1KvKR",
+   "finish_reason": "stop",
+   "prompt_tokens": 1043,
+   "completion_tokens": 522,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00029218,
+   "cost_is_estimate": false,
+   "latency_s": 3.022,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p3a:shared_outline:writer_from_outline:6e1379bc28",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632035-mcy3evOlJexKI6A97C75",
+   "finish_reason": "stop",
+   "prompt_tokens": 1619,
+   "completion_tokens": 336,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00032074,
+   "cost_is_estimate": false,
+   "latency_s": 1.464,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ]
+}

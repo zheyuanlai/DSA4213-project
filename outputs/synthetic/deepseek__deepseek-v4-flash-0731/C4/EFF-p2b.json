@@ -1,0 +1,1439 @@
+{
+ "run_id": "primary_v1:C4:EFF-p2b",
+ "case_id": "EFF-p2b",
+ "condition": "C4",
+ "split": "test",
+ "model_id": "deepseek/deepseek-v4-flash-0731",
+ "provider_routing": {
+  "order": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "only": [
+   "streamlake/fp8",
+   "parasail/fp8",
+   "deepinfra/fp8"
+  ],
+  "allow_fallbacks": true,
+  "require_parameters": true
+ },
+ "decoding": {
+  "temperature": 0,
+  "reasoning": {
+   "enabled": false
+  }
+ },
+ "prompt_hashes": {
+  "common_reporting.md": "c61902d7cdacd49c",
+  "writer_direct.md": "11291eefb6d70aa1",
+  "claim_outline.md": "51594727e4757b41",
+  "draft_writer.md": "3221cd787a75dc4b",
+  "reviewer_generic.md": "5db47bd7a556324f",
+  "reviser_generic.md": "c18ec26680fbf073",
+  "verifier_adaptive.md": "85ebe9120e35df52",
+  "verifier_scripted.md": "7f53ac06b8c7b11e"
+ },
+ "code_hash": "dd55fd0c967f1346",
+ "config_hash": "fe688899d11e380c",
+ "started_at": "2026-10-10T11:41:15Z",
+ "finished_at": "2026-10-10T11:41:51Z",
+ "status": "completed",
+ "failure": null,
+ "shared_artifacts": {
+  "outline": "b99c3a99229dea00f81210b1644e8cd56de4654dfd65bf66b53ce96f56b6d0ed"
+ },
+ "outline": {
+  "findings": [
+   {
+    "finding_id": "F1",
+    "summary": "Sablewing is more efficient than Ordell-DDS (50 steps) for 256×256 face generation, using 8 vs 50 NFE, 0.94 vs 5.40 TFLOPs per image, and 3.9 vs 21.7 s per batch of 64, but has a higher FID (7.8 vs 7.1).",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r1.nfe",
+     "T1.r1.tflops",
+     "T1.r1.wall",
+     "T1.r2.fid",
+     "T1.r2.nfe",
+     "T1.r2.tflops",
+     "T1.r2.wall"
+    ],
+    "scope": "Halvern-Faces 256×256, FID, NFE, TFLOPs, wall-clock time on Vantor V3",
+    "caveats": "No statistical tests reported; single dataset and setting."
+   },
+   {
+    "finding_id": "F2",
+    "summary": "Sablewing is more efficient than Ordell-DDS-10, using 8 vs 10 NFE, 0.94 vs 1.08 TFLOPs per image, and 3.9 vs 4.5 s per batch, and has a lower FID (7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r1.nfe",
+     "T1.r1.tflops",
+     "T1.r1.wall",
+     "T1.r3.fid",
+     "T1.r3.nfe",
+     "T1.r3.tflops",
+     "T1.r3.wall"
+    ],
+    "scope": "Halvern-Faces 256×256, FID, NFE, TFLOPs, wall-clock time on Vantor V3",
+    "caveats": "No statistical tests reported; single dataset and setting."
+   },
+   {
+    "finding_id": "F3",
+    "summary": "The efficiency gain of Sablewing over Ordell-DDS (50 steps) comes at a sample-quality cost: FID worsens from 7.1 to 7.8, a difference of 0.7 FID points.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid"
+    ],
+    "scope": "Halvern-Faces 256×256, FID",
+    "caveats": "No statistical test reported; difference may not be significant or practically important."
+   }
+  ]
+ },
+ "drafts": [
+  {
+   "stage": "outline_draft",
+   "passage": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images. This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing. Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6). No statistical tests were reported, and these results are limited to a single dataset and setting.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images.",
+     "evidence_ids": [
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r1.wall",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r2.wall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing.",
+     "evidence_ids": [
+      "T1.r1.fid",
+      "T1.r2.fid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6).",
+     "evidence_ids": [
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r1.wall",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops",
+      "T1.r3.wall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, and these results are limited to a single dataset and setting.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  },
+  {
+   "stage": "verified_adaptive",
+   "passage": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images. This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing. Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6). No statistical tests were reported, and these results are limited to a single dataset and setting.",
+   "sentences": [
+    {
+     "claim_id": "s1",
+     "text": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images.",
+     "evidence_ids": [
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r1.wall",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r2.wall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s2",
+     "text": "This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing.",
+     "evidence_ids": [
+      "T1.r1.fid",
+      "T1.r2.fid"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s3",
+     "text": "Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6).",
+     "evidence_ids": [
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r1.wall",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops",
+      "T1.r3.wall"
+     ],
+     "scope": null
+    },
+    {
+     "claim_id": "s4",
+     "text": "No statistical tests were reported, and these results are limited to a single dataset and setting.",
+     "evidence_ids": [],
+     "scope": null
+    }
+   ]
+  }
+ ],
+ "critique": null,
+ "claim_traces": [
+  {
+   "claim_id": "s1",
+   "original_text": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images.",
+   "actions": [
+    {
+     "call_id": "call_1c6387d3c84a4765a6bdd50d",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_45b138f1e3e94d7f8d78960b",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 8,
+      "evidence_id": "T1.r1.nfe"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_55a278503f344ff1a0dbc09e",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 50,
+      "evidence_id": "T1.r2.nfe"
+     },
+     "policy": "adaptive",
+     "step": 3
+    },
+    {
+     "call_id": "call_38fa482815b5446492ec3d7b",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 0.94,
+      "evidence_id": "T1.r1.tflops"
+     },
+     "policy": "adaptive",
+     "step": 4
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_1c6387d3c84a4765a6bdd50d",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Sample quality and sampling cost on Halvern-Faces 256×256.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.fid",
+        "row": "Sablewing (ours)",
+        "column": "FID",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Sablewing (ours)",
+        "column": "NFE",
+        "text": "8",
+        "value": 8.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tflops",
+        "row": "Sablewing (ours)",
+        "column": "TFLOPs per image",
+        "text": "0.94",
+        "value": 0.94,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.wall",
+        "row": "Sablewing (ours)",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "3.9",
+        "value": 3.9,
+        "unit": "s",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.fid",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "FID",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "NFE",
+        "text": "50",
+        "value": 50.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tflops",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "TFLOPs per image",
+        "text": "5.40",
+        "value": 5.4,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.wall",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "21.7",
+        "value": 21.7,
+        "unit": "s",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.fid",
+        "row": "Ordell-DDS-10",
+        "column": "FID",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Ordell-DDS-10",
+        "column": "NFE",
+        "text": "10",
+        "value": 10.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tflops",
+        "row": "Ordell-DDS-10",
+        "column": "TFLOPs per image",
+        "text": "1.08",
+        "value": 1.08,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.wall",
+        "row": "Ordell-DDS-10",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "4.5",
+        "value": 4.5,
+        "unit": "s",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r1.wall",
+      "T1.r2.fid",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r2.wall",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops",
+      "T1.r3.wall"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_45b138f1e3e94d7f8d78960b",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 8.0,
+      "actual": 8.0,
+      "abs_error": 0.0,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.nfe",
+       "row": "Sablewing (ours)",
+       "column": "NFE",
+       "text": "8",
+       "value": 8.0,
+       "unit": null,
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.nfe"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_55a278503f344ff1a0dbc09e",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 50.0,
+      "actual": 50.0,
+      "abs_error": 0.0,
+      "tolerance": 0.5,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.nfe",
+       "row": "Ordell-DDS (50 steps)",
+       "column": "NFE",
+       "text": "50",
+       "value": 50.0,
+       "unit": null,
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r2.nfe"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_38fa482815b5446492ec3d7b",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 0.94,
+      "actual": 0.94,
+      "abs_error": 0.0,
+      "tolerance": 0.005,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.tflops",
+       "row": "Sablewing (ours)",
+       "column": "TFLOPs per image",
+       "text": "0.94",
+       "value": 0.94,
+       "unit": "TFLOPs",
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.tflops"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s1",
+    "decision": "ACCEPT",
+    "original_text": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images.",
+    "revised_text": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images.",
+    "evidence_ids": [
+     "T1.r1.nfe",
+     "T1.r2.nfe",
+     "T1.r1.tflops",
+     "T1.r2.tflops",
+     "T1.r1.wall",
+     "T1.r2.wall"
+    ],
+    "rationale": "All numbers match the table: Sablewing NFE 8, TFLOPs 0.94, wall 3.9; Ordell-DDS NFE 50, TFLOPs 5.40, wall 21.7. The claim is scoped to Halvern-Faces 256×256 and uses \"markedly more efficient\" descriptively without statistical-test language. Supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 5,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 5,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s2",
+   "original_text": "This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing.",
+   "actions": [
+    {
+     "call_id": "call_576462c4b3394f10bdd3d2e5",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1",
+      "column": "fid"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_3a62c93441c247e8a540ed80",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 7.8,
+      "evidence_id": "T1.r1.fid"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_c1fb81882df64d42ad166847",
+     "tool": "compare_numbers",
+     "args": {
+      "claimed": 7.1,
+      "evidence_id": "T1.r2.fid"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_576462c4b3394f10bdd3d2e5",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Sample quality and sampling cost on Halvern-Faces 256×256.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.fid",
+        "row": "Sablewing (ours)",
+        "column": "FID",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.fid",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "FID",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.fid",
+        "row": "Ordell-DDS-10",
+        "column": "FID",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.fid",
+      "T1.r2.fid",
+      "T1.r3.fid"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_3a62c93441c247e8a540ed80",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 7.8,
+      "actual": 7.8,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r1.fid",
+       "row": "Sablewing (ours)",
+       "column": "FID",
+       "text": "7.8",
+       "value": 7.8,
+       "unit": null,
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r1.fid"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    },
+    {
+     "call_id": "call_c1fb81882df64d42ad166847",
+     "tool": "compare_numbers",
+     "status": "FOUND",
+     "data": {
+      "mode": "value",
+      "claimed": 7.1,
+      "actual": 7.1,
+      "abs_error": 0.0,
+      "tolerance": 0.05,
+      "match": true,
+      "evidence": {
+       "evidence_id": "T1.r2.fid",
+       "row": "Ordell-DDS (50 steps)",
+       "column": "FID",
+       "text": "7.1",
+       "value": 7.1,
+       "unit": null,
+       "higher_is_better": false
+      }
+     },
+     "returned_ids": [
+      "T1.r2.fid"
+     ],
+     "message": "",
+     "provenance": "deterministic arithmetic on table cells"
+    }
+   ],
+   "decision": {
+    "claim_id": "s2",
+    "decision": "ACCEPT",
+    "original_text": "This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing.",
+    "revised_text": "This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing.",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r2.fid"
+    ],
+    "rationale": "FID values match the table exactly: Sablewing 7.8 (T1.r1.fid), Ordell-DDS 7.1 (T1.r2.fid). The claim correctly reports the increase from 7.1 to 7.8 and characterizes it as a modest quality cost. No statistical test was reported, and the claim does not assert significance.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 1,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s3",
+   "original_text": "Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6).",
+   "actions": [
+    {
+     "call_id": "call_90e21f57133146f4a2437da9",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_90e5f691b3674cf9a14e9210",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp2"
+     },
+     "policy": "adaptive",
+     "step": 2
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_90e21f57133146f4a2437da9",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Sample quality and sampling cost on Halvern-Faces 256×256.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.fid",
+        "row": "Sablewing (ours)",
+        "column": "FID",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Sablewing (ours)",
+        "column": "NFE",
+        "text": "8",
+        "value": 8.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tflops",
+        "row": "Sablewing (ours)",
+        "column": "TFLOPs per image",
+        "text": "0.94",
+        "value": 0.94,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.wall",
+        "row": "Sablewing (ours)",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "3.9",
+        "value": 3.9,
+        "unit": "s",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.fid",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "FID",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "NFE",
+        "text": "50",
+        "value": 50.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tflops",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "TFLOPs per image",
+        "text": "5.40",
+        "value": 5.4,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.wall",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "21.7",
+        "value": 21.7,
+        "unit": "s",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.fid",
+        "row": "Ordell-DDS-10",
+        "column": "FID",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Ordell-DDS-10",
+        "column": "NFE",
+        "text": "10",
+        "value": 10.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tflops",
+        "row": "Ordell-DDS-10",
+        "column": "TFLOPs per image",
+        "text": "1.08",
+        "value": 1.08,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.wall",
+        "row": "Ordell-DDS-10",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "4.5",
+        "value": 4.5,
+        "unit": "s",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r1.wall",
+      "T1.r2.fid",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r2.wall",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops",
+      "T1.r3.wall"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    },
+    {
+     "call_id": "call_90e5f691b3674cf9a14e9210",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Sablewing vs Ordell-DDS-10: sampling cost and FID"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    }
+   ],
+   "decision": {
+    "claim_id": "s3",
+    "decision": "ACCEPT",
+    "original_text": "Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6).",
+    "revised_text": "Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6).",
+    "evidence_ids": [
+     "T1.r1.fid",
+     "T1.r1.nfe",
+     "T1.r1.tflops",
+     "T1.r1.wall",
+     "T1.r3.fid",
+     "T1.r3.nfe",
+     "T1.r3.tflops",
+     "T1.r3.wall",
+     "absent:test:exp1/cmp2"
+    ],
+    "rationale": "All numbers match T1 exactly: Sablewing NFE 8, TFLOPs 0.94, wall 3.9, FID 7.8; Ordell-DDS-10 NFE 10, TFLOPs 1.08, wall 4.5, FID 15.6. Sablewing is lower (better) on all four metrics. No significance claim is made; the sentence reports raw values only, consistent with no test reported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 3,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 0,
+   "stop_reason": "decision"
+  },
+  {
+   "claim_id": "s4",
+   "original_text": "No statistical tests were reported, and these results are limited to a single dataset and setting.",
+   "actions": [
+    {
+     "call_id": "call_fa37e91db01c4f5a945660d2",
+     "tool": "get_test_metadata",
+     "args": {
+      "experiment_id": "exp1",
+      "comparison_id": "cmp1"
+     },
+     "policy": "adaptive",
+     "step": 1
+    },
+    {
+     "call_id": "call_4f5a74dda53644b886478aa3",
+     "tool": "get_test_metadata",
+     "args": {
+      "comparison_id": "cmp2",
+      "experiment_id": "exp1"
+     },
+     "policy": "adaptive",
+     "step": 2
+    },
+    {
+     "call_id": "call_181d529f9437411f8f75c60b",
+     "tool": "lookup_table",
+     "args": {
+      "table_id": "T1"
+     },
+     "policy": "adaptive",
+     "step": 3
+    }
+   ],
+   "observations": [
+    {
+     "call_id": "call_fa37e91db01c4f5a945660d2",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp1",
+      "description": "Sablewing vs Ordell-DDS (50 steps): sampling cost and FID"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp1"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp1"
+    },
+    {
+     "call_id": "call_4f5a74dda53644b886478aa3",
+     "tool": "get_test_metadata",
+     "status": "NOT_FOUND",
+     "data": {
+      "comparison": "exp1/cmp2",
+      "description": "Sablewing vs Ordell-DDS-10: sampling cost and FID"
+     },
+     "returned_ids": [
+      "absent:test:exp1/cmp2"
+     ],
+     "message": "No statistical test is reported for this comparison. This means statistical significance is NOT established; it is NOT evidence that the effect is absent or that the methods are equivalent.",
+     "provenance": "comparison exp1/cmp2"
+    },
+    {
+     "call_id": "call_181d529f9437411f8f75c60b",
+     "tool": "lookup_table",
+     "status": "FOUND",
+     "data": {
+      "table_id": "T1",
+      "caption": "Sample quality and sampling cost on Halvern-Faces 256×256.",
+      "notes": null,
+      "cells": [
+       {
+        "evidence_id": "T1.r1.fid",
+        "row": "Sablewing (ours)",
+        "column": "FID",
+        "text": "7.8",
+        "value": 7.8,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.nfe",
+        "row": "Sablewing (ours)",
+        "column": "NFE",
+        "text": "8",
+        "value": 8.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.tflops",
+        "row": "Sablewing (ours)",
+        "column": "TFLOPs per image",
+        "text": "0.94",
+        "value": 0.94,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r1.wall",
+        "row": "Sablewing (ours)",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "3.9",
+        "value": 3.9,
+        "unit": "s",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.fid",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "FID",
+        "text": "7.1",
+        "value": 7.1,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.nfe",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "NFE",
+        "text": "50",
+        "value": 50.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.tflops",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "TFLOPs per image",
+        "text": "5.40",
+        "value": 5.4,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r2.wall",
+        "row": "Ordell-DDS (50 steps)",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "21.7",
+        "value": 21.7,
+        "unit": "s",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.fid",
+        "row": "Ordell-DDS-10",
+        "column": "FID",
+        "text": "15.6",
+        "value": 15.6,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.nfe",
+        "row": "Ordell-DDS-10",
+        "column": "NFE",
+        "text": "10",
+        "value": 10.0,
+        "unit": null,
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.tflops",
+        "row": "Ordell-DDS-10",
+        "column": "TFLOPs per image",
+        "text": "1.08",
+        "value": 1.08,
+        "unit": "TFLOPs",
+        "higher_is_better": false
+       },
+       {
+        "evidence_id": "T1.r3.wall",
+        "row": "Ordell-DDS-10",
+        "column": "Wall-clock time (s per batch of 64)",
+        "text": "4.5",
+        "value": 4.5,
+        "unit": "s",
+        "higher_is_better": false
+       }
+      ]
+     },
+     "returned_ids": [
+      "T1",
+      "T1.r1.fid",
+      "T1.r1.nfe",
+      "T1.r1.tflops",
+      "T1.r1.wall",
+      "T1.r2.fid",
+      "T1.r2.nfe",
+      "T1.r2.tflops",
+      "T1.r2.wall",
+      "T1.r3.fid",
+      "T1.r3.nfe",
+      "T1.r3.tflops",
+      "T1.r3.wall"
+     ],
+     "message": "",
+     "provenance": "table T1"
+    }
+   ],
+   "decision": {
+    "claim_id": "s4",
+    "decision": "ACCEPT",
+    "original_text": "No statistical tests were reported, and these results are limited to a single dataset and setting.",
+    "revised_text": "No statistical tests were reported, and these results are limited to a single dataset and setting.",
+    "evidence_ids": [
+     "absent:test:exp1/cmp1",
+     "absent:test:exp1/cmp2",
+     "T1"
+    ],
+    "rationale": "No statistical test is reported for either comparison (cmp1, cmp2), confirming the first clause. The evidence is limited to a single dataset (Halvern-Faces 256×256) and one setting, confirming the scope limitation. Both clauses are supported.",
+    "valid": true,
+    "validation_notes": []
+   },
+   "model_calls": 4,
+   "protocol_errors": [],
+   "ignored_parallel_calls": 3,
+   "stop_reason": "decision"
+  }
+ ],
+ "final_passage": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images. This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing. Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6). No statistical tests were reported, and these results are limited to a single dataset and setting.",
+ "final_sentences": [
+  {
+   "claim_id": "s1",
+   "text": "On Halvern-Faces 256×256, Sablewing is markedly more efficient than the 50-step Ordell-DDS sampler, requiring 8 versus 50 NFE, 0.94 versus 5.40 TFLOPs per image, and 3.9 versus 21.7 s per batch of 64 images.",
+   "evidence_ids": [
+    "T1.r1.nfe",
+    "T1.r1.tflops",
+    "T1.r1.wall",
+    "T1.r2.nfe",
+    "T1.r2.tflops",
+    "T1.r2.wall"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s2",
+   "text": "This efficiency gain comes at a modest sample-quality cost, with FID increasing from 7.1 for Ordell-DDS to 7.8 for Sablewing.",
+   "evidence_ids": [
+    "T1.r1.fid",
+    "T1.r2.fid"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s3",
+   "text": "Compared with the 10-step Ordell-DDS-10, Sablewing is both more efficient (8 vs 10 NFE, 0.94 vs 1.08 TFLOPs, 3.9 vs 4.5 s per batch) and better in quality (FID 7.8 vs 15.6).",
+   "evidence_ids": [
+    "T1.r1.fid",
+    "T1.r1.nfe",
+    "T1.r1.tflops",
+    "T1.r1.wall",
+    "T1.r3.fid",
+    "T1.r3.nfe",
+    "T1.r3.tflops",
+    "T1.r3.wall"
+   ],
+   "scope": null
+  },
+  {
+   "claim_id": "s4",
+   "text": "No statistical tests were reported, and these results are limited to a single dataset and setting.",
+   "evidence_ids": [],
+   "scope": null
+  }
+ ],
+ "calls": [
+  {
+   "call_id": "EFF-p2b:shared_outline:outline:69e87e84f7",
+   "role": "outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632018-q1DjVqhiT8cubqGiMqcO",
+   "finish_reason": "stop",
+   "prompt_tokens": 1096,
+   "completion_tokens": 541,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00030492,
+   "cost_is_estimate": false,
+   "latency_s": 3.746,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:shared_outline:writer_from_outline:fef2d172f2",
+   "role": "writer_from_outline",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "Parasail",
+   "generation_id": "gen-1791632022-h7fKPuO21sDy5JWnAbWi",
+   "finish_reason": "stop",
+   "prompt_tokens": 1693,
+   "completion_tokens": 373,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.00034146,
+   "cost_is_estimate": false,
+   "latency_s": 3.002,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:0a4b639eb2",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632065-yaCpqTsAD1gbUDURlPOg",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2862,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001770192,
+   "cost_is_estimate": false,
+   "latency_s": 1.329,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:996715f81e",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632067-US0xPF5kAJGyHBCSCl0K",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3830,
+   "completion_tokens": 336,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001858208,
+   "cost_is_estimate": false,
+   "latency_s": 3.857,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:322f2bb995",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632071-oSJXTLBJALXkau25jZpk",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4534,
+   "completion_tokens": 66,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001110592,
+   "cost_is_estimate": false,
+   "latency_s": 2.045,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:35a45fce3f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632073-SGtYpHijRgB8rExIxjc2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4740,
+   "completion_tokens": 69,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.45456e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.321,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:ea04ef6b34",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632074-9GlIjl1f5ZfBLvrL4an5",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4959,
+   "completion_tokens": 227,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001037184,
+   "cost_is_estimate": false,
+   "latency_s": 3.442,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:ddb7d49ef9",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632078-NOLtwI8qpp58Pktv3e2w",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2791,
+   "completion_tokens": 64,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001752592,
+   "cost_is_estimate": false,
+   "latency_s": 1.732,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:f20b0c7726",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632079-oivUkhlRUhzC3b02vI4I",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3122,
+   "completion_tokens": 122,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.8832e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.808,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:b0ad9c2356",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632081-K91aoNZwUuOshbYB5sm1",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3430,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 5.80576e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.347,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:635c42c191",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632083-WOmOZvN6q8ak0rkzHgrM",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3640,
+   "completion_tokens": 187,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.61424e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.264,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:648c7d539a",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632086-wwS0FsvhdYfNzNwpFTPh",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2880,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.7736e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.182,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:1e35f2c108",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632087-V8itxuihHi3qcF32tSIy",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3848,
+   "completion_tokens": 68,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001166528,
+   "cost_is_estimate": false,
+   "latency_s": 1.457,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:5b8b1d8b09",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632089-BblxRZqCpY7x77sBb3bY",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4023,
+   "completion_tokens": 272,
+   "reasoning_tokens": 0,
+   "cost_usd": 9.8664e-05,
+   "cost_is_estimate": false,
+   "latency_s": 3.524,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:d4462d22c7",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632092-qNZ41D5qpt81a41Qt64u",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 2760,
+   "completion_tokens": 155,
+   "reasoning_tokens": 0,
+   "cost_usd": 6.5688e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.996,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:3d62a6e263",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632094-0624hlxmSMvcQzgxmp02",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3115,
+   "completion_tokens": 101,
+   "reasoning_tokens": 0,
+   "cost_usd": 8.2672e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.786,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:21c48d8611",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632096-Gv4QFVDx3BpjYqu1zOM2",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 3369,
+   "completion_tokens": 47,
+   "reasoning_tokens": 0,
+   "cost_usd": 4.71456e-05,
+   "cost_is_estimate": false,
+   "latency_s": 1.209,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  },
+  {
+   "call_id": "EFF-p2b:C4:verify_adaptive:ee0c66814f",
+   "role": "verify_adaptive",
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "provider": "StreamLake",
+   "generation_id": "gen-1791632098-RaKNaq4mBK0mzhOgirTm",
+   "finish_reason": "tool_calls",
+   "prompt_tokens": 4337,
+   "completion_tokens": 171,
+   "reasoning_tokens": 0,
+   "cost_usd": 0.0001432544,
+   "cost_is_estimate": false,
+   "latency_s": 3.191,
+   "status": "ok",
+   "error": null,
+   "attempts": 1
+  }
+ ],
+ "totals": {
+  "n_model_calls": 18,
+  "n_model_calls_condition_only": 16,
+  "n_tool_calls": 12,
+  "tool_counts": {
+   "lookup_table": 4,
+   "compare_numbers": 5,
+   "get_test_metadata": 3
+  },
+  "prompt_tokens": 61029,
+  "completion_tokens": 2961,
+  "reasoning_tokens": 0,
+  "cost_usd": 0.00229865,
+  "cost_usd_condition_only": 0.00165227,
+  "any_cost_estimated": false,
+  "latency_s": 41.238,
+  "n_claims": 4,
+  "decision_counts": {
+   "ACCEPT": 4
+  },
+  "n_invalid_decisions": 0,
+  "n_protocol_errors": 0,
+  "n_ignored_parallel_calls": 9,
+  "n_format_errors": 0
+ },
+ "is_mock": false
+}

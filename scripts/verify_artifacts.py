@@ -59,6 +59,10 @@ def check_freeze() -> None:
 
 
 def check_private_gold() -> None:
+    released = ROOT / "data" / "synthetic" / "gold" / "test_gold.jsonl"
+    if released.exists():
+        manifest_text = (ROOT / "benchmarks" / "freeze_manifest.json").read_text()
+        record("released TEST gold hash", "PASS" if sha(released) in manifest_text else "FAIL")
     gold = ROOT / "private" / "gold" / "test_gold.jsonl"
     if not gold.exists():
         record("TEST gold hash", "SKIP", "private/ not present")
@@ -101,8 +105,10 @@ def check_extension() -> None:
 
 def check_tracked() -> None:
     tracked = git("ls-files").splitlines()
+    released = re.compile(r"outputs/synthetic/[^/]+/(?:_shared/[^/]+/outline\.json|C[45]/[^/]+\.json)$")
     leaks = [t for t in tracked if t.startswith(("private/", "outputs/synthetic/", "outputs/real_papers/",
-                                                 "outputs/real_papers_v2/")) or t in (".env",) or t.endswith(".key")]
+                                                 "outputs/real_papers_v2/")) and not released.match(t)
+             or t in (".env",) or t.endswith(".key")]
     record("no private or withheld files tracked", "FAIL" if leaks else "PASS", f"{leaks[:3]}" if leaks else "")
     key_re = re.compile(r"sk-or-v1-[0-9a-f]{20,}")
     hits = [t for t in tracked if (ROOT / t).is_file() and (ROOT / t).stat().st_size < 20_000_000
