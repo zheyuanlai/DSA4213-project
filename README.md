@@ -1,34 +1,8 @@
 # Saying What the Evidence Shows
 
 **Overstatement and Understatement in Agent-Written Results Sections**
+
 DSA4213 *Natural Language Processing for Data Science* (NUS, Sem 1 AY2026/27), Group 5. This is a private repository.
-
-[![Tests and artifact integrity](https://github.com/zheyuanlai/DSA4213-project/actions/workflows/tests.yml/badge.svg)](https://github.com/zheyuanlai/DSA4213-project/actions/workflows/tests.yml)
-
-> **Status (2026-10-18): final.** The final report is [`report/final_report.md`](report/final_report.md). Its student
-> contribution shares must still be completed and confirmed by all four students.
-> **No human annotation was carried out.** Every quality label comes from AI judges: a
-> [multi-agent AI annotation](docs/AI_ANNOTATION_RESULTS.md) of the pre-registered focal labels, and a post-freeze,
-> exploratory [evidence-level evaluation](docs/EVALUATION_EXTENSION_RESULTS.md) (atomic claims, deterministic numeric
-> checks, finding coverage, verifier edits) by two AI judge families with AI adjudication, plus a third-family
-> sensitivity check. These results must not be reported as human evaluation, and AI–AI agreement is not human
-> inter-annotator reliability. Anything labelled PROXY is an unvalidated automatic heuristic.
-> All 224 primary, 46/48 real-paper and 24 long-package outputs exist. OpenRouter spend is $1.22, reconciled
-> ($0.71 for the experiments, $0.51 for the third AI judge). Documentation index: [`docs/README.md`](docs/README.md).
-
-> **V2 follow-up (post hoc, exploratory; V1 files unchanged):** why the verifier never chose STRENGTHEN, and a
-> held-out test of a fix. Summary: [`v2/docs/V2_SUMMARY.md`](v2/docs/V2_SUMMARY.md); everything else in [`v2/`](v2/README.md).
-
-**Main findings** (AI-judged; details in the report):
-
-* The full agent (C4) does **not** outperform the generic writer–reviewer loop (C2) in claim accuracy or passage-level
-  success, and it keeps fewer of the required numbers (numeric recall −0.109, 95% CI [−0.185, −0.033]). Its higher
-  recall of negative findings on real papers comes from its outline step, not from verification.
-* The verifier **never chose STRENGTHEN** (0 of 406 TEST claims), so the bidirectional hypothesis H2 could not be tested.
-* Verification rarely damaged correct claims, but most errors remained unresolved: it repaired 29–43% of synthetic and
-  7–10% of real-paper draft errors.
-* Adaptive tool selection matched scripted checking at lower cost (−3.66 tool calls per case): an efficiency result.
-* Real-paper passages have two to three times the synthetic claim error rate and report under half of the important findings.
 
 ## What this is
 
@@ -116,28 +90,3 @@ Every call goes through `src/cost_guard.py`: a hard cap of $12, per-stage caps, 
 | `docs/` | results, protocols, deviations, reproducibility guide and audit; index in [`docs/README.md`](docs/README.md) |
 | `report/` | final report and verified BibTeX |
 | `.github/workflows/` | CI: tests, artifact integrity, secret scan |
-
-## Optional human audit (not carried out)
-
-The tooling for blind human annotation is complete and remains usable for a later audit of the AI labels.
-
-See [`annotation/README_HUMAN_REVIEW.md`](annotation/README_HUMAN_REVIEW.md) and
-[`docs/HUMAN_REVIEW_HANDOFF.md`](docs/HUMAN_REVIEW_HANDOFF.md). The prepared workflow has four students in two independent
-pairs, each covering half of the data: see [`docs/AMENDMENT_FOUR_PERSON_ANNOTATION.md`](docs/AMENDMENT_FOUR_PERSON_ANNOTATION.md)
-and [`annotation/four_person/README_COORDINATOR.md`](annotation/four_person/README_COORDINATOR.md)
-(`python -m evaluation.four_person --help`). The map from output IDs to conditions
-(`private/condition_mapping.csv`) is **not** in this repository. Only the coordinator holds it.
-
-## Credits and AI use
-
-Planned roles from the proposal (*planning context only, not a record of work done*): Li Jiajun (benchmark and annotation protocol),
-Xiao Xinkai (evidence store, tools and real-paper packages), Liu Yuxin (writer, verifier and baselines), and Lai Zheyuan (coordination, evaluation and report).
-**Actual contribution shares must be confirmed by all four students for the final report.**
-AI disclosure: the code, synthetic benchmark drafts, real-paper package extraction, documentation and the report draft
-were produced with Claude Code (Anthropic) under the coordinator's direction. The evaluated model is DeepSeek V4 Flash.
-The evaluation labels were produced by AI: Codex agents (multi-agent focal annotation); GPT-5.6 via the Codex CLI and
-Claude Sonnet 5.5 / Haiku 5.5 via the Claude CLI (judges), GPT-5.6 (adjudicator) and Qwen 3.7 Plus via OpenRouter
-(third judge). AI assistants are not group members, their labels are not human judgements, and their work does not
-count as student contribution. One historical commit (`70de390`, 2026-10-15) carries an AI co-author trailer; the
-published history was not rewritten to remove it.
-Real-paper excerpts are used under their CC licences ([`data/real_papers/README.md`](data/real_papers/README.md)).
